@@ -71,6 +71,9 @@ public abstract class SocketClient {
     /** The hostname used for the connection (null = no hostname supplied). */
     protected String _hostname_;
 
+    /** The remote socket address used for the connection. */
+    protected InetSocketAddress remoteInetSocketAddress;
+
     /** The default port the client should connect to. */
     protected int _defaultPort_;
 
@@ -118,7 +121,8 @@ public abstract class SocketClient {
     }
 
     // helper method to allow code to be shared with connect(String,...) methods
-    private void _connect(final InetAddress host, final int port, final InetAddress localAddr, final int localPort) throws SocketException, IOException {
+    private void _connect(final InetSocketAddress remoteInetSocketAddress, final InetAddress localAddr, final int localPort) throws IOException {
+        this.remoteInetSocketAddress = remoteInetSocketAddress;
         _socket_ = _socketFactory_.createSocket();
         if (receiveBufferSize != -1) {
             _socket_.setReceiveBufferSize(receiveBufferSize);
@@ -129,13 +133,13 @@ public abstract class SocketClient {
         if (localAddr != null) {
             _socket_.bind(new InetSocketAddress(localAddr, localPort));
         }
-        _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
+        _socket_.connect(remoteInetSocketAddress, connectTimeout);
         _connectAction_();
     }
 
     /**
      * Because there are so many connect() methods, the _connectAction_() method is provided as a means of performing some action immediately after establishing
-     * a connection, rather than reimplementing all of the connect() methods. The last action performed by every connect() method after opening a socket is to
+     * a connection, rather than reimplementing all the connect() methods. The last action performed by every connect() method after opening a socket is to
      * call this method.
      * <p>
      * This method sets the timeout on the just opened socket to the default timeout set by {@link #setDefaultTimeout setDefaultTimeout() }, sets _input_ and
@@ -218,7 +222,7 @@ public abstract class SocketClient {
      */
     public void connect(final InetAddress host, final int port) throws SocketException, IOException {
         _hostname_ = null;
-        _connect(host, port, null, -1);
+        _connect(new InetSocketAddress(host, port), null, -1);
     }
 
     /**
@@ -235,7 +239,7 @@ public abstract class SocketClient {
      */
     public void connect(final InetAddress host, final int port, final InetAddress localAddr, final int localPort) throws SocketException, IOException {
         _hostname_ = null;
-        _connect(host, port, localAddr, localPort);
+        _connect(new InetSocketAddress(host, port), localAddr, localPort);
     }
 
     /**
@@ -264,8 +268,7 @@ public abstract class SocketClient {
      * @throws java.net.UnknownHostException If the hostname cannot be resolved.
      */
     public void connect(final String hostname, final int port) throws SocketException, IOException {
-        _hostname_ = hostname;
-        _connect(InetAddress.getByName(hostname), port, null, -1);
+        connect(hostname, port, null, -1);
     }
 
     /**
@@ -283,7 +286,7 @@ public abstract class SocketClient {
      */
     public void connect(final String hostname, final int port, final InetAddress localAddr, final int localPort) throws SocketException, IOException {
         _hostname_ = hostname;
-        _connect(InetAddress.getByName(hostname), port, localAddr, localPort);
+        _connect(new InetSocketAddress(hostname, port), localAddr, localPort);
     }
 
     /**
@@ -350,7 +353,7 @@ public abstract class SocketClient {
      *
      * @return the charset.
      * @since 3.3
-     * @deprecated Since the code now requires Java 1.6 as a mininmum
+     * @deprecated Since the code now requires Java 1.6 as a minimum
      */
     @Deprecated
     public String getCharsetName() {
@@ -358,7 +361,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Subclasses can override this if they need to provide their own instance field for backwards compatibilty.
+     * Subclasses can override this if they need to provide their own instance field for backwards compatibility.
      *
      * @return the CommandSupport instance, may be {@code null}
      * @since 3.0
@@ -452,6 +455,16 @@ public abstract class SocketClient {
      */
     public InetAddress getRemoteAddress() {
         return _socket_.getInetAddress();
+    }
+
+    /**
+     * Gets the remote socket address used for the connection.
+     *
+     * @return the remote socket address used for the connection
+     * @since 3.10.0
+     */
+    protected InetSocketAddress getRemoteInetSocketAddress() {
+        return remoteInetSocketAddress;
     }
 
     /**
@@ -619,7 +632,7 @@ public abstract class SocketClient {
 
     /**
      * Set the default timeout in milliseconds to use when opening a socket. This value is only used previous to a call to {@link #connect connect()} and should
-     * not be confused with {@link #setSoTimeout setSoTimeout()} which operates on an the currently opened socket. _timeout_ contains the new timeout value.
+     * not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the currently opened socket. _timeout_ contains the new timeout value.
      *
      * @param timeout The timeout in milliseconds to use for the socket connection.
      */
@@ -708,7 +721,7 @@ public abstract class SocketClient {
      * Sets the SO_LINGER timeout on the currently opened socket.
      *
      * @param on  True if linger is to be enabled, false if not.
-     * @param val The linger timeout (in hundredths of a second?)
+     * @param val The {@code linger} timeout (in hundredths of a second?)
      * @throws SocketException      If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
@@ -741,7 +754,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Verifies that the remote end of the given socket is connected to the the same host that the SocketClient is currently connected to. This is useful for
+     * Verifies that the remote end of the given socket is connected to the same host that the SocketClient is currently connected to. This is useful for
      * doing a quick security check when a client needs to accept a connection from a server, such as an FTP data connection or a BSD R command standard error
      * stream.
      *

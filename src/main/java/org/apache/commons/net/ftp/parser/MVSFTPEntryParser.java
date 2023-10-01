@@ -60,7 +60,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "\\S+\\s+" + // extents -ignored
             // If the values are too large, the fields may be merged (NET-639)
             "(?:\\S+\\s+)?" + // used - ignored
-            "(?:F|FB|V|VB|U)\\s+" + // recfm - F[B], V[B], U
+            "\\S+\\s+" + // recfm - ignored
             "\\S+\\s+" + // logical record length -ignored
             "\\S+\\s+" + // block size - ignored
             "(PS|PO|PO-E)\\s+" + // Dataset organisation. Many exist
@@ -157,8 +157,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * --------------------------------------------------------------------- Very brief and incomplete description of the zOS/MVS-file system. (Note: "zOS" is
      * the operating system on the mainframe, and is the new name for MVS)
      *
-     * The file system on the mainframe does not have hierarchal structure as for example the unix file system. For a more comprehensive description, please
-     * refer to the IBM manuals
+     * The file system on the mainframe does not have hierarchical structure as for example the unix file system. For a more comprehensive description,
+     * please refer to the IBM manuals
      *
      * @LINK: http://publibfp.boulder.ibm.com/cgi-bin/bookmgr/BOOKS/dgt2d440/CONTENTS
      *
@@ -171,7 +171,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * Dataset organisation ====================
      *
-     * A dataset represents a piece of storage allocated on one or more disks. The structure of the storage is described with the field dataset organinsation
+     * A dataset represents a piece of storage allocated on one or more disks. The structure of the storage is described with the field dataset organisation
      * (DSORG). There are a number of dataset organisations, but only two are usable for FTP transfer.
      *
      * DSORG: PS: sequential, or flat file PO: partitioned dataset PO-E: extended partitioned dataset
@@ -184,11 +184,11 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * Dataset record format =====================
      *
-     * The physical layout of the dataset is described on the dataset itself. There are a number of record formats (RECFM), but just a few is relavant for the
+     * The physical layout of the dataset is described on the dataset itself. There are a number of record formats (RECFM), but just a few is relevant for the
      * FTP transfer.
      *
-     * Any one beginning with either F or V can safely used by FTP transfer. All others should only be used with great care. F means a fixed number of records
-     * per allocated storage, and V means a variable number of records.
+     * Any one beginning with either F or V can safely be used by FTP transfer. All others should only be used with great care. F means a fixed number of
+     * records per allocated storage, and V means a variable number of records.
      *
      *
      * Other notes ===========
@@ -213,17 +213,10 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * scheduler DB2 is used to interact with a DB2 subsystem
      *
      * This parser supports SEQ and JES.
-     *
-     *
-     *
-     *
-     *
-     *
      */
 
     /**
      * The sole constructor for a MVSFTPEntryParser object.
-     *
      */
     public MVSFTPEntryParser() {
         super(""); // note the regex is set in preParse.
@@ -239,17 +232,20 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parse entries representing a dataset list. Only datasets with DSORG PS or PO or PO-E and with RECFM F[B], V[B], U will be parsed.
-     *
-     * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10 Volume Unit Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname B10142 3390 2006/03/20 2 31 F 80 80 PS
-     * MDI.OKL.WORK ARCIVE Not Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST B1N231 3390 2006/03/20 1 15 VB 256 27998 PO PLU B1N231 3390 2006/03/20 1 15 VB
-     * 256 27998 PO-E PLB
-     *
+     * Parses entries representing a dataset list.
+     * <pre>
+     * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10
+     * Volume Unit Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname
+     * B10142 3390 2006/03/20 2 31 F 80 80 PS MDI.OKL.WORK
+     * ARCIVE Not Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST
+     * B1N231 3390 2006/03/20 1 15 VB 256 27998 PO PLU
+     * B1N231 3390 2006/03/20 1 15 VB 256 27998 PO-E PLB
+     * Migrated                                                HLQ.DATASET.NAME
+     * </pre>
+     * <pre>
      * ----------------------------------- Group within Regex [1] Volume [2] Unit [3] Referred [4] Ext: number of extents [5] Used [6] Recfm: Record format [7]
      * Lrecl: Logical record length [8] BlkSz: Block size [9] Dsorg: Dataset organisation. Many exists but only support: PS, PO, PO-E [10] Dsname: Dataset name
-     *
-     * Note: When volume is ARCIVE, it means the dataset is stored somewhere in a tape archive. These entries is currently not supported by this parser. A null
-     * value is returned.
+     * </pre>
      *
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
@@ -275,12 +271,22 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             return file;
         }
 
+        final boolean migrated = entry.startsWith("Migrated");
+        if (migrated || entry.startsWith("ARCIVE")) {
+            // Type of file is unknown for migrated datasets
+            final FTPFile file = new FTPFile();
+            file.setRawListing(entry);
+            file.setType(FTPFile.UNKNOWN_TYPE);
+            file.setName(entry.split("\\s+")[migrated ? 1 : 5]);
+            return file;
+        }
+
         return null;
     }
 
     /**
-     * Parses a line of an z/OS - MVS FTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the
-     * file listing line doesn't describe a file, then <code> null </code> is returned. Otherwise a <code> FTPFile </code> instance representing the file is
+     * Parses a line of a z/OS - MVS FTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the
+     * file listing line doesn't describe a file, then <code> null </code> is returned. Otherwise, a <code> FTPFile </code> instance representing the file is
      * returned.
      *
      * @param entry A line of text from the file listing
@@ -327,18 +333,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @return null: entry was not parsed.
      */
     private FTPFile parseJeslevel1List(final String entry) {
-        if (matches(entry)) {
-            final FTPFile file = new FTPFile();
-            if (group(3).equalsIgnoreCase("OUTPUT")) {
-                file.setRawListing(entry);
-                final String name = group(2); /* Job Number, used by GET */
-                file.setName(name);
-                file.setType(FTPFile.FILE_TYPE);
-                return file;
-            }
-        }
-
-        return null;
+        return parseJeslevelList(entry, 3);
     }
 
     /**
@@ -365,9 +360,13 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @return null: entry was not parsed.
      */
     private FTPFile parseJeslevel2List(final String entry) {
+        return parseJeslevelList(entry, 4);
+    }
+
+    private FTPFile parseJeslevelList(final String entry, final int matchNum) {
         if (matches(entry)) {
             final FTPFile file = new FTPFile();
-            if (group(4).equalsIgnoreCase("OUTPUT")) {
+            if (group(matchNum).equalsIgnoreCase("OUTPUT")) {
                 file.setRawListing(entry);
                 final String name = group(2); /* Job Number, used by GET */
                 file.setName(name);
@@ -375,12 +374,11 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 return file;
             }
         }
-
         return null;
     }
 
     /**
-     * Parse entries within a partitioned dataset.
+     * Parses entries within a partitioned dataset.
      *
      * Format of a memberlist within a PDS:
      *
@@ -437,9 +435,12 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * preParse is called as part of the interface. Per definition is is called before the parsing takes place. Three kind of lists is recognize: z/OS-MVS File
-     * lists z/OS-MVS Member lists unix file lists
-     *
+     * Pre-parses is called as part of the interface. Per definition, it is called before the parsing takes place. Three kinds of lists are recognized:
+     * <ul>
+     *     <li>z/OS-MVS File lists,</li>
+     *     <li>z/OS-MVS Member lists,</li>
+     *     <li>unix file lists.</li>
+     * </ul>
      * @since 2.0
      */
     @Override
@@ -477,7 +478,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Explicitly set the type of listing being processed.
+     * Sets the type of listing being processed.
      *
      * @param type The listing type.
      */

@@ -28,7 +28,7 @@ import junit.framework.TestCase;
 
 /**
  */
-public abstract class FTPParseTestFramework extends TestCase {
+public abstract class AbstractFTPParseTest extends TestCase {
     // associate Calendar unit ints with a readable string
     // MUST be listed least significant first, as the routine needs to
     // find the previous - less significant - entry
@@ -50,7 +50,7 @@ public abstract class FTPParseTestFramework extends TestCase {
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
-    public FTPParseTestFramework(final String name) {
+    public AbstractFTPParseTest(final String name) {
         super(name);
     }
 

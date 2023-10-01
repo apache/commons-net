@@ -19,7 +19,6 @@ package org.apache.commons.net.ntp;
 
 /**
  * Common NtpUtils Helper class.
- *
  */
 public final class NtpUtils {
 
@@ -30,7 +29,7 @@ public final class NtpUtils {
      * @return the raw IP address in a string format.
      */
     public static String getHostAddress(final int address) {
-        return ((address >>> 24) & 0xFF) + "." + ((address >>> 16) & 0xFF) + "." + ((address >>> 8) & 0xFF) + "." + ((address >>> 0) & 0xFF);
+        return (address >>> 24 & 0xFF) + "." + (address >>> 16 & 0xFF) + "." + (address >>> 8 & 0xFF) + "." + (address >>> 0 & 0xFF);
     }
 
     /**
@@ -69,7 +68,7 @@ public final class NtpUtils {
      * @return the packet reference id (as IP address) in "%d.%d.%d.%d" format.
      */
     public static String getRefAddress(final NtpV3Packet packet) {
-        final int address = (packet == null) ? 0 : packet.getReferenceId();
+        final int address = packet == null ? 0 : packet.getReferenceId();
         return getHostAddress(address);
     }
 
@@ -91,7 +90,7 @@ public final class NtpUtils {
         final StringBuilder buf = new StringBuilder(4);
         // start at highest-order byte (0x4c434c00 -> LCL)
         for (int shiftBits = 24; shiftBits >= 0; shiftBits -= 8) {
-            final char c = (char) ((refId >>> shiftBits) & 0xff);
+            final char c = (char) (refId >>> shiftBits & 0xff);
             if (c == 0) { // 0-terminated ASCII string
                 break;
             }

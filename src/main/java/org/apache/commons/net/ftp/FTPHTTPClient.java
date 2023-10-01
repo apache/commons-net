@@ -30,9 +30,8 @@ import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
-
-import org.apache.commons.net.util.Base64;
 
 /**
  * Experimental attempt at FTP client that tunnels over an HTTP proxy connection.
@@ -40,15 +39,13 @@ import org.apache.commons.net.util.Base64;
  * @since 2.2
  */
 public class FTPHTTPClient extends FTPClient {
+
     private static final byte[] CRLF = { '\r', '\n' };
     private final String proxyHost;
     private final int proxyPort;
     private final String proxyUsername;
     private final String proxyPassword;
-
     private final Charset charset;
-    private final Base64 base64 = new Base64();
-
     private String tunnelHost; // Save the host when setting up a tunnel (needed for EPSV)
 
     /**
@@ -130,7 +127,7 @@ public class FTPHTTPClient extends FTPClient {
         }
 
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
-        String passiveHost = null;
+        String passiveHost;
 
         final boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
         if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
@@ -195,7 +192,7 @@ public class FTPHTTPClient extends FTPClient {
 
         if (proxyUsername != null && proxyPassword != null) {
             final String auth = proxyUsername + ":" + proxyPassword;
-            final String header = "Proxy-Authorization: Basic " + base64.encodeToString(auth.getBytes(charset));
+            final String header = "Proxy-Authorization: Basic " + Base64.getEncoder().encodeToString(auth.getBytes(charset));
             output.write(header.getBytes(charset));
         }
         output.write(CRLF);
@@ -212,9 +209,9 @@ public class FTPHTTPClient extends FTPClient {
             throw new IOException("No response from proxy");
         }
 
-        String code = null;
+        String code;
         final String resp = response.get(0);
-        if (!resp.startsWith("HTTP/") || (resp.length() < 12)) {
+        if (!resp.startsWith("HTTP/") || resp.length() < 12) {
             throw new IOException("Invalid response from proxy: " + resp);
         }
         code = resp.substring(9, 12);

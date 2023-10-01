@@ -73,11 +73,11 @@ public class TelnetClientFunctionalTest extends TestCase {
      * Helper method. waits for a string with timeout
      */
     public boolean waitForString(final InputStream is, final String end, final long timeout) throws Exception {
-        final byte buffer[] = new byte[32];
+        final byte[] buffer = new byte[32];
         final long starttime = System.currentTimeMillis();
 
         String readbytes = "";
-        while ((readbytes.indexOf(end) < 0) && ((System.currentTimeMillis() - starttime) < timeout)) {
+        while (readbytes.indexOf(end) < 0 && System.currentTimeMillis() - starttime < timeout) {
             if (is.available() > 0) {
                 final int ret_read = is.read(buffer);
                 readbytes = readbytes + new String(buffer, 0, ret_read);
@@ -86,9 +86,6 @@ public class TelnetClientFunctionalTest extends TestCase {
             }
         }
 
-        if (readbytes.indexOf(end) >= 0) {
-            return (true);
-        }
-        return (false);
+        return readbytes.indexOf(end) >= 0;
     }
 }

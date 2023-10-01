@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.ftp;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,24 +71,9 @@ public class FTPClientConfigTest extends TestCase {
 
     public void testGetDateFormatSymbols() {
 
-        try {
-            FTPClientConfig.getDateFormatSymbols(badDelim);
-            fail("bad delimiter");
-        } catch (final IllegalArgumentException e) {
-            // should have failed
-        }
-        try {
-            FTPClientConfig.getDateFormatSymbols(tooLong);
-            fail("more than 12 months");
-        } catch (final IllegalArgumentException e) {
-            // should have failed
-        }
-        try {
-            FTPClientConfig.getDateFormatSymbols(tooShort);
-            fail("fewer than 12 months");
-        } catch (final IllegalArgumentException e) {
-            // should have failed
-        }
+        assertThrows(IllegalArgumentException.class, () -> FTPClientConfig.getDateFormatSymbols(badDelim), "bad delimiter");
+        assertThrows(IllegalArgumentException.class, () -> FTPClientConfig.getDateFormatSymbols(tooLong), "more than 12 months");
+        assertThrows(IllegalArgumentException.class, () -> FTPClientConfig.getDateFormatSymbols(tooShort), "fewer than 12 months");
         DateFormatSymbols dfs2 = null;
         try {
             dfs2 = FTPClientConfig.getDateFormatSymbols(fakeLang);
@@ -111,19 +98,8 @@ public class FTPClientConfigTest extends TestCase {
 
         assertEquals("different.parser.same.date", d1, d2);
 
-        try {
-            sdf1.parse("hij 31, 2004");
-            fail("should.have.failed.to.parse.weird");
-        } catch (final ParseException px) {
-            // expected
-        }
-        try {
-            sdf2.parse("dec 31, 2004");
-            fail("should.have.failed.to.parse.standard");
-        } catch (final ParseException px) {
-            // expected
-        }
-
+        assertThrows(ParseException.class, () -> sdf1.parse("hij 31, 2004"));
+        assertThrows(ParseException.class, () -> sdf2.parse("dec 31, 2004"));
     }
 
     public void testGetServerLanguageCode() {

@@ -28,7 +28,6 @@ import java.io.IOException;
  * @see SMTP
  * @see SMTPClient
  */
-
 public final class SMTPConnectionClosedException extends IOException {
 
     private static final long serialVersionUID = 626520434326660627L;

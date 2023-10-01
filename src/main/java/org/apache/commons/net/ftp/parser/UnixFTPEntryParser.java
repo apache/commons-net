@@ -51,7 +51,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     /**
      * Some Linux distributions are now shipping an FTP server which formats file listing dates in an all-numeric format: <code>"yyyy-MM-dd HH:mm</code>. This
      * is a very welcome development, and hopefully it will soon become the standard. However, since it is so new, for now, and possibly forever, we merely
-     * accomodate it, but do not make it the default.
+     * accommodate it, but do not make it the default.
      * <p>
      * For now end users may specify this format only via <code>UnixFTPEntryParser(FTPClientConfig)</code>. Steve Cohen - 2005-04-17
      */
@@ -63,7 +63,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * Permissions: r the file is readable w the file is writable x the file is executable - the indicated permission is not granted L mandatory locking occurs
      * during access (the set-group-ID bit is on and the group execution bit is off) s the set-user-ID or set-group-ID bit is on, and the corresponding user or
      * group execution bit is also on S undefined bit-state (the set-user-ID bit is on and the user execution bit is off) t the 1000 (octal) bit, or sticky bit,
-     * is on [see chmod(1)], and execution is on T the 1000 bit is turned on, and execution is off (undefined bit- state) e z/OS external link bit Final letter
+     * is on [see chmod(1)], and execution is on T the 1000 bit is turned on, and execution is off (undefined bit-state) e z/OS external link bit. Final letter
      * may be appended: + file has extended security attributes (e.g. ACL) Note: local listings on MacOSX also use '@'; this is not allowed for here as does not
      * appear to be shown by FTP servers {@code @} file has extended attributes
      */
@@ -110,8 +110,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     /**
      * The default constructor for a UnixFTPEntryParser object.
      *
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions.
+     *                                  If this exception is seen, this is a sign that {@code REGEX} is not a valid regular expression.
      */
     public UnixFTPEntryParser() {
         this(null);
@@ -121,8 +121,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * This constructor allows the creation of a UnixFTPEntryParser object with something other than the default configuration.
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions.
+     *                                  If this exception is seen, this is a sign that {@code REGEX} is not a valid regular expression.
      * @since 1.4
      */
     public UnixFTPEntryParser(final FTPClientConfig config) {
@@ -134,8 +134,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * @param config            The {@link FTPClientConfig configuration} object used to configure this parser.
      * @param trimLeadingSpaces if {@code true}, trim leading spaces from file names
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions.
+     *                                  If this exception is seen, this is a sign that {@code REGEX} is not a valid regular expression.
      * @since 3.4
      */
     public UnixFTPEntryParser(final FTPClientConfig config, final boolean trimLeadingSpaces) {

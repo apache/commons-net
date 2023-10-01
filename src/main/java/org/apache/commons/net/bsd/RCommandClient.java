@@ -40,24 +40,25 @@ import org.apache.commons.net.io.SocketInputStream;
  * the RCommandClient class if the process runs as root. However, there is no such restriction on Windows95 and some other systems. The security risks are
  * obvious. However, when carefully used, rcmd() can be very useful when used behind a firewall.
  * <p>
- * As with virtually all of the client classes in org.apache.commons.net, this class derives from SocketClient. But it overrides most of its connection methods
+ * As with virtually all the client classes in org.apache.commons.net, this class derives from SocketClient. But it overrides most of its connection methods
  * so that the local Socket will originate from an acceptable rshell port. The way to use RCommandClient is to first connect to the server, call the
  * {@link #rcommand rcommand() } method, and then fetch the connection's input, output, and optionally error streams. Interaction with the remote command is
  * controlled entirely through the I/O streams. Once you have finished processing the streams, you should invoke
  * {@link org.apache.commons.net.bsd.RExecClient#disconnect disconnect() } to clean up properly.
+ * </p>
  * <p>
- * By default the standard output and standard error streams of the remote process are transmitted over the same connection, readable from the input stream
+ * By default, the standard output and standard error streams of the remote process are transmitted over the same connection, readable from the input stream
  * returned by {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream() } . However, it is possible to tell the rshd daemon to return the
  * standard error stream over a separate connection, readable from the input stream returned by {@link org.apache.commons.net.bsd.RExecClient#getErrorStream
  * getErrorStream() } . You can specify that a separate connection should be created for standard error by setting the boolean
  * <code> separateErrorStream </code> parameter of {@link #rcommand rcommand() } to <code> true </code>. The standard input of the remote process can be written
  * to through the output stream returned by {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputStream() } .
+ * </p>
  *
  * @see org.apache.commons.net.SocketClient
  * @see RExecClient
  * @see RLoginClient
  */
-
 public class RCommandClient extends RExecClient {
     /**
      * The default rshell port. Set to 514 in BSD Unix.
@@ -65,12 +66,12 @@ public class RCommandClient extends RExecClient {
     public static final int DEFAULT_PORT = 514;
 
     /**
-     * The smallest port number an rcmd client may use. By BSD convention this number is 512.
+     * The smallest port number a rcmd client may use. By BSD convention this number is 512.
      */
     public static final int MIN_CLIENT_PORT = 512;
 
     /**
-     * The largest port number an rcmd client may use. By BSD convention this number is 1023.
+     * The largest port number a rcmd client may use. By BSD convention this number is 1023.
      */
     public static final int MAX_CLIENT_PORT = 1023;
 
@@ -113,8 +114,6 @@ public class RCommandClient extends RExecClient {
      */
     public void connect(final InetAddress host, final int port, final InetAddress localAddr) throws SocketException, BindException, IOException {
         int localPort;
-
-        localPort = MAX_CLIENT_PORT;
 
         for (localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
             try {
@@ -218,31 +217,14 @@ public class RCommandClient extends RExecClient {
     // port number limitations.
     @Override
     InputStream createErrorStream() throws IOException {
-        int localPort;
         final Socket socket;
 
-        localPort = MAX_CLIENT_PORT;
-        ServerSocket server = null;
-
-        for (localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
-            try {
-                server = _serverSocketFactory_.createServerSocket(localPort, 1, getLocalAddress());
-                break; // got a socket
-            } catch (final SocketException e) {
-                continue;
-            }
+        try (ServerSocket server = createServer()) {
+            _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8));
+            _output_.write(NULL_CHAR);
+            _output_.flush();
+            socket = server.accept();
         }
-
-        if (server == null) {
-            throw new BindException("All ports in use.");
-        }
-
-        _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8)); // $NON-NLS
-        _output_.write(NULL_CHAR);
-        _output_.flush();
-
-        socket = server.accept();
-        server.close();
 
         if (isRemoteVerificationEnabled() && !verifyRemote(socket)) {
             socket.close();
@@ -252,22 +234,33 @@ public class RCommandClient extends RExecClient {
         return new SocketInputStream(socket, socket.getInputStream());
     }
 
+    private ServerSocket createServer() throws IOException {
+        for (int localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
+            try {
+                return _serverSocketFactory_.createServerSocket(localPort, 1, getLocalAddress());
+            } catch (final SocketException e) {
+                continue;
+            }
+        }
+        throw new BindException("All ports in use.");
+    }
+
     /**
      * Same as <code> rcommand(localUsername, remoteUsername, command, false); </code>
      *
-     * @param localUsername  the local user
-     * @param remoteUsername the remote user
+     * @param localUser  the local user
+     * @param remoteUser the remote user
      * @param command        the command
      * @throws IOException on error
      */
-    public void rcommand(final String localUsername, final String remoteUsername, final String command) throws IOException {
-        rcommand(localUsername, remoteUsername, command, false);
+    public void rcommand(final String localUser, final String remoteUser, final String command) throws IOException {
+        rcommand(localUser, remoteUser, command, false);
     }
 
     /**
      * Remotely executes a command through the rshd daemon on the server to which the RCommandClient is connected. After calling this method, you may interact
      * with the remote process through its standard input, output, and error streams. You will typically be able to detect the termination of the remote process
-     * after reaching end of file on its standard output (accessible through {@link #getInputStream getInputStream() }. Disconnecting from the server or closing
+     * after reaching end of file on its standard output (accessible through {@link #getInputStream getInputStream()}). Disconnecting from the server or closing
      * the process streams before reaching end of file will not necessarily terminate the remote process.
      * <p>
      * If a separate error stream is requested, the remote server will connect to a local socket opened by RCommandClient, providing an independent stream
@@ -276,16 +269,16 @@ public class RCommandClient extends RExecClient {
      * the remote server, an IOException will be thrown. This serves as a simple protection against possible hijacking of the error stream by an attacker
      * monitoring the rexec() negotiation. You may disable this behavior with {@link org.apache.commons.net.bsd.RExecClient#setRemoteVerificationEnabled
      * setRemoteVerificationEnabled()} .
-     * <p>
+     * </p>
      *
-     * @param localUsername       The user account on the local machine that is requesting the command execution.
-     * @param remoteUsername      The account name on the server through which to execute the command.
+     * @param localUser       The user account on the local machine that is requesting the command execution.
+     * @param remoteUser      The account name on the server through which to execute the command.
      * @param command             The command, including any arguments, to execute.
      * @param separateErrorStream True if you would like the standard error to be transmitted through a different stream than standard output. False if not.
      * @throws IOException If the rcommand() attempt fails. The exception will contain a message indicating the nature of the failure.
      */
-    public void rcommand(final String localUsername, final String remoteUsername, final String command, final boolean separateErrorStream) throws IOException {
-        rexec(localUsername, remoteUsername, command, separateErrorStream);
+    public void rcommand(final String localUser, final String remoteUser, final String command, final boolean separateErrorStream) throws IOException {
+        rexec(localUser, remoteUser, command, separateErrorStream);
     }
 
 }

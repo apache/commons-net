@@ -51,7 +51,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      *
      * @param regex The regular expression with which this object is initialized.
      *
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen in normal conditions. It it is seen, this is a sign
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen in normal conditions. If it is seen, this is a sign
      *                                  that a subclass has been created with a bad regular expression. Since the parser must be created before use, this means
      *                                  that any bad parser subclasses created from this will bomb very quickly, leading to easy detection.
      */
@@ -66,7 +66,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * @param regex The regular expression with which this object is initialized.
      * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
      *
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen in normal conditions. It it is seen, this is a sign
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen in normal conditions. If it is seen, this is a sign
      *                                  that a subclass has been created with a bad regular expression. Since the parser must be created before use, this means
      *                                  that any bad parser subclasses created from this will bomb very quickly, leading to easy detection.
      * @since 3.4
@@ -122,15 +122,15 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     /**
      * Convenience method delegates to the internal MatchResult's group() method.
      *
-     * @param matchnum match group number to be retrieved
+     * @param matchNum match group number to be retrieved
      *
      * @return the content of the <code>matchnum'th</code> group of the internal match or null if this method is called without a match having been made.
      */
-    public String group(final int matchnum) {
+    public String group(final int matchNum) {
         if (this.result == null) {
             return null;
         }
-        return this.result.group(matchnum);
+        return this.result.group(matchNum);
     }
 
     /**

@@ -80,7 +80,7 @@ public abstract class AbstractFtpsTest {
      * @param userPropertiesResource resource path to user properties file.
      * @param serverJksResourceResource resource path to server JKS file.
      * @param defaultHome default home folder
-     * @throws FtpException Thrown when a the FTP classes cannot fulfill a request.
+     * @throws FtpException Thrown when the FTP classes cannot fulfill a request.
      */
     protected synchronized static void setupServer(final boolean implicit, final String userPropertiesResource, final String serverJksResourceResource, final String defaultHome)
             throws FtpException {
@@ -106,7 +106,7 @@ public abstract class AbstractFtpsTest {
         // define SSL configuration
         final URL serverJksResource = ClassLoader.getSystemClassLoader().getResource(serverJksResourceResource);
         Assert.assertNotNull(serverJksResourceResource, serverJksResource);
-        System.out.println("Loading " + serverJksResource);
+        // System.out.println("Loading " + serverJksResource);
         final SslConfigurationFactory sllConfigFactory = new SslConfigurationFactory();
         final File keyStoreFile = FileUtils.toFile(serverJksResource);
         Assert.assertTrue(keyStoreFile.toString(), keyStoreFile.exists());

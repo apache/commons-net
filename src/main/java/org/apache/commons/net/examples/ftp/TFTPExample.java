@@ -24,21 +24,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.time.Duration;
 
 import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
 import org.apache.commons.net.tftp.TFTPPacket;
 
 /**
- * This is an example of a simple Java tftp client. Notice how all of the code is really just argument processing and error handling.
+ * This is an example of a simple Java TFTP client. Notice how all the code is really just argument processing and error handling.
  * <p>
- * Usage: tftp [options] hostname localfile remotefile hostname - The name of the remote host, with optional :port localfile - The name of the local file to
- * send or the name to use for the received file remotefile - The name of the remote file to receive or the name for the remote server to use to name the local
- * file being sent. options: (The default is to assume -r -b) -s Send a local file -r Receive a remote file -a Use ASCII transfer mode -b Use binary transfer
- * mode
+ * Usage: TFTPExample [options] hostname localfile remotefile hostname - The name of the remote host, with optional :port localfile - The name of the local file
+ * to send or the name to use for the received file remotefile - The name of the remote file to receive or the name for the remote server to use to name the
+ * local file being sent. options: (The default is to assume -r -b) -s Send a local file -r Receive a remote file -a Use ASCII transfer mode -b Use binary
+ * transfer mode.
+ * </p>
  */
 public final class TFTPExample {
-    static final String USAGE = "Usage: tftp [options] hostname localfile remotefile\n\n" + "hostname   - The name of the remote host [:port]\n"
+    static final String USAGE = "Usage: TFTPExample [options] hostname localfile remotefile\n\n" + "hostname   - The name of the remote host [:port]\n"
             + "localfile  - The name of the local file to send or the name to use for\n" + "\tthe received file\n"
             + "remotefile - The name of the remote file to receive or the name for\n" + "\tthe remote server to use to name the local file being sent.\n\n"
             + "options: (The default is to assume -r -b)\n" + "\t-t timeout in seconds (default 60s)\n" + "\t-s Send a local file\n"
@@ -60,7 +62,7 @@ public final class TFTPExample {
         return closed;
     }
 
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws IOException {
         boolean receiveFile = true, closed;
         int transferMode = TFTP.BINARY_MODE, argc;
         String arg;
@@ -121,7 +123,7 @@ public final class TFTPExample {
         }
 
         // We want to timeout if a response takes longer than 60 seconds
-        tftp.setDefaultTimeout(timeout);
+        tftp.setDefaultTimeout(Duration.ofSeconds(timeout));
 
         // We haven't closed the local file yet.
         closed = false;
@@ -144,18 +146,18 @@ public final class TFTPExample {
         System.out.println("OK");
     }
 
-    private static void open(final TFTPClient tftp) {
+    private static void open(final TFTPClient tftp) throws IOException {
         try {
             tftp.open();
         } catch (final SocketException e) {
-            throw new RuntimeException("Error: could not open local UDP socket.", e);
+            throw new IOException("Error: could not open local UDP socket.", e);
         }
     }
 
     private static boolean receive(final int transferMode, final String hostname, final String localFilename, final String remoteFilename,
-            final TFTPClient tftp) {
+            final TFTPClient tftp) throws IOException {
         final boolean closed;
-        FileOutputStream output = null;
+        FileOutputStream output;
         final File file;
 
         file = new File(localFilename);
@@ -171,7 +173,7 @@ public final class TFTPExample {
             output = new FileOutputStream(file);
         } catch (final IOException e) {
             tftp.close();
-            throw new RuntimeException("Error: could not open local file for writing.", e);
+            throw new IOException("Error: could not open local file for writing.", e);
         }
 
         open(tftp);
@@ -200,16 +202,17 @@ public final class TFTPExample {
         return closed;
     }
 
-    private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename, final TFTPClient tftp) {
+    private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename, final TFTPClient tftp)
+            throws IOException {
         final boolean closed;
-        FileInputStream input = null;
+        FileInputStream input;
 
         // Try to open local file for reading
         try {
             input = new FileInputStream(localFilename);
         } catch (final IOException e) {
             tftp.close();
-            throw new RuntimeException("Error: could not open local file for reading.", e);
+            throw new IOException("Error: could not open local file for reading.", e);
         }
 
         open(tftp);

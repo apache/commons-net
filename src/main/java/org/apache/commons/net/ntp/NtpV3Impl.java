@@ -21,7 +21,6 @@ import java.net.DatagramPacket;
 
 /**
  * Implementation of NtpV3Packet with methods converting Java objects to/from the Network Time Protocol (NTP) data message header format described in RFC-1305.
- *
  */
 public class NtpV3Impl implements NtpV3Packet {
 
@@ -51,7 +50,7 @@ public class NtpV3Impl implements NtpV3Packet {
 //    private static final int MESSAGE_DIGEST = 54; /* len 16 bytes */
 
     /**
-     * Convert byte to unsigned integer. Java only has signed types so we have to do more work to get unsigned ops.
+     * Convert byte to unsigned integer. Java only has signed types, so we have to do more work to get unsigned ops.
      *
      * @param b input byte
      * @return unsigned int value of byte
@@ -62,7 +61,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Convert byte to unsigned long. Java only has signed types so we have to do more work to get unsigned ops
+     * Convert byte to unsigned long. Java only has signed types, so we have to do more work to get unsigned ops
      *
      * @param b input byte
      * @return unsigned long value of byte
@@ -81,11 +80,11 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Compares this object against the specified object. The result is <code>true</code> if and only if the argument is not <code>null</code> and is a
+     * Compares this object against the specified object. The result is {@code true} if and only if the argument is not <code>null</code> and is a
      * <code>NtpV3Impl</code> object that contains the same values as this object.
      *
      * @param obj the object to compare with.
-     * @return <code>true</code> if the objects are the same; <code>false</code> otherwise.
+     * @return {@code true} if the objects are the same; {@code false} otherwise.
      * @since 3.4
      */
     @Override
@@ -131,7 +130,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public int getLeapIndicator() {
-        return (ui(buf[LI_INDEX]) >> LI_SHIFT) & 0x3;
+        return ui(buf[LI_INDEX]) >> LI_SHIFT & 0x3;
     }
 
     /**
@@ -152,7 +151,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public int getMode() {
-        return (ui(buf[MODE_INDEX]) >> MODE_SHIFT) & 0x7;
+        return ui(buf[MODE_INDEX]) >> MODE_SHIFT & 0x7;
     }
 
     /**
@@ -166,9 +165,9 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the originate time as defined in RFC-1305.
+     * Returns the {@code originate} time as defined in RFC-1305.
      *
-     * @return the originate time. Never returns null.
+     * @return the {@code originate} time. Never returns null.
      */
     @Override
     public TimeStamp getOriginateTimeStamp() {
@@ -177,7 +176,7 @@ public class NtpV3Impl implements NtpV3Packet {
 
     /**
      * Returns poll interval as defined in RFC-1305, which is an eight-bit signed integer indicating the maximum interval between successive messages, in
-     * seconds to the nearest power of two (e.g. value of six indicates an interval of 64 seconds. The values that can appear in this field range from
+     * seconds to the nearest power of two (e.g. value of six indicates an interval of 64 seconds). The values that can appear in this field range from
      * NTP_MINPOLL to NTP_MAXPOLL inclusive.
      *
      * @return poll interval as defined in RFC-1305.
@@ -188,7 +187,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns precision as defined in RFC-1305 encoded as an 8-bit signed integer (seconds to nearest power of two). Values normally range from -6 to -20.
+     * Returns precision as defined in RFC-1305 encoded as an 8-bit signed integer (seconds to the nearest power of two). Values normally range from -6 to -20.
      *
      * @return precision as defined in RFC-1305.
      */
@@ -198,9 +197,9 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns receive timestamp as defined in RFC-1305.
+     * Returns {@code receive} timestamp as defined in RFC-1305.
      *
-     * @return the receive time. Never returns null.
+     * @return the {@code receive} time. Never returns null.
      */
     @Override
     public TimeStamp getReceiveTimeStamp() {
@@ -296,7 +295,7 @@ public class NtpV3Impl implements NtpV3Packet {
     @Override
     public long getRootDispersionInMillis() {
         final long l = getRootDispersion();
-        return (l * 1000) / 65536L;
+        return l * 1000 / 65536L;
     }
 
     /**
@@ -332,9 +331,9 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the transmit timestamp as defined in RFC-1305.
+     * Returns the {@code transmit} timestamp as defined in RFC-1305.
      *
-     * @return the transmit timestamp as defined in RFC-1305. Never returns a null object.
+     * @return the {@code transmit} timestamp as defined in RFC-1305. Never returns a null object.
      */
     @Override
     public TimeStamp getTransmitTimeStamp() {
@@ -358,11 +357,11 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public int getVersion() {
-        return (ui(buf[VERSION_INDEX]) >> VERSION_SHIFT) & 0x7;
+        return ui(buf[VERSION_INDEX]) >> VERSION_SHIFT & 0x7;
     }
 
     /**
-     * Computes a hashcode for this object. The result is the exclusive OR of the values of this object stored as a byte array.
+     * Computes a hash code for this object. The result is the exclusive OR of the values of this object stored as a byte array.
      *
      * @return a hash code value for this object.
      * @since 3.4
@@ -442,7 +441,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public void setLeapIndicator(final int li) {
-        buf[LI_INDEX] = (byte) (buf[LI_INDEX] & 0x3F | ((li & 0x3) << LI_SHIFT));
+        buf[LI_INDEX] = (byte) (buf[LI_INDEX] & 0x3F | (li & 0x3) << LI_SHIFT);
     }
 
     /**
@@ -555,7 +554,7 @@ public class NtpV3Impl implements NtpV3Packet {
      * @param t     TimeStamp.
      */
     private void setTimestamp(final int index, final TimeStamp t) {
-        long ntpTime = (t == null) ? 0 : t.ntpValue();
+        long ntpTime = t == null ? 0 : t.ntpValue();
         // copy 64-bits from Long value into 8 x 8-bit bytes of array
         // one byte at a time shifting 8-bits for each position.
         for (int i = 7; i >= 0; i--) {
@@ -582,7 +581,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public void setVersion(final int version) {
-        buf[VERSION_INDEX] = (byte) (buf[VERSION_INDEX] & 0xC7 | ((version & 0x7) << VERSION_SHIFT));
+        buf[VERSION_INDEX] = (byte) (buf[VERSION_INDEX] & 0xC7 | (version & 0x7) << VERSION_SHIFT);
     }
 
     /**

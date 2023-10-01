@@ -27,11 +27,10 @@ import org.apache.commons.net.imap.IMAPSClient;
 /**
  * Utility class for shared IMAP utilities
  */
-
 class IMAPUtils {
 
     /**
-     * Parse the URI and use the details to connect to the IMAP(S) server and login.
+     * Parses the URI and use the details to connect to the IMAP(S) server and login.
      *
      * @param uri            the URI to use, e.g. imaps://user:pass@imap.mail.yahoo.com/folder or imaps://user:pass@imap.googlemail.com/folder
      * @param defaultTimeout initial timeout (in milliseconds)
@@ -45,15 +44,15 @@ class IMAPUtils {
             throw new IllegalArgumentException("Missing userInfo details");
         }
 
-        final String[] userpass = userInfo.split(":");
-        if (userpass.length != 2) {
+        final String[] userPassword = userInfo.split(":");
+        if (userPassword.length != 2) {
             throw new IllegalArgumentException("Invalid userInfo details: '" + userInfo + "'");
         }
 
-        final String username = userpass[0];
-        String password = userpass[1];
+        final String user = userPassword[0];
+        String password = userPassword[1];
         // prompt for the password if necessary
-        password = Utils.getPassword(username, password);
+        password = Utils.getPassword(user, password);
 
         final IMAPClient imap;
 
@@ -84,12 +83,12 @@ class IMAPUtils {
             imap.connect(server);
             System.out.println("Successfully connected");
         } catch (final IOException e) {
-            throw new RuntimeException("Could not connect to server.", e);
+            throw new IOException("Could not connect to server.", e);
         }
 
-        if (!imap.login(username, password)) {
+        if (!imap.login(user, password)) {
             imap.disconnect();
-            throw new RuntimeException("Could not login to server. Check login details.");
+            throw new IOException("Could not login to server. Check login details.");
         }
 
         return imap;

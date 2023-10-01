@@ -38,7 +38,7 @@ class Utils {
      *
      * STDIN may require creating a temporary file which could be read by others Environment variables may be visible by using PS
      */
-    static String getPassword(final String username, String password) throws IOException {
+    static String getPassword(final String user, String password) throws IOException {
         if ("-".equals(password)) { // stdin
             final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             password = in.readLine();
@@ -47,7 +47,7 @@ class Utils {
             if (con == null) {
                 throw new IOException("Cannot access Console");
             }
-            final char[] pwd = con.readPassword("Password for " + username + ": ");
+            final char[] pwd = con.readPassword("Password for " + user + ": ");
             password = new String(pwd);
         } else if (password.equals(password.toUpperCase(Locale.ROOT))) { // environment variable name
             final String tmp = System.getenv(password);

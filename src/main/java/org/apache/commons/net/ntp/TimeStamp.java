@@ -109,7 +109,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      */
 
     /**
-     * Helper method to convert Java time to NTP timestamp object. Note that Java time (milliseconds) by definition has less precision then NTP time
+     * Helper method to convert Java time to NTP timestamp object. Note that Java time (milliseconds) by definition has less precision than NTP time
      * (picoseconds) so converting Ntptime to Javatime and back to Ntptime loses precision. For example, Tue, Dec 17 2002 09:07:24.810 is represented by a
      * single Java-based time value of f22cd1fc8a, but its NTP equivalent are all values from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
      *
@@ -123,7 +123,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Converts 64-bit NTP timestamp to Java standard time.
      *
-     * Note that java time (milliseconds) by definition has less precision then NTP time (picoseconds) so converting NTP timestamp to java time and back to NTP
+     * Note that java time (milliseconds) by definition has less precision than NTP time (picoseconds) so converting NTP timestamp to java time and back to NTP
      * timestamp loses precision. For example, Tue, Dec 17 2002 09:07:24.810 EST is represented by a single Java-based time value of f22cd1fc8a, but its NTP
      * equivalent are all values ranging from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
      *
@@ -131,7 +131,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this NTP timestamp value.
      */
     public static long getTime(final long ntpTimeValue) {
-        final long seconds = (ntpTimeValue >>> 32) & 0xffffffffL; // high-order 32-bits
+        final long seconds = ntpTimeValue >>> 32 & 0xffffffffL; // high-order 32-bits
         long fraction = ntpTimeValue & 0xffffffffL; // low-order 32-bits
 
         // Use round-off on fractional part to preserve going to lower precision
@@ -146,10 +146,10 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         final long msb = seconds & 0x80000000L;
         if (msb == 0) {
             // use base: 7-Feb-2036 @ 06:28:16 UTC
-            return msb0baseTime + (seconds * 1000) + fraction;
+            return msb0baseTime + seconds * 1000 + fraction;
         }
         // use base: 1-Jan-1900 @ 01:00:00 UTC
-        return msb1baseTime + (seconds * 1000) + fraction;
+        return msb1baseTime + seconds * 1000 + fraction;
     }
 
     /**
@@ -180,7 +180,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         }
 
         long seconds = baseTimeMillis / 1000;
-        final long fraction = ((baseTimeMillis % 1000) * 0x100000000L) / 1000;
+        final long fraction = baseTimeMillis % 1000 * 0x100000000L / 1000;
 
         if (useBase1) {
             seconds |= 0x80000000L; // set high-order bit if msb1baseTime 1900 used
@@ -200,7 +200,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     public static String toString(final long ntpTime) {
         final StringBuilder buf = new StringBuilder();
         // high-order second bits (32..63) as hexstring
-        appendHexString(buf, (ntpTime >>> 32) & 0xffffffffL);
+        appendHexString(buf, ntpTime >>> 32 & 0xffffffffL);
 
         // low-order fractional seconds bits (0..31) as hexstring
         buf.append('.');
@@ -260,15 +260,15 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     public int compareTo(final TimeStamp anotherTimeStamp) {
         final long thisVal = this.ntpTime;
         final long anotherVal = anotherTimeStamp.ntpTime;
-        return (Long.compare(thisVal, anotherVal));
+        return Long.compare(thisVal, anotherVal);
     }
 
     /**
-     * Compares this object against the specified object. The result is <code>true</code> if and only if the argument is not <code>null</code> and is a
+     * Compares this object against the specified object. The result is {@code true} if and only if the argument is not <code>null</code> and is a
      * <code>Long</code> object that contains the same <code>long</code> value as this object.
      *
      * @param obj the object to compare with.
-     * @return <code>true</code> if the objects are the same; <code>false</code> otherwise.
+     * @return {@code true} if the objects are the same; {@code false} otherwise.
      */
     @Override
     public boolean equals(final Object obj) {
@@ -302,7 +302,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * @return seconds represented by this NTP timestamp.
      */
     public long getSeconds() {
-        return (ntpTime >>> 32) & 0xffffffffL;
+        return ntpTime >>> 32 & 0xffffffffL;
     }
 
     /**
@@ -315,8 +315,8 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     }
 
     /**
-     * Computes a hashcode for this Timestamp. The result is the exclusive OR of the two halves of the primitive <code>long</code> value represented by this
-     * <code>TimeStamp</code> object. That is, the hashcode is the value of the expression: <blockquote>
+     * Computes a hash code for this Timestamp. The result is the exclusive OR of the two halves of the primitive <code>long</code> value represented by this
+     * <code>TimeStamp</code> object. That is, the hash code is the value of the expression: <blockquote>
      *
      * <pre>
      * {@code
@@ -330,7 +330,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      */
     @Override
     public int hashCode() {
-        return (int) (ntpTime ^ (ntpTime >>> 32));
+        return (int) (ntpTime ^ ntpTime >>> 32);
     }
 
     /**

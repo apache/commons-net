@@ -25,8 +25,6 @@ import java.net.SocketException;
  * The DatagramSocketFactory interface provides a means for the programmer to control the creation of datagram sockets and provide his own DatagramSocket
  * implementations for use by all classes derived from {@link org.apache.commons.net.DatagramSocketClient} . This allows you to provide your own DatagramSocket
  * implementations and to perform security checks or browser capability requests before creating a DatagramSocket.
- *
- *
  */
 
 public interface DatagramSocketFactory {
@@ -53,9 +51,9 @@ public interface DatagramSocketFactory {
      * Creates a DatagramSocket at the specified address on the local host at a specified port.
      *
      * @param port  The port to use for the socket.
-     * @param laddr The local address to use.
+     * @param localAddress The local address to use.
      * @return the socket
      * @throws SocketException If the socket could not be created.
      */
-    DatagramSocket createDatagramSocket(int port, InetAddress laddr) throws SocketException;
+    DatagramSocket createDatagramSocket(int port, InetAddress localAddress) throws SocketException;
 }

@@ -21,7 +21,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 /**
- * A final class derived from TFTPPacket definiing the TFTP Acknowledgement packet type.
+ * A final class derived from TFTPPacket defining the TFTP Acknowledgement packet type.
  * <p>
  * Details regarding the TFTP protocol and the format of TFTP packets can be found in RFC 783. But the point of these classes is to keep you from having to
  * worry about the internals. Additionally, only very few people should have to care about any of the TFTPPacket classes or derived classes. Almost all users
@@ -55,7 +55,7 @@ public final class TFTPAckPacket extends TFTPPacket {
             throw new TFTPPacketException("TFTP operator code does not match type.");
         }
 
-        this.blockNumber = (((data[2] & 0xff) << 8) | (data[3] & 0xff));
+        this.blockNumber = (data[2] & 0xff) << 8 | data[3] & 0xff;
     }
 
     /**
@@ -100,7 +100,7 @@ public final class TFTPAckPacket extends TFTPPacket {
     }
 
     /**
-     * This is a method only available within the package for implementing efficient datagram transport by elminating buffering. It takes a datagram as an
+     * This is a method only available within the package for implementing efficient datagram transport by eliminating buffering. It takes a datagram as an
      * argument, and a byte buffer in which to store the raw datagram data. Inside the method, the data is set as the datagram's data and the datagram returned.
      *
      * @param datagram The datagram to create.

@@ -27,6 +27,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Base64;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
@@ -37,7 +38,6 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
-import org.apache.commons.net.util.Base64;
 import org.apache.commons.net.util.SSLContextUtils;
 import org.apache.commons.net.util.SSLSocketUtils;
 import org.apache.commons.net.util.TrustManagerUtils;
@@ -59,57 +59,79 @@ public class FTPSClient extends FTPClient {
 //    ftps        990/tcp    ftp protocol, control, over TLS/SSL
 //    ftps        990/udp    ftp protocol, control, over TLS/SSL
 
+    /** Default FTPS data port. */
     public static final int DEFAULT_FTPS_DATA_PORT = 989;
+
+    /** Default FTPS port. */
     public static final int DEFAULT_FTPS_PORT = 990;
 
     /** The value that I can set in PROT command (C = Clear, P = Protected) */
     private static final String[] PROT_COMMAND_VALUE = { "C", "E", "S", "P" };
+
     /** Default PROT Command */
     private static final String DEFAULT_PROT = "C";
+
     /** Default secure socket protocol name, i.e. TLS */
     private static final String DEFAULT_PROTOCOL = "TLS";
 
     /** The AUTH (Authentication/Security Mechanism) command. */
     private static final String CMD_AUTH = "AUTH";
+
     /** The ADAT (Authentication/Security Data) command. */
     private static final String CMD_ADAT = "ADAT";
+
     /** The PROT (Data Channel Protection Level) command. */
     private static final String CMD_PROT = "PROT";
+
     /** The PBSZ (Protection Buffer Size) command. */
     private static final String CMD_PBSZ = "PBSZ";
+
     /** The MIC (Integrity Protected Command) command. */
     private static final String CMD_MIC = "MIC";
+
     /** The CONF (Confidentiality Protected Command) command. */
     private static final String CMD_CONF = "CONF";
+
     /** The ENC (Privacy Protected Command) command. */
     private static final String CMD_ENC = "ENC";
+
     /** The CCC (Clear Command Channel) command. */
     private static final String CMD_CCC = "CCC";
 
     /** @deprecated - not used - may be removed in a future release */
     @Deprecated
     public static String KEYSTORE_ALGORITHM;
+
     /** @deprecated - not used - may be removed in a future release */
     @Deprecated
     public static String TRUSTSTORE_ALGORITHM;
+
     /** @deprecated - not used - may be removed in a future release */
     @Deprecated
     public static String PROVIDER;
+
     /** @deprecated - not used - may be removed in a future release */
     @Deprecated
     public static String STORE_TYPE;
+
     /** The security mode. (True - Implicit Mode / False - Explicit Mode) */
     private final boolean isImplicit;
+
     /** The secure socket protocol to be used, e.g. SSL/TLS. */
     private final String protocol;
+
     /** The AUTH Command value */
     private String auth = DEFAULT_PROTOCOL;
+
     /** The context object. */
     private SSLContext context;
+
     /** The socket object. */
     private Socket plainSocket;
+
     /** Controls whether a new SSL session may be established by this socket. Default true. */
     private boolean isCreation = true;
+
     /** The use client mode flag. */
     private boolean isClientMode = true;
 
@@ -179,7 +201,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Constructor for FTPSClient, using explict mode, calls {@link #FTPSClient(String, boolean)}.
+     * Constructor for FTPSClient, using explicit mode, calls {@link #FTPSClient(String, boolean)}.
      *
      * @param protocol the protocol to use
      */
@@ -204,9 +226,9 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Because there are so many connect() methods, the _connectAction_() method is provided as a means of performing some action immediately after establishing
-     * a connection, rather than reimplementing all of the connect() methods.
+     * a connection, rather than reimplementing all the connect() methods.
      *
-     * @throws IOException If it throw by _connectAction_.
+     * @throws IOException If there is any problem with establishing the connection.
      * @see org.apache.commons.net.SocketClient#_connectAction_()
      */
     @Override
@@ -367,7 +389,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execADAT(final byte[] data) throws IOException {
         if (data != null) {
-            return sendCommand(CMD_ADAT, Base64.encodeBase64StringUnChunked(data));
+            return sendCommand(CMD_ADAT, Base64.getEncoder().encodeToString(data));
         }
         return sendCommand(CMD_ADAT);
     }
@@ -375,7 +397,7 @@ public class FTPSClient extends FTPClient {
     /**
      * AUTH command.
      *
-     * @throws SSLException If it server reply code not equal "234" and "334".
+     * @throws SSLException If the server reply code equals neither "234" nor "334".
      * @throws IOException  If an I/O error occurs while either sending the command.
      */
     protected void execAUTH() throws SSLException, IOException {
@@ -434,7 +456,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execCONF(final byte[] data) throws IOException {
         if (data != null) {
-            return sendCommand(CMD_CONF, Base64.encodeBase64StringUnChunked(data));
+            return sendCommand(CMD_CONF, Base64.getEncoder().encodeToString(data));
         }
         return sendCommand(CMD_CONF, ""); // perhaps "=" or just sendCommand(String)?
     }
@@ -449,7 +471,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execENC(final byte[] data) throws IOException {
         if (data != null) {
-            return sendCommand(CMD_ENC, Base64.encodeBase64StringUnChunked(data));
+            return sendCommand(CMD_ENC, Base64.getEncoder().encodeToString(data));
         }
         return sendCommand(CMD_ENC, ""); // perhaps "=" or just sendCommand(String)?
     }
@@ -464,7 +486,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execMIC(final byte[] data) throws IOException {
         if (data != null) {
-            return sendCommand(CMD_MIC, Base64.encodeBase64StringUnChunked(data));
+            return sendCommand(CMD_MIC, Base64.getEncoder().encodeToString(data));
         }
         return sendCommand(CMD_MIC, ""); // perhaps "=" or just sendCommand(String)?
     }
@@ -714,7 +736,7 @@ public class FTPSClient extends FTPClient {
                     return null;
                 }
 
-                if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
+                if (getRestartOffset() > 0 && !restart(getRestartOffset())) {
                     return null;
                 }
 
@@ -795,7 +817,7 @@ public class FTPSClient extends FTPClient {
                 sslSocket = context.getSocketFactory().createSocket(socket, getPassiveHost(), getPassivePort(), true);
             }
 
-            if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
+            if (getRestartOffset() > 0 && !restart(getRestartOffset())) {
                 closeSockets(socket, sslSocket);
                 return null;
             }
@@ -830,7 +852,7 @@ public class FTPSClient extends FTPClient {
         if (reply == null) {
             return null;
         }
-        return Base64.decodeBase64(extractPrefixedData("ADAT=", reply));
+        return Base64.getDecoder().decode(extractPrefixedData("ADAT=", reply));
     }
 
     /**
@@ -1025,10 +1047,10 @@ public class FTPSClient extends FTPClient {
         _controlInput_ = new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
         _controlOutput_ = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), getControlEncoding()));
 
-        if (isClientMode && (hostnameVerifier != null && !hostnameVerifier.verify(_hostname_, socket.getSession()))) {
+        if (isClientMode && hostnameVerifier != null && !hostnameVerifier.verify(_hostname_, socket.getSession())) {
             throw new SSLHandshakeException("Hostname doesn't match certificate");
         }
     }
 
 }
-/* kate: indent-width 4; replace-tabs on; */
+

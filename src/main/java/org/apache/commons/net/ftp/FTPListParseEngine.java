@@ -33,7 +33,7 @@ import org.apache.commons.net.util.Charsets;
  * <p>
  * This object defines a two-part parsing mechanism.
  * <p>
- * The first part is comprised of reading the raw input into an internal list of strings. Every item in this list corresponds to an actual file. All extraneous
+ * The first part consists of reading the raw input into an internal list of strings. Every item in this list corresponds to an actual file. All extraneous
  * matter emitted by the server will have been removed by the end of this phase. This is accomplished in conjunction with the FTPFileEntryParser associated with
  * this engine, by calling its methods <code>readNextEntry()</code> - which handles the issue of what delimits one entry from another, usually but not always a
  * line feed and <code>preParse()</code> - which handles removal of extraneous matter such as the preliminary lines of a listing, removal of duplicates on
@@ -50,7 +50,7 @@ import org.apache.commons.net.util.Charsets;
  * <pre>
  * FTPClient f = FTPClient();
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPListParseEngine engine = f.initiateListParsing(directory);
  *
  * while (engine.hasNext()) {
@@ -102,14 +102,14 @@ public class FTPListParseEngine {
      * @return a list of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
      *         <p>
      *         <b> NOTE:</b> This array may contain null members if any of the individual file listings failed to parse. The caller should check each entry for
-     *         null before referencing it, or use the a filter such as {@link FTPFileFilters#NON_NULL} which does not allow null entries.
+     *         null before referencing it, or use a filter such as {@link FTPFileFilters#NON_NULL} which does not allow null entries.
      * @since 3.9.0
      */
     public List<FTPFile> getFileList(final FTPFileFilter filter) {
         return entries.stream().map(e -> {
             final FTPFile file = parser.parseFTPEntry(e);
             return file == null && saveUnparseableEntries ? new FTPFile(e) : file;
-        }).filter(file -> filter.accept(file)).collect(Collectors.toList());
+        }).filter(filter::accept).collect(Collectors.toList());
     }
 
     /**
@@ -133,7 +133,7 @@ public class FTPListParseEngine {
      * @return an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
      *         <p>
      *         <b> NOTE:</b> This array may contain null members if any of the individual file listings failed to parse. The caller should check each entry for
-     *         null before referencing it, or use the a filter such as {@link FTPFileFilters#NON_NULL} which does not allow null entries.
+     *         null before referencing it, or use a filter such as {@link FTPFileFilters#NON_NULL} which does not allow null entries.
      * @since 2.2
      * @throws IOException - not ever thrown, may be removed in a later release
      */
@@ -144,7 +144,7 @@ public class FTPListParseEngine {
 
     /**
      * Returns an array of at most <code>quantityRequested</code> FTPFile objects starting at this object's internal iterator's current position. If fewer than
-     * <code>quantityRequested</code> such elements are available, the returned array will have a length equal to the number of entries at and after after the
+     * <code>quantityRequested</code> such elements are available, the returned array will have a length equal to the number of entries at and after the
      * current position. If no such entries are found, this array will have a length of 0.
      *
      * After this method is called this object's internal iterator is advanced by a number of positions equal to the size of the array returned.
@@ -178,7 +178,7 @@ public class FTPListParseEngine {
      * back toward the beginning.
      *
      * If fewer than <code>quantityRequested</code> such elements are available, the returned array will have a length equal to the number of entries at and
-     * after after the current position. If no such entries are found, this array will have a length of 0.
+     * after the current position. If no such entries are found, this array will have a length of 0.
      *
      * After this method is called this object's internal iterator is moved back by a number of positions equal to the size of the array returned.
      *

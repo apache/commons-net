@@ -21,12 +21,11 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLContext;
-
-import org.apache.commons.net.util.Base64;
 
 /**
  * An IMAP Client class with authentication support.
@@ -34,18 +33,28 @@ import org.apache.commons.net.util.Base64;
  * @see IMAPSClient
  */
 public class AuthenticatingIMAPClient extends IMAPSClient {
+
+    /** {@link Mac} algorithm. */
+    private static final String MAC_ALGORITHM = "HmacMD5";
+
     /**
      * The enumeration of currently-supported authentication methods.
      */
     public enum AUTH_METHOD {
-        /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
+
+        /** The standardized (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
+
         PLAIN("PLAIN"),
-        /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
+        /** The standardized (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
+
         CRAM_MD5("CRAM-MD5"),
-        /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
+
+        /** The standardized Microsoft LOGIN method, which sends the password unencrypted (insecure). */
         LOGIN("LOGIN"),
+
         /** XOAUTH */
         XOAUTH("XOAUTH"),
+
         /** XOAUTH 2 */
         XOAUTH2("XOAUTH2");
 
@@ -131,10 +140,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     }
 
     /**
-     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given username and the given password.
+     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given user and the given password.
      *
      * @param method   the method name
-     * @param username user
+     * @param user user
      * @param password password
      * @return True if successfully completed, false if not.
      * @throws IOException              If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
@@ -142,7 +151,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
      * @throws InvalidKeyException      If the CRAM hash algorithm failed to use the given password.
      * @throws InvalidKeySpecException  If the CRAM hash algorithm failed to use the given password.
      */
-    public boolean auth(final AuthenticatingIMAPClient.AUTH_METHOD method, final String username, final String password)
+    public boolean auth(final AuthenticatingIMAPClient.AUTH_METHOD method, final String user, final String password)
             throws IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
         if (!IMAPReply.isContinuation(sendCommand(IMAPCommand.AUTHENTICATE, method.getAuthName()))) {
             return false;
@@ -151,7 +160,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         switch (method) {
         case PLAIN: {
             // the server sends an empty response ("+ "), so we don't have to read it.
-            final int result = sendData(Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(getCharset())));
+            final int result = sendData(Base64.getEncoder().encodeToString(("\000" + user + "\000" + password).getBytes(getCharset())));
             if (result == IMAPReply.OK) {
                 setState(IMAP.IMAPState.AUTH_STATE);
             }
@@ -159,20 +168,20 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         }
         case CRAM_MD5: {
             // get the CRAM challenge (after "+ ")
-            final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
+            final byte[] serverChallenge = Base64.getDecoder().decode(getReplyString().substring(2).trim());
             // get the Mac instance
-            final Mac hmac_md5 = Mac.getInstance("HmacMD5");
-            hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
+            final Mac hmacMd5 = Mac.getInstance(MAC_ALGORITHM);
+            hmacMd5.init(new SecretKeySpec(password.getBytes(getCharset()), MAC_ALGORITHM));
             // compute the result:
-            final byte[] hmacResult = convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
+            final byte[] hmacResult = convertToHexString(hmacMd5.doFinal(serverChallenge)).getBytes(getCharset());
             // join the byte arrays to form the reply
-            final byte[] usernameBytes = username.getBytes(getCharset());
+            final byte[] usernameBytes = user.getBytes(getCharset());
             final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
             System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
             toEncode[usernameBytes.length] = ' ';
             System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
             // send the reply and read the server code:
-            final int result = sendData(Base64.encodeBase64StringUnChunked(toEncode));
+            final int result = sendData(Base64.getEncoder().encodeToString(toEncode));
             if (result == IMAPReply.OK) {
                 setState(IMAP.IMAPState.AUTH_STATE);
             }
@@ -181,10 +190,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         case LOGIN: {
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
-            if (sendData(Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))) != IMAPReply.CONT) {
+            if (sendData(Base64.getEncoder().encodeToString(user.getBytes(getCharset()))) != IMAPReply.CONT) {
                 return false;
             }
-            final int result = sendData(Base64.encodeBase64StringUnChunked(password.getBytes(getCharset())));
+            final int result = sendData(Base64.getEncoder().encodeToString(password.getBytes(getCharset())));
             if (result == IMAPReply.OK) {
                 setState(IMAP.IMAPState.AUTH_STATE);
             }
@@ -192,7 +201,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         }
         case XOAUTH:
         case XOAUTH2: {
-            final int result = sendData(username);
+            final int result = sendData(user);
             if (result == IMAPReply.OK) {
                 setState(IMAP.IMAPState.AUTH_STATE);
             }
@@ -203,10 +212,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     }
 
     /**
-     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given username and the given password.
+     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given user and the given password.
      *
      * @param method   the method name
-     * @param username user
+     * @param user user
      * @param password password
      * @return True if successfully completed, false if not.
      * @throws IOException              If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
@@ -214,9 +223,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
      * @throws InvalidKeyException      If the CRAM hash algorithm failed to use the given password.
      * @throws InvalidKeySpecException  If the CRAM hash algorithm failed to use the given password.
      */
-    public boolean authenticate(final AuthenticatingIMAPClient.AUTH_METHOD method, final String username, final String password)
+    public boolean authenticate(final AuthenticatingIMAPClient.AUTH_METHOD method, final String user, final String password)
             throws IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
-        return auth(method, username, password);
+        return auth(method, user, password);
     }
 
     /**
@@ -237,4 +246,4 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         return result.toString();
     }
 }
-/* kate: indent-width 4; replace-tabs on; */
+

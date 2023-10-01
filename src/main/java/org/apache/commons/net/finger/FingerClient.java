@@ -45,7 +45,6 @@ import org.apache.commons.net.util.Charsets;
  *     return;
  * }
  * </pre>
- *
  */
 
 public class FingerClient extends SocketClient {
@@ -83,12 +82,12 @@ public class FingerClient extends SocketClient {
      * this method, and you should disconnect after finishing reading the stream.
      *
      * @param longOutput Set to true if long output is requested, false if not.
-     * @param username   The name of the user to finger.
+     * @param user   The name of the user to finger.
      * @return The InputStream of the network connection of the finger query. Can be read to obtain finger results.
      * @throws IOException If an I/O error during the operation.
      */
-    public InputStream getInputStream(final boolean longOutput, final String username) throws IOException {
-        return getInputStream(longOutput, username, null);
+    public InputStream getInputStream(final boolean longOutput, final String user) throws IOException {
+        return getInputStream(longOutput, user, null);
     }
 
     /**
@@ -96,18 +95,18 @@ public class FingerClient extends SocketClient {
      * this method, and you should disconnect after finishing reading the stream.
      *
      * @param longOutput Set to true if long output is requested, false if not.
-     * @param username   The name of the user to finger.
+     * @param user   The name of the user to finger.
      * @param encoding   the character encoding that should be used for the query, null for the platform's default encoding
      * @return The InputStream of the network connection of the finger query. Can be read to obtain finger results.
      * @throws IOException If an I/O error during the operation.
      */
-    public InputStream getInputStream(final boolean longOutput, final String username, final String encoding) throws IOException {
+    public InputStream getInputStream(final boolean longOutput, final String user, final String encoding) throws IOException {
         final DataOutputStream output;
         final StringBuilder buffer = new StringBuilder(64);
         if (longOutput) {
             buffer.append(LONG_FLAG);
         }
-        buffer.append(username);
+        buffer.append(user);
         buffer.append(SocketClient.NETASCII_EOL);
 
         // Note: Charsets.toCharset() returns the platform default for null input
@@ -138,15 +137,15 @@ public class FingerClient extends SocketClient {
      * should disconnect afterward.
      *
      * @param longOutput Set to true if long output is requested, false if not.
-     * @param username   The name of the user to finger.
+     * @param user   The name of the user to finger.
      * @return The result of the finger query.
      * @throws IOException If an I/O error occurs while reading the socket.
      */
-    public String query(final boolean longOutput, final String username) throws IOException {
+    public String query(final boolean longOutput, final String user) throws IOException {
         int read;
         final StringBuilder result = new StringBuilder(buffer.length);
 
-        try (final BufferedReader input = new BufferedReader(new InputStreamReader(getInputStream(longOutput, username), getCharset()))) {
+        try (final BufferedReader input = new BufferedReader(new InputStreamReader(getInputStream(longOutput, user), getCharset()))) {
             while (true) {
                 read = input.read(buffer, 0, buffer.length);
                 if (read <= 0) {

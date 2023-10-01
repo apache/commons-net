@@ -13,7 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 package org.apache.commons.net.ftp.parser;
@@ -50,13 +49,13 @@ public class DownloadListings extends FTPClient {
 
         new File(DOWNLOAD_DIR).mkdirs();
         final DownloadListings self = new DownloadListings();
-        final OutputStream os = new FileOutputStream(new File(DOWNLOAD_DIR, "session.log"));
-        self.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(os), true));
+        final OutputStream outputStream = new FileOutputStream(new File(DOWNLOAD_DIR, "session.log"));
+        self.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(outputStream), true));
 
-        final Reader is = new FileReader("mirrors.list");
-        final BufferedReader rdr = new BufferedReader(is);
+        final Reader reader = new FileReader("mirrors.list");
+        final BufferedReader bufReader = new BufferedReader(reader);
         String line;
-        while ((line = rdr.readLine()) != null) {
+        while ((line = bufReader.readLine()) != null) {
             if (line.startsWith("ftp")) {
                 final String[] parts = line.split("\\s+");
                 final String target = parts[2];
@@ -80,8 +79,8 @@ public class DownloadListings extends FTPClient {
                 }
             }
         }
-        os.close();
-        rdr.close();
+        outputStream.close();
+        bufReader.close();
     }
 
     private PrintCommandListener listener;

@@ -23,6 +23,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,8 @@ public class IMAP extends SocketClient {
     /**
      * The default control socket encoding.
      */
-    protected static final String __DEFAULT_ENCODING = "ISO-8859-1";
+    protected static final String __DEFAULT_ENCODING = StandardCharsets.ISO_8859_1.name();
+
     /**
      * <p>
      * Implementation of IMAPChunkListener that returns {@code true} but otherwise does nothing.
@@ -193,7 +195,7 @@ public class IMAP extends SocketClient {
     }
 
     /**
-     * Overrides {@link SocketClient#fireReplyReceived(int, String)} so as to avoid creating the reply string if there are no listeners to invoke.
+     * Overrides {@link SocketClient#fireReplyReceived(int, String)} to avoid creating the reply string if there are no listeners to invoke.
      *
      * @param replyCode passed to the listeners
      * @param ignored   the string is only created if there are listeners defined.
@@ -374,7 +376,7 @@ public class IMAP extends SocketClient {
      * @param commandID The ID (tag) of the command.
      * @param command   The IMAP command to send.
      * @param args      The command arguments.
-     * @return The server reply code (either IMAPReply.OK, IMAPReply.NO or IMAPReply.BAD).
+     * @return The server reply code (either {@link IMAPReply#OK}, {@link IMAPReply#NO} or {@link IMAPReply#BAD}).
      */
     private int sendCommandWithID(final String commandID, final String command, final String args) throws IOException {
         final StringBuilder __commandBuffer = new StringBuilder();
@@ -433,4 +435,4 @@ public class IMAP extends SocketClient {
         this.state = state;
     }
 }
-/* kate: indent-width 4; replace-tabs on; */
+

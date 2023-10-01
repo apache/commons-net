@@ -38,7 +38,7 @@ public interface FTPFileEntryParserFactory {
      *
      * @param config A {@link FTPClientConfig FTPClientConfig} used to configure the parser created
      *
-     * @return the @link FTPFileEntryParser FTPFileEntryParser} so created.
+     * @return the {@link FTPFileEntryParser} so created.
      * @throws ParserInitializationException Thrown on any exception in instantiation
      * @since 1.4
      */

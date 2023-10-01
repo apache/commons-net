@@ -162,7 +162,7 @@ public class SimpleNTPServer implements Runnable {
     @Override
     public void run() {
         running = true;
-        final byte buffer[] = new byte[48];
+        final byte[] buffer = new byte[48];
         final DatagramPacket request = new DatagramPacket(buffer, buffer.length);
         do {
             try {

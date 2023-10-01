@@ -50,7 +50,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     /**
      * Same as <code> getTime(host, DEFAULT_PORT); </code>
      *
-     * @param host the time server
+     * @param host the time-server
      * @return the date
      * @throws IOException on error
      */
@@ -73,7 +73,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     /**
      * Same as <code> getTime(host, DEFAULT_PORT); </code>
      *
-     * @param host the time server
+     * @param host the time-server
      * @return the time returned from the server
      * @throws IOException on error
      */
@@ -91,21 +91,17 @@ public final class TimeUDPClient extends DatagramSocketClient {
      * @throws IOException If an error occurs while retrieving the time.
      */
     public long getTime(final InetAddress host, final int port) throws IOException {
-        long time;
-        final DatagramPacket sendPacket;
-        final DatagramPacket receivePacket;
+        final DatagramPacket sendPacket = new DatagramPacket(dummyData, dummyData.length, host, port);
+        final DatagramPacket receivePacket = new DatagramPacket(timeData, timeData.length);
 
-        sendPacket = new DatagramPacket(dummyData, dummyData.length, host, port);
-        receivePacket = new DatagramPacket(timeData, timeData.length);
+        checkOpen().send(sendPacket);
+        checkOpen().receive(receivePacket);
 
-        _socket_.send(sendPacket);
-        _socket_.receive(receivePacket);
-
-        time = 0L;
-        time |= (((timeData[0] & 0xff) << 24) & 0xffffffffL);
-        time |= (((timeData[1] & 0xff) << 16) & 0xffffffffL);
-        time |= (((timeData[2] & 0xff) << 8) & 0xffffffffL);
-        time |= ((timeData[3] & 0xff) & 0xffffffffL);
+        long time = 0L;
+        time |= (timeData[0] & 0xff) << 24 & 0xffffffffL;
+        time |= (timeData[1] & 0xff) << 16 & 0xffffffffL;
+        time |= (timeData[2] & 0xff) << 8 & 0xffffffffL;
+        time |= timeData[3] & 0xff & 0xffffffffL;
 
         return time;
     }

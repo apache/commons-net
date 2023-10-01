@@ -21,7 +21,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 /**
- * A class derived from TFTPRequestPacket definiing a TFTP write request packet type.
+ * A class derived from TFTPRequestPacket defining a TFTP write request packet type.
  * <p>
  * Details regarding the TFTP protocol and the format of TFTP packets can be found in RFC 783. But the point of these classes is to keep you from having to
  * worry about the internals. Additionally, only very few people should have to care about any of the TFTPPacket classes or derived classes. Almost all users

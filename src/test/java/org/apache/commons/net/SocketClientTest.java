@@ -16,25 +16,59 @@
  */
 package org.apache.commons.net;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.net.UnknownHostException;
 
 import org.apache.commons.net.ftp.FTPClient;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * A simple test class for SocketClient settings.
  *
  * @since 3.2
  */
-public class SocketClientTest extends TestCase {
+public class SocketClientTest {
     private static final String PROXY_HOST = "127.0.0.1";
     private static final int PROXY_PORT = 1080;
+
+    private static final String LOCALHOST_ADDRESS = "127.0.0.1";
+    private static final String UNRESOLVED_HOST = "unresolved";
+    private static final int REMOTE_PORT = 21;
+
+    @Test
+    public void testConnectResolved() {
+        final SocketClient socketClient = new FTPClient();
+
+        assertThrows(IOException.class, () -> socketClient.connect(LOCALHOST_ADDRESS, REMOTE_PORT));
+        final InetSocketAddress remoteAddress = socketClient.getRemoteInetSocketAddress();
+        assertFalse(remoteAddress.isUnresolved());
+        assertEquals(LOCALHOST_ADDRESS, remoteAddress.getHostString());
+        assertEquals(REMOTE_PORT, remoteAddress.getPort());
+    }
+
+    @Test
+    public void testConnectUnresolved() {
+        final SocketClient socketClient = new FTPClient();
+
+        assertThrows(UnknownHostException.class, () -> socketClient.connect(UNRESOLVED_HOST, REMOTE_PORT, null, -1));
+        final InetSocketAddress remoteAddress = socketClient.getRemoteInetSocketAddress();
+        assertTrue(remoteAddress.isUnresolved());
+        assertEquals(UNRESOLVED_HOST, remoteAddress.getHostString());
+        assertEquals(REMOTE_PORT, remoteAddress.getPort());
+    }
 
     /**
      * A simple test to verify that the Proxy is being set.
      */
+    @Test
     public void testProxySettings() {
         final SocketClient socketClient = new FTPClient();
         assertNull(socketClient.getProxy());

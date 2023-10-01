@@ -21,6 +21,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.Duration;
 import java.util.Arrays;
 
 import org.apache.commons.net.SocketClient;
@@ -193,15 +194,15 @@ class Telnet extends SocketClient {
 
     /* Code Section added for supporting AYT (start) */
     /**
-     * Sends an Are You There sequence and waits for the result.
+     * Sends an {@code Are You There (AYT)} sequence and waits for the result.
      *
-     * @param timeout - Time to wait for a response (millis.)
+     * @param timeout - Time to wait for a response.
      * @throws IOException              - Exception in I/O.
      * @throws IllegalArgumentException - Illegal argument
      * @throws InterruptedException     - Interrupted during wait.
      * @return true if AYT received a response, false otherwise
      **/
-    final boolean _sendAYT(final long timeout) throws IOException, IllegalArgumentException, InterruptedException {
+    final boolean _sendAYT(final Duration timeout) throws IOException, IllegalArgumentException, InterruptedException {
         boolean retValue = false;
         synchronized (aytMonitor) {
             synchronized (this) {
@@ -209,7 +210,7 @@ class Telnet extends SocketClient {
                 _output_.write(COMMAND_AYT);
                 _output_.flush();
             }
-            aytMonitor.wait(timeout);
+            aytMonitor.wait(timeout.toMillis());
             if (!aytFlag) {
                 aytFlag = true;
             } else {
@@ -359,7 +360,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Processes a DO request.
+     * Processes a {@code DO} request.
      *
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
@@ -425,7 +426,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Processes a DONT request.
+     * Processes a {@code DONT} request.
      *
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
@@ -498,7 +499,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Processes a WILL request.
+     * Processes a {@code WILL} request.
      *
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
@@ -549,7 +550,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Processes a WONT request.
+     * Processes a {@code WONT} request.
      *
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
@@ -616,7 +617,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Requests a DONT.
+     * Requests a {@code DONT}.
      *
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
@@ -633,7 +634,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a do has been reuqested
+     * @return returns true if a {@code DO} has been requested.
      *
      * @param option - option code to be looked up.
      */
@@ -644,7 +645,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a dont has been reuqested
+     * @return returns true if a {@code DONT} has been requested
      *
      * @param option - option code to be looked up.
      */
@@ -655,7 +656,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a will has been reuqested
+     * @return returns true if a {@code WILL} has been requested
      *
      * @param option - option code to be looked up.
      */
@@ -666,7 +667,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a wont has been reuqested
+     * @return returns true if a {@code WONT} has been requested
      *
      * @param option - option code to be looked up.
      */
@@ -675,7 +676,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Requests a WILL.
+     * Requests a {@code WILL}.
      *
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
@@ -692,7 +693,7 @@ class Telnet extends SocketClient {
     /* TERMINAL-TYPE option (end) */
 
     /**
-     * Requests a WONT.
+     * Requests a {@code WONT}.
      *
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
@@ -722,7 +723,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Sends a DO.
+     * Sends a {@code DO}.
      *
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
@@ -740,7 +741,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Sends a DONT.
+     * Sends a {@code DONT}.
      *
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
@@ -776,7 +777,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Sends a WILL.
+     * Sends a {@code WILL}.
      *
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
@@ -794,7 +795,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Sends a WONT.
+     * Sends a {@code WONT}.
      *
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
@@ -821,7 +822,7 @@ class Telnet extends SocketClient {
         options[option] |= DO_MASK;
 
         /* open TelnetOptionHandler functionality (start) */
-        if (requestedDo(option) && (optionHandlers[option] != null)) {
+        if (requestedDo(option) && optionHandlers[option] != null) {
             optionHandlers[option].setDo(true);
 
             final int[] subneg = optionHandlers[option].startSubnegotiationRemote();
@@ -894,7 +895,7 @@ class Telnet extends SocketClient {
         options[option] |= WILL_MASK;
 
         /* open TelnetOptionHandler functionality (start) */
-        if (requestedWill(option) && (optionHandlers[option] != null)) {
+        if (requestedWill(option) && optionHandlers[option] != null) {
             optionHandlers[option].setWill(true);
 
             final int[] subneg = optionHandlers[option].startSubnegotiationLocal();
@@ -969,7 +970,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a do has been acknowledged
+     * @return returns true if a {@code DO} has been acknowledged.
      *
      * @param option - option code to be looked up.
      */
@@ -980,7 +981,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a dont has been acknowledged
+     * @return returns true if a {@code DONT} has been acknowledged
      *
      * @param option - option code to be looked up.
      */
@@ -991,7 +992,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a will has been acknowledged
+     * @return returns true if a {@code WILL} has been acknowledged
      *
      * @param option - option code to be looked up.
      */
@@ -1002,7 +1003,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a wont has been acknowledged
+     * @return returns true if a {@code WONT} has been acknowledged
      *
      * @param option - option code to be looked up.
      */

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;
+import java.time.Duration;
 
 import org.apache.commons.net.DatagramSocketClient;
 
@@ -67,9 +68,19 @@ public class TFTP extends DatagramSocketClient {
     public static final int OCTET_MODE = 1;
 
     /**
-     * The default number of milliseconds to wait to receive a datagram before timing out. The default is 5000 milliseconds (5 seconds).
+     * The default number of milliseconds to wait to receive a datagram before timing out. The default is 5,000 milliseconds (5 seconds).
+     *
+     * @deprecated Use {@link #DEFAULT_TIMEOUT_DURATION}.
      */
+    @Deprecated
     public static final int DEFAULT_TIMEOUT = 5000;
+
+    /**
+     * The default duration to wait to receive a datagram before timing out. The default is 5 seconds.
+     *
+     * @since 3.10.0
+     */
+    public static final Duration DEFAULT_TIMEOUT_DURATION = Duration.ofSeconds(5);
 
     /**
      * The default TFTP port according to RFC 783 is 69.
@@ -107,10 +118,10 @@ public class TFTP extends DatagramSocketClient {
     byte[] sendBuffer;
 
     /**
-     * Creates a TFTP instance with a default timeout of DEFAULT_TIMEOUT, a null socket, and buffered operations disabled.
+     * Creates a TFTP instance with a default timeout of {@link #DEFAULT_TIMEOUT_DURATION}, a null socket, and buffered operations disabled.
      */
     public TFTP() {
-        setDefaultTimeout(DEFAULT_TIMEOUT);
+        setDefaultTimeout(DEFAULT_TIMEOUT_DURATION);
         receiveBuffer = null;
         receiveDatagram = null;
     }
@@ -133,7 +144,7 @@ public class TFTP extends DatagramSocketClient {
      * receive. To use these buffers you must call the bufferedReceive() and bufferedSend() methods instead of send() and receive(). You must also be certain
      * that you don't manipulate the resulting packet in such a way that it interferes with future buffered operations. For example, a TFTPDataPacket received
      * with bufferedReceive() will have a reference to the internal byte buffer. You must finish using this data before calling bufferedReceive() again, or else
-     * the data will be overwritten by the the call.
+     * the data will be overwritten by the call.
      *
      * @return The TFTPPacket received.
      * @throws InterruptedIOException If a socket timeout occurs. The Java documentation claims an InterruptedIOException is thrown on a DatagramSocket timeout,
@@ -146,7 +157,7 @@ public class TFTP extends DatagramSocketClient {
     public final TFTPPacket bufferedReceive() throws IOException, InterruptedIOException, SocketException, TFTPPacketException {
         receiveDatagram.setData(receiveBuffer);
         receiveDatagram.setLength(receiveBuffer.length);
-        _socket_.receive(receiveDatagram);
+        checkOpen().receive(receiveDatagram);
 
         final TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(receiveDatagram);
         trace("<", newTFTPPacket);
@@ -159,14 +170,14 @@ public class TFTP extends DatagramSocketClient {
      * receive. To use these buffers you must call the bufferedReceive() and bufferedSend() methods instead of send() and receive(). You must also be certain
      * that you don't manipulate the resulting packet in such a way that it interferes with future buffered operations. For example, a TFTPDataPacket received
      * with bufferedReceive() will have a reference to the internal byte buffer. You must finish using this data before calling bufferedReceive() again, or else
-     * the data will be overwritten by the the call.
+     * the data will be overwritten by the call.
      *
      * @param packet The TFTP packet to send.
      * @throws IOException If some I/O error occurs.
      */
     public final void bufferedSend(final TFTPPacket packet) throws IOException {
         trace(">", packet);
-        _socket_.send(packet.newDatagram(sendDatagram, sendBuffer));
+        checkOpen().send(packet.newDatagram(sendDatagram, sendBuffer));
     }
 
     /**
@@ -176,22 +187,16 @@ public class TFTP extends DatagramSocketClient {
      * @throws IOException if an I/O error occurs.
      */
     public final void discardPackets() throws IOException {
-        final int to;
-        final DatagramPacket datagram;
-
-        datagram = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
-
-        to = getSoTimeout();
-        setSoTimeout(1);
-
+        final DatagramPacket datagram = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
+        final Duration to = getSoTimeoutDuration();
+        setSoTimeout(Duration.ofMillis(1));
         try {
             while (true) {
-                _socket_.receive(datagram);
+                checkOpen().receive(datagram);
             }
         } catch (final SocketException | InterruptedIOException e) {
-            // Do nothing. We timed out so we hope we're caught up.
+            // Do nothing. We timed out, so we hope we're caught up.
         }
-
         setSoTimeout(to);
     }
 
@@ -221,7 +226,7 @@ public class TFTP extends DatagramSocketClient {
 
         packet = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
 
-        _socket_.receive(packet);
+        checkOpen().receive(packet);
 
         final TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(packet);
         trace("<", newTFTPPacket);
@@ -236,7 +241,7 @@ public class TFTP extends DatagramSocketClient {
      */
     public final void send(final TFTPPacket packet) throws IOException {
         trace(">", packet);
-        _socket_.send(packet.newDatagram());
+        checkOpen().send(packet.newDatagram());
     }
 
     /**

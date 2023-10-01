@@ -21,6 +21,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.nio.charset.Charset;
+import java.time.Duration;
+import java.util.Objects;
 
 /**
  * The DatagramSocketClient provides the basic operations that are required of client objects accessing datagram sockets. It is meant to be subclassed to avoid
@@ -36,7 +38,7 @@ import java.nio.charset.Charset;
  * @see DatagramSocketFactory
  */
 
-public abstract class DatagramSocketClient {
+public abstract class DatagramSocketClient implements AutoCloseable {
     /**
      * The default DatagramSocketFactory shared by all DatagramSocketClient instances.
      */
@@ -59,22 +61,33 @@ public abstract class DatagramSocketClient {
     protected boolean _isOpen_;
 
     /** The datagram socket's DatagramSocketFactory. */
-    protected DatagramSocketFactory _socketFactory_;
+    protected DatagramSocketFactory _socketFactory_ = DEFAULT_SOCKET_FACTORY;
 
     /**
      * Default constructor for DatagramSocketClient. Initializes _socket_ to null, _timeout_ to 0, and _isOpen_ to false.
      */
     public DatagramSocketClient() {
-        _socket_ = null;
-        _timeout_ = 0;
-        _isOpen_ = false;
-        _socketFactory_ = DEFAULT_SOCKET_FACTORY;
+    }
+
+    /**
+     * Gets the non-null DatagramSocket or throws {@link NullPointerException}.
+     *
+     * <p>
+     * This method does not allocate resources.
+     * </p>
+     *
+     * @return the non-null DatagramSocket.
+     * @since 3.10.0
+     */
+    protected DatagramSocket checkOpen() {
+        return Objects.requireNonNull(_socket_, "DatagramSocket");
     }
 
     /**
      * Closes the DatagramSocket used for the connection. You should call this method after you've finished using the class instance and also before you call
      * {@link #open open() } again. _isOpen_ is set to false and _socket_ is set to null.
      */
+    @Override
     public void close() {
         if (_socket_ != null) {
             _socket_.close();
@@ -106,7 +119,7 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Returns the default timeout in milliseconds that is used when opening a socket.
+     * Gets the default timeout in milliseconds that is used when opening a socket.
      *
      * @return The default timeout in milliseconds that is used when opening a socket.
      */
@@ -115,38 +128,51 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Returns the local address to which the client's socket is bound. If you call this method when the client socket is not open, a NullPointerException is
+     * Gets the local address to which the client's socket is bound. If you call this method when the client socket is not open, a NullPointerException is
      * thrown.
      *
      * @return The local address to which the client's socket is bound.
      */
     public InetAddress getLocalAddress() {
-        return _socket_.getLocalAddress();
+        return checkOpen().getLocalAddress();
     }
 
     /**
-     * Returns the port number of the open socket on the local host used for the connection. If you call this method when the client socket is not open, a
+     * Gets the port number of the open socket on the local host used for the connection. If you call this method when the client socket is not open, a
      * NullPointerException is thrown.
      *
      * @return The port number of the open socket on the local host used for the connection.
      */
     public int getLocalPort() {
-        return _socket_.getLocalPort();
+        return checkOpen().getLocalPort();
     }
 
     /**
-     * Returns the timeout in milliseconds of the currently opened socket. If you call this method when the client socket is not open, a NullPointerException is
+     * Gets the timeout in milliseconds of the currently opened socket. If you call this method when the client socket is not open, a NullPointerException is
      * thrown.
      *
      * @return The timeout in milliseconds of the currently opened socket.
-     * @throws SocketException if an error getting the timeout
+     * @throws SocketException if an error getting the timeout.
+     * @deprecated Use {@link #getSoTimeoutDuration()}.
      */
+    @Deprecated
     public int getSoTimeout() throws SocketException {
-        return _socket_.getSoTimeout();
+        return checkOpen().getSoTimeout();
     }
 
     /**
-     * Returns true if the client has a currently open socket.
+     * Gets the timeout duration of the currently opened socket. If you call this method when the client socket is not open, a NullPointerException is
+     * thrown.
+     *
+     * @return The timeout in milliseconds of the currently opened socket.
+     * @throws SocketException if an error getting the timeout.
+     */
+    public Duration getSoTimeoutDuration() throws SocketException {
+        return Duration.ofMillis(checkOpen().getSoTimeout());
+    }
+
+    /**
+     * Gets true if the client has a currently open socket.
      *
      * @return True if the client has a currently open socket, false otherwise.
      */
@@ -190,11 +216,11 @@ public abstract class DatagramSocketClient {
      * _isOpen_ is set to true after calling this method and _socket_ is set to the newly opened socket.
      *
      * @param port  The port to use for the socket.
-     * @param laddr The local address to use.
+     * @param localAddress The local address to use.
      * @throws SocketException If the socket could not be opened or the timeout could not be set.
      */
-    public void open(final int port, final InetAddress laddr) throws SocketException {
-        _socket_ = _socketFactory_.createDatagramSocket(port, laddr);
+    public void open(final int port, final InetAddress localAddress) throws SocketException {
+        _socket_ = _socketFactory_.createDatagramSocket(port, localAddress);
         _socket_.setSoTimeout(_timeout_);
         _isOpen_ = true;
     }
@@ -224,23 +250,49 @@ public abstract class DatagramSocketClient {
     }
 
     /**
+     * Set the default timeout in to use when opening a socket. After a call to open, the timeout for the socket is set using this value. This
+     * method should be used prior to a call to {@link #open open()} and should not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the
+     * currently open socket. _timeout_ contains the new timeout value.
+     *
+     * @param timeout The timeout durations to use for the datagram socket connection.
+     */
+    public void setDefaultTimeout(final Duration timeout) {
+        _timeout_ = Math.toIntExact(timeout.toMillis());
+    }
+
+    /**
      * Set the default timeout in milliseconds to use when opening a socket. After a call to open, the timeout for the socket is set using this value. This
      * method should be used prior to a call to {@link #open open()} and should not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the
      * currently open socket. _timeout_ contains the new timeout value.
      *
      * @param timeout The timeout in milliseconds to use for the datagram socket connection.
+     * @deprecated Use {@link #setDefaultTimeout(Duration)}.
      */
+    @Deprecated
     public void setDefaultTimeout(final int timeout) {
         _timeout_ = timeout;
+    }
+
+    /**
+     * Set the timeout duration of a currently open connection. Only call this method after a connection has been opened by {@link #open open()}.
+     *
+     * @param timeout The timeout in milliseconds to use for the currently open datagram socket connection.
+     * @throws SocketException if an error setting the timeout.
+     * @since 3.10.0
+     */
+    public void setSoTimeout(final Duration timeout) throws SocketException {
+        checkOpen().setSoTimeout(Math.toIntExact(timeout.toMillis()));
     }
 
     /**
      * Set the timeout in milliseconds of a currently open connection. Only call this method after a connection has been opened by {@link #open open()}.
      *
      * @param timeout The timeout in milliseconds to use for the currently open datagram socket connection.
-     * @throws SocketException if an error setting the timeout
+     * @throws SocketException if an error setting the timeout.
+     * @deprecated Use {@link #setSoTimeout(Duration)}.
      */
+    @Deprecated
     public void setSoTimeout(final int timeout) throws SocketException {
-        _socket_.setSoTimeout(timeout);
+        checkOpen().setSoTimeout(timeout);
     }
 }

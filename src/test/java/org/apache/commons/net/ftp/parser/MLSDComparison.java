@@ -13,7 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 package org.apache.commons.net.ftp.parser;
@@ -166,8 +165,11 @@ public class MLSDComparison {
         final int bm = b.get(Calendar.MINUTE);
         final int as = a.get(Calendar.SECOND);
         final int bs = b.get(Calendar.SECOND);
-        return (ah == 0 && am == 0 && as == 0) || (bh == 0 && bm == 0 && bs == 0) || (ah == bh && am == bm) // ignore seconds
-        ;
+        // @formatter:off
+        return ah == 0 && am == 0 && as == 0
+                || bh == 0 && bm == 0 && bs == 0
+                || ah == bh && am == bm; // ignore seconds
+        // @formatter:om
     }
 
     @Test
@@ -177,7 +179,7 @@ public class MLSDComparison {
         final File[] files = path.listFiles(filter);
         if (files != null) {
             for (final File mlsd : files) {
-                System.out.println(mlsd);
+                // System.out.println(mlsd);
                 FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
                 try (final InputStream is = new FileInputStream(mlsd)) {
                     engine.readServerList(is, FTP.DEFAULT_CONTROL_ENCODING);
@@ -190,8 +192,7 @@ public class MLSDComparison {
                     final UnixFTPEntryParser parser = new UnixFTPEntryParser(cfg);
                     engine = new FTPListParseEngine(parser);
                     engine.readServerList(inputStream, FTP.DEFAULT_CONTROL_ENCODING);
-                    final FTPFile[] lists = engine.getFiles(FTPFileFilters.ALL);
-                    compareSortedLists(mlsds, lists);
+                    compareSortedLists(mlsds, engine.getFiles(FTPFileFilters.ALL));
                 }
             }
         }

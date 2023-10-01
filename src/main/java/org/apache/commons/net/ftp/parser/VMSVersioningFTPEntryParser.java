@@ -50,8 +50,8 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
     /**
      * Constructor for a VMSFTPEntryParser object.
      *
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If the exception is seen,
+     *                                  this is a sign that <code>REGEX</code> is not a valid regular expression.
      */
     public VMSVersioningFTPEntryParser() {
         this(null);
@@ -61,8 +61,8 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
      * This constructor allows the creation of a VMSVersioningFTPEntryParser object with something other than the default configuration.
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If the exception is seen,
+     *                                  this is a sign that <code>REGEX</code> is not a valid regular expression.
      * @since 1.4
      */
     public VMSVersioningFTPEntryParser(final FTPClientConfig config) {
@@ -95,7 +95,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
         final ListIterator<String> iter = original.listIterator();
         while (iter.hasNext()) {
             final String entry = iter.next().trim();
-            MatchResult result = null;
+            MatchResult result;
             final Matcher _preparse_matcher_ = preparsePattern.matcher(entry);
             if (_preparse_matcher_.matches()) {
                 result = _preparse_matcher_.toMatchResult();
@@ -103,7 +103,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
                 final String version = result.group(2);
                 final Integer nv = Integer.valueOf(version);
                 final Integer existing = existingEntries.get(name);
-                if ((null != existing) && (nv.intValue() < existing.intValue())) {
+                if (null != existing && nv.intValue() < existing.intValue()) {
                     iter.remove(); // removes older version from original list.
                     continue;
                 }
@@ -125,7 +125,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
                 final String version = result.group(2);
                 final int nv = Integer.parseInt(version);
                 final Integer existing = existingEntries.get(name);
-                if ((null != existing) && (nv < existing.intValue())) {
+                if (null != existing && nv < existing.intValue()) {
                     iter.remove(); // removes older version from original list.
                 }
             }

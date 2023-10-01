@@ -57,8 +57,8 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     /**
      * Constructor for a VMSFTPEntryParser object.
      *
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If the exception is seen,
+     *                                  this is a sign that <code>REGEX</code> is not a valid regular expression.
      */
     public VMSFTPEntryParser() {
         this(null);
@@ -68,8 +68,8 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * This constructor allows the creation of a VMSFTPEntryParser object with something other than the default configuration.
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If the exception is seen,
+     *                                  this is a sign that <code>REGEX</code> is not a valid regular expression.
      * @since 1.4
      */
     public VMSFTPEntryParser(final FTPClientConfig config) {
@@ -126,7 +126,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             final String size = group(2);
             final String datestr = group(3) + " " + group(4);
             final String owner = group(5);
-            final String permissions[] = new String[3];
+            final String[] permissions = new String[3];
             permissions[0] = group(9);
             permissions[1] = group(10);
             permissions[2] = group(11);

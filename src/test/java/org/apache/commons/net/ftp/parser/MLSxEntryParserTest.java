@@ -21,7 +21,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  */
-public class MLSxEntryParserTest extends FTPParseTestFramework {
+public class MLSxEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "Type=cdir;Modify=20141022065101;UNIX.mode=0775;/no/space", // no space between facts and name
             "Type=cdir;Modify=20141022065103;UNIX.mode=0775;", // no name or space

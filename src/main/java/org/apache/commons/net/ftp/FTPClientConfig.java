@@ -53,7 +53,7 @@ import java.util.TreeMap;
  * conf.setServerLanguageCode("fr");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = listFiles(directory);
  * </pre>
  * <p>
@@ -68,7 +68,7 @@ import java.util.TreeMap;
  * conf.setTimeZoneId("Europe/Copenhagen");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPListParseEngine engine = f.initiateListParsing("com.whatever.YourOwnParser", directory);
  *
  * while (engine.hasNext()) {
@@ -87,7 +87,7 @@ import java.util.TreeMap;
  * conf.setShortMonthNames("jan|feb|mar|apr|ma\u00ED|j\u00FAn|j\u00FAl|\u00e1g\u00FA|sep|okt|n\u00F3v|des");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = listFiles(directory);
  * </pre>
  * <p>
@@ -100,7 +100,7 @@ import java.util.TreeMap;
  * conf.setTimeZoneId("America/Denver");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = listFiles(directory);
  * </pre>
  *
@@ -112,7 +112,7 @@ import java.util.TreeMap;
  * conf.setTimeZoneId("America/Denver");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = listFiles(directory);
  * </pre>
  *
@@ -125,7 +125,7 @@ import java.util.TreeMap;
 public class FTPClientConfig {
 
     /**
-     * Identifier by which a unix-based ftp server is known throughout the commons-net ftp system.
+     * Identifier by which a Unix-based ftp server is known throughout the commons-net ftp system.
      */
     public static final String SYST_UNIX = "UNIX";
 
@@ -178,7 +178,7 @@ public class FTPClientConfig {
     public static final String SYST_L8 = "TYPE: L8";
 
     /**
-     * Identifier by which an Netware-based ftp server is known throughout the commons-net ftp system.
+     * Identifier by which a Netware-based ftp server is known throughout the commons-net ftp system.
      *
      * @since 1.5
      */
@@ -235,7 +235,7 @@ public class FTPClientConfig {
 
     /**
      * Returns a Collection of all the language codes currently supported by this class. See {@link #setServerLanguageCode(String) serverLanguageCode} for a
-     * functional descrption of language codes within this system.
+     * functional description of language codes within this system.
      *
      * @return a Collection of all the language codes currently supported by this class
      */
@@ -322,7 +322,7 @@ public class FTPClientConfig {
      * The main constructor for an FTPClientConfig object
      *
      * @param systemKey key representing system type of the server being connected to. See {@link #getServerSystemKey() serverSystemKey} If set to the empty
-     *                  string, then FTPClient uses the system type returned by the server. However this is not recommended for general use; the correct system
+     *                  string, then FTPClient uses the system type returned by the server. However, this is not recommended for general use; the correct system
      *                  type should be set if it is known.
      */
     public FTPClientConfig(final String systemKey) {
@@ -546,10 +546,10 @@ public class FTPClientConfig {
      * </p>
      * <p>
      * If the code supplied is not supported here, <code>en_US</code> month names will be used. We are supporting here those language codes which, when a
-     * <code> java.util.Locale</code> is constucted using it, and a <code>java.text.SimpleDateFormat</code> is constructed using that Locale, the array returned
-     * by the SimpleDateFormat's <code>getShortMonths()</code> method consists solely of three 8-bit ASCII character strings. Additionally, languages which do
-     * not meet this requirement are included if a common alternative set of short month names is known to be used. This means that users who can tell us of
-     * additional such encodings may get them added to the list of supported languages by contacting the Apache Commons Net team.
+     * <code> java.util.Locale</code> is constructed using it, and a <code>java.text.SimpleDateFormat</code> is constructed using that Locale, the array
+     * returned by the SimpleDateFormat's <code>getShortMonths()</code> method consists solely of three 8-bit ASCII character strings. Additionally, languages
+     * which do not meet this requirement are included if a common alternative set of short month names is known to be used. This means that users who can tell
+     * us of additional such encodings may get them added to the list of supported languages by contacting the Apache Commons Net team.
      * </p>
      * <p>
      * <strong> Please note that this attribute will NOT be used to determine a locale-based date format for the language. </strong> Experience has shown that

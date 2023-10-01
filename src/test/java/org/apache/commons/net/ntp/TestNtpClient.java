@@ -18,6 +18,7 @@ package org.apache.commons.net.ntp;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.time.Duration;
 
 import org.apache.commons.net.examples.ntp.SimpleNTPServer;
 import org.junit.AfterClass;
@@ -75,7 +76,7 @@ public class TestNtpClient {
         final long currentTimeMillis = System.currentTimeMillis();
         final NTPUDPClient client = new NTPUDPClient();
         // timeout if response takes longer than 2 seconds
-        client.setDefaultTimeout(2000);
+        client.setDefaultTimeout(Duration.ofSeconds(2));
         try {
             // Java 1.7: use InetAddress.getLoopbackAddress() instead
             final InetAddress addr = InetAddress.getByAddress("loopback", new byte[] { 127, 0, 0, 1 });

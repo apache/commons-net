@@ -63,7 +63,7 @@ public final class EchoUDPClient extends DiscardUDPClient {
     public int receive(final byte[] data, final int length) throws IOException {
         receivePacket.setData(data);
         receivePacket.setLength(length);
-        _socket_.receive(receivePacket);
+        checkOpen().receive(receivePacket);
         return receivePacket.getLength();
     }
 

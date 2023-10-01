@@ -17,6 +17,11 @@
 
 package org.apache.commons.net.nntp;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * This is an implementation of a message threading algorithm, as originally devised by Zamie Zawinski.
  * See <a href="http://www.jwz.org/doc/threading.html">http://www.jwz.org/doc/threading.html</a> for details.
@@ -24,12 +29,6 @@ package org.apache.commons.net.nntp;
  * <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java">
  * http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java</a>
  */
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class Threader {
 
     /**
@@ -37,17 +36,17 @@ public class Threader {
      * @param threadable
      * @param idTable
      */
-    private void buildContainer(final Threadable threadable, final HashMap<String, ThreadContainer> idTable) {
+    private void buildContainer(final Threadable threadable, final HashMap<String, NntpThreadContainer> idTable) {
         String id = threadable.messageThreadId();
-        ThreadContainer container = idTable.get(id);
+        NntpThreadContainer container = idTable.get(id);
         int bogusIdCount = 0;
 
-        // A ThreadContainer exists for this id already. This should be a forward reference, but may
+        // A NntpThreadContainer exists for this id already. This should be a forward reference, but may
         // be a duplicate id, in which case we will need to generate a bogus placeholder id
         if (container != null) {
             if (container.threadable != null) { // oops! duplicate ids...
                 bogusIdCount++; // Avoid dead local store warning
-                id = "<Bogus-id:" + (bogusIdCount) + ">";
+                id = "<Bogus-id:" + bogusIdCount + ">";
                 container = null;
             } else {
                 // The container just contained a forward reference to this message, so let's
@@ -58,29 +57,29 @@ public class Threader {
 
         // No container exists for that message Id. Create one and insert it into the hash table.
         if (container == null) {
-            container = new ThreadContainer();
+            container = new NntpThreadContainer();
             container.threadable = threadable;
             idTable.put(id, container);
         }
 
-        // Iterate through all of the references and create ThreadContainers for any references that
+        // Iterate through all the references and create ThreadContainers for any references that
         // don't have them.
-        ThreadContainer parentRef = null;
+        NntpThreadContainer parentRef = null;
         {
             final String[] references = threadable.messageThreadReferences();
             for (final String refString : references) {
-                ThreadContainer ref = idTable.get(refString);
+                NntpThreadContainer ref = idTable.get(refString);
 
-                // if this id doesnt have a container, create one
+                // if this id doesn't have a container, create one
                 if (ref == null) {
-                    ref = new ThreadContainer();
+                    ref = new NntpThreadContainer();
                     idTable.put(refString, ref);
                 }
 
                 // Link references together in the order they appear in the References: header,
-                // IF they dont have a have a parent already &&
+                // IF they don't have a parent already &&
                 // IF it will not cause a circular reference
-                if ((parentRef != null) && (ref.parent == null) && (parentRef != ref) && !(ref.findChild(parentRef))) {
+                if (parentRef != null && ref.parent == null && parentRef != ref && !ref.findChild(parentRef)) {
                     // Link ref into the parent's child list
                     ref.parent = parentRef;
                     ref.next = parentRef.child;
@@ -96,11 +95,11 @@ public class Threader {
             parentRef = null;
         }
 
-        // if it has a parent already, its because we saw this message in a References: field, and presumed
+        // if it has a parent already, it's because we saw this message in a References: field, and presumed
         // a parent based on the other entries in that field. Now that we have the actual message, we can
         // throw away the old parent and use this new one
         if (container.parent != null) {
-            ThreadContainer rest, prev;
+            NntpThreadContainer rest, prev;
 
             for (prev = null, rest = container.parent.child; rest != null; prev = rest, rest = rest.next) {
                 if (rest == container) {
@@ -109,7 +108,7 @@ public class Threader {
             }
 
             if (rest == null) {
-                throw new RuntimeException("Didnt find " + container + " in parent" + container.parent);
+                throw new IllegalStateException("Didnt find " + container + " in parent " + container.parent);
             }
 
             // Unlink this container from the parent's child list
@@ -135,15 +134,15 @@ public class Threader {
      * Find the root set of all existing ThreadContainers
      *
      * @param idTable
-     * @return root the ThreadContainer representing the root node
+     * @return root the NntpThreadContainer representing the root node
      */
-    private ThreadContainer findRootSet(final HashMap<String, ThreadContainer> idTable) {
-        final ThreadContainer root = new ThreadContainer();
-        for (final Map.Entry<String, ThreadContainer> entry : idTable.entrySet()) {
-            final ThreadContainer c = entry.getValue();
+    private NntpThreadContainer findRootSet(final HashMap<String, NntpThreadContainer> idTable) {
+        final NntpThreadContainer root = new NntpThreadContainer();
+        for (final Map.Entry<String, NntpThreadContainer> entry : idTable.entrySet()) {
+            final NntpThreadContainer c = entry.getValue();
             if (c.parent == null) {
                 if (c.next != null) {
-                    throw new RuntimeException("c.next is " + c.next.toString());
+                    throw new IllegalStateException("c.next is " + c.next.toString());
                 }
                 c.next = root.child;
                 root.child = c;
@@ -157,23 +156,23 @@ public class Threader {
      *
      * @param root
      */
-    private void gatherSubjects(final ThreadContainer root) {
+    private void gatherSubjects(final NntpThreadContainer root) {
 
         int count = 0;
 
-        for (ThreadContainer c = root.child; c != null; c = c.next) {
+        for (NntpThreadContainer c = root.child; c != null; c = c.next) {
             count++;
         }
 
         // TODO verify this will avoid rehashing
-        HashMap<String, ThreadContainer> subjectTable = new HashMap<>((int) (count * 1.2), (float) 0.9);
+        HashMap<String, NntpThreadContainer> subjectTable = new HashMap<>((int) (count * 1.2), (float) 0.9);
         count = 0;
 
-        for (ThreadContainer c = root.child; c != null; c = c.next) {
+        for (NntpThreadContainer c = root.child; c != null; c = c.next) {
             Threadable threadable = c.threadable;
 
             // No threadable? If so, it is a dummy node in the root set.
-            // Only root set members may be dummies, and they alway have at least 2 kids
+            // Only root set members may be dummies, and they always have at least 2 kids
             // Take the first kid as representative of the subject
             if (threadable == null) {
                 threadable = c.child.threadable;
@@ -185,7 +184,7 @@ public class Threader {
                 continue;
             }
 
-            final ThreadContainer old = subjectTable.get(subj);
+            final NntpThreadContainer old = subjectTable.get(subj);
 
             // Add this container to the table iff:
             // - There exists no container with this subject
@@ -194,8 +193,8 @@ public class Threader {
             // - The container in the table has a "Re:" version of this subject, and
             // this container has a non-"Re:" version of this subject. The non-"Re:" version
             // is the more interesting of the two.
-            if (old == null || (c.threadable == null && old.threadable != null)
-                    || (old.threadable != null && old.threadable.subjectIsReply() && c.threadable != null && !c.threadable.subjectIsReply())) {
+            if (old == null || c.threadable == null && old.threadable != null
+                    || old.threadable != null && old.threadable.subjectIsReply() && c.threadable != null && !c.threadable.subjectIsReply()) {
                 subjectTable.put(subj, c);
                 count++;
             }
@@ -208,8 +207,8 @@ public class Threader {
 
         // subjectTable is now populated with one entry for each subject which occurs in the
         // root set. Iterate over the root set, and gather together the difference.
-        ThreadContainer prev, c, rest;
-        for (prev = null, c = root.child, rest = c.next; c != null; prev = c, c = rest, rest = (rest == null ? null : rest.next)) {
+        NntpThreadContainer prev, c, rest;
+        for (prev = null, c = root.child, rest = c.next; c != null; prev = c, c = rest, rest = rest == null ? null : rest.next) {
             Threadable threadable = c.threadable;
 
             // is it a dummy node?
@@ -219,12 +218,12 @@ public class Threader {
 
             final String subj = threadable.simplifiedSubject();
 
-            // Dont thread together all subjectless messages
+            // Don't thread together all subjectless messages
             if (subj == null || subj.isEmpty()) {
                 continue;
             }
 
-            final ThreadContainer old = subjectTable.get(subj);
+            final NntpThreadContainer old = subjectTable.get(subj);
 
             if (old == c) { // That's us
                 continue;
@@ -241,7 +240,7 @@ public class Threader {
 
             if (old.threadable == null && c.threadable == null) {
                 // both dummies - merge them
-                ThreadContainer tail;
+                NntpThreadContainer tail;
                 for (tail = old.child; tail != null && tail.next != null; tail = tail.next) {
                     // do nothing
                 }
@@ -255,7 +254,7 @@ public class Threader {
                 }
 
                 c.child = null;
-            } else if (old.threadable == null || (c.threadable != null && c.threadable.subjectIsReply() && !old.threadable.subjectIsReply())) {
+            } else if (old.threadable == null || c.threadable != null && c.threadable.subjectIsReply() && !old.threadable.subjectIsReply()) {
                 // Else if old is empty, or c has "Re:" and old does not ==> make this message a child of old
                 c.parent = old;
                 c.next = old.child;
@@ -263,11 +262,11 @@ public class Threader {
             } else {
                 // else make the old and new messages be children of a new dummy container.
                 // We create a new container object for old.msg and empty the old container
-                final ThreadContainer newc = new ThreadContainer();
+                final NntpThreadContainer newc = new NntpThreadContainer();
                 newc.threadable = old.threadable;
                 newc.child = old.child;
 
-                for (ThreadContainer tail = newc.child; tail != null; tail = tail.next) {
+                for (NntpThreadContainer tail = newc.child; tail != null; tail = tail.next) {
                     tail.parent = newc;
                 }
 
@@ -295,11 +294,11 @@ public class Threader {
      *
      * @param parent
      */
-    private void pruneEmptyContainers(final ThreadContainer parent) {
-        ThreadContainer container, prev, next;
-        for (prev = null, container = parent.child, next = container.next; container != null; prev = container, container = next, next = (container == null
+    private void pruneEmptyContainers(final NntpThreadContainer parent) {
+        NntpThreadContainer container, prev, next;
+        for (prev = null, container = parent.child, next = container.next; container != null; prev = container, container = next, next = container == null
                 ? null
-                : container.next)) {
+                : container.next) {
 
             // Is it empty and without any children? If so,delete it
             if (container.threadable == null && container.child == null) {
@@ -316,8 +315,8 @@ public class Threader {
             // Else if empty, with kids, and (not at root or only one kid)
             else if (container.threadable == null && (container.parent != null || container.child.next == null)) {
                 // We have an invalid/expired message with kids. Promote the kids to this level.
-                ThreadContainer tail;
-                final ThreadContainer kids = container.child;
+                NntpThreadContainer tail;
+                final NntpThreadContainer kids = container.child;
 
                 // Remove this container and replace with 'kids'.
                 if (prev == null) {
@@ -336,7 +335,7 @@ public class Threader {
                 tail.parent = container.parent;
                 tail.next = container.next;
 
-                // next currently points to the item after the inserted items in the chain - reset that so we process the newly
+                // next currently points to the item after the inserted items in the chain - reset that, so we process the newly
                 // promoted items next time round
                 next = kids;
 
@@ -362,7 +361,7 @@ public class Threader {
             return null;
         }
 
-        HashMap<String, ThreadContainer> idTable = new HashMap<>();
+        HashMap<String, NntpThreadContainer> idTable = new HashMap<>();
 
         // walk through each Threadable element
         for (final Threadable t : messages) {
@@ -375,7 +374,7 @@ public class Threader {
             return null;
         }
 
-        final ThreadContainer root = findRootSet(idTable);
+        final NntpThreadContainer root = findRootSet(idTable);
         idTable.clear();
         idTable = null;
 
@@ -385,16 +384,16 @@ public class Threader {
         gatherSubjects(root);
 
         if (root.next != null) {
-            throw new RuntimeException("root node has a next:" + root);
+            throw new IllegalStateException("root node has a next:" + root);
         }
 
-        for (ThreadContainer r = root.child; r != null; r = r.next) {
+        for (NntpThreadContainer r = root.child; r != null; r = r.next) {
             if (r.threadable == null) {
                 r.threadable = r.child.threadable.makeDummy();
             }
         }
 
-        final Threadable result = (root.child == null ? null : root.child.threadable);
+        final Threadable result = root.child == null ? null : root.child.threadable;
         root.flush();
 
         return result;

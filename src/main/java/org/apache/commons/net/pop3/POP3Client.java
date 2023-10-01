@@ -115,9 +115,9 @@ public class POP3Client extends POP3 {
     }
 
     /**
-     * Delete a message from the POP3 server. The message is only marked for deletion by the server. If you decide to unmark the message, you must issuse a
-     * {@link #reset reset } command. Messages marked for deletion are only deleted by the server on {@link #logout logout }. A delete attempt can only succeed
-     * if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } .
+     * Delete a message from the POP3 server. The message is only marked for deletion by the server. If you decide to unmark the message, you must issue a
+     * {@link #reset reset } command. Messages marked for deletion are only deleted by the server on {@link #logout logout }.
+     * A deletion attempt can only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } .
      *
      * @param messageId The message number to delete.
      * @return True if the deletion attempt was successful, false if not.
@@ -229,22 +229,22 @@ public class POP3Client extends POP3 {
     }
 
     /**
-     * Login to the POP3 server with the given username and password. You must first connect to the server with
-     * {@link org.apache.commons.net.SocketClient#connect connect } before attempting to login. A login attempt is only valid if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE } . After logging in, the client enters the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } .
+     * Login to the POP3 server with the given user and password. You must first connect to the server with
+     * {@link org.apache.commons.net.SocketClient#connect connect } before attempting to log in. A login attempt is only valid if the client is in the
+     * {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE }. After logging in, the client enters the
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }.
      *
-     * @param username The account name being logged in to.
+     * @param user The account name being logged in to.
      * @param password The plain text password of the account.
      * @return True if the login attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of logging in.
      */
-    public boolean login(final String username, final String password) throws IOException {
+    public boolean login(final String user, final String password) throws IOException {
         if (getState() != AUTHORIZATION_STATE) {
             return false;
         }
 
-        if (sendCommand(POP3Command.USER, username) != POP3Reply.OK) {
+        if (sendCommand(POP3Command.USER, user) != POP3Reply.OK) {
             return false;
         }
 
@@ -263,20 +263,20 @@ public class POP3Client extends POP3 {
      * the information. Therefore, after connecting to the server, you must call {@link org.apache.commons.net.pop3.POP3#getReplyString getReplyString } and
      * parse out the timestamp information yourself.
      * <p>
-     * You must first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect } before attempting to login. A login attempt is
-     * only valid if the client is in the {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE } . After logging in, the client
-     * enters the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } . After connecting, you must parse out the server specific
+     * You must first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect } before attempting to log in. A login attempt is
+     * only valid if the client is in the {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE }. After logging in, the client
+     * enters the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }. After connecting, you must parse out the server specific
      * information to use as a timestamp, and pass that information to this method. The secret is a shared secret known to you and the server. See RFC 1939 for
      * more details regarding the APOP command.
      *
-     * @param username  The account name being logged in to.
+     * @param user  The account name being logged in to.
      * @param timestamp The timestamp string to combine with the secret.
      * @param secret    The shared secret which produces the MD5 digest when combined with the timestamp.
      * @return True if the login attempt was successful, false if not.
      * @throws IOException              If a network I/O error occurs in the process of logging in.
      * @throws NoSuchAlgorithmException If the MD5 encryption algorithm cannot be instantiated by the Java runtime system.
      */
-    public boolean login(final String username, String timestamp, final String secret) throws IOException, NoSuchAlgorithmException {
+    public boolean login(final String user, String timestamp, final String secret) throws IOException, NoSuchAlgorithmException {
         int i;
         final byte[] digest;
         final StringBuilder buffer;
@@ -301,7 +301,7 @@ public class POP3Client extends POP3 {
         }
 
         buffer = new StringBuilder(256);
-        buffer.append(username);
+        buffer.append(user);
         buffer.append(' ');
         buffer.append(digestBuffer.toString());
 
@@ -331,7 +331,7 @@ public class POP3Client extends POP3 {
     }
 
     /**
-     * Send a NOOP command to the POP3 server. This is useful for keeping a connection alive since most POP3 servers will timeout after 10 minutes of
+     * Send a NOOP command to the POP3 server. This is useful for keeping a connection alive since most POP3 servers will time out after 10 minutes of
      * inactivity. A noop attempt will only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } .
      *
      * @return True if the noop attempt was successful, false if not.
@@ -363,7 +363,7 @@ public class POP3Client extends POP3 {
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
      * <p>
      * You must not issue any commands to the POP3 server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
-     * instance. The POP3 protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned BufferedReader actually
+     * instance. The POP3 protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the POP3 connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
      *
@@ -389,9 +389,9 @@ public class POP3Client extends POP3 {
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
      * <p>
      * You must not issue any commands to the POP3 server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
-     * instance. The POP3 protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned BufferedReader actually
-     * reads directly from the POP3 connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
-     * follow these requirements, your program will not work properly.
+     * instance. The POP3 protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader
+     * actually reads directly from the POP3 connection. After the end of message has been reached, new commands can be executed and their replies read.
+     * If you do not follow these requirements, your program will not work properly.
      *
      * @param messageId The number of the message to fetch.
      * @param numLines  The top number of lines to fetch. This must be &gt;= 0.

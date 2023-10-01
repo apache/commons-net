@@ -19,8 +19,6 @@ package org.apache.commons.net.pop3;
 
 /**
  * POP3Command stores POP3 command code constants.
- *
- *
  */
 
 public final class POP3Command {
@@ -67,7 +65,7 @@ public final class POP3Command {
 
     static {
         if (commands.length != NEXT) {
-            throw new RuntimeException("Error in array definition");
+            throw new IllegalStateException("Error in array definition");
         }
     }
 
@@ -82,7 +80,7 @@ public final class POP3Command {
         return commands[command];
     }
 
-    // Cannot be instantiated.
+    /** Cannot be instantiated. */
     private POP3Command() {
     }
 }

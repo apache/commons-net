@@ -38,7 +38,6 @@ public final class NNTPConnectionClosedException extends IOException {
 
     /**
      * Constructs a NNTPConnectionClosedException with a specified message.
-     * <p>
      *
      * @param message The message explaining the reason for the exception.
      */

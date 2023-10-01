@@ -35,7 +35,7 @@ public class ExtendedNNTPOps {
 
         final int argc = args.length;
         if (argc < 1) {
-            System.err.println("usage: ExtendedNNTPOps nntpserver [username password]");
+            System.err.println("usage: ExtendedNNTPOps nntpserver [user password]");
             System.exit(1);
         }
 

@@ -23,12 +23,11 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
+import java.util.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLContext;
-
-import org.apache.commons.net.util.Base64;
 
 /**
  * An SMTP Client class with authentication support (RFC4954).
@@ -37,18 +36,27 @@ import org.apache.commons.net.util.Base64;
  * @since 3.0
  */
 public class AuthenticatingSMTPClient extends SMTPSClient {
+
+    /** {@link Mac} algorithm. */
+    private static final String MAC_ALGORITHM = "HmacMD5";
+
     /**
      * The enumeration of currently-supported authentication methods.
      */
     public enum AUTH_METHOD {
-        /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
+
+        /** The standardized (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
         PLAIN,
-        /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
+
+        /** The standardized (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
         CRAM_MD5,
-        /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
+
+        /** The non-standarized Microsoft LOGIN method, which sends the password unencrypted (insecure). */
         LOGIN,
+
         /** XOAuth method which accepts a signed and base64ed OAuth URL. */
         XOAUTH,
+
         /** XOAuth 2 method which accepts a signed and base64ed OAuth JSON. */
         XOAUTH2;
 
@@ -139,10 +147,10 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
     }
 
     /**
-     * Authenticate to the SMTP server by sending the AUTH command with the selected mechanism, using the given username and the given password.
+     * Authenticate to the SMTP server by sending the AUTH command with the selected mechanism, using the given user and the given password.
      *
      * @param method   the method to use, one of the {@link AuthenticatingSMTPClient.AUTH_METHOD} enum values
-     * @param username the user name. If the method is XOAUTH/XOAUTH2, then this is used as the plain text oauth protocol parameter string which is
+     * @param user the user name. If the method is XOAUTH/XOAUTH2, then this is used as the plain text oauth protocol parameter string which is
      *                 Base64-encoded for transmission.
      * @param password the password for the username. Ignored for XOAUTH/XOAUTH2.
      *
@@ -155,7 +163,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
      * @throws InvalidKeyException           If the CRAM hash algorithm failed to use the given password.
      * @throws InvalidKeySpecException       If the CRAM hash algorithm failed to use the given password.
      */
-    public boolean auth(final AuthenticatingSMTPClient.AUTH_METHOD method, final String username, final String password)
+    public boolean auth(final AuthenticatingSMTPClient.AUTH_METHOD method, final String user, final String password)
             throws IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
         if (!SMTPReply.isPositiveIntermediate(sendCommand(SMTPCommand.AUTH, AUTH_METHOD.getAuthName(method)))) {
             return false;
@@ -164,35 +172,35 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
         if (method.equals(AUTH_METHOD.PLAIN)) {
             // the server sends an empty response ("334 "), so we don't have to read it.
             return SMTPReply
-                    .isPositiveCompletion(sendCommand(Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(getCharset()))));
+                    .isPositiveCompletion(sendCommand(Base64.getEncoder().encodeToString(("\000" + user + "\000" + password).getBytes(getCharset()))));
         }
         if (method.equals(AUTH_METHOD.CRAM_MD5)) {
             // get the CRAM challenge
-            final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(4).trim());
+            final byte[] serverChallenge = Base64.getDecoder().decode(getReplyString().substring(4).trim());
             // get the Mac instance
-            final Mac hmac_md5 = Mac.getInstance("HmacMD5");
-            hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
+            final Mac hmacMd5 = Mac.getInstance(MAC_ALGORITHM);
+            hmacMd5.init(new SecretKeySpec(password.getBytes(getCharset()), MAC_ALGORITHM));
             // compute the result:
-            final byte[] hmacResult = convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
+            final byte[] hmacResult = convertToHexString(hmacMd5.doFinal(serverChallenge)).getBytes(getCharset());
             // join the byte arrays to form the reply
-            final byte[] usernameBytes = username.getBytes(getCharset());
-            final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
-            System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
-            toEncode[usernameBytes.length] = ' ';
-            System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
+            final byte[] userNameBytes = user.getBytes(getCharset());
+            final byte[] toEncode = new byte[userNameBytes.length + 1 /* the space */ + hmacResult.length];
+            System.arraycopy(userNameBytes, 0, toEncode, 0, userNameBytes.length);
+            toEncode[userNameBytes.length] = ' ';
+            System.arraycopy(hmacResult, 0, toEncode, userNameBytes.length + 1, hmacResult.length);
             // send the reply and read the server code:
-            return SMTPReply.isPositiveCompletion(sendCommand(Base64.encodeBase64StringUnChunked(toEncode)));
+            return SMTPReply.isPositiveCompletion(sendCommand(Base64.getEncoder().encodeToString(toEncode)));
         }
         if (method.equals(AUTH_METHOD.LOGIN)) {
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
-            if (!SMTPReply.isPositiveIntermediate(sendCommand(Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))))) {
+            if (!SMTPReply.isPositiveIntermediate(sendCommand(Base64.getEncoder().encodeToString(user.getBytes(getCharset()))))) {
                 return false;
             }
-            return SMTPReply.isPositiveCompletion(sendCommand(Base64.encodeBase64StringUnChunked(password.getBytes(getCharset()))));
+            return SMTPReply.isPositiveCompletion(sendCommand(Base64.getEncoder().encodeToString(password.getBytes(getCharset()))));
         }
         if (method.equals(AUTH_METHOD.XOAUTH) || method.equals(AUTH_METHOD.XOAUTH2)) {
-            return SMTPReply.isPositiveIntermediate(sendCommand(Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))));
+            return SMTPReply.isPositiveIntermediate(sendCommand(Base64.getEncoder().encodeToString(user.getBytes(getCharset()))));
         }
         return false; // safety check
     }
@@ -217,7 +225,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
 
     /**
      * A convenience method to send the ESMTP EHLO command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param hostname The hostname of the sender.
      * @return The reply code received from the server.
@@ -232,7 +239,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
 
     /**
      * Login to the ESMTP server by sending the EHLO command with the client hostname as an argument. Before performing any mail commands, you must first login.
-     * <p>
      *
      * @return True if successfully completed, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -256,7 +262,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
 
     /**
      * Login to the ESMTP server by sending the EHLO command with the given hostname as an argument. Before performing any mail commands, you must first login.
-     * <p>
      *
      * @param hostname The hostname with which to greet the SMTP server.
      * @return True if successfully completed, false if not.
@@ -282,5 +287,3 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
         return res;
     }
 }
-
-/* kate: indent-width 4; replace-tabs on; */

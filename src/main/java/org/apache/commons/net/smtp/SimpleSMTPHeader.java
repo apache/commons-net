@@ -25,12 +25,13 @@ import java.util.Locale;
  * This class is used to construct a bare minimum acceptable header for an email message. To construct more complicated headers you should refer to RFC 5322.
  * When the Java Mail API is finalized, you will be able to use it to compose fully compliant Internet text messages.
  * <p>
- * The main purpose of the class is to faciliatate the mail sending process, by relieving the programmer from having to explicitly format a simple message
+ * The main purpose of the class is to facilitate the mail sending process, by relieving the programmer from having to explicitly format a simple message
  * header. For example:
+ * </p>
  *
  * <pre>
  * writer = client.sendMessageData();
- * if(writer == null) // failure
+ * if (writer == null) // failure
  *   return false;
  * header =
  *    new SimpleSMTPHeader("foobar@foo.com", "foo@bar.com" "Just testing");
@@ -39,7 +40,7 @@ import java.util.Locale;
  * writer.write(header.toString());
  * writer.write("This is just a test");
  * writer.close();
- * if(!client.completePendingCommand()) // failure
+ * if (!client.completePendingCommand()) // failure
  *   return false;
  * </pre>
  *
@@ -56,7 +57,6 @@ public class SimpleSMTPHeader {
 
     /**
      * Creates a new SimpleSMTPHeader instance initialized with the given from, to, and subject header field values.
-     * <p>
      *
      * @param from    The value of the <code>From:</code> header field. This should be the sender's email address. Must not be null.
      * @param to      The value of the <code>To:</code> header field. This should be the recipient's email address. May be null
@@ -75,7 +75,6 @@ public class SimpleSMTPHeader {
 
     /**
      * Add an email address to the CC (carbon copy or courtesy copy) list.
-     * <p>
      *
      * @param address The email address to add to the CC list.
      */
@@ -90,13 +89,13 @@ public class SimpleSMTPHeader {
     }
 
     /**
-     * Adds an arbitrary header field with the given value to the article header. These headers will be written before the From, To, Subject, and Cc fields when
-     * the SimpleSMTPHeader is convertered to a string. An example use would be:
+     * Adds an arbitrary header field with the given value to the article header. These headers will be written before the
+     * {@code From}, {@code To}, {@code Subject}, and {@code Cc} fields when the SimpleSMTPHeader is converted to a string.
+     * An example use would be:
      *
      * <pre>
      * header.addHeaderField("Organization", "Foobar, Inc.");
      * </pre>
-     * <p>
      *
      * @param headerField The header field to add, not including the colon.
      * @param value       The value of the added header field.
@@ -114,7 +113,6 @@ public class SimpleSMTPHeader {
     /**
      * Converts the SimpleSMTPHeader to a properly formatted header in the form of a String, including the blank line used to separate the header from the
      * article body. The header fields CC and Subject are only included when they are non-null.
-     * <p>
      *
      * @return The message header in the form of a String.
      */

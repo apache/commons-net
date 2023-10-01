@@ -90,7 +90,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /*
-     * Sets the Calendar precision (used by FTPFile#toFormattedDate) by clearing the immediately preceeding unit (if any). Unfortunately the clear(int) method
+     * Sets the Calendar precision (used by FTPFile#toFormattedDate) by clearing the immediately preceding unit (if any). Unfortunately the clear(int) method
      * results in setting all other units.
      */
     private static void setPrecision(final int index, final Calendar working) {
@@ -150,7 +150,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
      */
     @Override
     public void configure(final FTPClientConfig config) {
-        DateFormatSymbols dfs = null;
+        DateFormatSymbols dfs;
 
         final String languageCode = config.getServerLanguageCode();
         final String shortmonths = config.getShortMonthNames();
@@ -262,7 +262,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
         final Calendar working = (Calendar) serverTime.clone();
         working.setTimeZone(getServerTimeZone()); // is this needed?
 
-        Date parsed = null;
+        Date parsed;
 
         if (recentDateFormat != null) {
             final Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it
@@ -308,7 +308,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
         // a valid year (e.g. 22:04 will parse as 22 A.D.)
         // so could mistakenly confuse an hour with a year,
         // if we don't insist on full length parsing.
-        if ((parsed == null) || (pp.getIndex() != timestampStr.length())) {
+        if (parsed == null || pp.getIndex() != timestampStr.length()) {
             throw new ParseException("Timestamp '" + timestampStr + "' could not be parsed using a server time of " + serverTime.getTime().toString(),
                     pp.getErrorIndex());
         }
@@ -361,7 +361,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
-     * sets a TimeZone represented by the supplied ID string into all of the parsers used by this server.
+     * sets a TimeZone represented by the supplied ID string into all the parsers used by this server.
      *
      * @param serverTimeZoneId Time Id java.util.TimeZone id used by the ftp server. If null the client's local time zone is assumed.
      */

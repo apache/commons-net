@@ -48,9 +48,9 @@ import org.apache.commons.net.util.TrustManagerUtils;
  */
 public final class FTPClientExample {
 
-    public static final String USAGE = "Expected Parameters: [options] <hostname> <username> <password> [<remote file> [<local file>]]\n"
+    public static final String USAGE = "Expected Parameters: [options] <hostname> <user> <password> [<remote file> [<local file>]]\n"
             + "\nDefault behavior is to download a file and use ASCII transfer mode.\n" + "\t-a - use local active mode (default is local passive)\n"
-            + "\t-A - anonymous login (omit username and password parameters)\n" + "\t-b - use binary transfer mode\n"
+            + "\t-A - anonymous login (omit user and password parameters)\n" + "\t-b - use binary transfer mode\n"
             + "\t-c cmd - issue arbitrary command (remote is used as a parameter if provided) \n"
             + "\t-d - list directory details using MLSD (remote is used as the pathname if provided)\n" + "\t-e - use EPSV with IPv4 (default false)\n"
             + "\t-E - encoding to use for control channel\n" + "\t-f - issue FEAT command (remote and local files are ignored)\n"
@@ -69,7 +69,7 @@ public final class FTPClientExample {
             + "\t-y format - set default date format string\n" + "\t-Y format - set recent date format string\n"
             + "\t-Z timezone - set the server time zone for parsing LIST responses\n"
             + "\t-z timezone - set the time zone for displaying MDTM, LIST, MLSD, MLST responses\n"
-            + "\t-PrH server[:port] - HTTP Proxy host and optional port[80] \n" + "\t-PrU user - HTTP Proxy server username\n"
+            + "\t-PrH server[:port] - HTTP Proxy host and optional port[80] \n" + "\t-PrU user - HTTP Proxy server user\n"
             + "\t-PrP password - HTTP Proxy server password\n" + "\t-# - add hash display during transfers\n";
 
     private static CopyStreamListener createListener() {
@@ -108,7 +108,7 @@ public final class FTPClientExample {
         int proxyPort = 80;
         String proxyUser = null;
         String proxyPassword = null;
-        String username = null;
+        String user = null;
         String password = null;
         String encoding = null;
         String serverTimeZoneId = null;
@@ -124,7 +124,7 @@ public final class FTPClientExample {
             } else if (args[base].equals("-a")) {
                 localActive = true;
             } else if (args[base].equals("-A")) {
-                username = "anonymous";
+                user = "anonymous";
                 password = System.getProperty("user.name") + "@" + InetAddress.getLocalHost().getHostName();
             } else if (args[base].equals("-b")) {
                 binaryTransfer = true;
@@ -182,7 +182,7 @@ public final class FTPClientExample {
                 displayTimeZoneId = args[++base];
             } else if (args[base].equals("-PrH")) {
                 proxyHost = args[++base];
-                final String parts[] = proxyHost.split(":");
+                final String[] parts = proxyHost.split(":");
                 if (parts.length == 2) {
                     proxyHost = parts[0];
                     proxyPort = Integer.parseInt(parts[1]);
@@ -199,7 +199,7 @@ public final class FTPClientExample {
         }
 
         final int remain = args.length - base;
-        if (username != null) {
+        if (user != null) {
             minParams -= 2;
         }
         if (remain < minParams) // server, user, pass, remote, local [protocol]
@@ -213,13 +213,13 @@ public final class FTPClientExample {
 
         String server = args[base++];
         int port = 0;
-        final String parts[] = server.split(":");
+        final String[] parts = server.split(":");
         if (parts.length == 2) {
             server = parts[0];
             port = Integer.parseInt(parts[1]);
         }
-        if (username == null) {
-            username = args[base++];
+        if (user == null) {
+            user = args[base++];
             password = args[base++];
         }
 
@@ -248,7 +248,7 @@ public final class FTPClientExample {
             } else if (protocol.equals("false")) {
                 ftps = new FTPSClient(false);
             } else {
-                final String prot[] = protocol.split(",");
+                final String[] prot = protocol.split(",");
                 if (prot.length == 1) { // Just protocol
                     ftps = new FTPSClient(protocol);
                 } else { // protocol,true|false
@@ -329,7 +329,7 @@ public final class FTPClientExample {
         }
 
         __main: try {
-            if (!ftp.login(username, password)) {
+            if (!ftp.login(user, password)) {
                 ftp.logout();
                 error = true;
                 break __main;
@@ -340,7 +340,7 @@ public final class FTPClientExample {
             if (binaryTransfer) {
                 ftp.setFileType(FTP.BINARY_FILE_TYPE);
             } else {
-                // in theory this should not be necessary as servers should default to ASCII
+                // in theory this should not be necessary as servers should default to ASCII,
                 // but they don't all do so - see NET-500
                 ftp.setFileType(FTP.ASCII_FILE_TYPE);
             }

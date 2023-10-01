@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Wrapper class to network time packet messages (NTP, etc) that computes related timing info and stats.
+ * Wrapper class to network time packet messages (NTP, etc.) that computes related timing info and stats.
  */
 public class TimeInfo {
 
@@ -55,7 +55,7 @@ public class TimeInfo {
 
     /**
      * Create TimeInfo object with raw packet message and destination time received. Auto-computes details if computeDetails flag set otherwise this is delayed
-     * until computeDetails() is called. Delayed computation is for fast intialization when sub-millisecond timing is needed.
+     * until computeDetails() is called. Delayed computation is for fast initialization when sub-millisecond timing is needed.
      *
      * @param msgPacket        NTP message packet
      * @param returnTimeMillis destination receive time
@@ -80,7 +80,7 @@ public class TimeInfo {
 
     /**
      * Create TimeInfo object with raw packet message and destination time received. Auto-computes details if computeDetails flag set otherwise this is delayed
-     * until computeDetails() is called. Delayed computation is for fast intialization when sub-millisecond timing is needed.
+     * until computeDetails() is called. Delayed computation is for fast initialization when sub-millisecond timing is needed.
      *
      * @param message          NTP message packet
      * @param returnTimeMillis destination receive time
@@ -206,16 +206,16 @@ public class TimeInfo {
                 comments.add("Error: OrigTime > DestRcvTime");
             }
 
-            offsetMillis = Long.valueOf(((rcvTimeMillis - origTimeMillis) + (xmitTimeMillis - returnTimeMillis)) / 2);
+            offsetMillis = Long.valueOf((rcvTimeMillis - origTimeMillis + xmitTimeMillis - returnTimeMillis) / 2);
         }
     }
 
     /**
-     * Compares this object against the specified object. The result is <code>true</code> if and only if the argument is not <code>null</code> and is a
+     * Compares this object against the specified object. The result is {@code true} if and only if the argument is not <code>null</code> and is a
      * <code>TimeStamp</code> object that contains the same values as this object.
      *
      * @param obj the object to compare with.
-     * @return <code>true</code> if the objects are the same; <code>false</code> otherwise.
+     * @return {@code true} if the objects are the same; {@code false} otherwise.
      * @since 3.4
      */
     @Override
@@ -287,7 +287,7 @@ public class TimeInfo {
     }
 
     /**
-     * Computes a hashcode for this object. The result is the exclusive OR of the return time and the message hash code.
+     * Computes a hash code for this object. The result is the exclusive OR of the return time and the message hash code.
      *
      * @return a hash code value for this object.
      * @since 3.4

@@ -46,12 +46,12 @@ Apache Commons Net
 [![GitHub Actions Status](https://github.com/apache/commons-net/workflows/Java%20CI/badge.svg)](https://github.com/apache/commons-net/actions)
 [![Coverage Status](https://codecov.io/gh/apache/commons-net/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-net)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/?gav=true)
-[![Javadocs](https://javadoc.io/badge/commons-net/commons-net/3.9.0.svg)](https://javadoc.io/doc/commons-net/commons-net/3.9.0)
-[![CodeQL](https://github.com/apache/commons-net/workflows/CodeQL/badge.svg)](hhttps://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-text/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-text)
+[![Javadocs](https://javadoc.io/badge/commons-net/commons-net/3.10.0.svg)](https://javadoc.io/doc/commons-net/commons-net/3.10.0)
+[![CodeQL](https://github.com/apache/commons-net/workflows/CodeQL/badge.svg)](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-net/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-net)
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
-Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois.
 
 Documentation
 -------------
@@ -64,13 +64,13 @@ Where can I get the latest release?
 -----------------------------------
 You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-net/download_net.cgi).
 
-Alternatively you can pull it from the central Maven repositories:
+Alternatively, you can pull it from  the central Maven repositories:
 
 ```xml
 <dependency>
   <groupId>commons-net</groupId>
   <artifactId>commons-net</artifactId>
-  <version>3.9.0</version>
+  <version>3.10.0</version>
 </dependency>
 ```
 
@@ -89,7 +89,7 @@ You can learn more about contributing via GitHub in our [contribution guidelines
 
 License
 -------
-This code is under the [Apache Licence v2](https://www.apache.org/licenses/LICENSE-2.0).
+This code is under the [Apache License v2](https://www.apache.org/licenses/LICENSE-2.0).
 
 See the `NOTICE.txt` file for required notices and attributions.
 

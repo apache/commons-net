@@ -24,12 +24,12 @@ import java.io.OutputStream;
  * Wraps an output stream.
  * <p>
  * In binary mode, the only conversion is to double IAC.
+ * </p>
  * <p>
- * In ASCII mode, if convertCRtoCRLF is true (currently always true), any CR is converted to CRLF. IACs are doubled. Also a bare LF is converted to CRLF and a
+ * In ASCII mode, if convertCRtoCRLF is true (currently always true), any CR is converted to CRLF. IACs are doubled. Also, a bare LF is converted to CRLF and a
  * bare CR is converted to CR\0
- * <p>
+ * </p>
  */
-
 final class TelnetOutputStream extends OutputStream {
     private final TelnetClient client;
     // TODO there does not appear to be any way to change this value - should it be a ctor parameter?
@@ -54,7 +54,6 @@ final class TelnetOutputStream extends OutputStream {
 
     /**
      * Writes a byte array to the stream.
-     * <p>
      *
      * @param buffer The byte array to write.
      * @throws IOException If an error occurs while writing to the underlying stream.
@@ -66,7 +65,6 @@ final class TelnetOutputStream extends OutputStream {
 
     /**
      * Writes a number of bytes from a byte array to the stream starting from a given offset.
-     * <p>
      *
      * @param buffer The byte array to write.
      * @param offset The offset into the array at which to start copying data.
@@ -84,7 +82,6 @@ final class TelnetOutputStream extends OutputStream {
 
     /**
      * Writes a byte to the stream.
-     * <p>
      *
      * @param ch The byte to write.
      * @throws IOException If an error occurs while writing to the underlying stream.

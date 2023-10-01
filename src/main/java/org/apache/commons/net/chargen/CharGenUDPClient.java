@@ -27,7 +27,7 @@ import org.apache.commons.net.util.NetConstants;
 /**
  * The CharGenUDPClient class is a UDP implementation of a client for the character generator protocol described in RFC 864. It can also be used for Systat (RFC
  * 866), Quote of the Day (RFC 865), and netstat (port 15). All of these protocols involve sending a datagram to the appropriate port, and reading data
- * contained in one or more reply datagrams. The chargen and quote of the day protocols only send one reply datagram containing 512 bytes or less of data. The
+ * contained in one or more reply datagrams. The chargen and quote of the day protocols only send one reply datagram containing 512 bytes or fewer. The
  * other protocols may reply with more than one datagram, in which case you must wait for a timeout to determine that all reply datagrams have been sent.
  * <p>
  * To use the CharGenUDPClient class, just open a local UDP port with {@link org.apache.commons.net.DatagramSocketClient#open open } and call {@link #send send
@@ -66,7 +66,7 @@ public final class CharGenUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Receive the reply data from the server. This will always be 512 bytes or less. Chargen and quote of the day only return one packet. Netstat and systat
+     * Receive the reply data from the server. This will always be 512 bytes or fewer. Chargen and quote of the day only return one packet. Netstat and systat
      * require multiple calls to receive() with timeout detection.
      *
      * @return The reply data from the server.
@@ -76,7 +76,7 @@ public final class CharGenUDPClient extends DatagramSocketClient {
         final int length;
         final byte[] result;
 
-        _socket_.receive(receivePacket);
+        checkOpen().receive(receivePacket);
 
         result = new byte[length = receivePacket.getLength()];
         System.arraycopy(receiveData, 0, result, 0, length);
@@ -104,7 +104,7 @@ public final class CharGenUDPClient extends DatagramSocketClient {
     public void send(final InetAddress host, final int port) throws IOException {
         sendPacket.setAddress(host);
         sendPacket.setPort(port);
-        _socket_.send(sendPacket);
+        checkOpen().send(sendPacket);
     }
 
 }

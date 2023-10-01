@@ -21,6 +21,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.Duration;
 
 /**
  * The TelnetClient class implements the simple network virtual terminal (NVT) for the Telnet protocol according to RFC 854. It does not implement any of the
@@ -30,8 +31,8 @@ import java.io.OutputStream;
  * InputStream and OutputStream for sending and receiving data over the Telnet connection can be obtained by using the {@link #getInputStream getInputStream() }
  * and {@link #getOutputStream getOutputStream() } methods. When you finish using the streams, you must call {@link #disconnect disconnect } rather than simply
  * closing the streams.
+ * </p>
  */
-
 public class TelnetClient extends Telnet {
     private static final int DEFAULT_MAX_SUBNEGOTIATION_LENGTH = 512;
 
@@ -281,7 +282,23 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Sends an Are You There sequence and waits for the result.
+     * Sends an {@code Are You There (AYT)} sequence and waits for the result.
+     *
+     * @param timeout - Time to wait for a response.
+     *
+     * @return true if AYT received a response, false otherwise.
+     *
+     * @throws InterruptedException     on error
+     * @throws IllegalArgumentException on error
+     * @throws IOException              on error
+     * @since 3.10.0
+     */
+    public boolean sendAYT(final Duration timeout) throws IOException, IllegalArgumentException, InterruptedException {
+        return _sendAYT(timeout);
+    }
+
+    /**
+     * Sends an {@code Are You There (AYT)} sequence and waits for the result.
      *
      * @param timeout - Time to wait for a response (millis.)
      *
@@ -290,10 +307,13 @@ public class TelnetClient extends Telnet {
      * @throws InterruptedException     on error
      * @throws IllegalArgumentException on error
      * @throws IOException              on error
+     * @deprecated Use {@link #sendAYT(Duration)}.
      */
+    @Deprecated
     public boolean sendAYT(final long timeout) throws IOException, IllegalArgumentException, InterruptedException {
-        return _sendAYT(timeout);
+        return _sendAYT(Duration.ofMillis(timeout));
     }
+
     /* Code Section added for supporting AYT (start) */
 
     /**

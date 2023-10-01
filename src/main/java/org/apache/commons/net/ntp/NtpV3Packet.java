@@ -21,7 +21,6 @@ import java.net.DatagramPacket;
 
 /**
  * Interface for a NtpV3Packet with get/set methods corresponding to the fields in the NTP Data Message Header described in RFC 1305.
- *
  */
 public interface NtpV3Packet {
 
@@ -35,14 +34,29 @@ public interface NtpV3Packet {
     int LI_LAST_MINUTE_HAS_59_SECONDS = 2;
     int LI_ALARM_CONDITION = 3;
 
-    /* mode options */
+    // mode options
+    /** Mode option {@value}. */
     int MODE_RESERVED = 0;
+
+    /** Mode option {@value}. */
     int MODE_SYMMETRIC_ACTIVE = 1;
+
+    /** Mode option {@value}. */
     int MODE_SYMMETRIC_PASSIVE = 2;
+
+    /** Mode option {@value}. */
     int MODE_CLIENT = 3;
+
+    /** Mode option {@value}. */
     int MODE_SERVER = 4;
+
+    /** Mode option {@value}. */
     int MODE_BROADCAST = 5;
+
+    /** Mode option {@value}. */
     int MODE_CONTROL_MESSAGE = 6;
+
+    /** Mode option {@value}. */
     int MODE_PRIVATE = 7;
 
     int NTP_MINPOLL = 4; // 16 seconds
@@ -83,7 +97,7 @@ public interface NtpV3Packet {
     String getModeName();
 
     /**
-     * @return the originate time as defined in RFC-1305
+     * @return the {@code originate} time as defined in RFC-1305
      */
     TimeStamp getOriginateTimeStamp();
 
@@ -98,7 +112,7 @@ public interface NtpV3Packet {
     int getPrecision();
 
     /**
-     * @return the receive time as defined in RFC-1305
+     * @return the {@code receive} time as defined in RFC-1305
      */
     TimeStamp getReceiveTimeStamp();
 
@@ -148,7 +162,7 @@ public interface NtpV3Packet {
     int getStratum();
 
     /**
-     * @return the transmit timestamp as defined in RFC-1305
+     * @return the {@code transmit} timestamp as defined in RFC-1305
      */
     TimeStamp getTransmitTimeStamp();
 
@@ -251,7 +265,7 @@ public interface NtpV3Packet {
     void setStratum(int stratum);
 
     /**
-     * Set the transmit timestamp given NTP TimeStamp object.
+     * Set the {@code transmit} timestamp given NTP TimeStamp object.
      *
      * @param ts - timestamp
      */

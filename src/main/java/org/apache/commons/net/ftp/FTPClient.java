@@ -85,21 +85,21 @@ import org.apache.commons.net.util.NetConstants;
  *      // success.
  *      reply = ftp.getReplyCode();
  *
- *      if(!FTPReply.isPositiveCompletion(reply)) {
+ *      if (!FTPReply.isPositiveCompletion(reply)) {
  *        ftp.disconnect();
  *        System.err.println("FTP server refused connection.");
  *        System.exit(1);
  *      }
  *      ... // transfer files
  *      ftp.logout();
- *    } catch(IOException e) {
+ *    } catch (IOException e) {
  *      error = true;
  *      e.printStackTrace();
  *    } finally {
- *      if(ftp.isConnected()) {
+ *      if (ftp.isConnected()) {
  *        try {
  *          ftp.disconnect();
- *        } catch(IOException ioe) {
+ *        } catch (IOException ioe) {
  *          // do nothing
  *        }
  *      }
@@ -154,7 +154,7 @@ import org.apache.commons.net.util.NetConstants;
  * <pre>
  * FTPClient f = new FTPClient();
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = f.listFiles(directory);
  * </pre>
  * <p>
@@ -164,7 +164,7 @@ import org.apache.commons.net.util.NetConstants;
  * <pre>
  * FTPClient f = new FTPClient();
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPListParseEngine engine = f.initiateListParsing("com.whatever.YourOwnParser", directory);
  *
  * while (engine.hasNext()) {
@@ -179,7 +179,7 @@ import org.apache.commons.net.util.NetConstants;
  * <pre>
  * FTPClient f = new FTPClient();
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPListParseEngine engine = f.initiateListParsing(directory);
  *
  * while (engine.hasNext()) {
@@ -444,8 +444,9 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Parse the pathname from a CWD reply.
      * <p>
-     * According to RFC959 (http://www.ietf.org/rfc/rfc959.txt), it should be the same as for MKD i.e. {@code 257<space>"<directory-name>"[<space>commentary]}
-     * where any double-quotes in {@code <directory-name>} are doubled. Unlike MKD, the commentary is optional.
+     * According to <a href="http://www.ietf.org/rfc/rfc959.txt">RFC959</a>, it should be the same as for MKD i.e.
+     * {@code 257<space>"<directory-name>"[<space>commentary]} where any double-quotes in {@code <directory-name>} are doubled.
+     * Unlike MKD, the commentary is optional.
      * <p>
      * However, see NET-442 for an exception.
      *
@@ -561,7 +562,7 @@ public class FTPClient extends FTP implements Configurable {
     /** Map of FEAT responses. If null, has not been initialized. */
     private HashMap<String, Set<String>> featuresMap;
 
-    private boolean ipAddressFromPasvResponse = Boolean.parseBoolean(System.getProperty(FTPClient.FTP_IP_ADDRESS_FROM_PASV_RESPONSE));
+    private boolean ipAddressFromPasvResponse = Boolean.getBoolean(FTPClient.FTP_IP_ADDRESS_FROM_PASV_RESPONSE);
 
     /**
      * Default FTPClient constructor. Creates a new FTPClient instance with the data connection mode set to <code> ACTIVE_LOCAL_DATA_CONNECTION_MODE </code>,
@@ -696,7 +697,7 @@ public class FTPClient extends FTP implements Configurable {
                     return null;
                 }
 
-                if ((restartOffset > 0) && !restart(restartOffset)) {
+                if (restartOffset > 0 && !restart(restartOffset)) {
                     return null;
                 }
 
@@ -767,7 +768,7 @@ public class FTPClient extends FTP implements Configurable {
             }
 
             socket.connect(new InetSocketAddress(passiveHost, passivePort), connectTimeout);
-            if ((restartOffset > 0) && !restart(restartOffset)) {
+            if (restartOffset > 0 && !restart(restartOffset)) {
                 socket.close();
                 return null;
             }
@@ -799,7 +800,7 @@ public class FTPClient extends FTP implements Configurable {
         final char delim3 = reply.charAt(2);
         final char delim4 = reply.charAt(reply.length() - 1);
 
-        if ((delim1 != delim2) || (delim2 != delim3) || (delim3 != delim4)) {
+        if (delim1 != delim2 || delim2 != delim3 || delim3 != delim4) {
             throw new MalformedServerReplyException("Could not parse extended passive host information.\nServer Reply: " + reply);
         }
 
@@ -833,7 +834,7 @@ public class FTPClient extends FTP implements Configurable {
         try {
             final int oct1 = Integer.parseInt(m.group(2));
             final int oct2 = Integer.parseInt(m.group(3));
-            pasvPort = (oct1 << 8) | oct2;
+            pasvPort = oct1 << 8 | oct2;
         } catch (final NumberFormatException e) {
             throw new MalformedServerReplyException("Could not parse passive port information.\nServer Reply: " + reply);
         }
@@ -1163,7 +1164,7 @@ public class FTPClient extends FTP implements Configurable {
      * OutputStream output;
      * input  = new FileInputStream("foobaz.txt");
      * output = ftp.storeFileStream("foobar.txt")
-     * if(!FTPReply.isPositiveIntermediate(ftp.getReplyCode())) {
+     * if (!FTPReply.isPositiveIntermediate(ftp.getReplyCode())) {
      *     input.close();
      *     output.close();
      *     ftp.logout();
@@ -1175,7 +1176,7 @@ public class FTPClient extends FTP implements Configurable {
      * input.close();
      * output.close();
      * // Must call completePendingCommand() to finish command.
-     * if(!ftp.completePendingCommand()) {
+     * if (!ftp.completePendingCommand()) {
      *     ftp.logout();
      *     ftp.disconnect();
      *     System.err.println("File transfer failed.");
@@ -1210,7 +1211,7 @@ public class FTPClient extends FTP implements Configurable {
         // We cache the value to avoid creation of a new object every
         // time a file listing is generated.
         // Note: we don't check against a null parserKey (NET-544)
-        if (entryParser == null || (parserKey != null && !entryParserKey.equals(parserKey))) {
+        if (entryParser == null || parserKey != null && !entryParserKey.equals(parserKey)) {
             if (null != parserKey) {
                 // if a parser key was supplied in the parameters,
                 // use that to create the parser
@@ -1408,7 +1409,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Queries the server for a supported feature, and returns the its value (if any). Caches the parsed response to avoid resending the command repeatedly.
+     * Queries the server for a supported feature, and returns its value (if any). Caches the parsed response to avoid resending the command repeatedly.
      *
      * @param feature the feature to check
      *
@@ -1560,7 +1561,7 @@ public class FTPClient extends FTP implements Configurable {
      * <p>
      * <b>For debug use only</b>
      * <p>
-     * Currently contains:
+     * Currently, it contains:
      * <ul>
      * <li>successfully acked NOOPs at end of transfer</li>
      * <li>unanswered NOOPs at end of transfer</li>
@@ -1577,9 +1578,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Returns the current data connection mode (one of the <code> _DATA_CONNECTION_MODE </code> constants.
+     * Returns the current data connection mode (one of the <code> _DATA_CONNECTION_MODE </code> constants).
      *
-     * @return The current data connection mode (one of the <code> _DATA_CONNECTION_MODE </code> constants.
+     * @return The current data connection mode (one of the <code> _DATA_CONNECTION_MODE </code> constants).
      */
     public int getDataConnectionMode() {
         return dataConnectionMode;
@@ -1922,10 +1923,10 @@ public class FTPClient extends FTP implements Configurable {
             // Don't create map here, because next line may throw exception
             final int replyCode = feat();
             if (replyCode == FTPReply.NOT_LOGGED_IN) { // 503
-                return false; // NET-518; don't create empy map
+                return false; // NET-518; don't create empty map
             }
             final boolean success = FTPReply.isPositiveCompletion(replyCode);
-            // we init the map here, so we don't keep trying if we know the command will fail
+            // init the map here, so we don't keep trying if we know the command will fail
             featuresMap = new HashMap<>();
             if (!success) {
                 return false;
@@ -2143,9 +2144,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Whether should attempt to use EPSV with IPv4. Default (if not set) is <code>false</code>
+     * Whether to attempt using EPSV with IPv4. Default (if not set) is {@code false}
      *
-     * @return true if should attempt EPSV
+     * @return true if EPSV shall be attempted with IPv4.
      * @since 2.2
      */
     public boolean isUseEPSVwithIPv4() {
@@ -2287,7 +2288,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @param pathname the initial path, may be null
      * @param filter   the filter, non-null
-     * @return the list of FTPFile entries.
+     * @return the array of FTPFile entries.
      * @throws IOException on error
      * @since 2.2
      */
@@ -2379,9 +2380,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Login to the FTP server using the provided username and password.
+     * Login to the FTP server using the provided user and password.
      *
-     * @param username The username to login under.
+     * @param user The user name to login under.
      * @param password The password to use.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -2389,15 +2390,15 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean login(final String username, final String password) throws IOException {
+    public boolean login(final String user, final String password) throws IOException {
 
-        user(username);
+        user(user);
 
         if (FTPReply.isPositiveCompletion(_replyCode)) {
             return true;
         }
 
-        // If we get here, we either have an error code, or an intermmediate
+        // If we get here, we either have an error code, or an intermediate
         // reply requesting password.
         if (!FTPReply.isPositiveIntermediate(_replyCode)) {
             return false;
@@ -2410,7 +2411,7 @@ public class FTPClient extends FTP implements Configurable {
      * Login to the FTP server using the provided username, password, and account. If no account is required by the server, only the username and password, the
      * account information is not used.
      *
-     * @param username The username to login under.
+     * @param user The user name to login under.
      * @param password The password to use.
      * @param account  The account to use.
      * @return True if successfully completed, false if not.
@@ -2419,14 +2420,14 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean login(final String username, final String password, final String account) throws IOException {
-        user(username);
+    public boolean login(final String user, final String password, final String account) throws IOException {
+        user(user);
 
         if (FTPReply.isPositiveCompletion(_replyCode)) {
             return true;
         }
 
-        // If we get here, we either have an error code, or an intermmediate
+        // If we get here, we either have an error code, or an intermediate
         // reply requesting password.
         if (!FTPReply.isPositiveIntermediate(_replyCode)) {
             return false;
@@ -2645,7 +2646,7 @@ public class FTPClient extends FTP implements Configurable {
     public boolean reinitialize() throws IOException {
         rein();
 
-        if (FTPReply.isPositiveCompletion(_replyCode) || (FTPReply.isPositivePreliminary(_replyCode) && FTPReply.isPositiveCompletion(getReply()))) {
+        if (FTPReply.isPositiveCompletion(_replyCode) || FTPReply.isPositivePreliminary(_replyCode) && FTPReply.isPositiveCompletion(getReply())) {
 
             initDefaults();
 
@@ -2912,9 +2913,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets how long to wait for control keep-alive message replies.
+     * Sets the duration to wait for control keep-alive message replies.
      *
-     * @param timeout number of milliseconds to wait (defaults to 1000)
+     * @param timeout duration to wait (defaults to 1,000). Zero (or less) disables.
      * @since 3.0
      * @see #setControlKeepAliveTimeout(Duration)
      */
@@ -2923,10 +2924,10 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets how long to wait for control keep-alive message replies.
+     * Sets the duration to wait for control keep-alive message replies.
      *
      * @deprecated Use {@link #setControlKeepAliveReplyTimeout(Duration)}.
-     * @param timeoutMillis number of milliseconds to wait (defaults to 1000)
+     * @param timeoutMillis number of milliseconds to wait (defaults to 1,000).
      * @since 3.0
      * @see #setControlKeepAliveTimeout(long)
      */
@@ -2936,12 +2937,12 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the time to wait between sending control connection keepalive messages when processing file upload or download.
+     * Sets the duration to wait between sending control connection keepalive messages when processing file upload or download.
      * <p>
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
-     * @param controlIdle the wait between keepalive messages. Zero (or less) disables.
+     * @param controlIdle the duration to wait between keepalive messages. Zero (or less) disables.
      * @since 3.9.0
      * @see #setControlKeepAliveReplyTimeout(Duration)
      */
@@ -2950,13 +2951,13 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the time to wait between sending control connection keepalive messages when processing file upload or download.
+     * Sets the duration to wait between sending control connection keepalive messages when processing file upload or download.
      * <p>
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
      * @deprecated Use {@link #setControlKeepAliveTimeout(Duration)}.
-     * @param controlIdleSeconds the wait (in seconds) between keepalive messages. Zero (or less) disables.
+     * @param controlIdleSeconds the wait in seconds between keepalive messages. Zero (or less) disables.
      * @since 3.0
      * @see #setControlKeepAliveReplyTimeout(int)
      */
@@ -3077,7 +3078,7 @@ public class FTPClient extends FTP implements Configurable {
      * <b>N.B.</b> currently calling any connect method will reset the type to FTP.ASCII_FILE_TYPE and the formatOrByteSize to FTP.NON_PRINT_TEXT_FORMAT.
      *
      * @param fileType         The <code> _FILE_TYPE </code> constant indicating the type of file.
-     * @param formatOrByteSize The format of the file (one of the <code>_FORMAT</code> constants. In the case of <code>LOCAL_FILE_TYPE</code>, the byte size.
+     * @param formatOrByteSize The format of the file (one of the <code>_FORMAT</code> constants). In the case of <code>LOCAL_FILE_TYPE</code>, the byte size.
      *
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -3111,7 +3112,7 @@ public class FTPClient extends FTP implements Configurable {
 
     /**
      * You can set this to true if you would like to get hidden files when {@link #listFiles} too. A <code>LIST -a</code> will be issued to the ftp server. It
-     * depends on your ftp server if you need to call this method, also dont expect to get rid of hidden files if you call this method with "false".
+     * depends on your ftp server if you need to call this method, also don't expect to get rid of hidden files if you call this method with "false".
      *
      * @param listHiddenFiles true if hidden files should be listed
      * @since 2.0
@@ -3136,7 +3137,7 @@ public class FTPClient extends FTP implements Configurable {
      * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      */
     public boolean setModificationTime(final String pathname, final String timeval) throws IOException {
-        return (FTPReply.isPositiveCompletion(mfmt(pathname, timeval)));
+        return FTPReply.isPositiveCompletion(mfmt(pathname, timeval));
     }
 
     /**

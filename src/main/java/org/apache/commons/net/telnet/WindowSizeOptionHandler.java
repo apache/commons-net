@@ -40,7 +40,6 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler {
 
     /**
      * Constructor for the WindowSizeOptionHandler. Initial and accept behavior flags are set to false
-     * <p>
      *
      * @param nWidth  - Window width.
      * @param nHeight - Window Height
@@ -59,10 +58,10 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler {
      *
      * @param nWidth       - Window width.
      * @param nHeight      - Window Height
-     * @param initlocal    - if set to true, a WILL is sent upon connection.
-     * @param initremote   - if set to true, a DO is sent upon connection.
-     * @param acceptlocal  - if set to true, any DO request is accepted.
-     * @param acceptremote - if set to true, any WILL request is accepted.
+     * @param initlocal    - if set to true, a {@code WILL} is sent upon connection.
+     * @param initremote   - if set to true, a {@code DO} is sent upon connection.
+     * @param acceptlocal  - if set to true, any {@code DO} request is accepted.
+     * @param acceptremote - if set to true, any {@code WILL} request is accepted.
      */
     public WindowSizeOptionHandler(final int nWidth, final int nHeight, final boolean initlocal, final boolean initremote, final boolean acceptlocal,
             final boolean acceptremote) {
@@ -74,7 +73,6 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler {
 
     /**
      * Implements the abstract method of TelnetOptionHandler. This will send the client Height and Width to the server.
-     * <p>
      *
      * @return array to send to remote system
      */
@@ -105,7 +103,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler {
         //
         // allocate response array
         //
-        final int response[] = new int[nResponseSize];
+        final int[] response = new int[nResponseSize];
 
         //
         // Build response array.

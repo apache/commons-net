@@ -84,7 +84,7 @@ public class TestTimeInfo {
         other.addComment("another comment");
         // Assert.assertFalse(info.equals(other)); // comments not used for equality
 
-        final TimeInfo another = new TimeInfo(packet, returnTime, new ArrayList<String>());
+        final TimeInfo another = new TimeInfo(packet, returnTime, new ArrayList<>());
         Assert.assertEquals(info, another);
     }
 

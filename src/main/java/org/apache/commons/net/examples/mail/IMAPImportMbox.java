@@ -195,13 +195,13 @@ public final class IMAPImportMbox {
      * Is the message wanted?
      *
      * @param msgNum   the message number
-     * @param line     the From line
+     * @param line     the {@code From} line
      * @param msgNums  the list of wanted message numbers
      * @param contains the list of strings to be contained
      * @return true if the message is wanted
      */
     private static boolean wanted(final int msgNum, final String line, final BitSet msgNums, final List<String> contains) {
-        return (msgNums.isEmpty() && contains.isEmpty()) // no selectors
+        return msgNums.isEmpty() && contains.isEmpty() // no selectors
                 || msgNums.get(msgNum) // matches message number
                 || listContains(contains, line); // contains string
     }

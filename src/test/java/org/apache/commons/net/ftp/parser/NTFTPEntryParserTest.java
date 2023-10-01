@@ -125,7 +125,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#getParser()
      */
     @Override
     protected FTPFileEntryParser getParser() {
@@ -202,7 +202,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#testParseFieldsOnDirectory()
      */
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
@@ -222,7 +222,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#testParseFieldsOnFile()
      */
     @Override
     public void testParseFieldsOnFile() throws Exception {

@@ -24,7 +24,6 @@ import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 
 /**
  * Example class that shows how to use the {@link SubnetUtils} class.
- *
  */
 public class SubnetUtilsExample {
 

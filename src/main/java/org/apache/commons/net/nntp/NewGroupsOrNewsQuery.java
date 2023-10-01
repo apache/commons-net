@@ -18,6 +18,7 @@
 package org.apache.commons.net.nntp;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * The NewGroupsOrNewsQuery class. This is used to issue NNTP NEWGROUPS and NEWNEWS queries, implemented by
@@ -25,6 +26,7 @@ import java.util.Calendar;
  * } respectively. It prevents you from having to format date, time, distribution, and newgroup arguments.
  * <p>
  * You might use the class as follows:
+ * </p>
  *
  * <pre>
  * query = new NewsGroupsOrNewsQuery(new GregorianCalendar(97, 11, 15), false);
@@ -45,7 +47,6 @@ public final class NewGroupsOrNewsQuery {
 
     /**
      * Creates a new query using the given time as a reference point.
-     * <p>
      *
      * @param date The date since which new groups or news have arrived.
      * @param gmt  True if the date should be considered as GMT, false if not.
@@ -153,7 +154,6 @@ public final class NewGroupsOrNewsQuery {
      * Add a distribution group to the query. The distribution part of a newsgroup is the segment of the name preceding the first dot (e.g., comp, alt, rec).
      * Only those newsgroups matching one of the distributions or, in the case of NEWNEWS, an article in a newsgroup matching one of the distributions, will be
      * reported as a query result. Adding distributions is purely optional.
-     * <p>
      *
      * @param distribution A distribution to add to the query.
      */
@@ -170,7 +170,6 @@ public final class NewGroupsOrNewsQuery {
      * Add a newsgroup to the list of newsgroups being queried. Newsgroups added this way are only meaningful to the NEWNEWS command. Newsgroup names may
      * include the <code> * </code> wildcard, as in <code>comp.lang.* </code> or <code> comp.lang.java.* </code>. Adding at least one newsgroup is mandatory for
      * the NEWNEWS command.
-     * <p>
      *
      * @param newsgroup The newsgroup to add to the list of groups to be checked for new news.
      */
@@ -184,8 +183,7 @@ public final class NewGroupsOrNewsQuery {
     }
 
     /**
-     * Return the NNTP query formatted date (year, month, day in the form YYMMDD.
-     * <p>
+     * Return the NNTP query formatted date (year, month, day in the form YYMMDD).
      *
      * @return The NNTP query formatted date.
      */
@@ -195,27 +193,24 @@ public final class NewGroupsOrNewsQuery {
 
     /**
      * Return the comma separated list of distributions. This may be null if there are no distributions.
-     * <p>
      *
      * @return The list of distributions, which may be null if no distributions have been specified.
      */
     public String getDistributions() {
-        return distributions == null ? null : distributions.toString();
+        return Objects.toString(distributions, null);
     }
 
     /**
      * Return the comma separated list of newsgroups. This may be null if there are no newsgroups
-     * <p>
      *
      * @return The list of newsgroups, which may be null if no newsgroups have been specified.
      */
     public String getNewsgroups() {
-        return newsgroups == null ? null : newsgroups.toString();
+        return Objects.toString(newsgroups, null);
     }
 
     /**
-     * Return the NNTP query formatted time (hour, minutes, seconds in the form HHMMSS.
-     * <p>
+     * Return the NNTP query formatted time (hour, minutes, seconds in the form HHMMSS).
      *
      * @return The NNTP query formatted time.
      */
@@ -225,7 +220,6 @@ public final class NewGroupsOrNewsQuery {
 
     /**
      * Return whether or not the query date should be treated as GMT.
-     * <p>
      *
      * @return True if the query date is to be treated as GMT, false if not.
      */
@@ -239,14 +233,14 @@ public final class NewGroupsOrNewsQuery {
      * <code> comp.lang.java.* </code>.
      * <p>
      * The following would create a query that searched for new news in all comp.lang.java newsgroups except for comp.lang.java.advocacy.
+     * </p>
      *
      * <pre>
      * query.addNewsgroup("comp.lang.java.*");
      * query.omitNewsgroup("comp.lang.java.advocacy");
      * </pre>
-     * <p>
      *
-     * @param newsgroup The newsgroup to add to the list of groups to be checked for new news, but which should be omitted from the search for new news..
+     * @param newsgroup The newsgroup to add to the list of groups to be checked for new news, but which should be omitted from the search for new news.
      */
     public void omitNewsgroup(final String newsgroup) {
         addNewsgroup("!" + newsgroup);

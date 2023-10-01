@@ -76,7 +76,7 @@ public class SubnetUtils {
         public int getAddressCount() {
             final long countLong = getAddressCountLong();
             if (countLong > Integer.MAX_VALUE) {
-                throw new RuntimeException("Count is larger than an integer: " + countLong);
+                throw new IllegalStateException("Count is larger than an integer: " + countLong);
             }
             // Cannot be negative here
             return (int) countLong;
@@ -195,7 +195,7 @@ public class SubnetUtils {
          * Converts a packed integer address into a 4-element array
          */
         private int[] toArray(final int val) {
-            final int ret[] = new int[4];
+            final int[] ret = new int[4];
             for (int j = 3; j >= 0; --j) {
                 ret[j] |= val >>> 8 * (3 - j) & 0xff;
             }
@@ -362,7 +362,7 @@ public class SubnetUtils {
     }
 
     /**
-     * Sets to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()} to include the network and broadcast addresses. This also
+     * Sets to {@code true} if you want the return value of {@link SubnetInfo#getAddressCount()} to include the network and broadcast addresses. This also
      * applies to {@link SubnetInfo#isInRange(int)}
      *
      * @param inclusiveHostCount true if network and broadcast addresses are to be included

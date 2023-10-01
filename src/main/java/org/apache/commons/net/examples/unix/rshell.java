@@ -38,11 +38,6 @@ import org.apache.commons.net.examples.util.IOUtil;
 public final class rshell {
 
     public static void main(final String[] args) {
-        final String server;
-        final String localuser;
-        final String remoteuser;
-        final String command;
-        final RCommandClient client;
 
         if (args.length != 4) {
             System.err.println("Usage: rshell <hostname> <localuser> <remoteuser> <command>");
@@ -50,12 +45,11 @@ public final class rshell {
             return; // so compiler can do proper flow control analysis
         }
 
-        client = new RCommandClient();
-
-        server = args[0];
-        localuser = args[1];
-        remoteuser = args[2];
-        command = args[3];
+        final RCommandClient client = new RCommandClient();
+        final String server = args[0];
+        final String localuser = args[1];
+        final String remoteuser = args[2];
+        final String command = args[3];
 
         try {
             client.connect(server);

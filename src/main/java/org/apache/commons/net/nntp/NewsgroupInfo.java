@@ -28,7 +28,7 @@ package org.apache.commons.net.nntp;
 public final class NewsgroupInfo {
     /**
      * A constant indicating that the posting permission of a newsgroup is unknown. For example, the NNTP GROUP command does not return posting information, so
-     * NewsgroupInfo instances obtained from that command willhave an UNKNOWN_POSTING_PERMISSION.
+     * NewsgroupInfo instances obtained from that command will have an UNKNOWN_POSTING_PERMISSION.
      */
     public static final int UNKNOWN_POSTING_PERMISSION = 0;
 
@@ -56,7 +56,6 @@ public final class NewsgroupInfo {
 
     /**
      * Get the estimated number of articles in the newsgroup. The accuracy of this value will depend on the server implementation.
-     * <p>
      *
      * @return The estimated number of articles in the newsgroup.
      */
@@ -71,7 +70,6 @@ public final class NewsgroupInfo {
 
     /**
      * Get the number of the first article in the newsgroup.
-     * <p>
      *
      * @return The number of the first article in the newsgroup.
      */
@@ -86,7 +84,6 @@ public final class NewsgroupInfo {
 
     /**
      * Get the number of the last article in the newsgroup.
-     * <p>
      *
      * @return The number of the last article in the newsgroup.
      */
@@ -96,7 +93,6 @@ public final class NewsgroupInfo {
 
     /**
      * Get the newsgroup name.
-     * <p>
      *
      * @return The name of the newsgroup.
      */
@@ -106,7 +102,6 @@ public final class NewsgroupInfo {
 
     /**
      * Get the posting permission of the newsgroup. This will be one of the <code> POSTING_PERMISSION </code> constants.
-     * <p>
      *
      * @return The posting permission status of the newsgroup.
      */

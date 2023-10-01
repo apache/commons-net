@@ -383,21 +383,21 @@ public class IMAPClient extends IMAP {
     }
 
     /**
-     * Login to the IMAP server with the given username and password. You must first connect to the server with
-     * {@link org.apache.commons.net.SocketClient#connect connect } before attempting to login. A login attempt is only valid if the client is in the
+     * Login to the IMAP server with the given user and password. You must first connect to the server with
+     * {@link org.apache.commons.net.SocketClient#connect connect } before attempting to log in. A login attempt is only valid if the client is in the
      * NOT_AUTH_STATE. After logging in, the client enters the AUTH_STATE.
      *
-     * @param username The account name being logged in to.
+     * @param user The account name being logged in to.
      * @param password The plain text password of the account.
      * @return True if the login attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of logging in.
      */
-    public boolean login(final String username, final String password) throws IOException {
+    public boolean login(final String user, final String password) throws IOException {
         if (getState() != IMAP.IMAPState.NOT_AUTH_STATE) {
             return false;
         }
 
-        if (!doCommand(IMAPCommand.LOGIN, username + " " + password)) {
+        if (!doCommand(IMAPCommand.LOGIN, user + " " + password)) {
             return false;
         }
 
@@ -432,7 +432,7 @@ public class IMAPClient extends IMAP {
     }
 
     /**
-     * Send a NOOP command to the server. This is useful for keeping a connection alive since most IMAP servers will timeout after 10 minutes of inactivity.
+     * Send a NOOP command to the server. This is useful for keeping a connection alive since most IMAP servers will time out after 10 minutes of inactivity.
      *
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
@@ -568,4 +568,4 @@ public class IMAPClient extends IMAP {
     }
 
 }
-/* kate: indent-width 4; replace-tabs on; */
+

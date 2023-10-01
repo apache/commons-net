@@ -21,19 +21,19 @@ package org.apache.commons.net.nntp;
  * A placeholder utility class, used for constructing a tree of Threadables Original implementation by Jamie Zawinski. See the Grendel source for more details
  * <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java#511">here</a> Threadable objects
  */
-class ThreadContainer {
+class NntpThreadContainer {
     Threadable threadable;
-    ThreadContainer parent;
-//    ThreadContainer prev;
-    ThreadContainer next;
-    ThreadContainer child;
+    NntpThreadContainer parent;
+//    NntpThreadContainer prev;
+    NntpThreadContainer next;
+    NntpThreadContainer child;
 
     /**
      *
      * @param target
      * @return true if child is under self's tree. Detects circular references
      */
-    boolean findChild(final ThreadContainer target) {
+    boolean findChild(final NntpThreadContainer target) {
         if (child == null) {
             return false;
         }
@@ -43,13 +43,13 @@ class ThreadContainer {
         return child.findChild(target);
     }
 
-    // Copy the ThreadContainer tree structure down into the underlying Threadable objects
-    // (Make the Threadable tree look like the ThreadContainer tree)
+    // Copy the NntpThreadContainer tree structure down into the underlying Threadable objects
+    // (Make the Threadable tree look like the NntpThreadContainer tree)
     // TODO convert this to an iterative function - this can blow the stack
     // with very large Threadable trees
     void flush() {
         if (parent != null && threadable == null) {
-            throw new RuntimeException("no threadable in " + this.toString());
+            throw new IllegalStateException("no threadable in " + this.toString());
         }
 
         parent = null;
@@ -81,7 +81,7 @@ class ThreadContainer {
      */
     void reverseChildren() {
         if (child != null) {
-            ThreadContainer kid, prev, rest;
+            NntpThreadContainer kid, prev, rest;
             for (prev = null, kid = child, rest = kid.next; kid != null; prev = kid, kid = rest, rest = rest == null ? null : rest.next) {
                 kid.next = prev;
             }

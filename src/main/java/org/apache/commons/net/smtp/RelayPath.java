@@ -26,14 +26,12 @@ import java.util.Vector;
  *
  * @see SMTPClient
  */
-
 public final class RelayPath {
     private final Vector<String> path;
     private final String emailAddress;
 
     /**
      * Create a relay path with the specified email address as the ultimate destination.
-     * <p>
      *
      * @param emailAddress The destination email address.
      */
@@ -51,7 +49,6 @@ public final class RelayPath {
      * path.addRelay("bar.com");
      * path.addRelay("foo.com");
      * </pre>
-     * <p>
      *
      * @param hostname The host to add to the relay path.
      */
@@ -61,7 +58,6 @@ public final class RelayPath {
 
     /**
      * Return the properly formatted string representation of the relay path.
-     * <p>
      *
      * @return The properly formatted string representation of the relay path.
      */

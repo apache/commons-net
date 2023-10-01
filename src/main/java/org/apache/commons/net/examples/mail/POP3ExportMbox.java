@@ -37,8 +37,8 @@ import org.apache.commons.net.pop3.POP3SClient;
  * file.
  * <p>
  * The code currently assumes that POP3Client decodes the POP3 data as iso-8859-1. The POP3 standard only allows for ASCII so in theory iso-8859-1 should be OK.
- * However it appears that actual POP3 implementations may return 8bit data that is outside the ASCII range; this may result in loss of data when the mailbox is
- * created.
+ * However, it appears that actual POP3 implementations may return 8bit data that is outside the ASCII range; this may result in loss of data when the mailbox
+ * is created.
  * <p>
  * See main() method for usage details
  */
@@ -58,17 +58,17 @@ public final class POP3ExportMbox {
 
         final int argCount = args.length - argIdx;
         if (argCount < 3) {
-            System.err.println("Usage: POP3Mail [-F file/directory] <server[:port]> <username> <password|-|*|VARNAME> [TLS [true=implicit]]");
+            System.err.println("Usage: POP3Mail [-F file/directory] <server[:port]> <user> <password|-|*|VARNAME> [TLS [true=implicit]]");
             System.exit(1);
         }
 
-        final String arg0[] = args[argIdx++].split(":");
+        final String[] arg0 = args[argIdx++].split(":");
         final String server = arg0[0];
-        final String username = args[argIdx++];
+        final String user = args[argIdx++];
         String password = args[argIdx++];
         // prompt for the password if necessary
         try {
-            password = Utils.getPassword(username, password);
+            password = Utils.getPassword(user, password);
         } catch (final IOException e1) {
             System.err.println("Could not retrieve password: " + e1.getMessage());
             return;
@@ -106,7 +106,7 @@ public final class POP3ExportMbox {
         }
 
         try {
-            if (!pop3.login(username, password)) {
+            if (!pop3.login(user, password)) {
                 System.err.println("Could not login to server.  Check password.");
                 pop3.disconnect();
                 return;
@@ -149,7 +149,6 @@ public final class POP3ExportMbox {
             pop3.disconnect();
         } catch (final IOException e) {
             e.printStackTrace();
-            return;
         }
     }
 

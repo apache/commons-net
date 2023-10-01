@@ -431,7 +431,6 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
 
     /**
      * Reads the next number of bytes from the stream into an array and returns the number of bytes read. Returns -1 if the end of the stream has been reached.
-     * <p>
      *
      * @param buffer The byte array in which to store the data.
      * @return The number of bytes read. Returns -1 if the end of the message has been reached.
@@ -445,7 +444,6 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
     /**
      * Reads the next number of bytes from the stream into an array and returns the number of bytes read. Returns -1 if the end of the message has been reached.
      * The characters are stored in the array starting from the given offset and up to the length specified.
-     * <p>
      *
      * @param buffer The byte array in which to store the data.
      * @param offset The offset into the array at which to start storing data.

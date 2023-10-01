@@ -13,7 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 package org.apache.commons.net.util;
@@ -35,7 +34,7 @@ public class SSLContextUtils {
     /**
      * Create and initialize an SSLContext.
      *
-     * @param protocol     the protocol used to instatiate the context
+     * @param protocol     the protocol used to instantiate the context
      * @param keyManager   the key manager, may be {@code null}
      * @param trustManager the trust manager, may be {@code null}
      * @return the initialized context.
@@ -49,7 +48,7 @@ public class SSLContextUtils {
     /**
      * Create and initialize an SSLContext.
      *
-     * @param protocol      the protocol used to instatiate the context
+     * @param protocol      the protocol used to instantiate the context
      * @param keyManagers   the array of key managers, may be {@code null} but array entries must not be {@code null}
      * @param trustManagers the array of trust managers, may be {@code null} but array entries must not be {@code null}
      * @return the initialized context.

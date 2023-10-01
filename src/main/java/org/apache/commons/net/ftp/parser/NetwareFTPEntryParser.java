@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * Implementation of FTPFileEntryParser and FTPFileListParser for Netware Systems. Note that some of the proprietary extensions for Novell-specific operations
+ * Implementation of FTPFileEntryParser and FTPFileListParser for Netware Systems. Note that some proprietary extensions for Novell-specific operations
  * are not supported. See <a href="http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html">
  * http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html</a> for more details.
  *
@@ -54,7 +54,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     /**
      * The default constructor for a NetwareFTPEntryParser object.
      *
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
      *                                  sign that <code>REGEX</code> is not a valid regular expression.
      */
     public NetwareFTPEntryParser() {
@@ -65,7 +65,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * This constructor allows the creation of an NetwareFTPEntryParser object with something other than the default configuration.
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
      *                                  sign that <code>REGEX</code> is not a valid regular expression.
      * @since 1.4
      */

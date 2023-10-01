@@ -21,6 +21,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -68,13 +69,13 @@ import org.apache.commons.net.imap.IMAPReply;
  * Note that using BODY will set the \Seen flag. This is why the default uses BODY.PEEK[].<br>
  * The item name X-GM-LABELS is a Google Mail extension; it shows the labels for a message.<br>
  * For example:<br>
- * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 1:10,20<br>
- * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 3 ENVELOPE X-GM-LABELS<br>
+ * IMAPExportMbox imaps://user:password@imap.googlemail.com/messages_for_export exported.mbox 1:10,20<br>
+ * IMAPExportMbox imaps://user:password@imap.googlemail.com/messages_for_export exported.mbox 3 ENVELOPE X-GM-LABELS<br>
  * <p>
  * The sequence-set is passed unmodified to the FETCH command.<br>
  * The item names are wrapped in parentheses if more than one is provided. Otherwise, the parameter is assumed to be wrapped if necessary.<br>
  * Parameters with spaces must be quoted otherwise the OS shell will normally treat them as separate parameters.<br>
- * Also the listener that writes the mailbox only captures the multi-line responses (e.g. ones that include BODY references). It does not capture the output
+ * Also, the listener that writes the mailbox only captures the multi-line responses (e.g. ones that include BODY references). It does not capture the output
  * from FETCH commands using item names such as ENVELOPE or FLAGS that return a single line response.
  */
 public final class IMAPExportMbox {
@@ -172,7 +173,7 @@ public final class IMAPExportMbox {
                 bufferedWriter.append(lineSeparator); // blank line between entries
             } catch (final IOException e) {
                 e.printStackTrace();
-                throw new RuntimeException(e); // chunkReceived cannot throw a checked Exception
+                throw new UncheckedIOException(e); // chunkReceived cannot throw a checked Exception
             }
             lastFetched = firstLine;
             total.incrementAndGet();
@@ -376,7 +377,7 @@ public final class IMAPExportMbox {
             while (true) {
                 final boolean ok = imap.fetch(sequenceSet, itemNames);
                 // If the fetch failed, can we retry?
-                if (ok || (retryWaitSecs <= 0) || (mboxListener == null) || !checkSequence) {
+                if (ok || retryWaitSecs <= 0 || mboxListener == null || !checkSequence) {
                     break;
                 }
                 final String replyString = imap.getReplyString(); // includes EOL

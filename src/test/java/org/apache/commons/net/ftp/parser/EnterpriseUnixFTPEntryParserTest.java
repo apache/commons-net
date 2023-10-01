@@ -28,9 +28,8 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * Tests the EnterpriseUnixFTPEntryParser
- *
  */
-public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework {
+public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] BADSAMPLES = { "zrwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox",
             "dxrwr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc", "drwxr-xr-x   2 root     root         4096 Jam  4 00:03 zziplib",
@@ -79,7 +78,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#getBadListing()
      */
     @Override
     protected String[] getBadListing() {
@@ -87,7 +86,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#getGoodListing()
      */
     @Override
     protected String[] getGoodListing() {
@@ -95,7 +94,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#getParser()
      */
     @Override
     protected FTPFileEntryParser getParser() {
@@ -108,7 +107,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#testParseFieldsOnDirectory()
      */
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
@@ -116,7 +115,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#testParseFieldsOnFile()
      */
     @Override
     public void testParseFieldsOnFile() throws Exception {

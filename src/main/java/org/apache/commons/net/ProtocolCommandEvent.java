@@ -38,7 +38,7 @@ public class ProtocolCommandEvent extends EventObject {
 
     /**
      * Creates a ProtocolCommandEvent signalling a reply to a command was received. ProtocolCommandEvents created with this constructor should only be sent
-     * after a complete command reply has been received fromt a server.
+     * after a complete command reply has been received from a server.
      *
      * @param source    The source of the event.
      * @param replyCode The integer code indicating the natureof the reply. This will be the protocol integer value for protocols that use integer reply codes,

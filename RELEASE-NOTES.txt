@@ -1,3 +1,74 @@
+              Apache Commons Net 3.10.0
+                  RELEASE NOTES
+
+The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.10.0.
+
+Apache Commons Net library contains a collection of network utilities and protocol implementations.
+Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois.
+
+
+Maintenance and bug fix release (Java 8).
+
+For complete information on Apache Commons Net, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Net website:
+
+https://commons.apache.org/proper/commons-net/
+
+Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
+
+Changes in this version include:
+===============================
+
+New features:
+o           Add and use DatagramSocketClient.setDefaultTimeout(Duration) and deprecate DatagramSocketClient.setDefaultTimeout(int). Thanks to Gary Gregory.
+o           Add and use TFTP.DEFAULT_TIMEOUT_DURATION and deprecate org.apache.commons.net.tftp.TFTP.DEFAULT_TIMEOUT. Thanks to Gary Gregory.
+o           Add and use DatagramSocketClient#getSoTimeoutDuration(). Thanks to Gary Gregory.
+o           Add and use DatagramSocketClient#setSoTimeout(Duration). Thanks to Gary Gregory.
+o           Add and use DatagramSocketClient.checkOpen(). Thanks to Gary Gregory.
+o           Add TelnetClient.sendAYT(Duration). Thanks to Gary Gregory.
+o           TFTPServer implements AutoCloseable. Thanks to Gary Gregory.
+o           DatagramSocketClient implements AutoCloseable. Thanks to Gary Gregory.
+o           Add IMAP package tests, include junit-jupiter-params artifact #166. Thanks to KuKa, Gary Gregory.
+o           Add Base64 missing tests and documentation fixes #161. Thanks to KuKa, Bruno P. Kinoshita.
+o           Add FTPFile tests and fix Javadoc typos #162. Thanks to KuKa, Gary Gregory.
+o           Add IMAPReply tests and documentation fixes #165. Thanks to KuKa, Gary Gregory, Bruno P. Kinoshita.
+
+Fixed Bugs:
+o NET-650:  Delegate host resolution to Socket.connect() #138. Thanks to Matthew McGillis, exceptionfactory, sebbASF.
+o           Fixes many grammar issues and typos in JavaDoc and code comments #141. Thanks to Martin Wiesner, Gary Gregory, sebbASF.
+o           Remove redundant (null) initializations and other clean ups #155. Thanks to Martin Wiesner, Gary Gregory.
+o           TFTPServer.setMaxTimeoutRetries() now throws IllegalArgumentException instead of RuntimeException. Thanks to Gary Gregory.
+o           TFTPServer.setSocketTimeout() now throws IllegalArgumentException instead of RuntimeException. Thanks to Gary Gregory.
+o           FTPCommand.checkArray() now throws IllegalStateException instead of RuntimeException. Thanks to Gary Gregory.
+o           org.apache.commons.net.nntp.Threader now throws IllegalStateException instead of RuntimeException. Thanks to Gary Gregory.
+o           POP3Command static initializer now throws IllegalStateException instead of RuntimeException. Thanks to Gary Gregory.
+o           SMTPCommand static initializer now throws IllegalStateException instead of RuntimeException. Thanks to Gary Gregory.
+o           SubnetUtils.SubnetInfo.getPreviousAddress() now throws IllegalStateException instead of RuntimeException. Thanks to Gary Gregory.
+o           IMAPExportMbox.MboxListener.chunkReceived(IMAP) now throws UncheckedIOException instead of RuntimeException. Thanks to Gary Gregory.
+o           IMAPUtils.imapLogin(URI, int, ProtocolCommandListener) now throws IOException instead of RuntimeException while maintaining method signature source compatibility. Thanks to Gary Gregory.
+o           [StepSecurity] ci: Harden GitHub Actions #156. Thanks to step-security-bot, Gary Gregory.
+o NET-722:  Javadoc for FtpClient.setControlKeepAliveReplyTimeout(Duration) says timeout is in milliseconds. Thanks to David Costanzo, Gary Gregory.
+o           Change class org.apache.commons.net.ftp.parser.MVSFTPEntryParser to support more datasets #182. Thanks to haegar9766, Gary Gregory.
+o           Bulletproof TFTPServerPathTest #173. Thanks to Jakub Kupczyk, Bruno P. Kinoshita, Gary Gregory.
+o           Deprecate org.apache.commons.net.util.Base64 in favor of java.util.Base64. Thanks to Gary Gregory.
+o           Replace use of org.apache.commons.net.util.Base64 with java.util.Base64 in org.apache.commons.net.ftp. Thanks to Gary Gregory.
+o           Replace use of org.apache.commons.net.util.Base64 with java.util.Base64 in org.apache.commons.net.imap. Thanks to Gary Gregory.
+o           Replace use of org.apache.commons.net.util.Base64 with java.util.Base64 in org.apache.commons.net.pop3. Thanks to Gary Gregory.
+o           Replace use of org.apache.commons.net.util.Base64 with java.util.Base64 in org.apache.commons.net.smtp. Thanks to Gary Gregory.
+
+Changes:
+o           Bump commons-parent from 54 to 62 #132, #137, #153. Thanks to Dependabot.
+o           Bump commons-io from 2.11.0 to 2.14.0. Thanks to Gary Gregory.
+o           Bump commons-lang3 from 3.12.0 to 3.13.0. Thanks to Gary Gregory.
+
+
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
+
+Enjoy!
+-Apache Commons Net team
+
+-----------------------------------------------------------------------------
+
               Apache Commons Net 3.9.0
                   RELEASE NOTES
 
@@ -10,7 +81,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 Maintenance and bug fix release (Java 8).
 
 For complete information on Apache Commons Net, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Net website:
+patches, or suggestions for improvement, see the Apache Commons Net website:
 
 https://commons.apache.org/proper/commons-net/
 
@@ -77,7 +148,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 Maintenance and bug fix release (Java 7).
 
 For complete information on Apache Commons Net, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Net website:
+patches, or suggestions for improvement, see the Apache Commons Net website:
 
 https://commons.apache.org/proper/commons-net/
 
@@ -123,7 +194,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 Maintenance and bug fix release.
 
 For complete information on Apache Commons Net, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Net website:
+patches, or suggestions for improvement, see the Apache Commons Net website:
 
 https://commons.apache.org/proper/commons-net/
 
@@ -162,7 +233,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 Maintenance and bug fix release.
 
 For complete information on Apache Commons Net, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Net website:
+patches, or suggestions for improvement, see the Apache Commons Net website:
 
 https://commons.apache.org/proper/commons-net/
 
@@ -241,7 +312,7 @@ o NET-678:  VMS ftp LIST parsing results in empty file list Thanks to Roman Grig
 Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
 
 For complete information on Apache Commons Net, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Net website:
+patches, or suggestions for improvement, see the Apache Commons Net website:
 
 https://commons.apache.org/proper/commons-net/
 

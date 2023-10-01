@@ -43,7 +43,6 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler {
 
     /**
      * Constructor for the TerminalTypeOptionHandler. Initial and accept behavior flags are set to false
-     * <p>
      *
      * @param termtype - terminal type that will be negotiated.
      */
@@ -55,13 +54,12 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler {
     /**
      * Constructor for the TerminalTypeOptionHandler. Allows defining desired initial setting for local/remote activation of this option and behavior in case a
      * local/remote activation request for this option is received.
-     * <p>
      *
      * @param termtype     - terminal type that will be negotiated.
-     * @param initlocal    - if set to true, a WILL is sent upon connection.
-     * @param initremote   - if set to true, a DO is sent upon connection.
-     * @param acceptlocal  - if set to true, any DO request is accepted.
-     * @param acceptremote - if set to true, any WILL request is accepted.
+     * @param initlocal    - if set to true, a {@code WILL} is sent upon connection.
+     * @param initremote   - if set to true, a {@code DO} is sent upon connection.
+     * @param acceptlocal  - if set to true, any {@code DO} request is accepted.
+     * @param acceptremote - if set to true, any {@code WILL} request is accepted.
      */
     public TerminalTypeOptionHandler(final String termtype, final boolean initlocal, final boolean initremote, final boolean acceptlocal,
             final boolean acceptremote) {
@@ -71,18 +69,16 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler {
 
     /**
      * Implements the abstract method of TelnetOptionHandler.
-     * <p>
      *
      * @param suboptionData   - the sequence received, without IAC SB &amp; IAC SE
      * @param suboptionLength - the length of data in suboption_data
-     *                        <p>
      * @return terminal type information
      */
     @Override
     public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength) {
-        if ((suboptionData != null) && (suboptionLength > 1) && (termType != null)) {
-            if ((suboptionData[0] == TERMINAL_TYPE) && (suboptionData[1] == TERMINAL_TYPE_SEND)) {
-                final int response[] = new int[termType.length() + 2];
+        if (suboptionData != null && suboptionLength > 1 && termType != null) {
+            if (suboptionData[0] == TERMINAL_TYPE && suboptionData[1] == TERMINAL_TYPE_SEND) {
+                final int[] response = new int[termType.length() + 2];
 
                 response[0] = TERMINAL_TYPE;
                 response[1] = TERMINAL_TYPE_IS;
