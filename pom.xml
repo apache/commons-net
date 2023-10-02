@@ -63,10 +63,15 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
 
         <!-- Release plugin defines -->
+        <!-- Previous version of the component (used for reporting binary compatibility check)-->
         <commons.bc.version>3.9.0</commons.bc.version>
         <commons.release.isDistModule>true</commons.release.isDistModule>
-        <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>
-        <commons.releaseManagerKey>86fdc7e2a11262cb</commons.releaseManagerKey>
+        <!--
+          Define the following in ~/.m2/settings.xml in an active profile:
+          (or provide them on the command line)
+          commons.releaseManagerName
+          commons.releaseManagerKey
+        -->
         <!-- Local version defines -->
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
         <!-- for debugging FTPSClientTest -->
