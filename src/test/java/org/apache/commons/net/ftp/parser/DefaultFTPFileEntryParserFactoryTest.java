@@ -106,7 +106,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
             factory.createFileEntryParser("org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory");
             fail("ParserInitializationException should have been thrown.");
         } catch (final ParserInitializationException pie) {
-            assertTrue(pie.getCause() instanceof InstantiationException);
+            assertTrue(pie.getCause().toString(), pie.getCause() instanceof ReflectiveOperationException);
         }
         try {
             // Class exists, but is abstract

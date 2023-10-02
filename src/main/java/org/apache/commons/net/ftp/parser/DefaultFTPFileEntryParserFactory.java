@@ -108,7 +108,7 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
             try {
                 final Class<?> parserClass = Class.forName(key);
                 try {
-                    parser = (FTPFileEntryParser) parserClass.newInstance();
+                    parser = (FTPFileEntryParser) parserClass.getConstructor().newInstance();
                 } catch (final ClassCastException e) {
                     throw new ParserInitializationException(
                             parserClass.getName() + " does not implement the interface " + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
