@@ -903,7 +903,6 @@ This release fixes a few bugs and adds some new functionality (see below).
         [Site] typo in migration how-to.
       </action>
     </release>
-
     <release version="3.0.1" date="June 6, 2011" description="
 This is a bug-fix release.
         ">
@@ -1353,9 +1352,7 @@ This is primarily a maintenance release, but it also includes new features and e
         UnixFTPEntryParser fails to parse some entries
       </action>
     </release>
-
     <release version="2.1" description="Not released" />
-
     <release version="2.0" date="October 20, 2008" description="Java 5.0 release">
       <action dev="rwinston" type="fix" issue="NET-307">
         One of the "connect" method in class org.apache.commons.net.SocketClient doesn't handle connection timeout properly
@@ -1511,8 +1508,6 @@ This is primarily a maintenance release, but it also includes new features and e
         FTPFileEntryParserImpl.preParse() doesn't remove unparsable entries at the end of the file list
       </action>
     </release>
-
-
     <!-- 1.5.0 has not yet been released, so comment out the section until it is ready for release -->
     <!-- <release version="1.5.0" date="" description=""> <action dev="dfs" type="fix" issue="NET-3"> TelnetInputStream.java: 
       Applied Rob Hasselbaum's rhasselbaum@alumni.ithaca.edu patch for PR 38688 fixing a TelnetInputStream hang. </action> <action 
@@ -1529,8 +1524,6 @@ This is primarily a maintenance release, but it also includes new features and e
       Netware FTP servers. Tested on Novell Netware 6.5. </action> <action dev="rwinston" type="fix" issue="NET-188"> FTPTimestampParserImpl.java: 
       Fix leap year date parsing bug. </action> <action dev="rwinston" type="fix"> Article.java: Fix minor issues with NNTP parsing. 
       </action> </release> -->
-
-
     <release version="1.4.1" date="December 3, 2005" description="fix release to restore jdk 1.3 compatability">
       <action dev="scohen" type="fix">
         Applied patches for defect 37113. Code incompatible with jdk 1.3. Original patch submitted by Andrea Rombald
@@ -1539,7 +1532,6 @@ This is primarily a maintenance release, but it also includes new features and e
         Applied patches for defect 37522. updated project.xml to correct compatibility level.
       </action>
     </release>
-
     <release version="1.4.0" date="May 7, 2005" description="Some additions and enhancements">
       <action dev="dfs" type="fix">
         Fixed typo in method name.
@@ -1573,7 +1565,6 @@ This is primarily a maintenance release, but it also includes new features and e
         FTP client to operate across many different locales and date formats.
       </action>
     </release>
-
     <release version="1.3.0" date="December 15, 2004" description="many fixes and enhancements">
       <action dev="rwinston" type="fix">
         Applied patch for PR 31793. Thanks to mario@ops.co.at
@@ -1628,8 +1619,6 @@ This is primarily a maintenance release, but it also includes new features and e
       <action dev="dfs" type="fix">
         Fix TelnetClient zombie thread issue
       </action>
-
-
     </release>
     <release version="1.3.0-dev" date="July 28, 2004" description="regression fix">
       <action dev="dfs" type="fix">
@@ -1650,13 +1639,11 @@ This is primarily a maintenance release, but it also includes new features and e
         fixed handling of certain unusual "special" file types in the Unix parser.
       </action>
     </release>
-
     <release version="1.2.1" date="May 6, 2004" description="fix release">
       <action dev="scohen" type="fix">
         changed code that rendered package uncompilable under JDK 1.2
       </action>
     </release>
-
     <release version="1.2.0" date="April 30, 2004" description="autodetection of system for listings">
       <action dev="scohen" type="fix">
         Mario Ivankovits mario@ops.co.at added
@@ -1690,7 +1677,6 @@ This is primarily a maintenance release, but it also includes new features and e
         autodetection.
       </action>
     </release>
-
     <!-- Not yet released; probably never will be <release version="1.1.1" date="TBD" description="last jdk1.1 compatible 
       release"> <action dev="scohen" type="fix"> Removed all JDK 1.1 incompatibilities that had been introduced unintentionally 
       in previous versions. Release 1.1.1 is the last JDK 1.1 compatible release. Any future 1.1.x maintenance releases will remain 
@@ -1712,7 +1698,6 @@ This is primarily a maintenance release, but it also includes new features and e
         reported failure of SMTP on OS/390 which has EBCDIC as the
         native character set.
       </action>
-
       <action dev="dfs" type="fix">
         Applied variation of fix suggested by Matthieu Recouly
         matthieu.recouly@laposte.net so that
@@ -1757,7 +1742,6 @@ This is primarily a maintenance release, but it also includes new features and e
         New parsers merged with mainline with support for old list parsers.
       </action>
     </release>
-
     <release version="1.0.0" date="February 23, 2003" description="first jakarta-commons release">
       <action dev="brekke" type="add">
         Added a migration document for moving from NetComponents to Commons/Net.
