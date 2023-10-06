@@ -4,7 +4,7 @@
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.10.0.
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
-Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois.
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
 
 
 Maintenance and bug fix release (Java 8).
@@ -75,7 +75,7 @@ Enjoy!
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.9.0.
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
-Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
 
 
 Maintenance and bug fix release (Java 8).
@@ -142,7 +142,7 @@ Enjoy!
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.8.0.
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
-Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
 
 
 Maintenance and bug fix release (Java 7).
@@ -188,7 +188,7 @@ Enjoy!
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7.2.
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
-Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
 
 
 Maintenance and bug fix release.
@@ -227,7 +227,7 @@ Enjoy!
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7.1
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
-Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
 
 
 Maintenance and bug fix release.
@@ -261,7 +261,7 @@ Enjoy!
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
-Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
 
 This is mainly a bug-fix release. See further details below.
  This release requires a minimum of Java 7.
