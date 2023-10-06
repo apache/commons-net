@@ -34,9 +34,6 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class ExtendedPOP3Client extends POP3SClient {
 
-    /** {@link Mac} algorithm. */
-    private static final String MAC_ALGORITHM = "HmacMD5";
-
     /**
      * The enumeration of currently-supported authentication methods.
      */
@@ -63,6 +60,9 @@ public class ExtendedPOP3Client extends POP3SClient {
             return this.methodName;
         }
     }
+
+    /** {@link Mac} algorithm. */
+    private static final String MAC_ALGORITHM = "HmacMD5";
 
     /**
      * The default ExtendedPOP3Client constructor. Creates a new Extended POP3 Client.

@@ -37,9 +37,6 @@ import javax.net.ssl.SSLContext;
  */
 public class AuthenticatingSMTPClient extends SMTPSClient {
 
-    /** {@link Mac} algorithm. */
-    private static final String MAC_ALGORITHM = "HmacMD5";
-
     /**
      * The enumeration of currently-supported authentication methods.
      */
@@ -85,6 +82,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
             return null;
         }
     }
+
+    /** {@link Mac} algorithm. */
+    private static final String MAC_ALGORITHM = "HmacMD5";
 
     /**
      * The default AuthenticatingSMTPClient constructor. Creates a new Authenticating SMTP Client.

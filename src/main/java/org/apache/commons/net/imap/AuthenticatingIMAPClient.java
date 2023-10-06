@@ -34,9 +34,6 @@ import javax.net.ssl.SSLContext;
  */
 public class AuthenticatingIMAPClient extends IMAPSClient {
 
-    /** {@link Mac} algorithm. */
-    private static final String MAC_ALGORITHM = "HmacMD5";
-
     /**
      * The enumeration of currently-supported authentication methods.
      */
@@ -73,6 +70,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
             return authName;
         }
     }
+
+    /** {@link Mac} algorithm. */
+    private static final String MAC_ALGORITHM = "HmacMD5";
 
     /**
      * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient. Sets security mode to explicit (isImplicit = false).
