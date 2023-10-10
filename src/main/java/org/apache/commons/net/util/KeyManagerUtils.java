@@ -65,7 +65,7 @@ import org.apache.commons.net.io.Util;
  */
 public final class KeyManagerUtils {
 
-    private static class ClientKeyStore {
+    private static final class ClientKeyStore {
 
         private final X509Certificate[] certChain;
         private final PrivateKey key;
@@ -93,7 +93,7 @@ public final class KeyManagerUtils {
         }
     }
 
-    private static class X509KeyManager extends X509ExtendedKeyManager {
+    private static final class X509KeyManager extends X509ExtendedKeyManager {
 
         private final ClientKeyStore keyStore;
 

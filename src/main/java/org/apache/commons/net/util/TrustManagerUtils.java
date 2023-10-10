@@ -32,7 +32,7 @@ import javax.net.ssl.X509TrustManager;
  */
 public final class TrustManagerUtils {
 
-    private static class TrustManager implements X509TrustManager {
+    private static final class TrustManager implements X509TrustManager {
 
         private final boolean checkServerValidity;
 

@@ -244,7 +244,7 @@ import org.apache.commons.net.util.NetConstants;
 public class FTPClient extends FTP implements Configurable {
 
     // @since 3.0
-    private static class CSL implements CopyStreamListener {
+    private static final class CSL implements CopyStreamListener {
 
         private final FTPClient parent;
         private final long idleMillis;
@@ -337,7 +337,7 @@ public class FTPClient extends FTP implements Configurable {
         }
     }
 
-    private static class PropertiesSingleton {
+    private static final class PropertiesSingleton {
 
         static final Properties PROPERTIES;
 

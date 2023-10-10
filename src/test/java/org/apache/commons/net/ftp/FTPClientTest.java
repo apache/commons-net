@@ -28,7 +28,7 @@ import junit.framework.TestCase;
 
 public class FTPClientTest extends TestCase {
 
-    private static class LocalClient extends FTPClient {
+    private static final class LocalClient extends FTPClient {
 
         private String systemType;
 
@@ -42,7 +42,7 @@ public class FTPClientTest extends TestCase {
         }
     }
 
-    private static class PassiveNatWorkAroundLocalClient extends FTPClient {
+    private static final class PassiveNatWorkAroundLocalClient extends FTPClient {
         private final String passiveModeServerIP;
 
         public PassiveNatWorkAroundLocalClient(final String passiveModeServerIP) {

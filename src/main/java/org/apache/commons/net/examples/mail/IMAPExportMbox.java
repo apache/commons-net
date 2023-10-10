@@ -80,7 +80,7 @@ import org.apache.commons.net.imap.IMAPReply;
  */
 public final class IMAPExportMbox {
 
-    private static class MboxListener implements IMAPChunkListener {
+    private static final class MboxListener implements IMAPChunkListener {
 
         private final BufferedWriter bufferedWriter;
         volatile AtomicInteger total = new AtomicInteger();
