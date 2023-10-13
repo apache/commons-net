@@ -26,8 +26,9 @@ import org.apache.ftpserver.ssl.ClientAuth;
 import org.apache.ftpserver.ssl.SslConfiguration;
 
 /**
- * See:
- * <a href="https://issues.apache.org/jira/browse/FTPSERVER-491">
+ * Tests FTPSERVER-491.
+ *
+ * See <a href="https://issues.apache.org/jira/browse/FTPSERVER-491">
  *   https://issues.apache.org/jira/browse/FTPSERVER-491</a>
  */
 public class NoProtocolSslConfigurationProxy implements SslConfiguration {
