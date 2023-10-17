@@ -44,7 +44,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
     static final String[] modeStrings = { "netascii", "octet" };
 
     /**
-     * A null terminated byte array representation of the ascii names of the transfer mode constants. This is convenient for creating the TFTP request packets.
+     * A null terminated byte array representation of the ASCII names of the transfer mode constants. This is convenient for creating the TFTP request packets.
      */
     private static final byte[] modeBytes[] = { { (byte) 'n', (byte) 'e', (byte) 't', (byte) 'a', (byte) 's', (byte) 'c', (byte) 'i', (byte) 'i', 0 },
             { (byte) 'o', (byte) 'c', (byte) 't', (byte) 'e', (byte) 't', 0 } };

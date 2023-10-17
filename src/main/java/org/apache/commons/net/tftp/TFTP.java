@@ -42,8 +42,9 @@ import org.apache.commons.net.DatagramSocketClient;
  */
 
 public class TFTP extends DatagramSocketClient {
+
     /**
-     * The ascii transfer mode. Its value is 0 and equivalent to NETASCII_MODE
+     * The ASCII transfer mode. Its value is 0 and equivalent to NETASCII_MODE
      */
     public static final int ASCII_MODE = 0;
 

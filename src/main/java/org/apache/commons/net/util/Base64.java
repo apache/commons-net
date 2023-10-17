@@ -650,7 +650,7 @@ public class Base64 {
      *
      * </p>
      *
-     * @param in      byte[] array of ascii data to base64 decode.
+     * @param in      byte[] array of ASCII data to base64 decode.
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for encoding.
      */
