@@ -218,7 +218,7 @@ public class NtpV3Impl implements NtpV3Packet {
 
     /**
      * Returns the reference id string. String cannot be null but value is dependent on the version of the NTP spec supported and stratum level. Value can be an
-     * empty string, clock type string, IP address, or a hex string.
+     * empty string, clock type string, IP address, or a hexadecimal string.
      *
      * @return the reference id string.
      */

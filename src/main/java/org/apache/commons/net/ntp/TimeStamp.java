@@ -55,7 +55,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     public static final String NTP_DATE_FORMAT = "EEE, MMM dd yyyy HH:mm:ss.SSS";
 
     /**
-     * Left-pad 8-character hex string with 0's
+     * Left-pad 8-character hexadecimal string with 0's
      *
      * @param buf - StringBuilder which is appended with leading 0's.
      * @param l   - a long.
@@ -190,12 +190,12 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     }
 
     /**
-     * Converts 64-bit NTP timestamp value to a <code>String</code>. The NTP timestamp value is represented as hex string with seconds separated by fractional
-     * seconds by a decimal point; e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
+     * Converts 64-bit NTP timestamp value to a <code>String</code>. The NTP timestamp value is represented as hexadecimal string with seconds separated by
+     * fractional seconds by a decimal point; e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
      *
      * @param ntpTime the 64 bit timestamp
      *
-     * @return NTP timestamp 64-bit long value as hex string with seconds separated by fractional seconds.
+     * @return NTP timestamp 64-bit long value as hexadecimal string with seconds separated by fractional seconds.
      */
     public static String toString(final long ntpTime) {
         final StringBuilder buf = new StringBuilder();
@@ -240,7 +240,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Constructs a newly allocated NTP timestamp object that represents the value represented by the string in hexdecimal form (e.g. "c1a089bd.fc904f6d").
      *
-     * @param hexStamp the hex timestamp
+     * @param hexStamp the hexadecimal timestamp
      *
      * @throws NumberFormatException - if the string does not contain a parsable timestamp.
      */
@@ -367,10 +367,10 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     }
 
     /**
-     * Converts this <code>TimeStamp</code> object to a <code>String</code>. The NTP timestamp 64-bit long value is represented as hex string with seconds
-     * separated by fractional seconds by a decimal point; e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
+     * Converts this <code>TimeStamp</code> object to a <code>String</code>. The NTP timestamp 64-bit long value is represented as hexadecimal string with
+     * seconds separated by fractional seconds by a decimal point; e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
      *
-     * @return NTP timestamp 64-bit long value as hex string with seconds separated by fractional seconds.
+     * @return NTP timestamp 64-bit long value as hexadecimal string with seconds separated by fractional seconds.
      */
     @Override
     public String toString() {

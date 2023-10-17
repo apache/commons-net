@@ -229,11 +229,11 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     }
 
     /**
-     * Converts the given byte array to a String containing the hex values of the bytes. For example, the byte 'A' will be converted to '41', because this is
-     * the ASCII code (and the byte value) of the capital letter 'A'.
+     * Converts the given byte array to a String containing the hexadecimal values of the bytes. For example, the byte 'A' will be converted to '41', because
+     * this is the ASCII code (and the byte value) of the capital letter 'A'.
      *
      * @param a The byte array to convert.
-     * @return The resulting String of hex codes.
+     * @return The resulting String of hexadecimal codes.
      */
     private String convertToHexString(final byte[] a) {
         final StringBuilder result = new StringBuilder(a.length * 2);
