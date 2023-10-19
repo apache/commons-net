@@ -34,7 +34,7 @@ import org.apache.commons.net.ftp.FTPFile;
  *  "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  * </pre>
  * <p>
- * Note: VMSFTPEntryParser can only be instantiated through the DefaultFTPParserFactory by classname. It will not be chosen by the autodetection scheme.
+ * Note: VMSFTPEntryParser can only be instantiated through the DefaultFTPParserFactory by class name. It will not be chosen by the autodetection scheme.
  * </p>
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)

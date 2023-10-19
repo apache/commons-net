@@ -28,7 +28,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST"
  * </pre>
  * <p>
- * Note: EnterpriseUnixFTPEntryParser can only be instantiated through the DefaultFTPParserFactory by classname. It will not be chosen by the autodetection
+ * Note: EnterpriseUnixFTPEntryParser can only be instantiated through the DefaultFTPParserFactory by class name. It will not be chosen by the autodetection
  * scheme.
  * </p>
  *

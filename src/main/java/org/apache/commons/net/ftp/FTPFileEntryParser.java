@@ -40,7 +40,7 @@ import java.util.List;
  * </pre>
  *
  * The second example uses the <code>FTPClient.listFiles()</code> API to pull the whole list from the current working directory in one call, but specifying by
- * classname the parser to be used. For this particular parser class, this approach is necessary since there is no way to autodetect this server type.
+ * class name the parser to be used. For this particular parser class, this approach is necessary since there is no way to autodetect this server type.
  *
  * <pre>
  * FTPClient f = FTPClient();
