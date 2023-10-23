@@ -246,7 +246,7 @@ public class RCommandClient extends RExecClient {
     }
 
     /**
-     * Same as <code> rcommand(localUsername, remoteUsername, command, false); </code>
+     * Same as <code> rcommand(localUserName, remoteUserName, command, false); </code>
      *
      * @param localUser  the local user
      * @param remoteUser the remote user

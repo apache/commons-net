@@ -192,7 +192,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
             return SMTPReply.isPositiveCompletion(sendCommand(Base64.getEncoder().encodeToString(toEncode)));
         }
         if (method.equals(AUTH_METHOD.LOGIN)) {
-            // the server sends fixed responses (base64("Username") and
+            // the server sends fixed responses (base64("UserName") and
             // base64("Password")), so we don't have to read them.
             if (!SMTPReply.isPositiveIntermediate(sendCommand(Base64.getEncoder().encodeToString(user.getBytes(getCharset()))))) {
                 return false;

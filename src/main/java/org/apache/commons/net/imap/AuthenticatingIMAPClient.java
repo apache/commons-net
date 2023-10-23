@@ -188,7 +188,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
             return result == IMAPReply.OK;
         }
         case LOGIN: {
-            // the server sends fixed responses (base64("Username") and
+            // the server sends fixed responses (base64("UserName") and
             // base64("Password")), so we don't have to read them.
             if (sendData(Base64.getEncoder().encodeToString(user.getBytes(getCharset()))) != IMAPReply.CONT) {
                 return false;

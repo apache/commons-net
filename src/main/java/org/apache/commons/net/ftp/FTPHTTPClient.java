@@ -43,7 +43,7 @@ public class FTPHTTPClient extends FTPClient {
     private static final byte[] CRLF = { '\r', '\n' };
     private final String proxyHost;
     private final int proxyPort;
-    private final String proxyUsername;
+    private final String proxyUserName;
     private final String proxyPassword;
     private final Charset charset;
     private String tunnelHost; // Save the host when setting up a tunnel (needed for EPSV)
@@ -93,7 +93,7 @@ public class FTPHTTPClient extends FTPClient {
     public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass, final Charset encoding) {
         this.proxyHost = proxyHost;
         this.proxyPort = proxyPort;
-        this.proxyUsername = proxyUser;
+        this.proxyUserName = proxyUser;
         this.proxyPassword = proxyPass;
         this.tunnelHost = null;
         this.charset = encoding;
@@ -190,8 +190,8 @@ public class FTPHTTPClient extends FTPClient {
         output.write(hostString.getBytes(charset));
         output.write(CRLF);
 
-        if (proxyUsername != null && proxyPassword != null) {
-            final String auth = proxyUsername + ":" + proxyPassword;
+        if (proxyUserName != null && proxyPassword != null) {
+            final String auth = proxyUserName + ":" + proxyPassword;
             final String header = "Proxy-Authorization: Basic " + Base64.getEncoder().encodeToString(auth.getBytes(charset));
             output.write(header.getBytes(charset));
         }

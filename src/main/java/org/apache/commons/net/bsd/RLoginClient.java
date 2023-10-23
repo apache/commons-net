@@ -59,13 +59,13 @@ public class RLoginClient extends RCommandClient {
     /**
      * Same as the other rlogin method, but no terminal speed is defined.
      *
-     * @param localUsername  the local user
-     * @param remoteUsername the remote user
+     * @param localUserName  the local user
+     * @param remoteUserName the remote user
      * @param terminalType   the terminal type
      * @throws IOException on error
      */
-    public void rlogin(final String localUsername, final String remoteUsername, final String terminalType) throws IOException {
-        rexec(localUsername, remoteUsername, terminalType, false);
+    public void rlogin(final String localUserName, final String remoteUserName, final String terminalType) throws IOException {
+        rexec(localUserName, remoteUserName, terminalType, false);
     }
 
     /**
@@ -78,14 +78,14 @@ public class RLoginClient extends RCommandClient {
      * If user authentication fails, the rlogind daemon will request that a password be entered interactively. You will be able to read the prompt from the
      * output stream of the RLoginClient and write the password to the input stream of the RLoginClient.
      *
-     * @param localUsername  The user account on the local machine that is trying to log in to the remote host.
-     * @param remoteUsername The account name on the server that is being logged in to.
+     * @param localUserName  The user account on the local machine that is trying to log in to the remote host.
+     * @param remoteUserName The account name on the server that is being logged in to.
      * @param terminalType   The name of the user's terminal (e.g., "vt100", "network", etc.)
      * @param terminalSpeed  The speed of the user's terminal, expressed as a baud rate or bps (e.g., 9600 or 38400)
      * @throws IOException If the rlogin() attempt fails. The exception will contain a message indicating the nature of the failure.
      */
-    public void rlogin(final String localUsername, final String remoteUsername, final String terminalType, final int terminalSpeed) throws IOException {
-        rexec(localUsername, remoteUsername, terminalType + "/" + terminalSpeed, false);
+    public void rlogin(final String localUserName, final String remoteUserName, final String terminalType, final int terminalSpeed) throws IOException {
+        rexec(localUserName, remoteUserName, terminalType + "/" + terminalSpeed, false);
     }
 
 }
