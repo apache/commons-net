@@ -19,6 +19,7 @@ package org.apache.commons.net.ftp.parser;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
@@ -47,6 +48,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     private static final String DEFAULT_DATE_FORMAT_JA = "M'" + JA_MONTH + "' d'" + JA_DAY + "' yyyy'" + JA_YEAR + "'"; // 6月 3日 2003年
 
     private static final String DEFAULT_RECENT_DATE_FORMAT_JA = "M'" + JA_MONTH + "' d'" + JA_DAY + "' HH:mm"; // 8月 17日 20:10
+
+    private static final Pattern TOTAL_PATTERN = Pattern.compile("^total \\d+$");
 
     /**
      * Some Linux distributions are now shipping an FTP server which formats file listing dates in an all-numeric format: <code>"yyyy-MM-dd HH:mm</code>. This
@@ -271,12 +274,12 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Preparse the list to discard "total nnn" lines
+     * Preparses the list to discard "total nnn" lines.
      */
     @Override
     public List<String> preParse(final List<String> original) {
         // NET-389
-        original.removeIf(entry -> entry.matches("^total \\d+$"));
+        original.removeIf(entry -> TOTAL_PATTERN.matcher(entry).matches());
         return original;
     }
 
