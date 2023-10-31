@@ -295,7 +295,7 @@ public class POP3 extends SocketClient {
     }
 
     /**
-     * Set the internal POP3 state.
+     * Sets the internal POP3 state.
      *
      * @param state the new state. This must be one of the <code>_STATE</code> constants.
      */

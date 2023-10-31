@@ -1235,7 +1235,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Set strict multiline parsing.
+     * Sets strict multiline parsing.
      *
      * @param strictMultilineParsing the setting
      * @since 2.0
@@ -1245,7 +1245,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Set strict non-multiline parsing.
+     * Sets strict non-multiline parsing.
      * <p>
      * If true, it requires the 3-digit code be followed by space and some text. <br>
      * If false, only the 3-digit code is required (as was the case for versions up to 3.5)

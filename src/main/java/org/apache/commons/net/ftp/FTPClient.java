@@ -1312,7 +1312,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the current data connection mode to <code>ACTIVE_LOCAL_DATA_CONNECTION_MODE</code>. No communication with the FTP server is conducted, but this
+     * Sets the current data connection mode to <code>ACTIVE_LOCAL_DATA_CONNECTION_MODE</code>. No communication with the FTP server is conducted, but this
      * causes all future data transfers to require the FTP server to connect to the client's data port. Additionally, to accommodate differences between socket
      * implementations on different platforms, this method causes the client to issue a PORT command before every data transfer.
      */
@@ -1323,7 +1323,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the current data connection mode to <code> PASSIVE_LOCAL_DATA_CONNECTION_MODE </code>. Use this method only for data transfers between the client and
+     * Sets the current data connection mode to <code> PASSIVE_LOCAL_DATA_CONNECTION_MODE </code>. Use this method only for data transfers between the client and
      * server. This method causes a PASV (or EPSV) command to be issued to the server before the opening of every data connection, telling the server to open a
      * data port to which the client will connect to conduct data transfers. The FTPClient will stay in <code> PASSIVE_LOCAL_DATA_CONNECTION_MODE </code> until
      * the mode is changed by calling some other method such as {@link #enterLocalActiveMode enterLocalActiveMode() }
@@ -1339,7 +1339,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the current data connection mode to <code> ACTIVE_REMOTE_DATA_CONNECTION </code>. Use this method only for server to server data transfers. This
+     * Sets the current data connection mode to <code> ACTIVE_REMOTE_DATA_CONNECTION </code>. Use this method only for server to server data transfers. This
      * method issues a PORT command to the server, indicating the other server and port to which it should connect for data transfers. You must call this method
      * before EVERY server to server transfer attempt. The FTPClient will NOT automatically continue to issue PORT commands. You also must remember to call
      * {@link #enterLocalActiveMode enterLocalActiveMode() } if you wish to return to the normal data connection mode.
@@ -1363,7 +1363,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the current data connection mode to <code> PASSIVE_REMOTE_DATA_CONNECTION_MODE </code>. Use this method only for server to server data transfers.
+     * Sets the current data connection mode to <code> PASSIVE_REMOTE_DATA_CONNECTION_MODE </code>. Use this method only for server to server data transfers.
      * This method issues a PASV command to the server, telling it to open a data port to which the active server will connect to conduct data transfers. You
      * must call this method before EVERY server to server transfer attempt. The FTPClient will NOT automatically continue to issue PASV commands. You also must
      * remember to call {@link #enterLocalActiveMode enterLocalActiveMode() } if you wish to return to the normal data connection mode.
@@ -1677,7 +1677,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the local IP address in passive mode. Useful when there are multiple network cards.
+     * Sets the local IP address in passive mode. Useful when there are multiple network cards.
      *
      * @return The local IP address in passive mode.
      */
@@ -2870,7 +2870,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the external IP address in active mode. Useful when there are multiple network cards.
+     * Sets the external IP address in active mode. Useful when there are multiple network cards.
      *
      * @param ipAddress The external IP address of this machine.
      * @throws UnknownHostException if the ipAddress cannot be resolved
@@ -2881,7 +2881,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the client side port range in active mode.
+     * Sets the client side port range in active mode.
      *
      * @param minPort The lowest available port (inclusive).
      * @param maxPort The highest available port (inclusive).
@@ -2904,7 +2904,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the internal buffer size for buffered data streams.
+     * Sets the internal buffer size for buffered data streams.
      *
      * @param bufSize The size of the buffer. Use a non-positive value to use the default.
      */
@@ -2967,7 +2967,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the listener to be used when performing store/retrieve operations. The default value (if not set) is {@code null}.
+     * Sets the listener to be used when performing store/retrieve operations. The default value (if not set) is {@code null}.
      *
      * @param listener to be used, may be {@code null} to disable
      * @since 3.0
@@ -3153,7 +3153,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the local IP address to use in passive mode. Useful when there are multiple network cards.
+     * Sets the local IP address to use in passive mode. Useful when there are multiple network cards.
      *
      * @param inetAddress The local IP address of this machine.
      */
@@ -3162,7 +3162,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the local IP address to use in passive mode. Useful when there are multiple network cards.
+     * Sets the local IP address to use in passive mode. Useful when there are multiple network cards.
      *
      * @param ipAddress The local IP address of this machine.
      * @throws UnknownHostException if the ipAddress cannot be resolved
@@ -3258,7 +3258,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set whether to use EPSV with IPv4. Might be worth enabling in some circumstances.
+     * Sets whether to use EPSV with IPv4. Might be worth enabling in some circumstances.
      *
      * For example, when using IPv4 with NAT it may work with some rare configurations. E.g. if FTP server has a static PASV address (external network) and the
      * client is coming from another internal network. In that case the data connection after PASV command would fail, while EPSV would make the client succeed

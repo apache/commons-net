@@ -346,7 +346,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Set a {@link KeyManager} to use.
+     * Sets a {@link KeyManager} to use.
      *
      * @param newKeyManager The KeyManager implementation to set.
      * @see org.apache.commons.net.util.KeyManagerUtils

@@ -398,7 +398,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set the contents of this object from source datagram packet.
+     * Sets the contents of this object from source datagram packet.
      *
      * @param srcDp source DatagramPacket to copy contents from, never null.
      * @throws IllegalArgumentException if srcDp is null or byte length is less than minimum length of 48 bytes
@@ -422,7 +422,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set integer value at index position.
+     * Sets integer value at index position.
      *
      * @param idx   index position
      * @param value 32-bit int value
@@ -435,7 +435,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set leap indicator as defined in RFC-1305.
+     * Sets leap indicator as defined in RFC-1305.
      *
      * @param li leap indicator.
      */
@@ -445,7 +445,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set mode as defined in RFC-1305.
+     * Sets mode as defined in RFC-1305.
      *
      * @param mode the mode to set
      */
@@ -455,7 +455,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set originate timestamp given NTP TimeStamp object. If <code>ts</code> is null then zero time is used.
+     * Sets originate timestamp given NTP TimeStamp object. If <code>ts</code> is null then zero time is used.
      *
      * @param ts NTP timestamp
      */
@@ -465,7 +465,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set poll interval as defined in RFC-1305.
+     * Sets poll interval as defined in RFC-1305.
      *
      * @param poll poll interval.
      */
@@ -475,7 +475,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set precision as defined in RFC-1305.
+     * Sets precision as defined in RFC-1305.
      *
      * @param precision the precision to set
      * @since 3.4
@@ -486,7 +486,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set receive timestamp given NTP TimeStamp object. If <code>ts</code> is null then zero time is used.
+     * Sets receive timestamp given NTP TimeStamp object. If <code>ts</code> is null then zero time is used.
      *
      * @param ts timestamp
      */
@@ -496,7 +496,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set reference clock identifier field with 32-bit unsigned integer value. See RFC-1305 for description.
+     * Sets reference clock identifier field with 32-bit unsigned integer value. See RFC-1305 for description.
      *
      * @param refId reference clock identifier.
      */
@@ -506,7 +506,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set Reference time with NTP timestamp. If <code>ts</code> is null then zero time is used.
+     * Sets Reference time with NTP timestamp. If <code>ts</code> is null then zero time is used.
      *
      * @param ts NTP timestamp
      */
@@ -516,7 +516,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set root delay as defined in RFC-1305.
+     * Sets root delay as defined in RFC-1305.
      *
      * @param delay root delay
      * @since 3.4
@@ -527,7 +527,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set root dispersion as defined in RFC-1305.
+     * Sets root dispersion as defined in RFC-1305.
      *
      * @param dispersion root dispersion
      * @since 3.4
@@ -538,7 +538,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set stratum level as defined in RFC-1305.
+     * Sets stratum level as defined in RFC-1305.
      *
      * @param stratum stratum level.
      */
@@ -565,7 +565,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set transmit time with NTP timestamp. If <code>ts</code> is null then zero time is used.
+     * Sets transmit time with NTP timestamp. If <code>ts</code> is null then zero time is used.
      *
      * @param ts NTP timestamp
      */
@@ -575,7 +575,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Set NTP version as defined in RFC-1305.
+     * Sets NTP version as defined in RFC-1305.
      *
      * @param version NTP version.
      */

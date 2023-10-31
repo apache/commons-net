@@ -631,7 +631,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Set the default timeout in milliseconds to use when opening a socket. This value is only used previous to a call to {@link #connect connect()} and should
+     * Sets the default timeout in milliseconds to use when opening a socket. This value is only used previous to a call to {@link #connect connect()} and should
      * not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the currently opened socket. _timeout_ contains the new timeout value.
      *
      * @param timeout The timeout in milliseconds to use for the socket connection.
@@ -678,7 +678,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Set the underlying socket send buffer size.
+     * Sets the underlying socket send buffer size.
      *
      * @param size The size of the buffer in bytes.
      * @throws SocketException never thrown, but subclasses might want to do so
@@ -730,7 +730,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Set the timeout in milliseconds of a currently open connection. Only call this method after a connection has been opened by {@link #connect connect()}.
+     * Sets the timeout in milliseconds of a currently open connection. Only call this method after a connection has been opened by {@link #connect connect()}.
      * <p>
      * To set the initial timeout, use {@link #setDefaultTimeout(int)} instead.
      *

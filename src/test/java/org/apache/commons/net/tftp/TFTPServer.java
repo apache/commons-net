@@ -730,7 +730,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /**
-     * Set the stream object to log debug / informational messages. By default, this is a no-op
+     * Sets the stream object to log debug / informational messages. By default, this is a no-op
      *
      * @param log the stream to use for logging
      */
@@ -739,7 +739,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /**
-     * Set the stream object to log error messsages. By default, this is a no-op
+     * Sets the stream object to log error messsages. By default, this is a no-op
      *
      * @param logError the stream to use for logging errors
      */
@@ -748,7 +748,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /**
-     * Set the max number of retries in response to a timeout. Default 3. Min 0.
+     * Sets the max number of retries in response to a timeout. Default 3. Min 0.
      *
      * @param retries number of retries, must be &gt; 0
      * @throws IllegalArgumentException if {@code retries} is less than 0.
@@ -761,7 +761,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /**
-     * Set the socket timeout in milliseconds used in transfers.
+     * Sets the socket timeout in milliseconds used in transfers.
      * <p>
      * Defaults to the value {@link TFTP#DEFAULT_TIMEOUT}. Minimum value of 10.
      * </p>

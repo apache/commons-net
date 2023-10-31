@@ -250,7 +250,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     }
 
     /**
-     * Set the default timeout in to use when opening a socket. After a call to open, the timeout for the socket is set using this value. This
+     * Sets the default timeout in to use when opening a socket. After a call to open, the timeout for the socket is set using this value. This
      * method should be used prior to a call to {@link #open open()} and should not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the
      * currently open socket. _timeout_ contains the new timeout value.
      *
@@ -261,7 +261,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     }
 
     /**
-     * Set the default timeout in milliseconds to use when opening a socket. After a call to open, the timeout for the socket is set using this value. This
+     * Sets the default timeout in milliseconds to use when opening a socket. After a call to open, the timeout for the socket is set using this value. This
      * method should be used prior to a call to {@link #open open()} and should not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the
      * currently open socket. _timeout_ contains the new timeout value.
      *
@@ -274,7 +274,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     }
 
     /**
-     * Set the timeout duration of a currently open connection. Only call this method after a connection has been opened by {@link #open open()}.
+     * Sets the timeout duration of a currently open connection. Only call this method after a connection has been opened by {@link #open open()}.
      *
      * @param timeout The timeout in milliseconds to use for the currently open datagram socket connection.
      * @throws SocketException if an error setting the timeout.
@@ -285,7 +285,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     }
 
     /**
-     * Set the timeout in milliseconds of a currently open connection. Only call this method after a connection has been opened by {@link #open open()}.
+     * Sets the timeout in milliseconds of a currently open connection. Only call this method after a connection has been opened by {@link #open open()}.
      *
      * @param timeout The timeout in milliseconds to use for the currently open datagram socket connection.
      * @throws SocketException if an error setting the timeout.

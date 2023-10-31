@@ -906,7 +906,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Set AUTH command use value. This processing is done before connected processing.
+     * Sets AUTH command use value. This processing is done before connected processing.
      *
      * @param auth AUTH command use value.
      */
@@ -964,7 +964,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Set a {@link KeyManager} to use
+     * Sets a {@link KeyManager} to use
      *
      * @param keyManager The KeyManager implementation to set.
      * @see org.apache.commons.net.util.KeyManagerUtils

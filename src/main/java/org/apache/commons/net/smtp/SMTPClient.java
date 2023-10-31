@@ -406,7 +406,7 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Set the sender of a message using the SMTP MAIL command, specifying a reverse relay path. The sender must be set first before any recipients may be
+     * Sets the sender of a message using the SMTP MAIL command, specifying a reverse relay path. The sender must be set first before any recipients may be
      * specified, otherwise the mail server will reject your commands.
      *
      * @param path The reverse relay path pointing back to the sender.
@@ -421,7 +421,7 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Set the sender of a message using the SMTP MAIL command, specifying the sender's email address. The sender must be set first before any recipients may be
+     * Sets the sender of a message using the SMTP MAIL command, specifying the sender's email address. The sender must be set first before any recipients may be
      * specified, otherwise the mail server will reject your commands.
      *
      * @param address The sender's email address.
