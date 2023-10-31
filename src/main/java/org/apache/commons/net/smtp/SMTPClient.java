@@ -421,8 +421,8 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Sets the sender of a message using the SMTP MAIL command, specifying the sender's email address. The sender must be set first before any recipients may be
-     * specified, otherwise the mail server will reject your commands.
+     * Sets the sender of a message using the SMTP MAIL command, specifying the sender's email address. The sender must be set first before any recipients may
+     * be specified, otherwise the mail server will reject your commands.
      *
      * @param address The sender's email address.
      * @return True if successfully completed, false if not.
