@@ -215,7 +215,7 @@ public class POP3SClient extends POP3Client {
     }
 
     /**
-     * Get the currently configured {@link HostnameVerifier}.
+     * Gets the currently configured {@link HostnameVerifier}.
      *
      * @return A HostnameVerifier instance.
      * @since 3.4
@@ -225,7 +225,7 @@ public class POP3SClient extends POP3Client {
     }
 
     /**
-     * Get the {@link KeyManager} instance.
+     * Gets the {@link KeyManager} instance.
      *
      * @return The current {@link KeyManager} instance.
      */
@@ -234,7 +234,7 @@ public class POP3SClient extends POP3Client {
     }
 
     /**
-     * Get the currently configured {@link TrustManager}.
+     * Gets the currently configured {@link TrustManager}.
      *
      * @return A TrustManager instance.
      */

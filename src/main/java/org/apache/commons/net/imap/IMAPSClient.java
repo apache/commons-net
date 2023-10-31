@@ -220,7 +220,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Get the currently configured {@link HostnameVerifier}.
+     * Gets the currently configured {@link HostnameVerifier}.
      *
      * @return A HostnameVerifier instance.
      * @since 3.4
@@ -230,7 +230,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Get the {@link KeyManager} instance.
+     * Gets the {@link KeyManager} instance.
      *
      * @return The current {@link KeyManager} instance.
      */
@@ -239,7 +239,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Get the currently configured {@link TrustManager}.
+     * Gets the currently configured {@link TrustManager}.
      *
      * @return A TrustManager instance.
      */

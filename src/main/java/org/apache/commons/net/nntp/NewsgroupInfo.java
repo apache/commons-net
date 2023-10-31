@@ -55,7 +55,7 @@ public final class NewsgroupInfo {
     }
 
     /**
-     * Get the estimated number of articles in the newsgroup. The accuracy of this value will depend on the server implementation.
+     * Gets the estimated number of articles in the newsgroup. The accuracy of this value will depend on the server implementation.
      *
      * @return The estimated number of articles in the newsgroup.
      */
@@ -69,7 +69,7 @@ public final class NewsgroupInfo {
     }
 
     /**
-     * Get the number of the first article in the newsgroup.
+     * Gets the number of the first article in the newsgroup.
      *
      * @return The number of the first article in the newsgroup.
      */
@@ -83,7 +83,7 @@ public final class NewsgroupInfo {
     }
 
     /**
-     * Get the number of the last article in the newsgroup.
+     * Gets the number of the last article in the newsgroup.
      *
      * @return The number of the last article in the newsgroup.
      */
@@ -92,7 +92,7 @@ public final class NewsgroupInfo {
     }
 
     /**
-     * Get the newsgroup name.
+     * Gets the newsgroup name.
      *
      * @return The name of the newsgroup.
      */
@@ -101,7 +101,7 @@ public final class NewsgroupInfo {
     }
 
     /**
-     * Get the posting permission of the newsgroup. This will be one of the <code> POSTING_PERMISSION </code> constants.
+     * Gets the posting permission of the newsgroup. This will be one of the <code> POSTING_PERMISSION </code> constants.
      *
      * @return The posting permission status of the newsgroup.
      */

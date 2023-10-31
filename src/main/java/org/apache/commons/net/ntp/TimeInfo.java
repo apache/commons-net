@@ -231,7 +231,7 @@ public class TimeInfo {
     }
 
     /**
-     * Get host address from message datagram if available
+     * Gets host address from message datagram if available
      *
      * @return host address of available otherwise null
      * @since 3.4
@@ -251,7 +251,7 @@ public class TimeInfo {
     }
 
     /**
-     * Get round-trip network delay. If null then could not compute the delay.
+     * Gets round-trip network delay. If null then could not compute the delay.
      *
      * @return Long or null if delay not available.
      */
@@ -269,7 +269,7 @@ public class TimeInfo {
     }
 
     /**
-     * Get clock offset needed to adjust local clock to match remote clock. If null then could not compute the offset.
+     * Gets clock offset needed to adjust local clock to match remote clock. If null then could not compute the offset.
      *
      * @return Long or null if offset not available.
      */

@@ -1448,7 +1448,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Get the client port for active mode.
+     * Gets the client port for active mode.
      *
      * @return The client port for active mode.
      */
@@ -1557,7 +1557,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Get the CSL debug array.
+     * Gets the CSL debug array.
      * <p>
      * <b>For debug use only</b>
      * <p>
@@ -1606,7 +1606,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Get the host address for active mode; allows the local address to be overridden.
+     * Gets the host address for active mode; allows the local address to be overridden.
      *
      * @return __activeExternalHost if non-null, else getLocalAddress()
      * @see #setActiveExternalIPAddress(String)
@@ -1707,7 +1707,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Get the reported host address for active mode EPRT/PORT commands; allows override of {@link #getHostAddress()}.
+     * Gets the reported host address for active mode EPRT/PORT commands; allows override of {@link #getHostAddress()}.
      *
      * Useful for FTP Client behind Firewall NAT.
      *
@@ -2587,7 +2587,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Get file details using the MLST command
+     * Gets file details using the MLST command
      *
      * @param pathname the file or directory to list, may be {@code null}
      * @return the file details, may be {@code null}

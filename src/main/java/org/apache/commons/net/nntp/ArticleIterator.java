@@ -43,7 +43,7 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
     }
 
     /**
-     * Get the next Article
+     * Gets the next Article
      *
      * @return the next {@link Article}, never {@code null}, if unparseable then isDummy() will be true, and the subject will contain the raw info.
      */

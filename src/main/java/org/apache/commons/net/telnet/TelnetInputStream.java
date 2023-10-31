@@ -261,7 +261,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
     // as a processDo/Will/etc. command invoked from TelnetInputStream
     // tries to write.
     /**
-     * Get the next byte of data. IAC commands are processed internally and do not return data.
+     * Gets the next byte of data. IAC commands are processed internally and do not return data.
      *
      * @param mayBlock true if method is allowed to block
      * @return the next byte of data, or -1 (EOF) if end of stread reached, or -2 (WOULD_BLOCK) if mayBlock is false and there is no data available

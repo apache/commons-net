@@ -608,7 +608,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Get the currently configured {@link HostnameVerifier}. The verifier is only used on client mode connections.
+     * Gets the currently configured {@link HostnameVerifier}. The verifier is only used on client mode connections.
      *
      * @return A HostnameVerifier instance.
      * @since 3.4
@@ -639,7 +639,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Get the currently configured {@link TrustManager}.
+     * Gets the currently configured {@link TrustManager}.
      *
      * @return A TrustManager instance.
      */

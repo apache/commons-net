@@ -151,7 +151,7 @@ public enum IMAPCommand {
     UID(2, Integer.MAX_VALUE);
 
     /**
-     * Get the IMAP protocol string command corresponding to a command code.
+     * Gets the IMAP protocol string command corresponding to a command code.
      *
      * @param command the {@link IMAPCommand} whose command string is required. Must not be null.
      * @return The IMAP protocol string command corresponding to a command code.

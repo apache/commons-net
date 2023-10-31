@@ -134,7 +134,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Get Long value represented by bits starting at specified index.
+     * Gets Long value represented by bits starting at specified index.
      *
      * @return 8 bytes as 64-bit long
      */
@@ -321,7 +321,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Get NTP Timestamp at specified starting index.
+     * Gets NTP Timestamp at specified starting index.
      *
      * @param index index into data array
      * @return TimeStamp object for 64 bits starting at index

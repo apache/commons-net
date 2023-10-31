@@ -412,7 +412,7 @@ public class POP3Client extends POP3 {
     }
 
     /**
-     * Get the mailbox status. A status attempt can only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE
+     * Gets the mailbox status. A status attempt can only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE
      * TRANSACTION_STATE } . Returns a POP3MessageInfo instance containing the number of messages in the mailbox and the total size of the messages in bytes.
      * Returns null if the status the attempt fails.
      *

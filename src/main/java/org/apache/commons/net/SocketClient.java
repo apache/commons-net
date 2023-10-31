@@ -371,7 +371,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Get the underlying socket connection timeout.
+     * Gets the underlying socket connection timeout.
      *
      * @return timeout (in ms)
      * @since 2.0
@@ -440,7 +440,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Get the current receivedBuffer size
+     * Gets the current receivedBuffer size
      *
      * @return the size, or -1 if not initialized
      * @since 3.0
@@ -478,7 +478,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Get the current sendBuffer size
+     * Gets the current sendBuffer size
      *
      * @return the size, or -1 if not initialized
      * @since 3.0
@@ -488,7 +488,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Get the underlying {@link ServerSocketFactory}
+     * Gets the underlying {@link ServerSocketFactory}
      *
      * @return The server socket factory
      * @since 2.2

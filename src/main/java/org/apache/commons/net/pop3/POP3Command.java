@@ -28,7 +28,7 @@ public final class POP3Command {
     public static final int PASS = 1;
     /** Quit session. */
     public static final int QUIT = 2;
-    /** Get status. */
+    /** Gets status. */
     public static final int STAT = 3;
     /** List message(s). */
     public static final int LIST = 4;
@@ -70,7 +70,7 @@ public final class POP3Command {
     }
 
     /**
-     * Get the POP3 protocol string command corresponding to a command code.
+     * Gets the POP3 protocol string command corresponding to a command code.
      *
      * @param command the command code
      *
