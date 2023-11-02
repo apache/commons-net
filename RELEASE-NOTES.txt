@@ -145,7 +145,7 @@ Apache Commons Net library contains a collection of network utilities and protoc
 Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
 
 
-Maintenance and bug fix release (Java 7).
+Maintenance and bug fix release (Java 7 or above).
 
 For complete information on Apache Commons Net, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Commons Net website:

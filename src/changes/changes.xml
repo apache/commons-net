@@ -287,7 +287,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump commons-parent from 53 to 54 #112.
       </action>
     </release>
-    <release version="3.8.0" date="2021-02-13" description="Maintenance and bug fix release (Java 7).">
+    <release version="3.8.0" date="2021-02-13" description="Maintenance and bug fix release (Java 7 or above).">
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
         Add and use NetConstants.
@@ -325,7 +325,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump actions/cache from v2 to v2.1.4 #73.
       </action>
     </release>
-    <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release (Java 7).">
+    <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release (Java 7 or above).">
       <action issue="NET-689" type="fix" dev="ggregory" due-to="Charlie, Gary Gregory">
         Host name is not set on the SSLSocket causing isEndpointCheckingEnabled to fail.
       </action>
@@ -347,7 +347,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump junit from 4.13 to 4.13.1 #67.
       </action>
     </release>
-    <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release (Java 7).">
+    <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release (Java 7 or above).">
       <action issue="NET-687" type="fix" dev="ggregory" due-to="Gary Gregory, Mikael, j-verse">
         [FTPS] javax.net.ssl.SSLException: Unsupported or unrecognized SSL message, #59.
       </action>
@@ -358,7 +358,7 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     <release version="3.7" date="2020-08-05"
       description="
-This is mainly a bug-fix release (Java 7). See further details below.
+This is mainly a bug-fix release (Java 7 or above). See further details below.
 
  This release requires a minimum of Java 7.
 
@@ -462,7 +462,7 @@ This is mainly a bug-fix release (Java 7). See further details below.
     </release>
     <release version="3.6" date="2017-02-15"
       description="
-This is mainly a bug-fix release (Java 6). See further details below.
+This is mainly a bug-fix release (Java 6 or above). See further details below.
 
 
  This release is binary compatible with previous releases.
@@ -544,7 +544,7 @@ without checking it if is a space.
     </release>
     <release version="3.5" date="2016-05-05"
       description="
-This is mainly a bug-fix release (Java 6). See further details below.
+This is mainly a bug-fix release (Java 6 or above). See further details below.
 
 
  This release is binary compatible with previous releases.
