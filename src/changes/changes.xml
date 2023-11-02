@@ -64,7 +64,7 @@ The <action> type attribute can be add,update,fix,remove.
     -->
 
   <body>
-    <release version="3.10.1" date="202Y-MM-DD" description="Maintenance and bug fix release (Java 8).">
+    <release version="3.10.1" date="202Y-MM-DD" description="Maintenance and bug fix release (Java 8 or above).">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">
         Precompile regular expression in UnixFTPEntryParser.preParse(List&lt;String&gt;).
@@ -75,7 +75,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump commons-parent from 62 to 64.
       </action>
     </release>
-    <release version="3.10.0" date="2023-10-01" description="Maintenance and bug fix release (Java 8).">
+    <release version="3.10.0" date="2023-10-01" description="Maintenance and bug fix release (Java 8 or above).">
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         Add and use DatagramSocketClient.setDefaultTimeout(Duration) and deprecate DatagramSocketClient.setDefaultTimeout(int).
@@ -188,7 +188,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump commons-lang3 from 3.12.0 to 3.13.0.
       </action>
     </release>
-    <release version="3.9.0" date="2022-11-26" description="Maintenance and bug fix release (Java 8).">
+    <release version="3.9.0" date="2022-11-26" description="Maintenance and bug fix release (Java 8 or above).">
       <!-- FIX -->
       <action type="fix" issue="NET-708" dev="ggregory" due-to="XenoAmess">
         Use yyyy instead of YYYY in SimpleDateFormat #97.
