@@ -43,6 +43,16 @@ public class IMAPTest {
         );
     }
 
+    @ParameterizedTest(name = "String `{0}` should be quoted")
+    @MethodSource("mailboxNamesToBeQuoted")
+    public void quoteMailboxName(final String input) {
+        final String quotedMailboxName = IMAP.quoteMailboxName(input);
+        assertAll(
+                () -> assertTrue(quotedMailboxName.startsWith("\""), "quoted string should start with quotation mark"),
+                () -> assertTrue(quotedMailboxName.endsWith("\""), "quoted string should end with quotation mark")
+        );
+    }
+
     @Test
     public void testCheckGenerator() {
         // This test assumes:
@@ -75,16 +85,6 @@ public class IMAPTest {
                 () -> assertEquals(IMAP.DEFAULT_PORT, imap.getDefaultPort()),
                 () -> assertEquals(IMAP.IMAPState.DISCONNECTED_STATE, imap.getState()),
                 () -> assertEquals(0, imap.getReplyStrings().length)
-        );
-    }
-
-    @ParameterizedTest(name = "String `{0}` should be quoted")
-    @MethodSource("mailboxNamesToBeQuoted")
-    public void quoteMailboxName(final String input) {
-        final String quotedMailboxName = IMAP.quoteMailboxName(input);
-        assertAll(
-                () -> assertTrue(quotedMailboxName.startsWith("\""), "quoted string should start with quotation mark"),
-                () -> assertTrue(quotedMailboxName.endsWith("\""), "quoted string should end with quotation mark")
         );
     }
 

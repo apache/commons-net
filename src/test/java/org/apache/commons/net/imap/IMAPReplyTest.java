@@ -60,6 +60,18 @@ public class IMAPReplyTest {
         );
     }
 
+    @ParameterizedTest(name = "reply line `{1}` contains literal {0}")
+    @MethodSource("literalCommands")
+    public void literalCount(final int expectedLiteral, final String replyLine) {
+        assertEquals(expectedLiteral, IMAPReply.literalCount(replyLine));
+    }
+
+    @ParameterizedTest(name = "reply line `{0}` does not contain any literal")
+    @MethodSource("invalidLiteralCommands")
+    public void literalCountInvalid(final String replyLine) {
+        assertEquals(-1, IMAPReply.literalCount(replyLine));
+    }
+
     @Test
     public void testGetReplyCodeBadLine() throws IOException {
         final String badLine = "A044 BAD No such command as \"FOOBAR\"";
@@ -169,18 +181,6 @@ public class IMAPReplyTest {
     public void testIsUntaggedReplyLineInvalidLine() {
         final String taggedLine = "a001 OK LOGOUT completed";
         assertFalse(IMAPReply.isUntagged(taggedLine));
-    }
-
-    @ParameterizedTest(name = "reply line `{1}` contains literal {0}")
-    @MethodSource("literalCommands")
-    public void literalCount(final int expectedLiteral, final String replyLine) {
-        assertEquals(expectedLiteral, IMAPReply.literalCount(replyLine));
-    }
-
-    @ParameterizedTest(name = "reply line `{0}` does not contain any literal")
-    @MethodSource("invalidLiteralCommands")
-    public void literalCountInvalid(final String replyLine) {
-        assertEquals(-1, IMAPReply.literalCount(replyLine));
     }
 
 }

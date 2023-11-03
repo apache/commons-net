@@ -80,27 +80,6 @@ public class MainTest {
         }
     }
 
-    @Test
-    public void testCheckExamplesPropertiesIsComplete() throws Exception {
-        final Properties cp = scanClasses();
-        final Properties fp = new Properties();
-        try (final InputStream inputStream = this.getClass().getResourceAsStream("examples.properties")) {
-            fp.load(inputStream);
-        }
-        @SuppressWarnings("unchecked") // OK
-        final Enumeration<String> propertyNames = (Enumeration<String>) cp.propertyNames();
-        while (propertyNames.hasMoreElements()) {
-            final String c = propertyNames.nextElement();
-            final String fv = fp.getProperty(c);
-            final String cv = cp.getProperty(c);
-            if (fv == null) {
-                System.out.printf("%-25s %s - missing from examples.properties%n", c, cv);
-            } else if (!fv.equals(cv)) {
-                System.out.printf("%-25s %s - expected value %s %n", c, fv, cv);
-            }
-        }
-    }
-
     private Properties scanClasses() throws IOException {
         final CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         // ensure special characters are decoded OK by uing the charset
@@ -126,5 +105,26 @@ public class MainTest {
             }
         }
         return p;
+    }
+
+    @Test
+    public void testCheckExamplesPropertiesIsComplete() throws Exception {
+        final Properties cp = scanClasses();
+        final Properties fp = new Properties();
+        try (final InputStream inputStream = this.getClass().getResourceAsStream("examples.properties")) {
+            fp.load(inputStream);
+        }
+        @SuppressWarnings("unchecked") // OK
+        final Enumeration<String> propertyNames = (Enumeration<String>) cp.propertyNames();
+        while (propertyNames.hasMoreElements()) {
+            final String c = propertyNames.nextElement();
+            final String fv = fp.getProperty(c);
+            final String cv = cp.getProperty(c);
+            if (fv == null) {
+                System.out.printf("%-25s %s - missing from examples.properties%n", c, cv);
+            } else if (!fv.equals(cv)) {
+                System.out.printf("%-25s %s - expected value %s %n", c, fv, cv);
+            }
+        }
     }
 }
