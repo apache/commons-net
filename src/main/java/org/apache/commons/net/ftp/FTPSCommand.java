@@ -25,18 +25,60 @@ package org.apache.commons.net.ftp;
  */
 @Deprecated
 public final class FTPSCommand {
+
+    /**
+     * {@value}
+     */
     public static final int AUTH = 0;
+
+    /**
+     * {@value}
+     */
     public static final int ADAT = 1;
+
+    /**
+     * {@value}
+     */
     public static final int PBSZ = 2;
+
+    /**
+     * {@value}
+     */
     public static final int PROT = 3;
+
+    /**
+     * {@value}
+     */
     public static final int CCC = 4;
 
+    /**
+     * {@value}
+     */
     public static final int AUTHENTICATION_SECURITY_MECHANISM = AUTH;
+
+    /**
+     * {@value}
+     */
     public static final int AUTHENTICATION_SECURITY_DATA = ADAT;
+
+    /**
+     * {@value}
+     */
     public static final int PROTECTION_BUFFER_SIZE = PBSZ;
+
+    /**
+     * {@value}
+     */
     public static final int DATA_CHANNEL_PROTECTION_LEVEL = PROT;
+
+    /**
+     * {@value}
+     */
     public static final int CLEAR_COMMAND_CHANNEL = CCC;
 
+    /**
+     * {@value}
+     */
     private static final String[] commands = { "AUTH", "ADAT", "PBSZ", "PROT", "CCC" };
 
     /**

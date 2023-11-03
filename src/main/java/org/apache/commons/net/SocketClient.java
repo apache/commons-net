@@ -43,6 +43,7 @@ import javax.net.SocketFactory;
  * @see SocketFactory
  */
 public abstract class SocketClient {
+
     /**
      * The end of line character sequence used by most IETF protocols. That is a carriage return followed by a newline: "\r\n"
      */
@@ -89,6 +90,9 @@ public abstract class SocketClient {
     /** The socket's ServerSocket Factory. */
     protected ServerSocketFactory _serverSocketFactory_;
 
+    /**
+     * Defaults to {@link #DEFAULT_CONNECT_TIMEOUT}.
+     */
     protected int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
 
     /** Hint for SO_RCVBUF size */

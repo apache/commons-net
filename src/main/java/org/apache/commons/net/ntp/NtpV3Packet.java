@@ -29,12 +29,26 @@ public interface NtpV3Packet {
      */
     int NTP_PORT = 123;
 
+    /**
+     * {@value}
+     */
     int LI_NO_WARNING = 0;
+
+    /**
+     * {@value}
+     */
     int LI_LAST_MINUTE_HAS_61_SECONDS = 1;
+
+    /**
+     * {@value}
+     */
     int LI_LAST_MINUTE_HAS_59_SECONDS = 2;
+
+    /**
+     * {@value}
+     */
     int LI_ALARM_CONDITION = 3;
 
-    // mode options
     /** Mode option {@value}. */
     int MODE_RESERVED = 0;
 
@@ -59,21 +73,57 @@ public interface NtpV3Packet {
     /** Mode option {@value}. */
     int MODE_PRIVATE = 7;
 
+    /**
+     * {@value}
+     */
     int NTP_MINPOLL = 4; // 16 seconds
+
+    /**
+     * {@value}
+     */
     int NTP_MAXPOLL = 14; // 16284 seconds
 
+    /**
+     * {@value}
+     */
     int NTP_MINCLOCK = 1;
+
+    /**
+     * {@value}
+     */
     int NTP_MAXCLOCK = 10;
 
+    /**
+     * {@value}
+     */
     int VERSION_3 = 3;
+
+    /**
+     * {@value}
+     */
     int VERSION_4 = 4;
 
-    /*
-     * possible getType values such that other time-related protocols can have its information represented as NTP packets
+    //
+    // possible getType values such that other time-related protocols can have its information represented as NTP packets
+    //
+    /**
+     * {@value}
      */
     String TYPE_NTP = "NTP"; // RFC-1305/2030
+
+    /**
+     * {@value}
+     */
     String TYPE_ICMP = "ICMP"; // RFC-792
+
+    /**
+     * {@value}
+     */
     String TYPE_TIME = "TIME"; // RFC-868
+
+    /**
+     * {@value}
+     */
     String TYPE_DAYTIME = "DAYTIME"; // RFC-867
 
     /**
