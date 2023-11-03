@@ -61,50 +61,50 @@ public class IMAPReplyTest {
     }
 
     @Test
-    public void getReplyCodeBadLine() throws IOException {
+    public void testGetReplyCodeBadLine() throws IOException {
         final String badLine = "A044 BAD No such command as \"FOOBAR\"";
         assertEquals(IMAPReply.BAD, IMAPReply.getReplyCode(badLine));
     }
 
     @Test
-    public void getReplyCodeContinuationLine() throws IOException {
+    public void testGetReplyCodeContinuationLine() throws IOException {
         final String continuationLine = "+ Ready for additional command text";
         assertEquals(IMAPReply.CONT, IMAPReply.getReplyCode(continuationLine));
     }
 
     @Test
-    public void getReplyCodeMalformedLine() {
+    public void testGetReplyCodeMalformedLine() {
         final String malformedTaggedLine = "A064 FOO-BAR 0";
         final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class, () -> IMAPReply.getReplyCode(malformedTaggedLine));
         assertEquals("Received unexpected IMAP protocol response from server: 'A064 FOO-BAR 0'.", replyException.getMessage());
     }
 
     @Test
-    public void getReplyCodeNoLine() throws IOException {
+    public void testGetReplyCodeNoLine() throws IOException {
         final String noLine = "A223 NO COPY failed: disk is full";
         assertEquals(IMAPReply.NO, IMAPReply.getReplyCode(noLine));
     }
 
     @Test
-    public void getReplyCodeOkLine() throws IOException {
+    public void testGetReplyCodeOkLine() throws IOException {
         final String okLine = "A001 OK LOGIN completed";
         assertEquals(IMAPReply.OK, IMAPReply.getReplyCode(okLine));
     }
 
     @Test
-    public void getUntaggedReplyCodeBadLine() throws IOException {
+    public void testGetUntaggedReplyCodeBadLine() throws IOException {
         final String badLine = "* BAD Empty command line";
         assertEquals(IMAPReply.BAD, IMAPReply.getUntaggedReplyCode(badLine));
     }
 
     @Test
-    public void getUntaggedReplyCodeContinuationLine() throws IOException {
+    public void testGetUntaggedReplyCodeContinuationLine() throws IOException {
         final String continuationLine = "+ Ready for additional command text";
         assertEquals(IMAPReply.CONT, IMAPReply.getUntaggedReplyCode(continuationLine));
     }
 
     @Test
-    public void getUntaggedReplyCodeMalformedLine() {
+    public void testGetUntaggedReplyCodeMalformedLine() {
         // invalid experimental comm response (missing X prefix)
         final String malformedUntaggedLine = "* FOO-BAR hello-world";
         final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class, () -> IMAPReply.getUntaggedReplyCode(malformedUntaggedLine));
@@ -112,61 +112,61 @@ public class IMAPReplyTest {
     }
 
     @Test
-    public void getUntaggedReplyCodeNoLine() throws IOException {
+    public void testGetUntaggedReplyCodeNoLine() throws IOException {
         final String noLine = "* NO Disk is 98% full, please delete unnecessary data";
         assertEquals(IMAPReply.NO, IMAPReply.getUntaggedReplyCode(noLine));
     }
 
     @Test
-    public void getUntaggedReplyCodeOkLine() throws IOException {
+    public void testGetUntaggedReplyCodeOkLine() throws IOException {
         final String okLine = "* OK Salvage successful, no data lost";
         assertEquals(IMAPReply.OK, IMAPReply.getUntaggedReplyCode(okLine));
     }
 
     @Test
-    public void isContinuationReplyCode() {
+    public void testIsContinuationReplyCode() {
         final int replyCode = 3;
         assertTrue(IMAPReply.isContinuation(replyCode));
     }
 
     @Test
-    public void isContinuationReplyCodeInvalidCode() {
+    public void testIsContinuationReplyCodeInvalidCode() {
         final int invalidContinuationReplyCode = 1;
         assertFalse(IMAPReply.isContinuation(invalidContinuationReplyCode));
     }
 
     @Test
-    public void isContinuationReplyLine() {
+    public void testIsContinuationReplyLine() {
         final String replyLine = "+FLAGS completed";
         assertTrue(IMAPReply.isContinuation(replyLine));
     }
 
     @Test
-    public void isContinuationReplyLineInvalidLine() {
+    public void testIsContinuationReplyLineInvalidLine() {
         final String invalidContinuationReplyLine = "* 22 EXPUNGE";
         assertFalse(IMAPReply.isContinuation(invalidContinuationReplyLine));
     }
 
     @Test
-    public void isSuccessReplyCode() {
+    public void testIsSuccessReplyCode() {
         final int successfulReplyCode = 0;
         assertTrue(IMAPReply.isSuccess(successfulReplyCode));
     }
 
     @Test
-    public void isSuccessReplyCodeUnsuccessfulCode() {
+    public void testIsSuccessReplyCodeUnsuccessfulCode() {
         final int unsuccessfulReplyCode = 2;
         assertFalse(IMAPReply.isSuccess(unsuccessfulReplyCode));
     }
 
     @Test
-    public void isUntaggedReplyLine() {
+    public void testIsUntaggedReplyLine() {
         final String replyLine = "* 18 EXISTS";
         assertTrue(IMAPReply.isUntagged(replyLine));
     }
 
     @Test
-    public void isUntaggedReplyLineInvalidLine() {
+    public void testIsUntaggedReplyLineInvalidLine() {
         final String taggedLine = "a001 OK LOGOUT completed";
         assertFalse(IMAPReply.isUntagged(taggedLine));
     }

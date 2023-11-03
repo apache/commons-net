@@ -81,7 +81,7 @@ public class MainTest {
     }
 
     @Test
-    public void checkExamplesPropertiesIsComplete() throws Exception {
+    public void testCheckExamplesPropertiesIsComplete() throws Exception {
         final Properties cp = scanClasses();
         final Properties fp = new Properties();
         try (final InputStream inputStream = this.getClass().getResourceAsStream("examples.properties")) {

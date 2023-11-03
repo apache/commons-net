@@ -44,7 +44,7 @@ public class IMAPTest {
     }
 
     @Test
-    public void checkGenerator() {
+    public void testCheckGenerator() {
         // This test assumes:
         // - 26 letters in the generator alphabet
         // - the generator uses a fixed size tag
@@ -69,7 +69,7 @@ public class IMAPTest {
     }
 
     @Test
-    public void constructDefaultIMAP() {
+    public void testConstructDefaultIMAP() {
         final IMAP imap = new IMAP();
         assertAll(
                 () -> assertEquals(IMAP.DEFAULT_PORT, imap.getDefaultPort()),
@@ -89,12 +89,12 @@ public class IMAPTest {
     }
 
     @Test
-    public void quoteMailboxNameNullInput() {
+    public void testQuoteMailboxNameNullInput() {
         assertNull(IMAP.quoteMailboxName(null));
     }
 
     @Test
-    public void quoteMailboxNoQuotingIfNoSpacePresent() {
+    public void testQuoteMailboxNoQuotingIfNoSpacePresent() {
         final String stringToQuote = "Foobar\"";
         assertEquals(stringToQuote, IMAP.quoteMailboxName(stringToQuote));
     }
