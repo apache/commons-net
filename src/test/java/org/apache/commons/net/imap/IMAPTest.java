@@ -100,7 +100,7 @@ public class IMAPTest {
     }
 
     @Test
-    public void trueChunkListener() {
+    public void testTrueChunkListener() {
         assertTrue(IMAP.TRUE_CHUNK_LISTENER.chunkReceived(new IMAP()));
     }
 
