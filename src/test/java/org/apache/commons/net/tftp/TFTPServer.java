@@ -81,7 +81,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     /*
      * An ongoing transfer.
      */
-    private class TFTPTransfer implements Runnable {
+    private final class TFTPTransfer implements Runnable {
         private final TFTPPacket tftpPacket;
 
         private boolean shutdownTransfer;

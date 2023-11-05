@@ -32,7 +32,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /**
      * Handy holder to hold both sides of the connection used in testing for clarity.
      */
-    private class TestConnection {
+    private final class TestConnection {
         private final TelnetTestSimpleServer server;
         private final TelnetClient client;
         private final int port;
