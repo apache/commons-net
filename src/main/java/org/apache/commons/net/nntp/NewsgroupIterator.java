@@ -24,7 +24,7 @@ import java.util.Iterator;
  *
  * @since 3.0
  */
-class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupInfo> {
+final class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupInfo> {
 
     private final Iterator<String> stringIterator;
 

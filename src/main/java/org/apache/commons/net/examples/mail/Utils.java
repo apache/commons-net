@@ -26,7 +26,7 @@ import java.util.Locale;
 /**
  * Utilities for mail examples
  */
-class Utils {
+final class Utils {
 
     /**
      * If the initial password is: '*' - replace it with a line read from the system console '-' - replace it with next line from STDIN 'ABCD' - if the input is

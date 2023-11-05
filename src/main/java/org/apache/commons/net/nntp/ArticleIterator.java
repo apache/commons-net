@@ -24,7 +24,7 @@ import java.util.Iterator;
  *
  * @since 3.0
  */
-class ArticleIterator implements Iterator<Article>, Iterable<Article> {
+final class ArticleIterator implements Iterator<Article>, Iterable<Article> {
 
     private final Iterator<String> stringIterator;
 

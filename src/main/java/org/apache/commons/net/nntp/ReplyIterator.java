@@ -30,7 +30,7 @@ import org.apache.commons.net.io.Util;
  *
  * @since 3.0
  */
-class ReplyIterator implements Iterator<String>, Iterable<String> {
+final class ReplyIterator implements Iterator<String>, Iterable<String> {
 
     private final BufferedReader reader;
 

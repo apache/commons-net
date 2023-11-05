@@ -20,7 +20,7 @@ package org.apache.commons.net.ftp;
 import java.time.Duration;
 
 /** Temporary until Commons Lang 3.12.0. */
-class DurationUtils {
+final class DurationUtils {
 
     /**
      * Tests whether the given Duration is positive (&gt;0).

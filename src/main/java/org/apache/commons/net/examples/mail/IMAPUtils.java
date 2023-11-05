@@ -27,7 +27,7 @@ import org.apache.commons.net.imap.IMAPSClient;
 /**
  * Utility class for shared IMAP utilities
  */
-class IMAPUtils {
+final class IMAPUtils {
 
     /**
      * Parses the URI and use the details to connect to the IMAP(S) server and login.
