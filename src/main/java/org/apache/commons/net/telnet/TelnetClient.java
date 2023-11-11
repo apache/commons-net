@@ -50,7 +50,7 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Construct an instance with the specified max subnegotiation length and the default terminal-type {@code VT100}
+     * Constructs an instance with the specified max subnegotiation length and the default terminal-type {@code VT100}
      *
      * @param maxSubnegotiationLength the size of the subnegotiation buffer
      */
@@ -59,7 +59,7 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Construct an instance with the specified terminal type.
+     * Constructs an instance with the specified terminal type.
      *
      * @param termtype the terminal type to use, e.g. {@code VT100}
      */
@@ -68,7 +68,7 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Construct an instance with the specified terminal type and max subnegotiation length
+     * Constructs an instance with the specified terminal type and max subnegotiation length
      *
      * @param termtype                the terminal type to use, e.g. {@code VT100}
      * @param maxSubnegotiationLength the size of the subnegotiation buffer
