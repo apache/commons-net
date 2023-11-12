@@ -515,7 +515,7 @@ public class FTPClient extends FTP implements Configurable {
 
     private FTPFileEntryParserFactory parserFactory;
 
-    private int bufferSize; // buffersize for buffered data streams
+    private int bufferSize; // for buffered data streams
 
     private int sendDataSocketBufferSize;
 
