@@ -202,8 +202,8 @@ public abstract class AbstractFtpsTest {
         try {
             // Do it twice.
             // Just testing that we are not getting an SSL error (the file MUST be present).
-            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
-            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
+            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.INSTANCE));
+            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.INSTANCE));
         } finally {
             client.disconnect();
         }
