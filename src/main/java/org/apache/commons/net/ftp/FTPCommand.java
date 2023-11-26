@@ -132,7 +132,6 @@ public final class FTPCommand {
     /** Command code {@value}. */
     public static final int NOOP = 32;
 
-
     /**
      * Command code {@value}.
      *

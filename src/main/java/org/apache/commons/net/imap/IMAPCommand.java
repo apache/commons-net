@@ -205,4 +205,3 @@ public enum IMAPCommand {
 
 }
 
-
