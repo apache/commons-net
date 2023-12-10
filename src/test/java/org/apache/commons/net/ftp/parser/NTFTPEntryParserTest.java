@@ -17,6 +17,8 @@
 package org.apache.commons.net.ftp.parser;
 
 import java.io.ByteArrayInputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTPFile;
@@ -185,18 +187,18 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     public void testNET516() throws Exception { // problem where part of a multi-byte char gets converted to 0x85 = line term
-        final int utf = testNET516("UTF-8");
+        final int utf = testNET516(StandardCharsets.UTF_8);
         assertEquals(LISTFILE_COUNT, utf);
-        final int ascii = testNET516("ASCII");
+        final int ascii = testNET516(StandardCharsets.US_ASCII);
         assertEquals(LISTFILE_COUNT, ascii);
-        final int iso8859_1 = testNET516("ISO-8859-1");
+        final int iso8859_1 = testNET516(StandardCharsets.ISO_8859_1);
         assertEquals(LISTFILE_COUNT, iso8859_1);
     }
 
-    private int testNET516(final String charset) throws Exception {
+    private int testNET516(final Charset charset) throws Exception {
         final FTPFileEntryParser parser = new NTFTPEntryParser();
         final FTPListParseEngine engine = new FTPListParseEngine(parser);
-        engine.readServerList(new ByteArrayInputStream(listFilesByteTrace), charset);
+        engine.readServerList(new ByteArrayInputStream(listFilesByteTrace), charset.name());
         final FTPFile[] ftpfiles = engine.getFiles();
         return ftpfiles.length;
     }
