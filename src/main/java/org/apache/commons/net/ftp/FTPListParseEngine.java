@@ -274,8 +274,6 @@ public class FTPListParseEngine {
         resetIterator();
     }
 
-    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
-
     /**
      * resets this object's internal iterator to the beginning of the list.
      */
