@@ -34,6 +34,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -609,9 +610,9 @@ public class FTPClient extends FTP implements Configurable {
         if (autodetectEncoding) {
             final ArrayList<String> oldReplyLines = new ArrayList<>(_replyLines);
             final int oldReplyCode = _replyCode;
-            if (hasFeature("UTF8") || hasFeature("UTF-8")) // UTF8 appears to be the default
+            if (hasFeature("UTF8") || hasFeature(StandardCharsets.UTF_8.name())) // UTF-8 appears to be the default
             {
-                setControlEncoding("UTF-8");
+                setControlEncoding(StandardCharsets.UTF_8.name());
                 _controlInput_ = new CRLFLineReader(new InputStreamReader(_input_, getControlEncoding()));
                 _controlOutput_ = new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
             }

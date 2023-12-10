@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.security.CodeSource;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -84,7 +85,7 @@ public class MainTest {
         final CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         // ensure special characters are decoded OK by uing the charset
         // Use canonical path to ensure consistency with Windows
-        final String sourceFile = new File(URLDecoder.decode(codeSource.getLocation().getFile(), "UTF-8")).getCanonicalPath();
+        final String sourceFile = new File(URLDecoder.decode(codeSource.getLocation().getFile(), StandardCharsets.UTF_8.name())).getCanonicalPath();
         final Properties p = new Properties();
         if (sourceFile.endsWith(".jar")) {
             try (final JarFile jf = new JarFile(sourceFile)) {
