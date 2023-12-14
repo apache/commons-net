@@ -497,7 +497,7 @@ public class FTPClient extends FTP implements Configurable {
     private int activeMaxPort;
     private InetAddress activeExternalHost;
 
-    /** overrides __activeExternalHost in EPRT/PORT commands. */
+    /** Overrides __activeExternalHost in EPRT/PORT commands. */
     private InetAddress reportActiveExternalHost;
 
     /** The address to bind to on passive connections, if necessary. */

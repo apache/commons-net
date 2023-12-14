@@ -186,7 +186,7 @@ public class SubnetUtils {
             return isInclusiveHostCount() ? network : broadcastLong() - networkLong() > 1 ? network + 1 : 0;
         }
 
-        /** long versions of the values (as unsigned int) which are more suitable for range checking. */
+        /** Long versions of the values (as unsigned int) which are more suitable for range checking. */
         private long networkLong() {
             return network & UNSIGNED_INT_MASK;
         }
