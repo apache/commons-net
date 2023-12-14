@@ -30,7 +30,7 @@ public class TelnetTestResponder implements Runnable {
     long _timeout;
 
     /**
-     * Constructor. Starts a new thread for the reader.
+     * Constructs a new instance. Starts a new thread for the reader.
      * <p>
      *
      * @param is      - InputStream on which to read.
