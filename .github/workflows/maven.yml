@@ -84,6 +84,6 @@ jobs:
         NEXUS_USER: ${{ secrets.NEXUS_USER }}
         NEXUS_PW: ${{ secrets.NEXUS_PW }}
       run: >
-        echo "Deploy SNAPSHOT" >> $GITHUB_STEP_SUMMARY
+        echo "Deploy SNAPSHOT" >> $GITHUB_STEP_SUMMARY;
         mvn --show-version --batch-mode --no-transfer-progress deploy -Dgpg.skip 
         -DskipTests -Drat.skip -Djacoco.skip -Dcyclonedx.skip -Dspotbugs.skip -Dspdx.skip -Dpmd.skip
