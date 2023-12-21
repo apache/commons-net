@@ -15,7 +15,16 @@
 
 name: Java CI
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '**/workflows/*.yml'
+      - '!**/workflows/maven.yml'
+  pull_request:
+    paths-ignore:
+      - '**/workflows/*.yml'
+      - '!**/workflows/maven.yml'
 
 permissions:
   contents: read
@@ -41,7 +50,7 @@ jobs:
           - java: 8
             os: ubuntu-latest
             experimental: false
-            deploy: 'deploy' # (use string so it shows up in summary)
+            deploy: true
 #        include:
 #          - java: 22-ea
 #            experimental: true        
@@ -75,5 +84,6 @@ jobs:
         NEXUS_USER: ${{ secrets.NEXUS_USER }}
         NEXUS_PW: ${{ secrets.NEXUS_PW }}
       run: >
+        echo "Deploy SNAPSHOT" >> $GITHUB_STEP_SUMMARY
         mvn --show-version --batch-mode --no-transfer-progress deploy -Dgpg.skip 
         -DskipTests -Drat.skip -Djacoco.skip -Dcyclonedx.skip -Dspotbugs.skip -Dspdx.skip -Dpmd.skip
