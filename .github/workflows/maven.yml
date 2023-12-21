@@ -29,7 +29,7 @@ jobs:
         java: [ 8, 11, 17, 21 ]
         os: [ubuntu-latest]
         experimental: [false]
-        # Don't need 
+        # Don't need to run all javas on all OSes
         include:
           - java: 8
             os: macos-latest
@@ -37,6 +37,11 @@ jobs:
           - java: 8
             os: windows-latest
             experimental: false
+          # Update java 8/ubuntu to add deploy step
+          - java: 8
+            os: ubuntu-latest
+            experimental: false
+            deploy: 'deploy' # (use string so it shows up in summary)
 #        include:
 #          - java: 22-ea
 #            experimental: true        
@@ -57,6 +62,18 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: ${{ matrix.java }}
-    - name: Build with Maven
+        # these values cause the plugin to set up the Maven settings.xml file
+        server-id: apache.snapshots.https # Value of the distributionManagement/repository/id field of the pom.xml
+        server-username: NEXUS_USER # env variable for username in deploy
+        server-password: NEXUS_PW # env variable for token in deploy
+    - name: Build and test with Maven
       run: mvn --show-version --batch-mode --no-transfer-progress -Ddoclint=all
 # N.B. Add  -Pslf4j-simple to enable logging above
+    - name: Deploy SNAPSHOT using minimal build
+      if: matrix.deploy
+      env:
+        NEXUS_USER: ${{ secrets.NEXUS_USER }}
+        NEXUS_PW: ${{ secrets.NEXUS_PW }}
+      run: >
+        mvn --show-version --batch-mode --no-transfer-progress deploy -Dgpg.skip 
+        -DskipTests -Drat.skip -Djacoco.skip -Dcyclonedx.skip -Dspotbugs.skip -Dspdx.skip -Dpmd.skip
