@@ -16,9 +16,13 @@
 name: "Scorecards supply-chain security"
 
 on:
+  workflow_dispatch:
   branch_protection_rule:
   push:
     branches: [ "master" ]
+    paths-ignore:
+      - '**/workflows/*.yml'
+      - '!**/workflows/scorecards-analysis.yml'
 
 permissions: read-all
 
