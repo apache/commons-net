@@ -64,9 +64,9 @@ public class SMTP extends SocketClient {
     /** The default SMTP port (25). */
     public static final int DEFAULT_PORT = 25;
 
-    // We have to ensure that the protocol communication is in ASCII,
-    // but we use ISO-8859-1 just in case 8-bit characters cross
-    // the wire.
+    /**
+     * We have to ensure that the protocol communication is in ASCII, but we use ISO-8859-1 just in case 8-bit characters cross the wire.
+     */
     private static final String DEFAULT_ENCODING = StandardCharsets.ISO_8859_1.name();
 
     /**
