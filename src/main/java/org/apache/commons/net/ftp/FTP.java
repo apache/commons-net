@@ -28,6 +28,7 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.apache.commons.net.MalformedServerReplyException;
@@ -157,7 +158,7 @@ public class FTP extends SocketClient {
      * The default character encoding used for communicating over an FTP control connection. The default encoding is an ASCII-compatible encoding. Some FTP
      * servers expect other encodings. You can change the encoding used by an FTP instance with {@link #setControlEncoding setControlEncoding}.
      */
-    public static final String DEFAULT_CONTROL_ENCODING = "ISO-8859-1";
+    public static final String DEFAULT_CONTROL_ENCODING = StandardCharsets.ISO_8859_1.name();
 
     /** Length of the FTP reply code (3 alphanumerics) */
     public static final int REPLY_CODE_LEN = 3;
