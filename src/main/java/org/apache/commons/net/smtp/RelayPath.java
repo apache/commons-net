@@ -64,11 +64,10 @@ public final class RelayPath {
     @Override
     public String toString() {
         final StringBuilder buffer = new StringBuilder();
-        final Enumeration<String> hosts;
 
         buffer.append('<');
 
-        hosts = path.elements();
+        final Enumeration<String> hosts = path.elements();
 
         if (hosts.hasMoreElements()) {
             buffer.append('@');
