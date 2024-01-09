@@ -1052,5 +1052,84 @@ public class FTPSClient extends FTPClient {
         }
     }
 
+    /**
+     * Gets the security mode. (True - Implicit Mode / False - Explicit Mode)
+     * @since 3.11.0
+     */
+    protected boolean isImplicit() {
+        return isImplicit;
+    }
+
+    /**
+     * Gets the secure socket protocol to be used, e.g. SSL/TLS.
+     * @since 3.11.0
+     */
+    protected String getProtocol() {
+        return protocol;
+    }
+
+    /**
+     * Gets the AUTH Command value.
+     * @since 3.11.0
+     */
+    protected String getAuth() {
+        return auth;
+    }
+
+    /**
+     * Gets whether a new SSL session may be established by this socket. Default true
+     * @since 3.11.0
+     */
+    protected boolean isCreation() {
+        return isCreation;
+    }
+
+    /**
+     * Gets the use client mode flag.
+     * @since 3.11.0
+     */
+    protected boolean isClientMode() {
+        return isClientMode;
+    }
+
+    /**
+     * Gets the need client auth flag.
+     * @since 3.11.0
+     */
+    protected boolean isNeedClientAuth() {
+        return isNeedClientAuth;
+    }
+
+    /**
+     * Gets the want client auth flag.
+     * @since 3.11.0
+     */
+    protected boolean isWantClientAuth() {
+        return isWantClientAuth;
+    }
+
+    /**
+     * Gets the cipher suites.
+     * @since 3.11.0
+     */
+    protected String[] getSuites() {
+        return suites;
+    }
+
+    /**
+     * Gets the protocol versions.
+     * @since 3.11.0
+     */
+    protected String[] getProtocols() {
+        return protocols;
+    }
+
+    /**
+     * Gets whether to use Java 1.7+ HTTPS Endpoint Identification Algorithm.
+     * @since 3.11.0
+     */
+    protected boolean isTlsEndpointChecking() {
+        return tlsEndpointChecking;
+    }
 }
 
