@@ -1069,14 +1069,6 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the AUTH Command value.
-     * @since 3.11.0
-     */
-    protected String getAuth() {
-        return auth;
-    }
-
-    /**
      * Gets whether a new SSL session may be established by this socket. Default true
      * @since 3.11.0
      */
@@ -1085,7 +1077,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the use client mode flag.
+     * Gets the use client mode flag. The {@link #getUseClientMode()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
      * @since 3.11.0
      */
     protected boolean isClientMode() {
@@ -1093,7 +1086,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the need client auth flag.
+     * Gets the need client auth flag. The {@link #getNeedClientAuth()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
      * @since 3.11.0
      */
     protected boolean isNeedClientAuth() {
@@ -1101,7 +1095,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the want client auth flag.
+     * Gets the want client auth flag. The {@link #getWantClientAuth()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
      * @since 3.11.0
      */
     protected boolean isWantClientAuth() {
@@ -1109,7 +1104,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the cipher suites.
+     * Gets the cipher suites. The {@link #getEnabledCipherSuites()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
      * @since 3.11.0
      */
     protected String[] getSuites() {
@@ -1117,19 +1113,12 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the protocol versions.
+     * Gets the protocol versions. The {@link #getEnabledProtocols()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
      * @since 3.11.0
      */
     protected String[] getProtocols() {
         return protocols;
-    }
-
-    /**
-     * Gets whether to use Java 1.7+ HTTPS Endpoint Identification Algorithm.
-     * @since 3.11.0
-     */
-    protected boolean isTlsEndpointChecking() {
-        return tlsEndpointChecking;
     }
 }
 
