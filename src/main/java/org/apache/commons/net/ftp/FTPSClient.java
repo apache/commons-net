@@ -639,6 +639,32 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
+     * Gets the secure socket protocol to be used, e.g. SSL/TLS.
+     * @since 3.11.0
+     */
+    protected String getProtocol() {
+        return protocol;
+    }
+
+    /**
+     * Gets the protocol versions. The {@link #getEnabledProtocols()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected String[] getProtocols() {
+        return protocols == null ? null : protocols.clone();
+    }
+
+    /**
+     * Gets the cipher suites. The {@link #getEnabledCipherSuites()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected String[] getSuites() {
+        return suites == null ? null : suites.clone();
+    }
+
+    /**
      * Gets the currently configured {@link TrustManager}.
      *
      * @return A TrustManager instance.
@@ -684,6 +710,23 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
+     * Gets the use client mode flag. The {@link #getUseClientMode()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected boolean isClientMode() {
+        return isClientMode;
+    }
+
+    /**
+     * Gets whether a new SSL session may be established by this socket. Default true
+     * @since 3.11.0
+     */
+    protected boolean isCreation() {
+        return isCreation;
+    }
+
+    /**
      * Return whether or not endpoint identification using the HTTPS algorithm on Java 1.7+ is enabled. The default behavior is for this to be disabled.
      *
      * This check is only performed on client mode connections.
@@ -693,6 +736,32 @@ public class FTPSClient extends FTPClient {
      */
     public boolean isEndpointCheckingEnabled() {
         return tlsEndpointChecking;
+    }
+
+    /**
+     * Gets the security mode. (True - Implicit Mode / False - Explicit Mode)
+     * @since 3.11.0
+     */
+    protected boolean isImplicit() {
+        return isImplicit;
+    }
+
+    /**
+     * Gets the need client auth flag. The {@link #getNeedClientAuth()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected boolean isNeedClientAuth() {
+        return isNeedClientAuth;
+    }
+
+    /**
+     * Gets the want client auth flag. The {@link #getWantClientAuth()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected boolean isWantClientAuth() {
+        return isWantClientAuth;
     }
 
     /**
@@ -878,6 +947,8 @@ public class FTPSClient extends FTPClient {
         return minvalue;
     }
 
+    // DEPRECATED - for API compatibility only - DO NOT USE
+
     /**
      * Send an FTP command. A successful CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance to be assigned to a plain
      * {@link Socket}
@@ -973,8 +1044,6 @@ public class FTPSClient extends FTPClient {
         this.keyManager = keyManager;
     }
 
-    // DEPRECATED - for API compatibility only - DO NOT USE
-
     /**
      * Configures the socket to require client authentication.
      *
@@ -1050,75 +1119,6 @@ public class FTPSClient extends FTPClient {
         if (isClientMode && hostnameVerifier != null && !hostnameVerifier.verify(_hostname_, socket.getSession())) {
             throw new SSLHandshakeException("Hostname doesn't match certificate");
         }
-    }
-
-    /**
-     * Gets the security mode. (True - Implicit Mode / False - Explicit Mode)
-     * @since 3.11.0
-     */
-    protected boolean isImplicit() {
-        return isImplicit;
-    }
-
-    /**
-     * Gets the secure socket protocol to be used, e.g. SSL/TLS.
-     * @since 3.11.0
-     */
-    protected String getProtocol() {
-        return protocol;
-    }
-
-    /**
-     * Gets whether a new SSL session may be established by this socket. Default true
-     * @since 3.11.0
-     */
-    protected boolean isCreation() {
-        return isCreation;
-    }
-
-    /**
-     * Gets the use client mode flag. The {@link #getUseClientMode()} method gets the value from the socket while
-     * this method gets its value from this instance's config.
-     * @since 3.11.0
-     */
-    protected boolean isClientMode() {
-        return isClientMode;
-    }
-
-    /**
-     * Gets the need client auth flag. The {@link #getNeedClientAuth()} method gets the value from the socket while
-     * this method gets its value from this instance's config.
-     * @since 3.11.0
-     */
-    protected boolean isNeedClientAuth() {
-        return isNeedClientAuth;
-    }
-
-    /**
-     * Gets the want client auth flag. The {@link #getWantClientAuth()} method gets the value from the socket while
-     * this method gets its value from this instance's config.
-     * @since 3.11.0
-     */
-    protected boolean isWantClientAuth() {
-        return isWantClientAuth;
-    }
-
-    /**
-     * Gets the cipher suites. The {@link #getEnabledCipherSuites()} method gets the value from the socket while
-     * this method gets its value from this instance's config.
-     * @since 3.11.0
-     */
-    protected String[] getSuites() {
-        return suites == null ? null : suites.clone();
-    }
-
-    /**
-     * Gets the protocol versions. The {@link #getEnabledProtocols()} method gets the value from the socket while
-     * this method gets its value from this instance's config.
-     * @since 3.11.0
-     */
-    protected String[] getProtocols() {
-        return protocols == null ? null : protocols.clone();
     }
 }
 
