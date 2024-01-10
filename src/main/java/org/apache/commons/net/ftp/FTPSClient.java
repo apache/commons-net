@@ -1052,5 +1052,73 @@ public class FTPSClient extends FTPClient {
         }
     }
 
+    /**
+     * Gets the security mode. (True - Implicit Mode / False - Explicit Mode)
+     * @since 3.11.0
+     */
+    protected boolean isImplicit() {
+        return isImplicit;
+    }
+
+    /**
+     * Gets the secure socket protocol to be used, e.g. SSL/TLS.
+     * @since 3.11.0
+     */
+    protected String getProtocol() {
+        return protocol;
+    }
+
+    /**
+     * Gets whether a new SSL session may be established by this socket. Default true
+     * @since 3.11.0
+     */
+    protected boolean isCreation() {
+        return isCreation;
+    }
+
+    /**
+     * Gets the use client mode flag. The {@link #getUseClientMode()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected boolean isClientMode() {
+        return isClientMode;
+    }
+
+    /**
+     * Gets the need client auth flag. The {@link #getNeedClientAuth()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected boolean isNeedClientAuth() {
+        return isNeedClientAuth;
+    }
+
+    /**
+     * Gets the want client auth flag. The {@link #getWantClientAuth()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected boolean isWantClientAuth() {
+        return isWantClientAuth;
+    }
+
+    /**
+     * Gets the cipher suites. The {@link #getEnabledCipherSuites()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected String[] getSuites() {
+        return suites == null ? null : suites.clone();
+    }
+
+    /**
+     * Gets the protocol versions. The {@link #getEnabledProtocols()} method gets the value from the socket while
+     * this method gets its value from this instance's config.
+     * @since 3.11.0
+     */
+    protected String[] getProtocols() {
+        return protocols == null ? null : protocols.clone();
+    }
 }
 
