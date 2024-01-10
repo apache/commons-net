@@ -29,7 +29,7 @@
 
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
-    <version>3.10.1-SNAPSHOT</version>
+    <version>3.11.0-SNAPSHOT</version>
     <name>Apache Commons Net</name>
     <!-- N.B. the description content is deliberately not indented ! to improve the layout of the Release Notes generated 
         by mvn changes:announcement-generate -->
@@ -58,13 +58,13 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <spotbugs.configdir>src/conf</spotbugs.configdir>
 
         <!-- Current release -->
-        <commons.release.version>3.10.0</commons.release.version>
+        <commons.release.versionBump>3.11.0</commons.release.versionBump>
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
 
         <!-- Release plugin defines -->
         <!-- Previous version of the component (used for reporting binary compatibility check)-->
-        <commons.bc.version>3.9.0</commons.bc.version>
+        <commons.bc.version>3.10.0</commons.bc.version>
         <commons.release.isDistModule>true</commons.release.isDistModule>
         <!--
           Define the following in ~/.m2/settings.xml in an active profile:
