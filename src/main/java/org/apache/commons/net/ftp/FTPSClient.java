@@ -1109,7 +1109,7 @@ public class FTPSClient extends FTPClient {
      * @since 3.11.0
      */
     protected String[] getSuites() {
-        return suites.clone();
+        return suites == null ? null : suites.clone();
     }
 
     /**
@@ -1118,7 +1118,7 @@ public class FTPSClient extends FTPClient {
      * @since 3.11.0
      */
     protected String[] getProtocols() {
-        return protocols.clone();
+        return protocols == null ? null : protocols.clone();
     }
 }
 
