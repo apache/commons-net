@@ -80,15 +80,15 @@ public final class KeyManagerUtils {
             this.certChain = x509certs;
         }
 
-        final String getAlias() {
+        String getAlias() {
             return this.keyAlias;
         }
 
-        final X509Certificate[] getCertificateChain() {
+        X509Certificate[] getCertificateChain() {
             return this.certChain;
         }
 
-        final PrivateKey getPrivateKey() {
+        PrivateKey getPrivateKey() {
             return this.key;
         }
     }

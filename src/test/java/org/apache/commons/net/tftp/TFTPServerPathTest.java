@@ -57,11 +57,11 @@ public class TFTPServerPathTest {
         if (path != null) {
             try {
                 Files.deleteIfExists(path);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 if (retry) {
                     try {
                         Thread.sleep(500);
-                    } catch (InterruptedException e1) {
+                    } catch (final InterruptedException e1) {
                         fail(e);
                     }
                     Files.deleteIfExists(path);

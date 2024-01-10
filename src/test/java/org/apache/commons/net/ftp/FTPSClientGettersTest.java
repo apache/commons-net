@@ -30,14 +30,14 @@ public class FTPSClientGettersTest {
 
     @Test
     public void testGetters() {
-        FTPSClient testClient = new FTPSClient("SSL", true);
+        final FTPSClient testClient = new FTPSClient("SSL", true);
         assertTrue(testClient.isImplicit());
         assertEquals("SSL", testClient.getProtocol());
 
-        FTPSClient testClient2 = new FTPSClient("TLS", false);
+        final FTPSClient testClient2 = new FTPSClient("TLS", false);
         assertFalse(testClient2.isImplicit());
         assertEquals("TLS", testClient2.getProtocol());
-        final String[] protocols = new String[]{"123", "456"};
+        final String[] protocols = {"123", "456"};
         testClient2.setEnabledProtocols(protocols);
         assertArrayEquals(protocols, testClient2.getProtocols());
         testClient2.setNeedClientAuth(true);
@@ -48,7 +48,7 @@ public class FTPSClientGettersTest {
         assertTrue(testClient2.isWantClientAuth());
         testClient2.setWantClientAuth(false);
         assertFalse(testClient2.isWantClientAuth());
-        final String[] suites = new String[]{"abc", "def"};
+        final String[] suites = {"abc", "def"};
         testClient2.setEnabledCipherSuites(suites);
         assertArrayEquals(suites, testClient2.getSuites());
         testClient2.setAuthValue("qwerty");
