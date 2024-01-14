@@ -3135,7 +3135,7 @@ public class FTPClient extends FTP implements Configurable {
      * @return true if successfully set, false if not
      * @throws IOException if an I/O error occurs.
      * @since 2.2
-     * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
+     * @see <a href="https://tools.ietf.org/html/draft-somers-ftp-mfxx-04">https://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      */
     public boolean setModificationTime(final String pathname, final String timeval) throws IOException {
         return FTPReply.isPositiveCompletion(mfmt(pathname, timeval));

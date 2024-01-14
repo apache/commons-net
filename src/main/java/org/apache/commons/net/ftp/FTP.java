@@ -795,7 +795,7 @@ public class FTP extends SocketClient {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      * @since 2.2
-     * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
+     * @see <a href="https://tools.ietf.org/html/draft-somers-ftp-mfxx-04">https://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      **/
     public int mfmt(final String pathname, final String timeval) throws IOException {
         return sendCommand(FTPCmd.MFMT, timeval + " " + pathname);

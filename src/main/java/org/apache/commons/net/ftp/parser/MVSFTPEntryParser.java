@@ -160,7 +160,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * The file system on the mainframe does not have hierarchical structure as for example the unix file system. For a more comprehensive description,
      * please refer to the IBM manuals
      *
-     * @LINK: http://publibfp.boulder.ibm.com/cgi-bin/bookmgr/BOOKS/dgt2d440/CONTENTS
+     * @LINK: https://publibfp.boulder.ibm.com/cgi-bin/bookmgr/BOOKS/dgt2d440/CONTENTS
      *
      *
      * Dataset names =============

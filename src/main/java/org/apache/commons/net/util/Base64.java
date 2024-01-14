@@ -72,7 +72,7 @@ public class Base64 {
      * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet" equivalents as specified in Table 1 of RFC
      * 2045.
      *
-     * Thanks to "commons" project in ws.apache.org for <a href="http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">this code</a>.
+     * Thanks to "commons" project in ws.apache.org for <a href="https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">this code</a>.
      */
     private static final byte[] STANDARD_ENCODE_TABLE = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
             'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
@@ -98,7 +98,7 @@ public class Base64 {
      * Note: '+' and '-' both decode to 62. '/' and '_' both decode to 63. This means decoder seamlessly handles both URL_SAFE and STANDARD base64. (The
      * encoder, on the other hand, needs to know ahead of time what to emit).
      *
-     * Thanks to "commons" project in ws.apache.org for <a href="http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">this code</a>
+     * Thanks to "commons" project in ws.apache.org for <a href="https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">this code</a>
      */
     private static final byte[] DECODE_TABLE = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, 62, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1,
@@ -644,8 +644,8 @@ public class Base64 {
      * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
      * <p>
-     * See: <a href="http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * See: <a href="https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">
+     * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </a>
      *
      * </p>
@@ -754,8 +754,8 @@ public class Base64 {
      * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
      * <p>
-     * See: <a href="http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * See: <a href="https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">
+     * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </a>
      * </p>
      *
