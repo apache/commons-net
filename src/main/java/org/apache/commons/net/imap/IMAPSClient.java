@@ -37,7 +37,7 @@ import org.apache.commons.net.util.SSLSocketUtils;
 
 /**
  * The IMAPSClient class provides SSL/TLS connection encryption to IMAPClient. Copied from
- * <a href="http://commons.apache.org/proper/commons-net/apidocs/index.html?org/apache/commons/net/ftp/FTPSClient.html"> FTPSClient</a> and modified to suit
+ * <a href="https://commons.apache.org/proper/commons-net/apidocs/index.html?org/apache/commons/net/ftp/FTPSClient.html"> FTPSClient</a> and modified to suit
  * IMAP. If implicit mode is selected (NOT the default), SSL/TLS negotiation starts right after the connection has been established. In explicit mode (the
  * default), SSL/TLS negotiation starts when the user calls execTLS() and the server accepts the command.
  *
