@@ -282,7 +282,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
                 return EOF;
             }
 
-            ch = ch & 0xff;
+            ch &= 0xff;
 
             /* Code Section added for supporting AYT (start) */
             synchronized (client) {
