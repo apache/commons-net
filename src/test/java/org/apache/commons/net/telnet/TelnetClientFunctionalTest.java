@@ -80,7 +80,7 @@ public class TelnetClientFunctionalTest extends TestCase {
         while (readbytes.indexOf(end) < 0 && System.currentTimeMillis() - starttime < timeout) {
             if (is.available() > 0) {
                 final int ret_read = is.read(buffer);
-                readbytes = readbytes + new String(buffer, 0, ret_read);
+                readbytes += new String(buffer, 0, ret_read);
             } else {
                 Thread.sleep(500);
             }
