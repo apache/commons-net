@@ -97,7 +97,7 @@ public class FTPListParseEngine {
      * Returns a list of FTPFile objects containing the whole list of files returned by the server as read by this object's parser. The files are filtered
      * before being added to the array.
      *
-     * @param filter FTPFileFilter, must not be <code>null</code>.
+     * @param filter FTPFileFilter, must not be {@code null}.
      *
      * @return a list of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
      *         <p>
@@ -128,7 +128,7 @@ public class FTPListParseEngine {
      * Returns an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser. The files are filtered
      * before being added to the array.
      *
-     * @param filter FTPFileFilter, must not be <code>null</code>.
+     * @param filter FTPFileFilter, must not be {@code null}.
      *
      * @return an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
      *         <p>

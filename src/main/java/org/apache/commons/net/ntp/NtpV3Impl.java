@@ -80,7 +80,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Compares this object against the specified object. The result is {@code true} if and only if the argument is not <code>null</code> and is a
+     * Compares this object against the specified object. The result is {@code true} if and only if the argument is not {@code null} and is a
      * <code>NtpV3Impl</code> object that contains the same values as this object.
      *
      * @param obj the object to compare with.

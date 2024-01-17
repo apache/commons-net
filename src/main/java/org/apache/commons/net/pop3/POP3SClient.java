@@ -192,7 +192,7 @@ public class POP3SClient extends POP3Client {
      * Returns the names of the cipher suites which could be enabled for use on this connection. When the underlying {@link java.net.Socket Socket} is not an
      * {@link SSLSocket} instance, returns null.
      *
-     * @return An array of cipher suite names, or <code>null</code>.
+     * @return An array of cipher suite names, or {@code null}.
      */
     public String[] getEnabledCipherSuites() {
         if (_socket_ instanceof SSLSocket) {
@@ -205,7 +205,7 @@ public class POP3SClient extends POP3Client {
      * Returns the names of the protocol versions which are currently enabled for use on this connection. When the underlying {@link java.net.Socket Socket} is
      * not an {@link SSLSocket} instance, returns null.
      *
-     * @return An array of protocols, or <code>null</code>.
+     * @return An array of protocols, or {@code null}.
      */
     public String[] getEnabledProtocols() {
         if (_socket_ instanceof SSLSocket) {
@@ -333,7 +333,7 @@ public class POP3SClient extends POP3Client {
     /**
      * Override the default {@link HostnameVerifier} to use.
      *
-     * @param newHostnameVerifier The HostnameVerifier implementation to set or <code>null</code> to disable.
+     * @param newHostnameVerifier The HostnameVerifier implementation to set or {@code null} to disable.
      * @since 3.4
      */
     public void setHostnameVerifier(final HostnameVerifier newHostnameVerifier) {

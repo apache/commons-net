@@ -264,7 +264,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     }
 
     /**
-     * Compares this object against the specified object. The result is {@code true} if and only if the argument is not <code>null</code> and is a
+     * Compares this object against the specified object. The result is {@code true} if and only if the argument is not {@code null} and is a
      * <code>Long</code> object that contains the same <code>long</code> value as this object.
      *
      * @param obj the object to compare with.

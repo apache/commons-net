@@ -275,8 +275,8 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      *
-     * @param string String value that is checked for <code>null</code> or empty.
-     * @return {@code true} for <code>null</code> or empty values, else {@code false}.
+     * @param string String value that is checked for {@code null} or empty.
+     * @return {@code true} for {@code null} or empty values, else {@code false}.
      */
     private boolean isNullOrEmpty(final String string) {
         return string == null || string.isEmpty();
