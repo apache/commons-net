@@ -32,8 +32,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * A simple test class for SocketClient settings.
- *
- * @since 3.2
  */
 public class SocketClientTest {
     private static final String PROXY_HOST = "127.0.0.1";
