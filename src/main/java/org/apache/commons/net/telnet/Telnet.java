@@ -270,7 +270,6 @@ class Telnet extends SocketClient {
 
     /**
      * Stops spying this Telnet.
-     *
      */
     void _stopSpyStream() {
         spyStream = null;
@@ -1013,7 +1012,6 @@ class Telnet extends SocketClient {
 
     /**
      * Unregisters the current notification handler.
-     *
      */
     public void unregisterNotifHandler() {
         this.notifhand = null;

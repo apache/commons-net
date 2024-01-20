@@ -63,7 +63,6 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl {
 
     /**
      * The sole constructor for a EnterpriseUnixFTPEntryParser object.
-     *
      */
     public EnterpriseUnixFTPEntryParser() {
         super(REGEX);

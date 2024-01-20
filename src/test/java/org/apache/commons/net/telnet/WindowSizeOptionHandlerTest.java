@@ -77,7 +77,6 @@ public class WindowSizeOptionHandlerTest extends AbstractTelnetOptionHandlerTest
 
     /**
      * test of client-driven subnegotiation.
-     *
      */
     public void testStartSubnegotiationLocal() {
         final int[] exp1 = { 31, 0, 80, 0, 24 };

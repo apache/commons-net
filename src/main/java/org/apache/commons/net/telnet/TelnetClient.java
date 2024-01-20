@@ -379,7 +379,6 @@ public class TelnetClient extends Telnet {
 
     /**
      * Stops spying this TelnetClient.
-     *
      */
     public void stopSpyStream() {
         super._stopSpyStream();
@@ -397,7 +396,6 @@ public class TelnetClient extends Telnet {
 
     /**
      * Unregisters the current notification handler.
-     *
      */
     @Override
     public void unregisterNotifHandler() {

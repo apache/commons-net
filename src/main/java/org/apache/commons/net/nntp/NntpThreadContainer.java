@@ -77,7 +77,6 @@ final class NntpThreadContainer {
 
     /**
      * Reverse the entire set of children
-     *
      */
     void reverseChildren() {
         if (child != null) {

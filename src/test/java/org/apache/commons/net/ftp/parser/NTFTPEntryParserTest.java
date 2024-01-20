@@ -160,7 +160,6 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework {
 
     /*
      * Test that group names with embedded spaces can be handled correctly
-     *
      */
     public void testGroupNameWithSpaces() {
         final FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");

@@ -228,7 +228,6 @@ public class Article implements Threadable {
 
     /**
      * Attempts to parse the subject line for some typical reply signatures, and strip them out
-     *
      */
     private void simplifySubject() {
         int start = 0;

@@ -42,7 +42,6 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     private FTPClientConfig ftpClientConfig;
 
     /**
-     *
      */
     public FTPClientConfigFunctionalTest() {
 

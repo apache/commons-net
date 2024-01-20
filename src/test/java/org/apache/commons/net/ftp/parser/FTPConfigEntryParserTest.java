@@ -36,7 +36,6 @@ public class FTPConfigEntryParserTest extends TestCase {
 
     /**
      * This is a new format reported on the mailing lists. Parsing this kind of entry necessitated changing the regex in the parser.
-     *
      */
     public void testParseEntryWithSymlink() {
 
