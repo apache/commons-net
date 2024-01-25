@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Performs some subnet calculations given a network address and a subnet mask.
+ * Performs subnet calculations given a network address and a subnet mask.
  *
  * @see "http://www.faqs.org/rfcs/rfc1519.html"
  * @since 2.0
