@@ -23,10 +23,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import junit.framework.TestCase;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.tftp.TFTPServer.ServerMode;
-
-import junit.framework.TestCase;
 
 /**
  * Test the TFTP Server and TFTP Client by creating some FILES in the system temp folder and then uploading and downloading them.

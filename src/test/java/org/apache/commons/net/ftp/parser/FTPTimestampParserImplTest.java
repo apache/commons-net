@@ -27,10 +27,10 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.apache.commons.net.ftp.FTPClientConfig;
-
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
+
+import org.apache.commons.net.ftp.FTPClientConfig;
 
 /**
  * Test the FTPTimestampParser class.
