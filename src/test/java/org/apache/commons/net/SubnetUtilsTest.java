@@ -231,7 +231,10 @@ public class SubnetUtilsTest {
 
     @Test
     public void testInvalidMasks() {
+        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("192.168.0.1/"));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("192.168.0.1/33"));
+        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("192.168.0.1/111"));
+        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("192.168.0.1/032"));
     }
 
     @Test
