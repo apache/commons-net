@@ -372,4 +372,14 @@ public class SubnetUtils {
         this.inclusiveHostCount = inclusiveHostCount;
     }
 
+    /**
+     * Converts this instance to a debug String.
+     *
+     * @return this instance to a debug String.
+     * @since 3.11.0
+     */
+    @Override
+    public String toString() {
+        return getInfo().toString();
+    }
 }
