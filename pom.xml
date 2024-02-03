@@ -24,7 +24,7 @@
     <parent>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>65</version>
+        <version>66</version>
     </parent>
 
     <groupId>commons-net</groupId>
@@ -41,7 +41,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
     <inceptionYear>2001</inceptionYear>
 
     <properties>
-        <!-- Environment -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <commons.javadoc.java.link>${commons.javadoc8.java.link}</commons.javadoc.java.link>
@@ -61,6 +60,7 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <commons.release.versionBump>3.11.0</commons.release.versionBump>
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
+        <project.build.outputTimestamp>2024-01-01T00:00:00Z</project.build.outputTimestamp>
 
         <!-- Release plugin defines -->
         <!-- Previous version of the component (used for reporting binary compatibility check)-->
