@@ -47,9 +47,9 @@ public class SubnetUtilsNet728Test {
 
     @Test
     void test() {
-        SubnetUtils s = new SubnetUtils("192.168.1.1/32");
+        final SubnetUtils s = new SubnetUtils("192.168.1.1/32");
         s.setInclusiveHostCount(true);
-        SubnetUtils ss = new SubnetUtils("10.65.0.151/32");
+        final SubnetUtils ss = new SubnetUtils("10.65.0.151/32");
         ss.setInclusiveHostCount(true);
         assertTrue(ss.getInfo().isInRange("10.65.0.151"));
         assertTrue(s.getInfo().isInRange("192.168.1.1"));

@@ -56,8 +56,7 @@ public class NtpV3Impl implements NtpV3Packet {
      * @return unsigned int value of byte
      */
     protected static final int ui(final byte b) {
-        final int i = b & 0xFF;
-        return i;
+        return b & 0xFF;
     }
 
     /**
@@ -67,8 +66,7 @@ public class NtpV3Impl implements NtpV3Packet {
      * @return unsigned long value of byte
      */
     protected static final long ul(final byte b) {
-        final long i = b & 0xFF;
-        return i;
+        return b & 0xFF;
     }
 
     private final byte[] buf = new byte[48];
@@ -117,9 +115,7 @@ public class NtpV3Impl implements NtpV3Packet {
      * @return 4 bytes as 32-bit int
      */
     private int getInt(final int index) {
-        final int i = ui(buf[index]) << 24 | ui(buf[index + 1]) << 16 | ui(buf[index + 2]) << 8 | ui(buf[index + 3]);
-
-        return i;
+        return ui(buf[index]) << 24 | ui(buf[index + 1]) << 16 | ui(buf[index + 2]) << 8 | ui(buf[index + 3]);
     }
 
     /**
@@ -139,9 +135,8 @@ public class NtpV3Impl implements NtpV3Packet {
      * @return 8 bytes as 64-bit long
      */
     private long getLong(final int index) {
-        final long i = ul(buf[index]) << 56 | ul(buf[index + 1]) << 48 | ul(buf[index + 2]) << 40 | ul(buf[index + 3]) << 32 | ul(buf[index + 4]) << 24
+        return ul(buf[index]) << 56 | ul(buf[index + 1]) << 48 | ul(buf[index + 2]) << 40 | ul(buf[index + 3]) << 32 | ul(buf[index + 4]) << 24
                 | ul(buf[index + 5]) << 16 | ul(buf[index + 6]) << 8 | ul(buf[index + 7]);
-        return i;
     }
 
     /**

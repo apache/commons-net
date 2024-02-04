@@ -295,9 +295,8 @@ public class TimeInfo {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = (int) returnTimeMillis;
-        result = prime * result + message.hashCode();
-        return result;
+        final int result = (int) returnTimeMillis;
+        return prime * result + message.hashCode();
     }
 
 }

@@ -219,18 +219,18 @@ public class IMAPClient extends IMAP {
      */
     @Deprecated
     public boolean append(final String mailboxName, final String flags, final String datetime) throws IOException {
-        String args = mailboxName;
+        final StringBuilder args = new StringBuilder().append(mailboxName);
         if (flags != null) {
-            args += " " + flags;
+            args.append(" ").append(flags);
         }
         if (datetime != null) {
             if (datetime.charAt(0) == '{') {
-                args += " " + datetime;
+                args.append(" ").append(datetime);
             } else {
-                args += " {" + datetime + "}";
+                args.append(" {").append(datetime).append("}");
             }
         }
-        return doCommand(IMAPCommand.APPEND, args);
+        return doCommand(IMAPCommand.APPEND, args.toString());
     }
 
     /**
@@ -473,12 +473,12 @@ public class IMAPClient extends IMAP {
      * @throws IOException If a network I/O error occurs.
      */
     public boolean search(final String charset, final String criteria) throws IOException {
-        String args = "";
+        final StringBuilder args = new StringBuilder();
         if (charset != null) {
-            args += "CHARSET " + charset;
+            args.append("CHARSET ").append(charset);
         }
-        args += criteria;
-        return doCommand(IMAPCommand.SEARCH, args);
+        args.append(criteria);
+        return doCommand(IMAPCommand.SEARCH, args.toString());
     }
 
     /**

@@ -431,7 +431,7 @@ public class FTPSClient extends FTPClient {
      * @since 3.0
      */
     public int execCCC() throws IOException {
-        final int repCode = sendCommand(CMD_CCC);
+
 // This will be performed by sendCommand(String, String)
 //        if (FTPReply.isPositiveCompletion(repCode)) {
 //            _socket_.close();
@@ -443,7 +443,7 @@ public class FTPSClient extends FTPClient {
 //                new OutputStreamWriter(
 //                    _socket_.getOutputStream(), getControlEncoding()));
 //        }
-        return repCode;
+        return sendCommand(CMD_CCC);
     }
 
     /**
