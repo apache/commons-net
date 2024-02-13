@@ -641,6 +641,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Gets the secure socket protocol to be used, e.g. SSL/TLS.
      * @since 3.11.0
+     * @return the protocol
      */
     protected String getProtocol() {
         return protocol;
@@ -650,6 +651,7 @@ public class FTPSClient extends FTPClient {
      * Gets the protocol versions. The {@link #getEnabledProtocols()} method gets the value from the socket while
      * this method gets its value from this instance's config.
      * @since 3.11.0
+     * @return a clone of the protocols, may be null
      */
     protected String[] getProtocols() {
         return protocols == null ? null : protocols.clone();
@@ -659,6 +661,7 @@ public class FTPSClient extends FTPClient {
      * Gets the cipher suites. The {@link #getEnabledCipherSuites()} method gets the value from the socket while
      * this method gets its value from this instance's config.
      * @since 3.11.0
+     * @return a clone of the suites, may be null
      */
     protected String[] getSuites() {
         return suites == null ? null : suites.clone();
