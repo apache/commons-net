@@ -716,6 +716,7 @@ public class FTPSClient extends FTPClient {
      * Gets the use client mode flag. The {@link #getUseClientMode()} method gets the value from the socket while
      * this method gets its value from this instance's config.
      * @since 3.11.0
+     * @return True If the socket should start its first handshake in "client" mode.
      */
     protected boolean isClientMode() {
         return isClientMode;
@@ -724,6 +725,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Gets whether a new SSL session may be established by this socket. Default true
      * @since 3.11.0
+     * @return True if session may be established
      */
     protected boolean isCreation() {
         return isCreation;
@@ -744,6 +746,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Gets the security mode. (True - Implicit Mode / False - Explicit Mode)
      * @since 3.11.0
+     * @return True if enabled, false if not.
      */
     protected boolean isImplicit() {
         return isImplicit;
@@ -753,6 +756,7 @@ public class FTPSClient extends FTPClient {
      * Gets the need client auth flag. The {@link #getNeedClientAuth()} method gets the value from the socket while
      * this method gets its value from this instance's config.
      * @since 3.11.0
+     * @return True if enabled, false if not.
      */
     protected boolean isNeedClientAuth() {
         return isNeedClientAuth;
@@ -762,6 +766,7 @@ public class FTPSClient extends FTPClient {
      * Gets the want client auth flag. The {@link #getWantClientAuth()} method gets the value from the socket while
      * this method gets its value from this instance's config.
      * @since 3.11.0
+     * @return True if enabled, false if not.
      */
     protected boolean isWantClientAuth() {
         return isWantClientAuth;
