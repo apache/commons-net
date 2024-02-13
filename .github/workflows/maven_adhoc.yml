@@ -39,6 +39,11 @@ jobs:
         mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
         mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
         mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
     # - name: Test exec function
     #   run: |
     #     mvn -q exec:java
