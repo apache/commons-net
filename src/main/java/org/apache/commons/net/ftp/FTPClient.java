@@ -507,7 +507,6 @@ public class FTPClient extends FTP implements Configurable {
     private int fileFormat;
     @SuppressWarnings("unused") // field is written, but currently not read
     private int fileStructure;
-    @SuppressWarnings("unused") // field is written, but currently not read
     private int fileTransferMode;
 
     private boolean remoteVerificationEnabled;
@@ -713,7 +712,8 @@ public class FTPClient extends FTP implements Configurable {
                 if (soTimeoutMillis >= 0) {
                     server.setSoTimeout(soTimeoutMillis);
                 }
-                socket = server.accept();
+
+                socket = wrapSocketIfModeZisEnabled(server.accept());
 
                 // Ensure the timeout is set before any commands are issued on the new socket
                 if (soTimeoutMillis >= 0) {
@@ -749,7 +749,8 @@ public class FTPClient extends FTP implements Configurable {
                 _parsePassiveModeReply(_replyLines.get(0));
             }
 
-            socket = _socketFactory_.createSocket();
+            socket = wrapSocketIfModeZisEnabled(_socketFactory_.createSocket());
+
             if (receiveDataSocketBufferSize > 0) {
                 socket.setReceiveBufferSize(receiveDataSocketBufferSize);
             }
@@ -791,6 +792,14 @@ public class FTPClient extends FTP implements Configurable {
         }
 
         return socket;
+    }
+
+    private Socket wrapSocketIfModeZisEnabled(final Socket plainSocket) {
+        if (fileTransferMode == COMPRESSED_MODE_Z_TRANSFER_MODE) {
+            return ModeZSocket.wrap(plainSocket);
+        } else {
+            return plainSocket;
+        }
     }
 
     protected void _parseExtendedPassiveModeReply(String reply) throws MalformedServerReplyException {
