@@ -43,7 +43,13 @@ import org.apache.commons.net.ftp.FTPClientConfig;
  */
 public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
 
-    private static final String REGEX = "(.*?);([0-9]+)\\s*.*";
+    /**
+     * Guard against polynomial regular expression used on uncontrolled data.
+     * Don't look for more than 20 digits for the version.
+     * Don't look for more than 80 spaces after the version.
+     * Don't look for more than 80 characters after the spaces.
+     */
+    private static final String REGEX = "(.*?);([0-9]{1,20})\\s{0,80}.{0,80}";
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
     /**
