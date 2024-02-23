@@ -88,9 +88,9 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
         while (iter.hasNext()) {
             final String entry = iter.next().trim();
             MatchResult result;
-            final Matcher _preparse_matcher_ = PATTERN.matcher(entry);
-            if (_preparse_matcher_.matches()) {
-                result = _preparse_matcher_.toMatchResult();
+            final Matcher matcher = PATTERN.matcher(entry);
+            if (matcher.matches()) {
+                result = matcher.toMatchResult();
                 final String name = result.group(1);
                 final String version = result.group(2);
                 final Integer nv = Integer.valueOf(version);
@@ -110,9 +110,9 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
         while (iter.hasPrevious()) {
             final String entry = iter.previous().trim();
             MatchResult result = null;
-            final Matcher _preparse_matcher_ = PATTERN.matcher(entry);
-            if (_preparse_matcher_.matches()) {
-                result = _preparse_matcher_.toMatchResult();
+            final Matcher matcher = PATTERN.matcher(entry);
+            if (matcher.matches()) {
+                result = matcher.toMatchResult();
                 final String name = result.group(1);
                 final String version = result.group(2);
                 final int nv = Integer.parseInt(version);
