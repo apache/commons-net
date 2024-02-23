@@ -73,7 +73,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add Maven property project.build.outputTimestamp for build reproducibility.</action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">Bump commons-parent from 62 to 66.</action>
-      <action type="update" dev="ggregory" due-to="Dependabot">Bump org.codehaus.mojo:exec-maven-plugin from 3.1.0 to 3.1.1.</action>
+      <action type="update" dev="ggregory" due-to="Dependabot">Bump org.codehaus.mojo:exec-maven-plugin from 3.1.0 to 3.2.0, #221.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-lang3 from 3.13.0 to 3.14.0.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-io from 2.15.0 to 2.15.1.</action>
     </release>
