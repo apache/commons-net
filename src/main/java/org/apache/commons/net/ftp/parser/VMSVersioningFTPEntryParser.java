@@ -68,7 +68,6 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
     public VMSVersioningFTPEntryParser(final FTPClientConfig config) {
         configure(config);
         try {
-            // _preparse_matcher_ = new Perl5Matcher();
             preparsePattern = Pattern.compile(PRE_PARSE_REGEX);
         } catch (final PatternSyntaxException pse) {
             throw new IllegalArgumentException("Unparseable regex supplied:  " + PRE_PARSE_REGEX);
