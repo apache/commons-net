@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.net.MalformedServerReplyException;
 
 /**
- * IMAPReply stores IMAP reply code constants.
+ * Stores IMAP reply code constants.
  */
 public final class IMAPReply {
     /** The reply code indicating success of an operation. */
@@ -131,7 +131,7 @@ public final class IMAPReply {
     }
 
     /**
-     * Checks if the reply line is a continuation, i.e. starts with "+"
+     * Tests whether the reply line is a continuation, i.e. starts with "+"
      *
      * @param replyCode the code to be checked
      * @return {@code true} if the response was a continuation
@@ -141,7 +141,7 @@ public final class IMAPReply {
     }
 
     /**
-     * Checks if the reply line is a continuation, i.e. starts with "+"
+     * Tests whether if the reply line is a continuation, i.e. starts with "+"
      *
      * @param line the line to be checked
      * @return {@code true} if the line is a continuation
@@ -151,7 +151,7 @@ public final class IMAPReply {
     }
 
     /**
-     * Checks whether the reply code indicates success or not
+     * Tests whether whether the reply code indicates success or not
      *
      * @param replyCode the code to check
      * @return {@code true} if the code equals {@link #OK}
@@ -161,7 +161,7 @@ public final class IMAPReply {
     }
 
     /**
-     * Checks if the reply line is untagged - e.g. "* OK ..."
+     * Tests whether if the reply line is untagged - e.g. "* OK ..."
      *
      * @param line to be checked
      * @return {@code true} if the line is untagged
