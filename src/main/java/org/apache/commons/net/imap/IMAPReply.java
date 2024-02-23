@@ -62,9 +62,18 @@ public final class IMAPReply {
     // Start of line for continuation replies
     private static final String IMAP_CONTINUATION_PREFIX = "+";
 
-    private static final String TAGGED_RESPONSE = "^\\w+ (\\S+).*"; // TODO perhaps be less strict on tag match?
+    /**
+     * Guard against Polynomial regular expression used on uncontrolled data.
+     *
+     * Don't look for more than 80 letters.
+     * Don't look for more than 80 non-whitespace.
+     * Don't look for more than 80 character.
+     */
+    private static final String TAGGED_RESPONSE = "^\\w{1,80} (\\S{1,80}).{0,80}";
 
-    // tag cannot contain: + ( ) { SP CTL % * " \ ]
+    /**
+     * Tag cannot contain: + ( ) { SP CTL % * " \ ]
+     */
     private static final Pattern TAGGED_PATTERN = Pattern.compile(TAGGED_RESPONSE);
 
     private static final String UNTAGGED_RESPONSE = "^\\* (\\S+).*";
