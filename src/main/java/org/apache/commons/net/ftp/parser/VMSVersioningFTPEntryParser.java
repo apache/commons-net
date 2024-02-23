@@ -23,7 +23,6 @@ import java.util.ListIterator;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
 
@@ -44,8 +43,8 @@ import org.apache.commons.net.ftp.FTPClientConfig;
  */
 public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
 
-    private static final String PRE_PARSE_REGEX = "(.*?);([0-9]+)\\s*.*";
-    private final Pattern preparsePattern;
+    private static final String REGEX = "(.*?);([0-9]+)\\s*.*";
+    private static final Pattern PATTERN = Pattern.compile(REGEX);
 
     /**
      * Constructor for a VMSFTPEntryParser object.
@@ -67,12 +66,6 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
      */
     public VMSVersioningFTPEntryParser(final FTPClientConfig config) {
         configure(config);
-        try {
-            preparsePattern = Pattern.compile(PRE_PARSE_REGEX);
-        } catch (final PatternSyntaxException pse) {
-            throw new IllegalArgumentException("Unparseable regex supplied:  " + PRE_PARSE_REGEX);
-        }
-
     }
 
     @Override
@@ -95,7 +88,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
         while (iter.hasNext()) {
             final String entry = iter.next().trim();
             MatchResult result;
-            final Matcher _preparse_matcher_ = preparsePattern.matcher(entry);
+            final Matcher _preparse_matcher_ = PATTERN.matcher(entry);
             if (_preparse_matcher_.matches()) {
                 result = _preparse_matcher_.toMatchResult();
                 final String name = result.group(1);
@@ -117,7 +110,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
         while (iter.hasPrevious()) {
             final String entry = iter.previous().trim();
             MatchResult result = null;
-            final Matcher _preparse_matcher_ = preparsePattern.matcher(entry);
+            final Matcher _preparse_matcher_ = PATTERN.matcher(entry);
             if (_preparse_matcher_.matches()) {
                 result = _preparse_matcher_.toMatchResult();
                 final String name = result.group(1);
