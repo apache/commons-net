@@ -426,6 +426,13 @@ public class FTP extends SocketClient {
         return sendCommand(FTPCmd.CDUP);
     }
 
+    private int checkMode(final int index) {
+        if (index >= MODES.length()) {
+            throw new IllegalArgumentException("Unknown mode");
+        }
+        return index;
+    }
+
     /**
      * A convenience method to send the FTP CWD command to the server, receive the reply, and return the reply code.
      *
@@ -907,12 +914,13 @@ public class FTP extends SocketClient {
         return sendCommand(FTPCmd.MODE, modeStringAt(mode));
     }
 
-    private char modeCharAt(final int fileType) {
-        return MODES.charAt(fileType);
+    private char modeCharAt(final int index) {
+        return MODES.charAt(checkMode(index));
     }
 
-    private String modeStringAt(final int mode) {
-        return MODES.substring(mode, mode + 1);
+    private String modeStringAt(final int index) {
+        checkMode(index);
+        return MODES.substring(index, index + 1);
     }
 
     /**
