@@ -3421,6 +3421,6 @@ public class FTPClient extends FTP implements Configurable {
 
     @SuppressWarnings("resource")
     private Socket wrapOnDeflate(final Socket plainSocket) {
-        return fileTransferMode == DEFLATE_TRANSFER_MODE ? DeflateSocket.wrap(plainSocket) : plainSocket;
+        return fileTransferMode == DEFLATE_TRANSFER_MODE ? new DeflateSocket(plainSocket) : plainSocket;
     }
 }

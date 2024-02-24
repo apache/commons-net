@@ -17,15 +17,11 @@
 
 package org.apache.commons.net.ftp;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.readAllBytes;
-import static org.apache.commons.io.FileUtils.deleteDirectory;
-import static org.apache.commons.net.ftp.FTP.DEFLATE_TRANSFER_MODE;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,6 +29,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.TestCase;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.Authority;
@@ -43,8 +42,6 @@ import org.apache.ftpserver.listener.ListenerFactory;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
 import org.apache.ftpserver.usermanager.impl.WritePermission;
-
-import junit.framework.TestCase;
 
 public class FTPClientDeflateTest extends TestCase {
 
@@ -119,12 +116,12 @@ public class FTPClientDeflateTest extends TestCase {
 
     @Override
     protected void setUp() throws IOException {
-        deleteDirectory(new File(DEFAULT_HOME));
+        FileUtils.deleteDirectory(new File(DEFAULT_HOME));
     }
 
     @Override
     protected void tearDown() throws Exception {
-        deleteDirectory(new File(DEFAULT_HOME));
+        FileUtils.deleteDirectory(new File(DEFAULT_HOME));
     }
 
     public void testRetrievingFiles() throws Exception {
@@ -132,21 +129,21 @@ public class FTPClientDeflateTest extends TestCase {
         new File(DEFAULT_HOME).mkdirs();
         final String filename = "test_download.txt";
         final String fileContent = "Created at " + Instant.now();
-        Files.write(Paths.get(DEFAULT_HOME).resolve(filename), fileContent.getBytes(UTF_8));
+        Files.write(Paths.get(DEFAULT_HOME).resolve(filename), fileContent.getBytes(StandardCharsets.UTF_8));
 
         runWithFTPserver((port, user, password) -> {
             final FTPClient client = new FTPClient();
             try {
                 client.connect("localhost", port);
                 client.login(user, password);
-                assertTrue("Mode Z successfully activated", client.setFileTransferMode(DEFLATE_TRANSFER_MODE));
+                assertTrue("Mode Z successfully activated", client.setFileTransferMode(FTP.DEFLATE_TRANSFER_MODE));
 
                 final FTPFile[] files = client.listFiles();
                 assertEquals("Only single file in home directory", 1, files.length);
 
                 final ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 assertTrue("File successfully transferred", client.retrieveFile(files[0].getName(), bos));
-                assertEquals("File content is not corrupted", fileContent, new String(bos.toByteArray(), UTF_8));
+                assertEquals("File content is not corrupted", fileContent, new String(bos.toByteArray(), StandardCharsets.UTF_8));
             } finally {
                 client.logout();
             }
@@ -160,20 +157,20 @@ public class FTPClientDeflateTest extends TestCase {
             try {
                 client.connect("localhost", port);
                 client.login(user, password);
-                assertTrue("Mode Z successfully activated", client.setFileTransferMode(DEFLATE_TRANSFER_MODE));
+                assertTrue("Mode Z successfully activated", client.setFileTransferMode(FTP.DEFLATE_TRANSFER_MODE));
 
                 final FTPFile[] filesBeforeUpload = client.listFiles();
                 assertEquals("No files in home directory before upload", 0, filesBeforeUpload.length);
 
-                final String filename = "test_upload.txt";
+                final String fileName = "test_upload.txt";
                 final String fileContent = "Created at " + Instant.now();
-                assertTrue("File successfully transferred", client.storeFile(filename, new ByteArrayInputStream(fileContent.getBytes(UTF_8))));
+                assertTrue("File successfully transferred", client.storeFile(fileName, new ByteArrayInputStream(fileContent.getBytes(StandardCharsets.UTF_8))));
 
                 final FTPFile[] filesAfterUpload = client.listFiles();
                 assertEquals("Single file in home directory after upload", 1, filesAfterUpload.length);
 
-                final Path p = Paths.get(DEFAULT_HOME, filename);
-                assertEquals("File content is not corrupted", fileContent, new String(readAllBytes(p), UTF_8));
+                final Path p = Paths.get(DEFAULT_HOME, fileName);
+                assertEquals("File content is not corrupted", fileContent, new String(Files.readAllBytes(p), StandardCharsets.UTF_8));
             } finally {
                 client.logout();
             }
