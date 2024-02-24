@@ -29,19 +29,18 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
 /**
- * Wrapper class for FTP data channel sockets when using MODE Z. All methods
- * except of {@link #getInputStream()} and {@link #getOutputStream()} are
- * calling the delegate methods directly.
+ * Wrapper class for FTP data channel sockets when compressing data in the "deflate" compression format. All methods except of {@link #getInputStream()} and
+ * {@link #getOutputStream()} are calling the delegate methods directly.
  */
-class ModeZSocket extends Socket {
+class DeflateSocket extends Socket {
 
     static Socket wrap(final Socket plain) {
-        return new ModeZSocket(plain);
+        return new DeflateSocket(plain);
     }
 
     private final Socket delegate;
 
-    private ModeZSocket(final Socket delegate) {
+    private DeflateSocket(final Socket delegate) {
         this.delegate = delegate;
     }
 

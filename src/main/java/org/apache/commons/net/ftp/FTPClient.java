@@ -3421,7 +3421,7 @@ public class FTPClient extends FTP implements Configurable {
 
     private Socket wrapSocketIfModeZisEnabled(final Socket plainSocket) {
         if (fileTransferMode == COMPRESSED_MODE_Z_TRANSFER_MODE) {
-            return ModeZSocket.wrap(plainSocket);
+            return DeflateSocket.wrap(plainSocket);
         }
         return plainSocket;
     }
