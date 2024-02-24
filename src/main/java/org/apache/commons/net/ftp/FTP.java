@@ -904,11 +904,15 @@ public class FTP extends SocketClient {
      */
     public int mode(final int mode) throws IOException {
 
-        return sendCommand(FTPCmd.MODE, MODES.substring(mode, mode + 1));
+        return sendCommand(FTPCmd.MODE, modeStringAt(mode));
     }
 
     private char modeCharAt(final int fileType) {
         return MODES.charAt(fileType);
+    }
+
+    private String modeStringAt(final int mode) {
+        return MODES.substring(mode, mode + 1);
     }
 
     /**
@@ -1405,7 +1409,7 @@ public class FTP extends SocketClient {
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int stru(final int structure) throws IOException {
-        return sendCommand(FTPCmd.STRU, MODES.substring(structure, structure + 1));
+        return sendCommand(FTPCmd.STRU, modeStringAt(structure));
     }
 
     /**
@@ -1432,7 +1436,7 @@ public class FTP extends SocketClient {
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int type(final int fileType) throws IOException {
-        return sendCommand(FTPCmd.TYPE, MODES.substring(fileType, fileType + 1));
+        return sendCommand(FTPCmd.TYPE, modeStringAt(fileType));
     }
 
     /**
