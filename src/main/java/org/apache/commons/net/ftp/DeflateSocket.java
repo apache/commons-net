@@ -25,6 +25,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.nio.channels.SocketChannel;
+import java.util.Objects;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
@@ -41,7 +42,7 @@ class DeflateSocket extends Socket {
     private final Socket delegate;
 
     private DeflateSocket(final Socket delegate) {
-        this.delegate = delegate;
+        this.delegate = Objects.requireNonNull(delegate, "delegate");
     }
 
     @Override
