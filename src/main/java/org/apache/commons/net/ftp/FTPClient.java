@@ -794,14 +794,6 @@ public class FTPClient extends FTP implements Configurable {
         return socket;
     }
 
-    private Socket wrapSocketIfModeZisEnabled(final Socket plainSocket) {
-        if (fileTransferMode == COMPRESSED_MODE_Z_TRANSFER_MODE) {
-            return ModeZSocket.wrap(plainSocket);
-        } else {
-            return plainSocket;
-        }
-    }
-
     protected void _parseExtendedPassiveModeReply(String reply) throws MalformedServerReplyException {
         reply = reply.substring(reply.indexOf('(') + 1, reply.indexOf(')')).trim();
 
@@ -3425,5 +3417,13 @@ public class FTPClient extends FTP implements Configurable {
      */
     public boolean structureMount(final String pathname) throws IOException {
         return FTPReply.isPositiveCompletion(smnt(pathname));
+    }
+
+    private Socket wrapSocketIfModeZisEnabled(final Socket plainSocket) {
+        if (fileTransferMode == COMPRESSED_MODE_Z_TRANSFER_MODE) {
+            return ModeZSocket.wrap(plainSocket);
+        } else {
+            return plainSocket;
+        }
     }
 }
