@@ -46,21 +46,24 @@ import org.apache.commons.net.util.NetConstants;
  * The FTP class is made public to provide access to various FTP constants and to make it easier for adventurous programmers (or those with special needs) to
  * interact with the FTP protocol and implement their own clients. A set of methods with names corresponding to the FTP command names are provided to facilitate
  * this interaction.
+ * </p>
  * <p>
  * You should keep in mind that the FTP server may choose to prematurely close a connection if the client has been idle for longer than a given time period
  * (usually 900 seconds). The FTP class will detect a premature FTP server connection closing when it receives a
  * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE } response to a command. When that occurs, the FTP class
- * method encountering that reply will throw an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} . <code>FTPConectionClosedException</code> is a
- * subclass of <code> IOException </code> and therefore need not be caught separately, but if you are going to catch it separately, its catch block must appear
- * before the more general <code> IOException </code> catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you
+ * method encountering that reply will throw an {@link org.apache.commons.net.ftp.FTPConnectionClosedException}. <code>FTPConectionClosedException</code> is a
+ * subclass of <code>IOException</code> and therefore need not be caught separately, but if you are going to catch it separately, its catch block must appear
+ * before the more general <code>IOException</code> catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you
  * must disconnect the connection with {@link #disconnect disconnect() } to properly clean up the system resources used by FTP. Before disconnecting, you may
  * check the last reply code and text with {@link #getReplyCode getReplyCode }, {@link #getReplyString getReplyString }, and {@link #getReplyStrings
  * getReplyStrings}. You may avoid server disconnections while the client is idle by periodically sending NOOP commands to the server.
+ * </p>
  * <p>
  * Rather than list it separately for each method, we mention here that every method communicating with the server and throwing an IOException can also throw a
  * {@link org.apache.commons.net.MalformedServerReplyException} , which is a subclass of IOException. A MalformedServerReplyException will be thrown when the
  * reply received from the server deviates enough from the protocol specification that it cannot be interpreted in a useful manner despite attempts to be as
  * lenient as possible.
+ * </p>
  *
  * @see FTPClient
  * @see FTPConnectionClosedException
@@ -68,8 +71,10 @@ import org.apache.commons.net.util.NetConstants;
  */
 
 public class FTP extends SocketClient {
+
     /** The default FTP data port (20). */
     public static final int DEFAULT_DATA_PORT = 20;
+
     /** The default FTP control port (21). */
     public static final int DEFAULT_PORT = 21;
 
@@ -399,9 +404,7 @@ public class FTP extends SocketClient {
 
     private String buildMessage(final String command, final String args) {
         final StringBuilder __commandBuffer = new StringBuilder();
-
         __commandBuffer.append(command);
-
         if (args != null) {
             __commandBuffer.append(' ');
             __commandBuffer.append(args);
@@ -657,21 +660,15 @@ public class FTP extends SocketClient {
      * @return The entire text from the last FTP response as a String.
      */
     public String getReplyString() {
-        final StringBuilder buffer;
-
         if (!_newReplyString) {
             return _replyString;
         }
-
-        buffer = new StringBuilder(256);
-
+        final StringBuilder buffer = new StringBuilder(256);
         for (final String line : _replyLines) {
             buffer.append(line);
             buffer.append(SocketClient.NETASCII_EOL);
         }
-
         _newReplyString = false;
-
         return _replyString = buffer.toString();
     }
 
@@ -1228,13 +1225,9 @@ public class FTP extends SocketClient {
         if (_controlOutput_ == null) {
             throw new IOException("Connection is not open");
         }
-
         final String message = buildMessage(command, args);
-
         send(message);
-
         fireCommandSent(command, message);
-
         return getReply();
     }
 
@@ -1451,7 +1444,6 @@ public class FTP extends SocketClient {
      */
     public int type(final int fileType, final int formatOrByteSize) throws IOException {
         final StringBuilder arg = new StringBuilder();
-
         arg.append(MODES.charAt(fileType));
         arg.append(' ');
         if (fileType == LOCAL_FILE_TYPE) {
