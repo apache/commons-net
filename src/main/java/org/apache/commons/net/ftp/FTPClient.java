@@ -3423,7 +3423,8 @@ public class FTPClient extends FTP implements Configurable {
         switch (fileTransferMode) {
         case DEFLATE_TRANSFER_MODE:
             return new DeflateSocket(plainSocket);
-        case GZIP_TRANSFER_MODE:
+        // Experiment, not in an RFC?
+        // case GZIP_TRANSFER_MODE:
             //return new GZIPSocket(plainSocket);
         default:
             return plainSocket;

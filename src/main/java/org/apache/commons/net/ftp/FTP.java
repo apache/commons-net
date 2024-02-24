@@ -154,14 +154,16 @@ public class FTP extends SocketClient {
     /**
      * A constant used to indicate a file is to be transferred as FTP (un)compressing data in the "deflate" compression format. All constants ending in
      * <code>TRANSFER_MODE</code> are used to indicate file transfer modes.
+     *
+     * See the Internet Draft <a ref="https://datatracker.ietf.org/doc/html/draft-preston-ftpext-deflate-03">Deflate transmission mode for FTP</a>
      */
     public static final int DEFLATE_TRANSFER_MODE = 13;
 
-    /**
-     * A constant used to indicate a file is to be transferred as FTP (un)compressing data in the GZIP compression format. All constants ending in
-     * <code>TRANSFER_MODE</code> are used to indicate file transfer modes.
-     */
-    public static final int GZIP_TRANSFER_MODE = 14;
+//    /**
+//     * A constant used to indicate a file is to be transferred as FTP (un)compressing data in the GZIP compression format. All constants ending in
+//     * <code>TRANSFER_MODE</code> are used to indicate file transfer modes.
+//     */
+//    public static final int GZIP_TRANSFER_MODE = 14;
 
     // We have to ensure that the protocol communication is in ASCII,
     // but we use ISO-8859-1 just in case 8-bit characters cross
@@ -175,7 +177,7 @@ public class FTP extends SocketClient {
     /** Length of the FTP reply code (3 alphanumerics) */
     public static final int REPLY_CODE_LEN = 3;
 
-    private static final String modes = "AEILNTCFRPSBCZ";
+    private static final String MODES = "AEILNTCFRPSBCZ";
     protected int _replyCode;
     protected ArrayList<String> _replyLines;
     protected boolean _newReplyString;
@@ -904,7 +906,8 @@ public class FTP extends SocketClient {
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int mode(final int mode) throws IOException {
-        return sendCommand(FTPCmd.MODE, modes.substring(mode, mode + 1));
+
+        return sendCommand(FTPCmd.MODE, MODES.substring(mode, mode + 1));
     }
 
     /**
@@ -1405,7 +1408,7 @@ public class FTP extends SocketClient {
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int stru(final int structure) throws IOException {
-        return sendCommand(FTPCmd.STRU, modes.substring(structure, structure + 1));
+        return sendCommand(FTPCmd.STRU, MODES.substring(structure, structure + 1));
     }
 
     /**
@@ -1432,7 +1435,7 @@ public class FTP extends SocketClient {
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int type(final int fileType) throws IOException {
-        return sendCommand(FTPCmd.TYPE, modes.substring(fileType, fileType + 1));
+        return sendCommand(FTPCmd.TYPE, MODES.substring(fileType, fileType + 1));
     }
 
     /**
@@ -1449,12 +1452,12 @@ public class FTP extends SocketClient {
     public int type(final int fileType, final int formatOrByteSize) throws IOException {
         final StringBuilder arg = new StringBuilder();
 
-        arg.append(modes.charAt(fileType));
+        arg.append(MODES.charAt(fileType));
         arg.append(' ');
         if (fileType == LOCAL_FILE_TYPE) {
             arg.append(formatOrByteSize);
         } else {
-            arg.append(modes.charAt(formatOrByteSize));
+            arg.append(MODES.charAt(formatOrByteSize));
         }
 
         return sendCommand(FTPCmd.TYPE, arg.toString());
