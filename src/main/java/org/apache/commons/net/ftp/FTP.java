@@ -151,6 +151,13 @@ public class FTP extends SocketClient {
      */
     public static final int COMPRESSED_TRANSFER_MODE = 12;
 
+    /**
+     * A constant used to indicate a file is to be transferred as FTP compressed
+     * data with MODE Z (zlib). All constants ending in <code>TRANSFER_MODE</code> are used to indicate
+     * file transfer modes.
+     */
+    public static final int COMPRESSED_MODE_Z_TRANSFER_MODE = 13;
+
     // We have to ensure that the protocol communication is in ASCII,
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
@@ -163,7 +170,7 @@ public class FTP extends SocketClient {
     /** Length of the FTP reply code (3 alphanumerics) */
     public static final int REPLY_CODE_LEN = 3;
 
-    private static final String modes = "AEILNTCFRPSBC";
+    private static final String modes = "AEILNTCFRPSBCZ";
     protected int _replyCode;
     protected ArrayList<String> _replyLines;
     protected boolean _newReplyString;
