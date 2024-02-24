@@ -446,8 +446,8 @@ public class FTPClient extends FTP implements Configurable {
      * Parse the pathname from a CWD reply.
      * <p>
      * According to <a href="http://www.ietf.org/rfc/rfc959.txt">RFC959</a>, it should be the same as for MKD i.e.
-     * {@code 257<space>"<directory-name>"[<space>commentary]} where any double-quotes in {@code <directory-name>} are doubled.
-     * Unlike MKD, the commentary is optional.
+     * {@code 257<space>"<directory-name>"[<space>commentary]} where any double-quotes in {@code <directory-name>} are doubled. Unlike MKD, the commentary is
+     * optional.
      * <p>
      * However, see NET-442 for an exception.
      *
@@ -713,7 +713,7 @@ public class FTPClient extends FTP implements Configurable {
                     server.setSoTimeout(soTimeoutMillis);
                 }
 
-                socket = wrapSocketIfModeZisEnabled(server.accept());
+                socket = wrapOnDeflate(server.accept());
 
                 // Ensure the timeout is set before any commands are issued on the new socket
                 if (soTimeoutMillis >= 0) {
@@ -749,7 +749,7 @@ public class FTPClient extends FTP implements Configurable {
                 _parsePassiveModeReply(_replyLines.get(0));
             }
 
-            socket = wrapSocketIfModeZisEnabled(_socketFactory_.createSocket());
+            socket = wrapOnDeflate(_socketFactory_.createSocket());
 
             if (receiveDataSocketBufferSize > 0) {
                 socket.setReceiveBufferSize(receiveDataSocketBufferSize);
@@ -2384,7 +2384,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Login to the FTP server using the provided user and password.
      *
-     * @param user The user name to login under.
+     * @param user     The user name to login under.
      * @param password The password to use.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -2413,7 +2413,7 @@ public class FTPClient extends FTP implements Configurable {
      * Login to the FTP server using the provided username, password, and account. If no account is required by the server, only the username and password, the
      * account information is not used.
      *
-     * @param user The user name to login under.
+     * @param user     The user name to login under.
      * @param password The password to use.
      * @param account  The account to use.
      * @return True if successfully completed, false if not.
@@ -3419,10 +3419,8 @@ public class FTPClient extends FTP implements Configurable {
         return FTPReply.isPositiveCompletion(smnt(pathname));
     }
 
-    private Socket wrapSocketIfModeZisEnabled(final Socket plainSocket) {
-        if (fileTransferMode == COMPRESSED_MODE_Z_TRANSFER_MODE) {
-            return DeflateSocket.wrap(plainSocket);
-        }
-        return plainSocket;
+    @SuppressWarnings("resource")
+    private Socket wrapOnDeflate(final Socket plainSocket) {
+        return fileTransferMode == DEFLATE_TRANSFER_MODE ? DeflateSocket.wrap(plainSocket) : plainSocket;
     }
 }

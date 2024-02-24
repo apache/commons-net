@@ -20,7 +20,7 @@ package org.apache.commons.net.ftp;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
-import static org.apache.commons.net.ftp.FTP.COMPRESSED_MODE_Z_TRANSFER_MODE;
+import static org.apache.commons.net.ftp.FTP.DEFLATE_TRANSFER_MODE;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -139,7 +139,7 @@ public class FTPClientDeflateTest extends TestCase {
             try {
                 client.connect("localhost", port);
                 client.login(user, password);
-                assertTrue("Mode Z successfully activated", client.setFileTransferMode(COMPRESSED_MODE_Z_TRANSFER_MODE));
+                assertTrue("Mode Z successfully activated", client.setFileTransferMode(DEFLATE_TRANSFER_MODE));
 
                 final FTPFile[] files = client.listFiles();
                 assertEquals("Only single file in home directory", 1, files.length);
@@ -160,7 +160,7 @@ public class FTPClientDeflateTest extends TestCase {
             try {
                 client.connect("localhost", port);
                 client.login(user, password);
-                assertTrue("Mode Z successfully activated", client.setFileTransferMode(COMPRESSED_MODE_Z_TRANSFER_MODE));
+                assertTrue("Mode Z successfully activated", client.setFileTransferMode(DEFLATE_TRANSFER_MODE));
 
                 final FTPFile[] filesBeforeUpload = client.listFiles();
                 assertEquals("No files in home directory before upload", 0, filesBeforeUpload.length);
