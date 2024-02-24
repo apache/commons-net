@@ -907,6 +907,10 @@ public class FTP extends SocketClient {
         return sendCommand(FTPCmd.MODE, MODES.substring(mode, mode + 1));
     }
 
+    private char modeCharAt(final int fileType) {
+        return MODES.charAt(fileType);
+    }
+
     /**
      * A convenience method to send the FTP NLST command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
      * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
@@ -1444,12 +1448,12 @@ public class FTP extends SocketClient {
      */
     public int type(final int fileType, final int formatOrByteSize) throws IOException {
         final StringBuilder arg = new StringBuilder();
-        arg.append(MODES.charAt(fileType));
+        arg.append(modeCharAt(fileType));
         arg.append(' ');
         if (fileType == LOCAL_FILE_TYPE) {
             arg.append(formatOrByteSize);
         } else {
-            arg.append(MODES.charAt(formatOrByteSize));
+            arg.append(modeCharAt(formatOrByteSize));
         }
 
         return sendCommand(FTPCmd.TYPE, arg.toString());
