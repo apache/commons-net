@@ -33,7 +33,7 @@ import java.util.zip.InflaterInputStream;
  * except of {@link #getInputStream()} and {@link #getOutputStream()} are
  * calling the delegate methods directly.
  */
-public class ModeZSocket extends Socket {
+class ModeZSocket extends Socket {
 
     private final Socket delegate;
 
