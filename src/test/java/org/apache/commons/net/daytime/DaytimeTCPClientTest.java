@@ -42,12 +42,9 @@ class DaytimeTCPClientTest {
 
     private static MockDaytimeTCPServer mockDaytimeTCPServer;
 
-    private static Stream<Arguments> daytimeMockData() {
-        return Stream.of(
-                Arguments.of("Thursday, February 2, 2006, 13:45:51-PST", ZoneId.of("PST", ZoneId.SHORT_IDS), LocalDateTime.of(2006, 2, 2, 13, 45, 51)),
-                Arguments.of("Thursday, January 1, 2004, 00:00:00-UTC", ZoneId.of("UTC"), LocalDate.of(2004, 1, 1).atStartOfDay()),
-                Arguments.of("Friday, July 28, 2023, 06:06:50-JST", ZoneId.of("JST", ZoneId.SHORT_IDS), LocalDateTime.of(2023, 7, 28, 6, 6, 50, 999))
-        );
+    @AfterAll
+    public static void afterAll() throws IOException {
+        mockDaytimeTCPServer.stop();
     }
 
     @BeforeAll
@@ -56,25 +53,16 @@ class DaytimeTCPClientTest {
         mockDaytimeTCPServer.start();
     }
 
-    @AfterAll
-    public static void afterAll() throws IOException {
-        mockDaytimeTCPServer.stop();
+    private static Stream<Arguments> daytimeMockData() {
+        return Stream.of(
+                Arguments.of("Thursday, February 2, 2006, 13:45:51-PST", ZoneId.of("PST", ZoneId.SHORT_IDS), LocalDateTime.of(2006, 2, 2, 13, 45, 51)),
+                Arguments.of("Thursday, January 1, 2004, 00:00:00-UTC", ZoneId.of("UTC"), LocalDate.of(2004, 1, 1).atStartOfDay()),
+                Arguments.of("Friday, July 28, 2023, 06:06:50-JST", ZoneId.of("JST", ZoneId.SHORT_IDS), LocalDateTime.of(2023, 7, 28, 6, 6, 50, 999))
+        );
     }
 
     private DaytimeTCPClient daytimeTCPClient;
     private InetAddress localHost;
-
-    @BeforeEach
-    public void setUp() throws UnknownHostException {
-        localHost = InetAddress.getLocalHost();
-    }
-
-    @AfterEach
-    public void tearDown() throws IOException {
-        if (daytimeTCPClient != null && daytimeTCPClient.isConnected()) {
-            daytimeTCPClient.disconnect();
-        }
-    }
 
     @Test
     public void constructDaytimeTcpClient() {
@@ -95,6 +83,18 @@ class DaytimeTCPClientTest {
 
         final String time = daytimeTCPClient.getTime();
         assertEquals(expectedDaytimeString, time);
+    }
+
+    @BeforeEach
+    public void setUp() throws UnknownHostException {
+        localHost = InetAddress.getLocalHost();
+    }
+
+    @AfterEach
+    public void tearDown() throws IOException {
+        if (daytimeTCPClient != null && daytimeTCPClient.isConnected()) {
+            daytimeTCPClient.disconnect();
+        }
     }
 
 }

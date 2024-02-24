@@ -84,16 +84,6 @@ public final class MockDaytimeTCPServer extends MockTcpServer {
         super(port, serverAddress);
     }
 
-    @Override
-    protected void processClientSocket(final Socket clientSocket) throws Exception {
-        try (final PrintWriter pw = new PrintWriter(clientSocket.getOutputStream())) {
-            final Clock nextClock = Objects.requireNonNull(responseQueue.poll(5, TimeUnit.SECONDS), "Could not obtain next clock for DaytimeTCPMockServer");
-            final ZonedDateTime dateTime = ZonedDateTime.now(nextClock);
-            pw.write(dateTime.format(DAYTIME_DATA_FORMAT));
-            pw.flush();
-        }
-    }
-
     /**
      * Queues clock that will be used in next accepted {@link Socket}
      * to return Daytime data, as defined in <a href="https://datatracker.ietf.org/doc/html/rfc867">RFC 867</a> spec
@@ -104,6 +94,16 @@ public final class MockDaytimeTCPServer extends MockTcpServer {
     public Clock enqueue(final Clock clock) {
         responseQueue.add(clock);
         return clock;
+    }
+
+    @Override
+    protected void processClientSocket(final Socket clientSocket) throws Exception {
+        try (final PrintWriter pw = new PrintWriter(clientSocket.getOutputStream())) {
+            final Clock nextClock = Objects.requireNonNull(responseQueue.poll(5, TimeUnit.SECONDS), "Could not obtain next clock for DaytimeTCPMockServer");
+            final ZonedDateTime dateTime = ZonedDateTime.now(nextClock);
+            pw.write(dateTime.format(DAYTIME_DATA_FORMAT));
+            pw.flush();
+        }
     }
 
 }
