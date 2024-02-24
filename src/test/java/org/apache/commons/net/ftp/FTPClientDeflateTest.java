@@ -46,7 +46,7 @@ import org.apache.ftpserver.usermanager.impl.WritePermission;
 
 import junit.framework.TestCase;
 
-public class FTPClientModeZTest extends TestCase {
+public class FTPClientDeflateTest extends TestCase {
 
     private static final class FtpServerAndPort {
         private final int port;
