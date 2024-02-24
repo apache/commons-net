@@ -17,8 +17,6 @@
 
 package org.apache.commons.net.daytime;
 
-import org.apache.commons.net.MockTcpServer;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -31,6 +29,8 @@ import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.net.MockTcpServer;
 
 /**
  * The MockDaytimeTCPServer class is a simple TCP implementation of a server for the Daytime Protocol described in <a href="https://datatracker.ietf.org/doc/html/rfc867">RFC 867</a>.
