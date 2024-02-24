@@ -155,7 +155,7 @@ public class FTP extends SocketClient {
      * A constant used to indicate a file is to be transferred as FTP (un)compressing data in the "deflate" compression format. All constants ending in
      * <code>TRANSFER_MODE</code> are used to indicate file transfer modes.
      *
-     * See the Internet Draft <a ref="https://datatracker.ietf.org/doc/html/draft-preston-ftpext-deflate-03">Deflate transmission mode for FTP</a>
+     * See the Internet Draft <a ref="https://datatracker.ietf.org/doc/html/draft-preston-ftpext-deflate-04">Deflate transmission mode for FTP</a>
      */
     public static final int DEFLATE_TRANSFER_MODE = 13;
 
