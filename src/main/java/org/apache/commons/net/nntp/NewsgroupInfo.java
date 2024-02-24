@@ -101,7 +101,7 @@ public final class NewsgroupInfo {
     }
 
     /**
-     * Gets the posting permission of the newsgroup. This will be one of the <code> POSTING_PERMISSION </code> constants.
+     * Gets the posting permission of the newsgroup. This will be one of the <code>POSTING_PERMISSION</code> constants.
      *
      * @return The posting permission status of the newsgroup.
      */

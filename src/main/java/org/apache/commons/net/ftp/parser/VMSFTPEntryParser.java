@@ -107,8 +107,8 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parses a line of a VMS FTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the file
-     * listing line doesn't describe a file, <code> null </code> is returned, otherwise a <code> FTPFile </code> instance representing the files in the
+     * Parses a line of a VMS FTP server file listing and converts it into a usable format in the form of an <code>FTPFile</code> instance. If the file
+     * listing line doesn't describe a file, <code>null</code> is returned, otherwise a <code>FTPFile</code> instance representing the files in the
      * directory is returned.
      *
      * @param entry A line of text from the file listing

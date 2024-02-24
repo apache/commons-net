@@ -546,7 +546,7 @@ public class FTPClientConfig {
      * </p>
      * <p>
      * If the code supplied is not supported here, <code>en_US</code> month names will be used. We are supporting here those language codes which, when a
-     * <code> java.util.Locale</code> is constructed using it, and a <code>java.text.SimpleDateFormat</code> is constructed using that Locale, the array
+     * <code>java.util.Locale</code> is constructed using it, and a <code>java.text.SimpleDateFormat</code> is constructed using that Locale, the array
      * returned by the SimpleDateFormat's <code>getShortMonths()</code> method consists solely of three 8-bit ASCII character strings. Additionally, languages
      * which do not meet this requirement are included if a common alternative set of short month names is known to be used. This means that users who can tell
      * us of additional such encodings may get them added to the list of supported languages by contacting the Apache Commons Net team.

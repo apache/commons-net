@@ -41,8 +41,8 @@ import org.apache.commons.net.util.NetConstants;
  * You should keep in mind that the SMTP server may choose to prematurely close a connection for various reasons. The SMTP class will detect a premature SMTP
  * server connection closing when it receives a {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE } response to
  * a command. When that occurs, the SMTP class method encountering that reply will throw an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} .
- * <code>SMTPConnectionClosedException</code> is a subclass of <code> IOException </code> and therefore need not be caught separately, but if you are going to
- * catch it separately, its catch block must appear before the more general <code> IOException </code> catch block. When you encounter an
+ * <code>SMTPConnectionClosedException</code> is a subclass of <code>IOException</code> and therefore need not be caught separately, but if you are going to
+ * catch it separately, its catch block must appear before the more general <code>IOException</code> catch block. When you encounter an
  * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} , you must disconnect the connection with
  * {@link org.apache.commons.net.SocketClient#disconnect disconnect() } to properly clean up the system resources used by SMTP. Before disconnecting, you may
  * check the last reply code and text with {@link #getReplyCode getReplyCode }, {@link #getReplyString getReplyString }, and {@link #getReplyStrings
@@ -241,7 +241,7 @@ public class SMTP extends SocketClient {
 
     /**
      * Returns the integer value of the reply code of the last SMTP reply. You will usually only use this method after you connect to the SMTP server to check
-     * that the connection was successful since <code> connect </code> is of type void.
+     * that the connection was successful since <code>connect</code> is of type void.
      *
      * @return The integer value of the reply code of the last SMTP reply.
      */

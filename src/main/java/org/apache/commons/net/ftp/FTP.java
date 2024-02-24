@@ -653,7 +653,7 @@ public class FTP extends SocketClient {
 
     /**
      * Returns the integer value of the reply code of the last FTP reply. You will usually only use this method after you connect to the FTP server to check
-     * that the connection was successful since <code> connect </code> is of type void.
+     * that the connection was successful since <code>connect</code> is of type void.
      *
      * @return The integer value of the reply code of the last FTP reply.
      */

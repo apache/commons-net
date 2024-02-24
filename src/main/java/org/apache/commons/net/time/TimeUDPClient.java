@@ -48,7 +48,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     private final byte[] timeData = new byte[4];
 
     /**
-     * Same as <code> getTime(host, DEFAULT_PORT); </code>
+     * Same as <code>getTime(host, DEFAULT_PORT);</code>
      *
      * @param host the time-server
      * @return the date
@@ -71,7 +71,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Same as <code> getTime(host, DEFAULT_PORT); </code>
+     * Same as <code>getTime(host, DEFAULT_PORT);</code>
      *
      * @param host the time-server
      * @return the time returned from the server

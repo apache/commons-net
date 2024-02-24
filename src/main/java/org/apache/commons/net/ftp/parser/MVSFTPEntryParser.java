@@ -285,8 +285,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parses a line of a z/OS - MVS FTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the
-     * file listing line doesn't describe a file, then <code> null </code> is returned. Otherwise, a <code> FTPFile </code> instance representing the file is
+     * Parses a line of a z/OS - MVS FTP server file listing and converts it into a usable format in the form of an <code>FTPFile</code> instance. If the
+     * file listing line doesn't describe a file, then <code>null</code> is returned. Otherwise, a <code>FTPFile</code> instance representing the file is
      * returned.
      *
      * @param entry A line of text from the file listing

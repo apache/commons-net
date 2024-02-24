@@ -40,8 +40,8 @@ import org.apache.commons.net.io.CRLFLineReader;
  * if the server is being shutdown by the operator or some other reason. The NNTP class will detect a premature NNTP server connection closing when it receives
  * a {@link org.apache.commons.net.nntp.NNTPReply#SERVICE_DISCONTINUED NNTPReply.SERVICE_DISCONTINUED } response to a command. When that occurs, the NNTP class
  * method encountering that reply will throw an {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} . <code>NNTPConectionClosedException</code> is
- * a subclass of <code> IOException </code> and therefore need not be caught separately, but if you are going to catch it separately, its catch block must
- * appear before the more general <code> IOException </code> catch block. When you encounter an
+ * a subclass of <code>IOException</code> and therefore need not be caught separately, but if you are going to catch it separately, its catch block must
+ * appear before the more general <code>IOException</code> catch block. When you encounter an
  * {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect() } to properly
  * clean up the system resources used by NNTP. Before disconnecting, you may check the last reply code and text with {@link #getReplyCode getReplyCode } and
  * {@link #getReplyString getReplyString }.
@@ -313,7 +313,7 @@ public class NNTP extends SocketClient {
 
     /**
      * Returns the integer value of the reply code of the last NNTP reply. You will usually only use this method after you connect to the NNTP server to check
-     * that the connection was successful since <code> connect </code> is of type void.
+     * that the connection was successful since <code>connect</code> is of type void.
      *
      * @return The integer value of the reply code of the last NNTP reply.
      */

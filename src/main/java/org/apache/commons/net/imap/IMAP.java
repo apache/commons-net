@@ -157,7 +157,7 @@ public class IMAP extends SocketClient {
     }
 
     /**
-     * Disconnects the client from the server, and sets the state to <code> DISCONNECTED_STATE </code>. The reply text information from the last issued command
+     * Disconnects the client from the server, and sets the state to <code>DISCONNECTED_STATE</code>. The reply text information from the last issued command
      * is voided to allow garbage collection of the memory used to store that information.
      *
      * @throws IOException If there is an error in disconnecting.

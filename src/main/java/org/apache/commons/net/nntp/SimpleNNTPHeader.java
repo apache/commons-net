@@ -94,7 +94,7 @@ public class SimpleNNTPHeader {
     }
 
     /**
-     * Returns the address used in the <code> From: </code> header field.
+     * Returns the address used in the <code>From:</code> header field.
      *
      * @return The from address.
      */
@@ -103,7 +103,7 @@ public class SimpleNNTPHeader {
     }
 
     /**
-     * Returns the contents of the <code> Newsgroups: </code> header field.
+     * Returns the contents of the <code>Newsgroups:</code> header field.
      *
      * @return The comma-separated list of newsgroups to which the article is being posted.
      */
@@ -112,7 +112,7 @@ public class SimpleNNTPHeader {
     }
 
     /**
-     * Returns the subject used in the <code> Subject: </code> header field.
+     * Returns the subject used in the <code>Subject:</code> header field.
      *
      * @return The subject.
      */

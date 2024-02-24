@@ -66,8 +66,8 @@ import java.util.List;
  */
 public interface FTPFileEntryParser {
     /**
-     * Parses a line of an FTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the file listing
-     * line doesn't describe a file, <code> null </code> should be returned, otherwise a <code> FTPFile </code> instance representing the files in the directory
+     * Parses a line of an FTP server file listing and converts it into a usable format in the form of an <code>FTPFile</code> instance. If the file listing
+     * line doesn't describe a file, <code>null</code> should be returned, otherwise a <code>FTPFile</code> instance representing the files in the directory
      * is returned.
      *
      * @param listEntry A line of text from the file listing

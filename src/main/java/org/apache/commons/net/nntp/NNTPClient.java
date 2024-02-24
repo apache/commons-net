@@ -41,8 +41,8 @@ import org.apache.commons.net.util.NetConstants;
  * if the server is being shutdown by the operator or some other reason. The NNTP class will detect a premature NNTP server connection closing when it receives
  * a {@link org.apache.commons.net.nntp.NNTPReply#SERVICE_DISCONTINUED NNTPReply.SERVICE_DISCONTINUED } response to a command. When that occurs, the NNTP class
  * method encountering that reply will throw an {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} . <code>NNTPConectionClosedException</code> is
- * a subclass of <code> IOException </code> and therefore need not be caught separately, but if you are going to catch it separately, its catch block must
- * appear before the more general <code> IOException </code> catch block. When you encounter an
+ * a subclass of <code>IOException</code> and therefore need not be caught separately, but if you are going to catch it separately, its catch block must
+ * appear before the more general <code>IOException</code> catch block. When you encounter an
  * {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} , you must disconnect the connection with
  * {@link org.apache.commons.net.nntp.NNTP#disconnect disconnect() } to properly clean up the system resources used by NNTP. Before disconnecting, you may check
  * the last reply code and text with {@link org.apache.commons.net.nntp.NNTP#getReplyCode getReplyCode } and
@@ -651,7 +651,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> retrieveArticle((String) null) </code> Note: the return can be cast to a {@link BufferedReader}
+     * Same as <code>retrieveArticle((String) null)</code> Note: the return can be cast to a {@link BufferedReader}
      *
      * @return A DotTerminatedMessageReader instance from which the article can be read. null if the article does not exist.
      * @throws IOException if an IO error occurs
@@ -687,7 +687,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> retrieveArticle(articleNumber, null) </code>
+     * Same as <code>retrieveArticle(articleNumber, null)</code>
      *
      * @param articleNumber the article number to fetch
      * @return A DotTerminatedMessageReader instance from which the article can be read. null if the article does not exist.
@@ -699,7 +699,7 @@ public class NNTPClient extends NNTP {
 
     /**
      * Retrieves an article from the currently selected newsgroup. The article is referenced by its article number. The article number and identifier contained
-     * in the server reply are returned through an ArticleInfo. The <code> articleId </code> field of the ArticleInfo cannot always be trusted because some NNTP
+     * in the server reply are returned through an ArticleInfo. The <code>articleId</code> field of the ArticleInfo cannot always be trusted because some NNTP
      * servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
@@ -726,7 +726,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> retrieveArticle(articleId, (ArticleInfo) null) </code> Note: the return can be cast to a {@link BufferedReader}
+     * Same as <code>retrieveArticle(articleId, (ArticleInfo) null)</code> Note: the return can be cast to a {@link BufferedReader}
      *
      * @param articleId the article id to retrieve
      * @return A DotTerminatedMessageReader instance from which the article can be read. null if the article does not exist.
@@ -738,7 +738,7 @@ public class NNTPClient extends NNTP {
 
     /**
      * Retrieves an article from the NNTP server. The article is referenced by its unique article identifier (including the enclosing &lt; and &gt;). The
-     * article number and identifier contained in the server reply are returned through an ArticleInfo. The <code> articleId </code> field of the ArticleInfo
+     * article number and identifier contained in the server reply are returned through an ArticleInfo. The <code>articleId</code> field of the ArticleInfo
      * cannot always be trusted because some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
@@ -781,7 +781,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> retrieveArticleBody(null) </code> Note: the return can be cast to a {@link BufferedReader}
+     * Same as <code>retrieveArticleBody(null)</code> Note: the return can be cast to a {@link BufferedReader}
      *
      * @return A DotTerminatedMessageReader instance from which the article body can be read. null if the article does not exist.
      * @throws IOException if an error occurs
@@ -817,7 +817,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> retrieveArticleBody(articleNumber, null) </code>
+     * Same as <code>retrieveArticleBody(articleNumber, null)</code>
      *
      * @param articleNumber the article number
      * @return the reader
@@ -829,7 +829,7 @@ public class NNTPClient extends NNTP {
 
     /**
      * Retrieves an article body from the currently selected newsgroup. The article is referenced by its article number. The article number and identifier
-     * contained in the server reply are returned through an ArticleInfo. The <code> articleId </code> field of the ArticleInfo cannot always be trusted because
+     * contained in the server reply are returned through an ArticleInfo. The <code>articleId</code> field of the ArticleInfo cannot always be trusted because
      * some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
@@ -856,7 +856,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> retrieveArticleBody(articleId, (ArticleInfo) null) </code> Note: the return can be cast to a {@link BufferedReader}
+     * Same as <code>retrieveArticleBody(articleId, (ArticleInfo) null)</code> Note: the return can be cast to a {@link BufferedReader}
      *
      * @param articleId the article id
      * @return A DotTerminatedMessageReader instance from which the article body can be read. null if the article does not exist.
@@ -868,7 +868,7 @@ public class NNTPClient extends NNTP {
 
     /**
      * Retrieves an article body from the NNTP server. The article is referenced by its unique article identifier (including the enclosing &lt; and &gt;). The
-     * article number and identifier contained in the server reply are returned through an ArticleInfo. The <code> articleId </code> field of the ArticleInfo
+     * article number and identifier contained in the server reply are returned through an ArticleInfo. The <code>articleId</code> field of the ArticleInfo
      * cannot always be trusted because some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
@@ -912,7 +912,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> retrieveArticleHeader((String) null) </code> Note: the return can be cast to a {@link BufferedReader}
+     * Same as <code>retrieveArticleHeader((String) null)</code> Note: the return can be cast to a {@link BufferedReader}
      *
      * @return the reader
      * @throws IOException if an error occurs
@@ -948,7 +948,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> retrieveArticleHeader(articleNumber, null) </code>
+     * Same as <code>retrieveArticleHeader(articleNumber, null)</code>
      *
      * @param articleNumber the article number
      * @return the reader
@@ -960,7 +960,7 @@ public class NNTPClient extends NNTP {
 
     /**
      * Retrieves an article header from the currently selected newsgroup. The article is referenced by its article number. The article number and identifier
-     * contained in the server reply are returned through an ArticleInfo. The <code> articleId </code> field of the ArticleInfo cannot always be trusted because
+     * contained in the server reply are returned through an ArticleInfo. The <code>articleId</code> field of the ArticleInfo cannot always be trusted because
      * some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
@@ -987,7 +987,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> retrieveArticleHeader(articleId, (ArticleInfo) null) </code> Note: the return can be cast to a {@link BufferedReader}
+     * Same as <code>retrieveArticleHeader(articleId, (ArticleInfo) null)</code> Note: the return can be cast to a {@link BufferedReader}
      *
      * @param articleId the article id to fetch
      * @return the reader
@@ -999,7 +999,7 @@ public class NNTPClient extends NNTP {
 
     /**
      * Retrieves an article header from the NNTP server. The article is referenced by its unique article identifier (including the enclosing &lt; and &gt;). The
-     * article number and identifier contained in the server reply are returned through an ArticleInfo. The <code> articleId </code> field of the ArticleInfo
+     * article number and identifier contained in the server reply are returned through an ArticleInfo. The <code>articleId</code> field of the ArticleInfo
      * cannot always be trusted because some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
@@ -1175,7 +1175,7 @@ public class NNTPClient extends NNTP {
     }
 
     /***
-     * Same as <code> selectArticle((String) null, articleId) </code>. Useful for retrieving the current article number.
+     * Same as <code>selectArticle((String) null, articleId)</code>. Useful for retrieving the current article number.
      *
      * @param pointer to the article
      * @return true if OK
@@ -1227,7 +1227,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> selectArticle(articleNumber, null) </code>
+     * Same as <code>selectArticle(articleNumber, null)</code>
      *
      * @param articleNumber the numger
      * @return true if successful
@@ -1265,7 +1265,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> selectArticle(articleId, (ArticleInfo) null) </code>
+     * Same as <code>selectArticle(articleId, (ArticleInfo) null)</code>
      *
      * @param articleId the article's Id
      * @return true if successful
@@ -1324,7 +1324,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> selectNewsgroup(newsgroup, null) </code>
+     * Same as <code>selectNewsgroup(newsgroup, null)</code>
      *
      * @param newsgroup the newsgroup name
      * @return true if newsgroup exist and was selected
@@ -1360,7 +1360,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> selectNextArticle((ArticleInfo) null) </code>
+     * Same as <code>selectNextArticle((ArticleInfo) null)</code>
      *
      * @return true if successful
      * @throws IOException on error
@@ -1372,7 +1372,7 @@ public class NNTPClient extends NNTP {
     /**
      * Select the article following the currently selected article in the currently selected newsgroup and return its number and unique id through the pointer
      * parameter. Because of deviating server implementations, the articleId information cannot be trusted. To obtain the article identifier, issue a
-     * <code> selectArticle(pointer.articleNumber, pointer) </code> immediately afterward.
+     * <code>selectArticle(pointer.articleNumber, pointer)</code> immediately afterward.
      *
      * @param pointer A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of server
      *                deviations from RFC 977 reply formats. You may set this parameter to null if you do not desire to retrieve the returned article
@@ -1411,7 +1411,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * Same as <code> selectPreviousArticle((ArticleInfo) null) </code>
+     * Same as <code>selectPreviousArticle((ArticleInfo) null)</code>
      *
      * @return true if successful
      * @throws IOException on error
@@ -1425,7 +1425,7 @@ public class NNTPClient extends NNTP {
     /**
      * Select the article preceding the currently selected article in the currently selected newsgroup and return its number and unique id through the pointer
      * parameter. Because of deviating server implementations, the articleId information cannot be trusted. To obtain the article identifier, issue a
-     * <code> selectArticle(pointer.articleNumber, pointer) </code> immediately afterward.
+     * <code>selectArticle(pointer.articleNumber, pointer)</code> immediately afterward.
      *
      * @param pointer A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of server
      *                deviations from RFC 977 reply formats. You may set this parameter to null if you do not desire to retrieve the returned article

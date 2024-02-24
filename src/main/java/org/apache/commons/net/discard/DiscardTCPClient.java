@@ -35,7 +35,7 @@ public class DiscardTCPClient extends SocketClient {
     public static final int DEFAULT_PORT = 9;
 
     /**
-     * The default DiscardTCPClient constructor. It merely sets the default port to <code> DEFAULT_PORT </code>.
+     * The default DiscardTCPClient constructor. It merely sets the default port to <code>DEFAULT_PORT</code>.
      */
     public DiscardTCPClient() {
         setDefaultPort(DEFAULT_PORT);
