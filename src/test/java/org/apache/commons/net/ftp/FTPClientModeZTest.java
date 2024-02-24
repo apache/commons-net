@@ -35,7 +35,7 @@ public class FTPClientModeZTest extends TestCase {
         private final int port;
         private final FtpServer ftpServer;
 
-        FtpServerAndPort(FtpServer ftpServer, int port) {
+        FtpServerAndPort(final FtpServer ftpServer, final int port) {
             this.port = port;
             this.ftpServer = ftpServer;
         }
@@ -52,11 +52,11 @@ public class FTPClientModeZTest extends TestCase {
 
         final PropertiesUserManagerFactory propertiesUserManagerFactory = new PropertiesUserManagerFactory();
         final UserManager userManager = propertiesUserManagerFactory.createUserManager();
-        BaseUser user = new BaseUser();
+        final BaseUser user = new BaseUser();
         user.setName(username);
         user.setPassword(password);
 
-        List<Authority> authorities = new ArrayList<Authority>();
+        final List<Authority> authorities = new ArrayList<>();
         authorities.add(new WritePermission());
         user.setAuthorities(authorities);
 
@@ -66,11 +66,11 @@ public class FTPClientModeZTest extends TestCase {
         return userManager;
     }
 
-    private static void runWithFTPserver(Runner runner) throws Exception {
+    private static void runWithFTPserver(final Runner runner) throws Exception {
 
-        String username = "test";
-        String password = "test";
-        FtpServerAndPort ftpServerAndPort = setupPlainFTPserver(username, password);
+        final String username = "test";
+        final String password = "test";
+        final FtpServerAndPort ftpServerAndPort = setupPlainFTPserver(username, password);
         try {
             runner.run(ftpServerAndPort.port, username, password);
         } finally {
@@ -90,11 +90,11 @@ public class FTPClientModeZTest extends TestCase {
         factory.setPort(0);
 
         // replace the default listener
-        Listener listener = factory.createListener();
+        final Listener listener = factory.createListener();
         serverFactory.addListener("default", listener);
 
         // start the server
-        FtpServer server = serverFactory.createServer();
+        final FtpServer server = serverFactory.createServer();
         server.start();
 
         return new FtpServerAndPort(server, listener.getPort());
@@ -113,21 +113,21 @@ public class FTPClientModeZTest extends TestCase {
     public void testRetrievingFiles() throws Exception {
 
         new File(DEFAULT_HOME).mkdirs();
-        String filename = "test_download.txt";
-        String fileContent = "Created at " + Instant.now();
+        final String filename = "test_download.txt";
+        final String fileContent = "Created at " + Instant.now();
         Files.write(Paths.get(DEFAULT_HOME).resolve(filename), fileContent.getBytes(UTF_8));
 
         runWithFTPserver((port, user, password) -> {
-            FTPClient client = new FTPClient();
+            final FTPClient client = new FTPClient();
             try {
                 client.connect("localhost", port);
                 client.login(user, password);
                 assertTrue("Mode Z successfully activated", client.setFileTransferMode(COMPRESSED_MODE_Z_TRANSFER_MODE));
 
-                FTPFile[] files = client.listFiles();
+                final FTPFile[] files = client.listFiles();
                 assertEquals("Only single file in home directory", 1, files.length);
 
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                final ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 assertTrue("File successfully transferred", client.retrieveFile(files[0].getName(), bos));
                 assertEquals("File content is not corrupted", fileContent, new String(bos.toByteArray(), UTF_8));
             } finally {
@@ -139,23 +139,23 @@ public class FTPClientModeZTest extends TestCase {
     public void testStoringFiles() throws Exception {
 
         runWithFTPserver((port, user, password) -> {
-            FTPClient client = new FTPClient();
+            final FTPClient client = new FTPClient();
             try {
                 client.connect("localhost", port);
                 client.login(user, password);
                 assertTrue("Mode Z successfully activated", client.setFileTransferMode(COMPRESSED_MODE_Z_TRANSFER_MODE));
 
-                FTPFile[] filesBeforeUpload = client.listFiles();
+                final FTPFile[] filesBeforeUpload = client.listFiles();
                 assertEquals("No files in home directory before upload", 0, filesBeforeUpload.length);
 
-                String filename = "test_upload.txt";
-                String fileContent = "Created at " + Instant.now();
+                final String filename = "test_upload.txt";
+                final String fileContent = "Created at " + Instant.now();
                 assertTrue("File successfully transferred", client.storeFile(filename, new ByteArrayInputStream(fileContent.getBytes(UTF_8))));
 
-                FTPFile[] filesAfterUpload = client.listFiles();
+                final FTPFile[] filesAfterUpload = client.listFiles();
                 assertEquals("Single file in home directory after upload", 1, filesAfterUpload.length);
 
-                Path p = Paths.get(DEFAULT_HOME, filename);
+                final Path p = Paths.get(DEFAULT_HOME, filename);
                 assertEquals("File content is not corrupted", fileContent, new String(readAllBytes(p), UTF_8));
             } finally {
                 client.logout();
