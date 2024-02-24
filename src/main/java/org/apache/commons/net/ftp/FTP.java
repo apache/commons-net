@@ -157,6 +157,12 @@ public class FTP extends SocketClient {
      */
     public static final int DEFLATE_TRANSFER_MODE = 13;
 
+    /**
+     * A constant used to indicate a file is to be transferred as FTP (un)compressing data in the GZIP compression format. All constants ending in
+     * <code>TRANSFER_MODE</code> are used to indicate file transfer modes.
+     */
+    public static final int GZIP_TRANSFER_MODE = 14;
+
     // We have to ensure that the protocol communication is in ASCII,
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
