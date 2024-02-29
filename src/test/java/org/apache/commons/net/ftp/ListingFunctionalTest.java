@@ -16,7 +16,7 @@
  */
 package org.apache.commons.net.ftp;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -229,7 +229,7 @@ public class ListingFunctionalTest extends TestCase {
         assertNotNull(files);
 
         // This may well fail, e.g. window parser for VMS listing
-        assertArrayEquals("Expected empty array: " + Arrays.toString(files), new FTPFile[] {}, files);
+        assertArrayEquals(new FTPFile[] {}, files, "Expected empty array: " + Arrays.toString(files));
     }
 
     /*

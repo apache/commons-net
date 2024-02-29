@@ -31,7 +31,7 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilters;
 import org.apache.commons.net.ftp.FTPListParseEngine;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Attempt comparison of LIST and MLSD listings

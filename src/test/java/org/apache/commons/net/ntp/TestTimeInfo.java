@@ -16,15 +16,20 @@
  */
 package org.apache.commons.net.ntp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TestTimeInfo {
 
@@ -32,9 +37,9 @@ public class TestTimeInfo {
     public void testAddress() throws UnknownHostException {
         final NtpV3Packet packet = new NtpV3Impl();
         final TimeInfo info = new TimeInfo(packet, System.currentTimeMillis());
-        Assert.assertNull(info.getAddress());
+        assertNull(info.getAddress());
         packet.getDatagramPacket().setAddress(InetAddress.getByAddress("loopback", new byte[] { 127, 0, 0, 1 }));
-        Assert.assertNotNull(info.getAddress());
+        assertNotNull(info.getAddress());
     }
 
     @Test
@@ -62,13 +67,13 @@ public class TestTimeInfo {
         final TimeInfo info = new TimeInfo(packet, returnTimeMillis);
         info.computeDetails();
 
-        Assert.assertSame(packet, info.getMessage());
-        Assert.assertEquals(returnTimeMillis, info.getReturnTime());
-        Assert.assertEquals(Long.valueOf(500), info.getOffset());
-        Assert.assertEquals(Long.valueOf(-1000), info.getDelay());
+        assertSame(packet, info.getMessage());
+        assertEquals(returnTimeMillis, info.getReturnTime());
+        assertEquals(Long.valueOf(500), info.getOffset());
+        assertEquals(Long.valueOf(-1000), info.getDelay());
 
         // comments: [Warning: processing time > total network time, Error: OrigTime > DestRcvTime]
-        Assert.assertEquals(2, info.getComments().size());
+        assertEquals(2, info.getComments().size());
     }
 
     @Test
@@ -79,13 +84,13 @@ public class TestTimeInfo {
         info.addComment("this is a comment");
         final TimeInfo other = new TimeInfo(packet, returnTime);
         other.addComment("this is a comment");
-        Assert.assertEquals(info, other); // fails
-        Assert.assertEquals(info.hashCode(), other.hashCode());
+        assertEquals(info, other); // fails
+        assertEquals(info.hashCode(), other.hashCode());
         other.addComment("another comment");
-        // Assert.assertFalse(info.equals(other)); // comments not used for equality
+        // assertFalse(info.equals(other)); // comments not used for equality
 
         final TimeInfo another = new TimeInfo(packet, returnTime, new ArrayList<>());
-        Assert.assertEquals(info, another);
+        assertEquals(info, another);
     }
 
     @Test
@@ -102,23 +107,23 @@ public class TestTimeInfo {
 
         // 1. different return time
         final NtpV3Packet packet2 = new NtpV3Impl();
-        Assert.assertEquals(packet, packet2);
+        assertEquals(packet, packet2);
         final TimeInfo info2 = new TimeInfo(packet2, returnTime + 1);
-        Assert.assertNotEquals(info, info2);
+        assertNotEquals(info, info2);
 
         // 2. different message / same time
         packet2.setStratum(3);
         packet2.setRootDelay(25);
         final TimeInfo info3 = new TimeInfo(packet2, returnTime);
-        Assert.assertNotEquals(info, info3);
+        assertNotEquals(info, info3);
 
         // 3. different class
         Object other = this;
-        Assert.assertNotEquals(info, other);
+        assertNotEquals(info, other);
 
         // 4. null comparison
         other = null;
-        Assert.assertNotEquals(info, other);
+        assertNotEquals(info, other);
     }
 
     @Test
@@ -126,13 +131,13 @@ public class TestTimeInfo {
         final NtpV3Packet packet = new NtpV3Impl();
         final TimeInfo info = new TimeInfo(packet, 0);
         info.computeDetails();
-        Assert.assertNull(info.getDelay());
-        Assert.assertNull(info.getOffset());
-        Assert.assertEquals(0L, info.getReturnTime());
+        assertNull(info.getDelay());
+        assertNull(info.getOffset());
+        assertEquals(0L, info.getReturnTime());
         // comments: Error: zero orig time -- cannot compute delay/offset
         final List<String> comments = info.getComments();
-        Assert.assertEquals(1, comments.size());
-        Assert.assertTrue(comments.get(0).contains("zero orig time"));
+        assertEquals(1, comments.size());
+        assertTrue(comments.get(0).contains("zero orig time"));
     }
 
 }

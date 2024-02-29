@@ -17,14 +17,16 @@
 
 package org.apache.commons.net.io;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import org.junit.jupiter.api.Test;
+
 //import java.nio.charset.Charset;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class ToNetASCIIInputStreamTest {
 
@@ -39,7 +41,7 @@ public class ToNetASCIIInputStreamTest {
 
             final byte[] result = new byte[length];
             System.arraycopy(output, 0, result, 0, length);
-            Assert.assertArrayEquals("Failed converting " + input, expected, result);
+            assertArrayEquals(expected, result, "Failed converting " + input);
         }
     }
 

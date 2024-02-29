@@ -16,10 +16,10 @@
  */
 package org.apache.commons.net.smtp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,8 +28,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SimpleSMTPHeaderTestCase {
 
@@ -72,7 +72,7 @@ public class SimpleSMTPHeaderTestCase {
         return null;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         beforeDate = new Date();
         header = new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", "Test email");

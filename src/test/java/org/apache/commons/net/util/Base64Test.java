@@ -17,19 +17,19 @@
 
 package org.apache.commons.net.util;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.nio.charset.StandardCharsets;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class Base64Test {
 
@@ -108,7 +108,7 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testDecodeInteger() {
         fail("Not yet implemented");
     }
@@ -120,7 +120,7 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testDecodeObject() {
         fail("Not yet implemented");
     }
@@ -139,13 +139,13 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testEncodeBase64ByteArrayBoolean() {
         fail("Not yet implemented");
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testEncodeBase64ByteArrayBooleanBoolean() {
         fail("Not yet implemented");
     }
@@ -201,31 +201,31 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testEncodeBase64URLSafe() {
         fail("Not yet implemented");
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testEncodeBase64URLSafeString() {
         fail("Not yet implemented");
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testEncodeByteArray() {
         fail("Not yet implemented");
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testEncodeInteger() {
         fail("Not yet implemented");
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testEncodeObject() {
         fail("Not yet implemented");
     }
@@ -250,7 +250,7 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testToIntegerBytes() {
         fail("Not yet implemented");
     }
