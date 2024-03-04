@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.net.URL;
 import java.time.Duration;
+import java.time.Instant;
+import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.NullOutputStream;
@@ -39,6 +41,9 @@ import org.apache.ftpserver.ssl.SslConfiguration;
 import org.apache.ftpserver.ssl.SslConfigurationFactory;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 /**
  * Tests {@link FTPSClient}.
@@ -62,6 +67,10 @@ public abstract class AbstractFtpsTest {
     private static final boolean TRACE_CALLS = Boolean.parseBoolean(System.getenv("TRACE_CALLS"));
     private static final boolean ADD_LISTENER = Boolean.parseBoolean(System.getenv("ADD_LISTENER"));
     private static final long startTime = System.nanoTime();
+    private static final String USER_PROPS_RES = "org/apache/commons/net/ftpsserver/users.properties";
+    private static final String SERVER_JKS_RES = "org/apache/commons/net/ftpsserver/ftpserver.jks";
+
+    private final boolean endpointCheckingEnabled;
 
     /**
      * Returns the test directory as a String.
@@ -136,9 +145,12 @@ public abstract class AbstractFtpsTest {
         }
     }
 
-    private final boolean endpointCheckingEnabled;
+    @BeforeAll
+    public static void setupServer() throws Exception {
+        AbstractFtpsTest.setupServer(AbstractFtpsTest.IMPLICIT, USER_PROPS_RES, SERVER_JKS_RES, "target/test-classes/org/apache/commons/net/test-data");
+    }
 
-    public AbstractFtpsTest(final boolean endpointCheckingEnabled, final String userPropertiesResource, final String serverJksResource) {
+    public AbstractFtpsTest(final boolean endpointCheckingEnabled) {
         this.endpointCheckingEnabled = endpointCheckingEnabled;
     }
 
@@ -207,5 +219,145 @@ public abstract class AbstractFtpsTest {
         } finally {
             client.disconnect();
         }
+    }
+
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testHasFeature() throws SocketException, IOException {
+        trace(">>testHasFeature");
+        loginClient().disconnect();
+        trace("<<testHasFeature");
+    }
+
+    private void testListFiles(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
+        try {
+            // do it twice
+            assertNotNull(client.listFiles(pathname));
+            assertNotNull(client.listFiles(pathname));
+        } finally {
+            client.disconnect();
+        }
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testListFilesPathNameEmpty() throws SocketException, IOException {
+        trace(">>testListFilesPathNameEmpty");
+        testListFiles("");
+        trace("<<testListFilesPathNameEmpty");
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testListFilesPathNameJunk() throws SocketException, IOException {
+        trace(">>testListFilesPathNameJunk");
+        testListFiles("   Junk   ");
+        trace("<<testListFilesPathNameJunk");
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testListFilesPathNameNull() throws SocketException, IOException {
+        trace(">>testListFilesPathNameNull");
+        testListFiles(null);
+        trace("<<testListFilesPathNameNull");
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testListFilesPathNameRoot() throws SocketException, IOException {
+        trace(">>testListFilesPathNameRoot");
+        testListFiles("/");
+        trace("<<testListFilesPathNameRoot");
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testMdtmCalendar() throws SocketException, IOException {
+        trace(">>testMdtmCalendar");
+        testMdtmCalendar("/file.txt");
+        trace("<<testMdtmCalendar");
+    }
+
+    private void testMdtmCalendar(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
+        try {
+            // do it twice
+            final Calendar mdtmCalendar1 = client.mdtmCalendar(pathname);
+            final Calendar mdtmCalendar2 = client.mdtmCalendar(pathname);
+            assertNotNull(mdtmCalendar1);
+            assertNotNull(mdtmCalendar2);
+            assertEquals(mdtmCalendar1, mdtmCalendar2);
+        } finally {
+            client.disconnect();
+        }
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testMdtmFile() throws SocketException, IOException {
+        trace(">>testMdtmFile");
+        testMdtmFile("/file.txt");
+        trace("<<testMdtmFile");
+    }
+
+    private void testMdtmFile(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
+        try {
+            // do it twice
+            final FTPFile mdtmFile1 = client.mdtmFile(pathname);
+            final FTPFile mdtmFile2 = client.mdtmFile(pathname);
+            assertNotNull(mdtmFile1);
+            assertNotNull(mdtmFile2);
+            assertEquals(mdtmFile1.toString(), mdtmFile2.toString());
+        } finally {
+            client.disconnect();
+        }
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testMdtmInstant() throws SocketException, IOException {
+        trace(">>testMdtmInstant");
+        testMdtmInstant("/file.txt");
+        trace("<<testMdtmInstant");
+    }
+
+    private void testMdtmInstant(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
+        try {
+            // do it twice
+            final Instant mdtmInstant1 = client.mdtmInstant(pathname);
+            final Instant mdtmInstant2 = client.mdtmInstant(pathname);
+            assertNotNull(mdtmInstant1);
+            assertNotNull(mdtmInstant2);
+            assertEquals(mdtmInstant1, mdtmInstant2);
+        } finally {
+            client.disconnect();
+        }
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testOpenClose() throws SocketException, IOException {
+        trace(">>testOpenClose");
+        final FTPSClient ftpsClient = loginClient();
+        try {
+            assertTrue(ftpsClient.hasFeature("MODE"));
+            assertTrue(ftpsClient.hasFeature(FTPCmd.MODE));
+        } finally {
+            ftpsClient.disconnect();
+        }
+        trace("<<testOpenClose");
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    public void testRetrieveFilePathNameRoot() throws SocketException, IOException {
+        trace(">>testRetrieveFilePathNameRoot");
+        retrieveFile("/file.txt");
+        trace("<<testRetrieveFilePathNameRoot");
     }
 }
