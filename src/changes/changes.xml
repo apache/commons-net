@@ -64,7 +64,7 @@ The <action> type attribute can be add,update,fix,remove.
     -->
 
   <body>
-    <release version="3.11.0" date="202Y-MM-DD" description="Maintenance and bug fix release (Java 8 or above).">
+    <release version="3.11.0" date="YYYY-MM-DD" description="Maintenance and bug fix release (Java 8 or above).">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Precompile regular expression in UnixFTPEntryParser.preParse(List&lt;String&gt;).</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Guard against polynomial regular expression used on uncontrolled data in VMSVersioningFTPEntryParser.REGEX.</action>
@@ -76,7 +76,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add Maven property project.build.outputTimestamp for build reproducibility.</action>
       <action type="add" dev="ggregory" due-to="Georg Voss, Gary Gregory">Add FTP.DEFLATE_TRANSFER_MODE to support the "deflate" compression format in FTPClient.setFileTransferMode(int).</action>
       <!-- UPDATE -->
-      <action type="update" dev="ggregory" due-to="Dependabot">Bump commons-parent from 62 to 66.</action>
+      <action type="update" dev="ggregory" due-to="Dependabot">Bump commons-parent from 62 to 67.</action>
       <action type="update" dev="ggregory" due-to="Dependabot">Bump org.codehaus.mojo:exec-maven-plugin from 3.1.0 to 3.2.0, #221.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-lang3 from 3.13.0 to 3.14.0.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-io from 2.15.0 to 2.15.1.</action>
