@@ -456,13 +456,13 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             } else if (header.contains("Name") && header.contains("Id")) {
                 setType(MEMBER_LIST_TYPE);
                 super.setRegex(MEMBER_LIST_REGEX);
-            } else if (header.indexOf("total") == 0) {
+            } else if (header.startsWith("total")) {
                 setType(UNIX_LIST_TYPE);
                 unixFTPEntryParser = new UnixFTPEntryParser();
             } else if (header.indexOf("Spool Files") >= 30) {
                 setType(JES_LEVEL_1_LIST_TYPE);
                 super.setRegex(JES_LEVEL_1_LIST_REGEX);
-            } else if (header.indexOf("JOBNAME") == 0 && header.indexOf("JOBID") > 8) {// header contains JOBNAME JOBID OWNER // STATUS CLASS
+            } else if (header.startsWith("JOBNAME") && header.indexOf("JOBID") > 8) {// header contains JOBNAME JOBID OWNER // STATUS CLASS
                 setType(JES_LEVEL_2_LIST_TYPE);
                 super.setRegex(JES_LEVEL_2_LIST_REGEX);
             } else {

@@ -77,7 +77,7 @@ public class TelnetClientFunctionalTest extends TestCase {
         final long starttime = System.currentTimeMillis();
 
         String readbytes = "";
-        while (readbytes.indexOf(end) < 0 && System.currentTimeMillis() - starttime < timeout) {
+        while (!readbytes.contains(end) && System.currentTimeMillis() - starttime < timeout) {
             if (is.available() > 0) {
                 final int ret_read = is.read(buffer);
                 readbytes += new String(buffer, 0, ret_read);

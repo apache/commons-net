@@ -40,7 +40,7 @@ public class InvalidTelnetOptionExceptionTest extends TestCase {
      * test of the constructors.
      */
     public void testConstructors() {
-        assertTrue(exc1.getMessage().indexOf(msg1) >= 0);
-        assertTrue(exc1.getMessage().indexOf("" + code1) >= 0);
+        assertTrue(exc1.getMessage().contains(msg1));
+        assertTrue(exc1.getMessage().contains("" + code1));
     }
 }

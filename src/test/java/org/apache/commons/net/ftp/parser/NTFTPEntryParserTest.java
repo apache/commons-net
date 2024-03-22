@@ -105,7 +105,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework {
 
     @Override
     protected void doAdditionalGoodTests(final String test, final FTPFile f) {
-        if (test.indexOf("<DIR>") >= 0) {
+        if (test.contains("<DIR>")) {
             assertEquals("directory.type", FTPFile.DIRECTORY_TYPE, f.getType());
         }
     }
