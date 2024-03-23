@@ -22,7 +22,7 @@ import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce. Here is a sample of the sort of output line this parser processes:
+ * Parser for the Connect Enterprise UNIX FTP Server From Sterling Commerce. Here is a sample of the sort of output line this parser processes:
  *
  * <pre>
  * "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST"

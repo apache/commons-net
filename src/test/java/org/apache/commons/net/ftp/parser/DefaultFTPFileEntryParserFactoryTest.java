@@ -79,7 +79,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
         parser = factory.createFileEntryParser("AS/400");
         assertTrue(parser instanceof CompositeFileEntryParser);
 
-        // Added test to make sure it handles the Unix systems that were
+        // Added test to make sure it handles the UNIX systems that were
         // compiled with OS as "UNKNOWN". This test validates that the
         // check is case-insensitive.
         parser = factory.createFileEntryParser("UNKNOWN Type: L8");

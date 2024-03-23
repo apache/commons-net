@@ -23,7 +23,7 @@ import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NewsgroupInfo;
 
 /**
- * This is a trivial example using the NNTP package to approximate the Unix newsgroups command. It merely connects to the specified news server and issues
+ * This is a trivial example using the NNTP package to approximate the UNIX newsgroups command. It merely connects to the specified news server and issues
  * fetches the list of newsgroups stored by the server. On servers that store a lot of newsgroups, this command can take a very long time (listing upwards of
  * 30,000 groups).
  */
