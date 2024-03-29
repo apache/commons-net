@@ -127,7 +127,7 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.15.1</version>
+            <version>2.16.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
