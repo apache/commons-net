@@ -1,98 +1,126 @@
 <?xml version="1.0"?>
-<!--
-   Licensed to the Apache Software Foundation (ASF) under one or more
-   contributor license agreements.  See the NOTICE file distributed with
-   this work for additional information regarding copyright ownership.
-   The ASF licenses this file to You under the Apache License, Version 2.0
-   (the "License"); you may not use this file except in compliance with
-   the License.  You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
--->
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional 
+  information regarding copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0 (the "License"); you may not use this file except 
+  in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to 
+  in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See 
+  the License for the specific language governing permissions and limitations under the License. -->
 
 <document>
-
   <properties>
-    <title>Migration How-to</title>
-    <author email="brekke@apache.org">Jeffrey D. Brekke</author>
+    <title>Apache Commons Net Migration How-to</title>
+    <author email="brekke@apache.org">Jeffrey D. Brekke, Gary Gregory</author>
   </properties>
-
   <body>
+    <section name="Migration How-To">
+      <p>
+        This how-to lists the migration steps for moving between versions of Apache Commons Net.
+      </p>
+    </section>
+    <section name="Apache Commons Net 3.9.0">
+      <p>
+        This version requires Java 8 or above.
+      </p>
+    </section>
+    <section name="Apache Commons Net 3.7 to 3.8.0">
+      <p>
+        This version requires Java 7 or above.
+      </p>
+    </section>
+    <section name="Apache Commons Net 3.5 to 3.6">
+      <p>
+        This version requires Java 6 or above.
+      </p>
+    </section>
+    <section name="Apache Commons Net 3.x to Commons Net 3.5">
+      <p>
+        Version 3.5 is binary compatible with previous 3.x versions and 2.0.
+        There should be no changes required to existing binary code.
+      </p>
+      <p>
+        Version 3.5 is source compatible with 3.4.
+        However, version 3.4 is
+        <b>not source compatible</b>
+        with 3.3.
+      </p>
+      <p>
+        The interface NtpV3Packet has been updated to add 3 new methods.
+        Adding methods to an interface
+        <a href="https://docs.oracle.com/javase/specs/jls/se5.0/html/binaryComp.html#45348">does not affect binary compatibility</a>
+        The
+        <a href="clirr-report.html">clirr report</a>
+        shows which methods have been added.
+        (note that the report does not distinguish between source and binary incompatibility)
+        Code that uses the interface will need to be updated and recompiled.
+        However code that uses the implementation class NtpV3Impl will continue to work as before.
+      </p>
+    </section>
 
-<section name="Migration How-To">
-<p>
-This how-to lists the migration steps for moving between versions of Apache Commons Net.
-</p>
-</section>
-
-<section name="Commons Net 3.x to Commons Net 3.5">
-<p>
-Version 3.5 is binary compatible with previous 3.x versions and 2.0.
-There should be no changes required to existing binary code.
-</p>
-<p>
-Version 3.5 is source compatible with 3.4.
-However, version 3.4 is <b>not source compatible</b> with 3.3.
-</p>
-<p>
-The interface NtpV3Packet has been updated to add 3 new methods.
-Adding methods to an interface <a href="https://docs.oracle.com/javase/specs/jls/se5.0/html/binaryComp.html#45348">does not affect binary compatibility</a>
-The <a href="clirr-report.html">clirr report</a> shows which methods have been added.
-(note that the report does not distinguish between source and binary incompatibility)
-Code that uses the interface will need to be updated and recompiled.
-However code that uses the implementation class NtpV3Impl will continue to work as before.
-</p>
-</section>
-
-<section name="Commons Net 2.x to Commons Net 3.0">
-    <p>
+    <section name="Apache Commons Net 2.x to Commons Net 3.0">
+      <p>
         Version 3.0 is binary compatible with version 2.0. There should be no changes required to existing binary code.
-    </p>
-    <p>
-        However, version 3.0 is <b>not source compatible</b> with 2.0.
-    </p>
-    <p>
-        Several obsolete/unused constants have been removed.<br/>
-        (Such changes do not affect binary code, because compilers are required to localise constants).<br/>
-        The <a href="clirr-report.html">clirr report</a> shows which constants have been removed.
+      </p>
+      <p>
+        However, version 3.0 is
+        <b>not source compatible</b>
+        with 2.0.
+      </p>
+      <p>
+        Several obsolete/unused constants have been removed.
+        <br />
+        (Such changes do not affect binary code, because compilers are required to localise constants).
+        <br />
+        The
+        <a href="clirr-report.html">clirr report</a>
+        shows which constants have been removed.
         If any source code happens to be using one of these constants, then the source will have to be updated.
-    </p>
-    <p>
-        Also, some throws clauses have been removed from methods which did not actually throw them.<br/>
-        Throws clauses are not part of method signatures, so do not affect binary compatibility.<br/>
+      </p>
+      <p>
+        Also, some throws clauses have been removed from methods which did not actually throw them.
+        <br />
+        Throws clauses are not part of method signatures, so do not affect binary compatibility.
+        <br />
         The following public methods no longer throw IOException:
         <ul>
-        <li>TelnetClient#addOptionHandler(TelnetOptionHandler)</li>
-        <li>TelnetClient#deleteOptionHandler(int)</li>
+          <li>TelnetClient#addOptionHandler(TelnetOptionHandler)</li>
+          <li>TelnetClient#deleteOptionHandler(int)</li>
         </ul>
         Source code using these methods will need to be updated.
-    </p>
-</section>
+      </p>
+    </section>
 
-<section name="Commons Net 1.4.x to Commons Net 2.0">
-    <p>
+    <section name="Apache Commons Net 1.4.x to Commons Net 2.0">
+      <p>
         Version 2.0 requires a JDK 5.0+ runtime. It has also been tested on JDK 6.0. There should
         be no changes required to existing client code.
-    </p>
-</section>
+      </p>
+    </section>
 
-<section name="NetComponents 1.3.8  to  Commons Net 1.x">
-<p>
-This version is a drop in replacement for NetComponents.  Only package names have changed.
-</p>
-<ol>
-  <li>Change all occurrences of <tt>com.oroinc.net.*</tt> to <tt>org.apache.commons.net.*</tt></li>
-  <li>Change all occurrences of <tt>com.oroinc.io.*</tt> to <tt>org.apache.commons.net.io.*</tt></li>
-  <li>Change all occurrences of <tt>com.oroinc.util.*</tt> to <tt>org.apache.commons.net.util.*</tt></li>
-</ol>
-</section>
+    <section name="NetComponents 1.3.8 to Commons Net 1.x">
+      <p>
+        This version is a drop in replacement for NetComponents. Only package names have changed.
+      </p>
+      <ol>
+        <li>
+          Change all occurrences of
+          <tt>com.oroinc.net.*</tt>
+          to
+          <tt>org.apache.commons.net.*</tt>
+        </li>
+        <li>
+          Change all occurrences of
+          <tt>com.oroinc.io.*</tt>
+          to
+          <tt>org.apache.commons.net.io.*</tt>
+        </li>
+        <li>
+          Change all occurrences of
+          <tt>com.oroinc.util.*</tt>
+          to
+          <tt>org.apache.commons.net.util.*</tt>
+        </li>
+      </ol>
+    </section>
 
 
-</body>
+  </body>
 </document>
