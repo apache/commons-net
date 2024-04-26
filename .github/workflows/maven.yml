@@ -41,8 +41,12 @@ jobs:
         # Don't need to run all javas on all OSes
         include:
           - java: 8
-            os: macos-latest
+            os: macos-13
             experimental: false
+          - java: 8
+            # Java 8 not currently available
+            os: macos-latest
+            experimental: true
           - java: 8
             os: windows-latest
             experimental: false
