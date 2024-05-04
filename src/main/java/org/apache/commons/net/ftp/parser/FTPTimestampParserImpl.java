@@ -241,8 +241,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
      */
     @Override
     public Calendar parseTimestamp(final String timestampStr) throws ParseException {
-        final Calendar now = Calendar.getInstance();
-        return parseTimestamp(timestampStr, now);
+        return parseTimestamp(timestampStr, Calendar.getInstance());
     }
 
     /**
