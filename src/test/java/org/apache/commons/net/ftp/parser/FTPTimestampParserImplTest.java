@@ -16,9 +16,9 @@
  */
 package org.apache.commons.net.ftp.parser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.text.Format;
 import java.text.ParseException;
@@ -30,8 +30,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the FTPTimestampParser class.
@@ -101,7 +101,7 @@ public class FTPTimestampParserImplTest {
 
     // This test currently fails, because we assume that short dates are +-6months when parsing Feb 29
     @Test
-    @Ignore
+    @Disabled
     public void testNET446() throws Exception {
         final GregorianCalendar server = new GregorianCalendar(2001, Calendar.JANUARY, 1, 12, 0);
         // Note: we use a known leap year for the target date to avoid rounding up
@@ -328,7 +328,7 @@ public class FTPTimestampParserImplTest {
             final Calendar parsed = parser.parseTimestamp(fmtTime);
             // since the timestamp is ahead of now (by one hour),
             // this must mean the file's date refers to a year ago.
-            assertEquals("test.roll.back.year", 1, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR));
+            assertEquals(1, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR), "test.roll.back.year");
         } catch (final ParseException e) {
             fail("Unable to parse");
         }
@@ -373,7 +373,7 @@ public class FTPTimestampParserImplTest {
             final Calendar parsed = parser.parseTimestamp(fmtTimePlusOneHour);
             // the only difference should be the two hours
             // difference, no rolling back a year should occur.
-            assertEquals("no.rollback.because.of.time.zones", TWO_HOURS_OF_MILLISECONDS, cal.getTime().getTime() - parsed.getTime().getTime());
+            assertEquals(TWO_HOURS_OF_MILLISECONDS, cal.getTime().getTime() - parsed.getTime().getTime(), "no.rollback.because.of.time.zones");
         } catch (final ParseException e) {
             fail("Unable to parse " + fmtTimePlusOneHour);
         }
@@ -385,7 +385,7 @@ public class FTPTimestampParserImplTest {
         try {
             final Calendar parsed = parser.parseTimestamp(fmtTimePlusThreeHours);
             // rollback should occur here.
-            assertEquals("rollback.even.with.time.zones", 1, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR));
+            assertEquals(1, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR), "rollback.even.with.time.zones");
         } catch (final ParseException e) {
             fail("Unable to parse" + fmtTimePlusThreeHours);
         }
@@ -415,13 +415,13 @@ public class FTPTimestampParserImplTest {
             // the timestamp is ahead of now (by one hour), but
             // that's within range of the "slop" factor.
             // so the date is still considered this year.
-            assertEquals("test.slop.no.roll.back.year", 0, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR));
+            assertEquals(0, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR), "test.slop.no.roll.back.year");
 
             // add a day to get beyond the range of the slop factor.
             // this must mean the file's date refers to a year ago.
             fmtTime = sdf.format(anHourFromNowTomorrow);
             parsed = parser.parseTimestamp(fmtTime);
-            assertEquals("test.slop.roll.back.year", 1, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR));
+            assertEquals(1, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR), "test.slop.roll.back.year");
 
         } catch (final ParseException e) {
             fail("Unable to parse");
