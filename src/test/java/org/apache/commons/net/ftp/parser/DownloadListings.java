@@ -43,9 +43,9 @@ public class DownloadListings extends FTPClient {
     static final String DOWNLOAD_DIR = "target/ftptest";
 
     public static void main(final String[] args) throws Exception {
-        String host;// = "ftp.funet.fi";
+        String host; // = "ftp.funet.fi";
         final int port = 21;
-        String path;// = "/";
+        String path; // = "/";
 
         new File(DOWNLOAD_DIR).mkdirs();
         final DownloadListings self = new DownloadListings();

@@ -69,7 +69,7 @@ public class POP3SClient extends POP3Client {
     private String[] suites;
     /** The protocol versions. */
     private String[] protocols // null;
-    ;// {"SSLv2", "SSLv3", "TLSv1", "TLSv1.1", "SSLv2Hello"};
+    ; // {"SSLv2", "SSLv3", "TLSv1", "TLSv1.1", "SSLv2Hello"};
 
     /** The FTPS {@link TrustManager} implementation, default null. */
     private TrustManager trustManager;

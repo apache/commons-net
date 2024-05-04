@@ -265,7 +265,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
         Date parsed;
 
         if (recentDateFormat != null) {
-            final Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it
+            final Calendar now = (Calendar) serverTime.clone(); // Copy this, because we may change it
             now.setTimeZone(this.getServerTimeZone());
             if (lenientFutureDates) {
                 // add a day to "now" so that "slop" doesn't cause a date
