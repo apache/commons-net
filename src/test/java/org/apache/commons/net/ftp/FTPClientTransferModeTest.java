@@ -67,7 +67,7 @@ public class FTPClientTransferModeTest {
     }
 
     private static final String DEFAULT_HOME = "ftp_root/";
-    
+
     private static UserManager initUserManager(final String username, final String password) throws FtpException {
 
         final PropertiesUserManagerFactory propertiesUserManagerFactory = new PropertiesUserManagerFactory();
@@ -138,7 +138,7 @@ public class FTPClientTransferModeTest {
 
         runWithFTPserver((port, user, password) -> {
             final FTPClient client = new FTPClient();
-            try {   
+            try {
                 client.connect("localhost", port);
                 client.login(user, password);
                 assertTrue(client.setFileTransferMode(transferMode));

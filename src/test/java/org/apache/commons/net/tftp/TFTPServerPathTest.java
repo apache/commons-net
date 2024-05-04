@@ -58,17 +58,16 @@ public class TFTPServerPathTest {
             try {
                 Files.deleteIfExists(path);
             } catch (final IOException e) {
-                if (retry) {
-                    System.err.println("Retrying delete failure: " + e);
-                    try {
-                        Thread.sleep(500);
-                    } catch (final InterruptedException e1) {
-                        fail(e);
-                    }
-                    Files.deleteIfExists(path);
-                } else {
+                if (!retry) {
                     throw e;
                 }
+                System.err.println("Retrying delete failure: " + e);
+                try {
+                    Thread.sleep(500);
+                } catch (final InterruptedException e1) {
+                    fail(e);
+                }
+                Files.deleteIfExists(path);
             }
         }
     }
