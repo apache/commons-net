@@ -99,17 +99,6 @@ public class FTPTimestampParserImplTest {
         }
     }
 
-    // This test currently fails, because we assume that short dates are +-6months when parsing Feb 29
-    @Test
-    @Disabled
-    public void testNET446() throws Exception {
-        final GregorianCalendar server = new GregorianCalendar(2001, Calendar.JANUARY, 1, 12, 0);
-        // Note: we use a known leap year for the target date to avoid rounding up
-        final GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY, 29);
-        final GregorianCalendar expected = new GregorianCalendar(2000, Calendar.FEBRUARY, 29);
-        checkShortParse("Feb 29th 2000", server, input, expected);
-    }
-
     // Test leap year if current year is a leap year
     @Test
     public void testFeb29IfLeapYear() throws Exception {
@@ -166,8 +155,6 @@ public class FTPTimestampParserImplTest {
         assertThrows(ParseException.class, () -> checkShortParse("Feb 29th 1999", server, input, expected, false));
     }
 
-//    Lenient mode allows for dates up to 1 day in the future
-
     @Test
     public void testNET444() throws Exception {
         final FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
@@ -186,6 +173,27 @@ public class FTPTimestampParserImplTest {
         final String future25 = sdf.format(nowplus25.getTime());
         final Calendar parsed25 = parser.parseTimestamp(future25, now);
         assertEquals(nowplus25.get(Calendar.YEAR) - 1, parsed25.get(Calendar.YEAR));
+    }
+
+//    Lenient mode allows for dates up to 1 day in the future
+
+    // This test currently fails, because we assume that short dates are +-6months when parsing Feb 29
+    @Test
+    @Disabled
+    public void testNET446() throws Exception {
+        final GregorianCalendar server = new GregorianCalendar(2001, Calendar.JANUARY, 1, 12, 0);
+        // Note: we use a known leap year for the target date to avoid rounding up
+        final GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY, 29);
+        final GregorianCalendar expected = new GregorianCalendar(2000, Calendar.FEBRUARY, 29);
+        checkShortParse("Feb 29th 2000", server, input, expected);
+    }
+
+    @Test
+    @Disabled
+    public void testNet710() throws ParseException {
+        Calendar serverTime = Calendar.getInstance(TimeZone.getTimeZone("EDT"), Locale.US);
+        serverTime.set(2022, 2, 16, 14, 0);
+        new FTPTimestampParserImpl().parseTimestamp("Mar 13 02:33", serverTime);
     }
 
     @Test
