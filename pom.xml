@@ -26,7 +26,6 @@
         <artifactId>commons-parent</artifactId>
         <version>69</version>
     </parent>
-
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
     <version>3.11.0-SNAPSHOT</version>
@@ -39,7 +38,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
     </description>
     <url>https://commons.apache.org/proper/commons-net/</url>
     <inceptionYear>2001</inceptionYear>
-
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -48,20 +46,16 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <commons.module.name>org.apache.commons.net</commons.module.name>
         <commons.jira.id>NET</commons.jira.id>
         <commons.jira.pid>12310487</commons.jira.pid>
-
         <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
         <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net</commons.scmPubUrl>
         <japicmp.skip>false</japicmp.skip>
-        <jacoco.skip>false</jacoco.skip>
         <checkstyle.configdir>src/conf</checkstyle.configdir>
         <spotbugs.configdir>src/conf</spotbugs.configdir>
-
         <!-- Current release -->
         <commons.release.versionBump>3.11.0</commons.release.versionBump>
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
         <project.build.outputTimestamp>2024-01-01T00:00:00Z</project.build.outputTimestamp>
-
         <!-- Release plugin defines -->
         <!-- Previous version of the component (used for reporting binary compatibility check)-->
         <commons.bc.version>3.10.0</commons.bc.version>
@@ -77,8 +71,17 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <!-- for debugging FTPSClientTest -->
         <commons.net.trace_calls>false</commons.net.trace_calls>
         <commons.net.add_listener>false</commons.net.add_listener>
+        <!-- JaCoCo: Don't make code coverage worse than: -->
+        <jacoco.skip>false</jacoco.skip>
+        <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
+        <!-- TODO Improve dismal coverage -->
+        <commons.jacoco.classRatio>0.47</commons.jacoco.classRatio>
+        <commons.jacoco.instructionRatio>0.40</commons.jacoco.instructionRatio>
+        <commons.jacoco.methodRatio>0.40</commons.jacoco.methodRatio>
+        <commons.jacoco.branchRatio>0.32</commons.jacoco.branchRatio>
+        <commons.jacoco.lineRatio>0.37</commons.jacoco.lineRatio>    
+        <commons.jacoco.complexityRatio>0.31</commons.jacoco.complexityRatio>
     </properties>
-
     <scm>
         <connection>scm:git:https://gitbox.apache.org/repos/asf/commons-net</connection>
         <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-net</developerConnection>
@@ -88,7 +91,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <system>jira</system>
         <url>https://issues.apache.org/jira/browse/NET</url>
     </issueManagement>
-
     <distributionManagement>
         <site>
             <id>apache.website</id>
@@ -96,7 +98,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
             <url>scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net/</url>
         </site>
     </distributionManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -137,7 +138,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <defaultGoal>clean apache-rat:check javadoc:javadoc checkstyle:check verify japicmp:cmp</defaultGoal>
         <pluginManagement>
@@ -157,7 +157,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
             </plugins>
         </pluginManagement>
         <plugins>
-
             <!-- Exclude examples from binary jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -173,7 +172,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     </archive>
                 </configuration>
             </plugin>
-
             <!-- Exclude examples from source jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -184,7 +182,10 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     </excludes>
                 </configuration>
             </plugin>
-
+            <plugin>
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -194,12 +195,11 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                         <exclude>**/POP3*Test.java</exclude>
                     </excludes>
                     <environmentVariables>
-                    <TRACE_CALLS>${commons.net.trace_calls}</TRACE_CALLS>
-                    <ADD_LISTENER>${commons.net.add_listener}</ADD_LISTENER>
+                        <TRACE_CALLS>${commons.net.trace_calls}</TRACE_CALLS>
+                        <ADD_LISTENER>${commons.net.add_listener}</ADD_LISTENER>
                     </environmentVariables>
                 </configuration>
             </plugin>
-
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -210,7 +210,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <tarLongFileMode>gnu</tarLongFileMode>
                 </configuration>
             </plugin>
-
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -300,7 +299,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     </execution>
                 </executions>
             </plugin>
-
             <!-- Exclude examples from Javadoc jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -309,7 +307,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <excludePackageNames>*.examples.*</excludePackageNames>
                 </configuration>
             </plugin>
-
             <!-- Copy the examples sources -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -344,7 +341,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     </ignorePathsToDelete>
                 </configuration>
             </plugin>
-
             <!-- Allow exec:java to launch examples from the classpath For example: mvn -q exec:java -Dexec.arguments=FTPClientExample,-A,-l,hostname -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -361,7 +357,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <mainClass>org.apache.commons.net.examples.Main</mainClass>
                 </configuration>
             </plugin>
-
             <!-- Allow checkstyle use from command line -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -375,12 +370,9 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                 </configuration>
             </plugin>
         </plugins>
-
     </build>
-
     <reporting>
         <plugins>
-
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
@@ -388,7 +380,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <excludeFilterFile>${spotbugs.configdir}/findbugs-exclude-filter.xml</excludeFilterFile>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -396,7 +387,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <excludePackageNames>*.examples.*</excludePackageNames>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -409,10 +399,8 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <enableRulesSummary>false</enableRulesSummary>
                 </configuration>
             </plugin>
-
         </plugins>
     </reporting>
-
     <profiles>
         <profile>
             <id>slf4j-simple</id>
@@ -431,7 +419,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
             </dependencies>
         </profile>
     </profiles>
-
     <developers>
         <developer>
             <name>Jeffrey D. Brekke</name>
@@ -485,7 +472,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
           </properties>
         </developer>
     </developers>
-
     <contributors>
         <contributor>
             <name>Henrik Sorensen</name>
@@ -547,5 +533,4 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
             <email>bogdandr # op dot pl</email>
         </contributor>
     </contributors>
-
 </project>
