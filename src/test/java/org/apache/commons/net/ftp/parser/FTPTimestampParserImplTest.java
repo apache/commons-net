@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.text.Format;
@@ -27,15 +29,14 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
-
 import org.apache.commons.net.ftp.FTPClientConfig;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Test the FTPTimestampParser class.
  */
-public class FTPTimestampParserImplTest extends TestCase {
+public class FTPTimestampParserImplTest {
 
     private static final int TWO_HOURS_OF_MILLISECONDS = 2 * 60 * 60 * 1000;
 
@@ -99,7 +100,9 @@ public class FTPTimestampParserImplTest extends TestCase {
     }
 
     // This test currently fails, because we assume that short dates are +-6months when parsing Feb 29
-    public void DISABLEDtestNET446() throws Exception {
+    @Test
+    @Ignore
+    public void testNET446() throws Exception {
         final GregorianCalendar server = new GregorianCalendar(2001, Calendar.JANUARY, 1, 12, 0);
         // Note: we use a known leap year for the target date to avoid rounding up
         final GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY, 29);
@@ -108,6 +111,7 @@ public class FTPTimestampParserImplTest extends TestCase {
     }
 
     // Test leap year if current year is a leap year
+    @Test
     public void testFeb29IfLeapYear() throws Exception {
         final GregorianCalendar now = new GregorianCalendar();
         final int thisYear = now.get(Calendar.YEAR);
@@ -120,12 +124,14 @@ public class FTPTimestampParserImplTest extends TestCase {
     }
 
     // Test Feb 29 for a known leap year
+    @Test
     public void testFeb29LeapYear() throws Exception {
         final int year = 2000; // Use same year for current and short date
         final GregorianCalendar now = new GregorianCalendar(year, Calendar.APRIL, 1, 12, 0);
         checkShortParse("Feb 29th 2000", now, new GregorianCalendar(year, Calendar.FEBRUARY, 29));
     }
 
+    @Test
     public void testFeb29LeapYear2() throws Exception {
         final int year = 2000; // Use same year for current and short date
         final GregorianCalendar now = new GregorianCalendar(year, Calendar.MARCH, 1, 12, 0);
@@ -133,6 +139,7 @@ public class FTPTimestampParserImplTest extends TestCase {
     }
 
     // same date feb 29
+    @Test
     public void testFeb29LeapYear3() throws Exception {
         final int year = 2000; // Use same year for current and short date
         final GregorianCalendar now = new GregorianCalendar(year, Calendar.FEBRUARY, 29, 12, 0);
@@ -140,6 +147,7 @@ public class FTPTimestampParserImplTest extends TestCase {
     }
 
     // future dated Feb 29
+    @Test
     public void testFeb29LeapYear4() throws Exception {
         final int year = 2000; // Use same year for current and short date
         final GregorianCalendar now = new GregorianCalendar(year, Calendar.FEBRUARY, 28, 12, 0);
@@ -148,6 +156,7 @@ public class FTPTimestampParserImplTest extends TestCase {
     }
 
     // Test Feb 29 for a known non-leap year - should fail
+    @Test
     public void testFeb29NonLeapYear() {
         final GregorianCalendar server = new GregorianCalendar(1999, Calendar.APRIL, 1, 12, 0);
         // Note: we use a known leap year for the target date to avoid rounding up
@@ -159,6 +168,7 @@ public class FTPTimestampParserImplTest extends TestCase {
 
 //    Lenient mode allows for dates up to 1 day in the future
 
+    @Test
     public void testNET444() throws Exception {
         final FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
         parser.setLenientFutureDates(true);
@@ -178,6 +188,7 @@ public class FTPTimestampParserImplTest extends TestCase {
         assertEquals(nowplus25.get(Calendar.YEAR) - 1, parsed25.get(Calendar.YEAR));
     }
 
+    @Test
     public void testParseDec31Lenient() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2007, Calendar.DECEMBER, 30, 12, 0);
         checkShortParse("2007-12-30", now, now); // should always work
@@ -186,6 +197,7 @@ public class FTPTimestampParserImplTest extends TestCase {
         checkShortParse("2007-12-31", now, target, true);
     }
 
+    @Test
     public void testParseJan01() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2007, Calendar.JANUARY, 1, 12, 0);
         checkShortParse("2007-01-01", now, now); // should always work
@@ -194,6 +206,7 @@ public class FTPTimestampParserImplTest extends TestCase {
         checkShortParse("2006-12-31", now, target, false);
     }
 
+    @Test
     public void testParseJan01Lenient() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2007, Calendar.DECEMBER, 31, 12, 0);
         checkShortParse("2007-12-31", now, now); // should always work
@@ -202,6 +215,7 @@ public class FTPTimestampParserImplTest extends TestCase {
         checkShortParse("2008-1-1", now, target, true);
     }
 
+    @Test
     public void testParser() throws ParseException {
         // This test requires an English Locale
         final Locale locale = Locale.getDefault();
@@ -236,19 +250,16 @@ public class FTPTimestampParserImplTest extends TestCase {
         }
     }
 
+    @Test
     public void testParseShortFutureDates1() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2001, Calendar.MAY, 30, 12, 0);
         checkShortParse("2001-5-30", now, now); // should always work
         final GregorianCalendar target = (GregorianCalendar) now.clone();
         target.add(Calendar.DAY_OF_MONTH, 1);
         checkShortParse("2001-5-30 +1 day", now, target, true);
-        try {
-            checkShortParse("2001-5-30 +1 day", now, target, false);
-            fail("Expected AssertionFailedError");
-        } catch (final AssertionFailedError pe) {
-            if (pe.getMessage().startsWith("Expected AssertionFailedError")) { // don't swallow our failure
-                throw pe;
-            }
+        final AssertionError error = assertThrows(AssertionError.class, () -> checkShortParse("2001-5-30 +1 day", now, target, false));
+        if (error.getMessage().startsWith("Expected AssertionFailedError")) { // don't swallow our failure
+            throw error;
         }
         target.add(Calendar.WEEK_OF_YEAR, 1);
 //        checkShortParse("2001-5-30 +1 week",now,target);
@@ -258,19 +269,16 @@ public class FTPTimestampParserImplTest extends TestCase {
 //        checkShortParse("2001-5-30 +26 weeks",now,target);
     }
 
+    @Test
     public void testParseShortFutureDates2() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2004, Calendar.AUGUST, 1, 12, 0);
         checkShortParse("2004-8-1", now, now); // should always work
         final GregorianCalendar target = (GregorianCalendar) now.clone();
         target.add(Calendar.DAY_OF_MONTH, 1);
         checkShortParse("2004-8-1 +1 day", now, target, true);
-        try {
-            checkShortParse("2004-8-1 +1 day", now, target, false);
-            fail("Expected AssertionFailedError");
-        } catch (final AssertionFailedError pe) {
-            if (pe.getMessage().startsWith("Expected AssertionFailedError")) { // don't swallow our failure
-                throw pe;
-            }
+        final AssertionError error = assertThrows(AssertionError.class, () -> checkShortParse("2004-8-1 +1 day", now, target, false));
+        if (error.getMessage().startsWith("Expected AssertionFailedError")) { // don't swallow our failure
+            throw error;
         }
 //        target.add(Calendar.WEEK_OF_YEAR, 1);
 //        checkShortParse("2004-8-1 +1 week",now,target);
@@ -280,6 +288,7 @@ public class FTPTimestampParserImplTest extends TestCase {
 //        checkShortParse("2004-8-1 +26 weeks",now,target);
     }
 
+    @Test
     public void testParseShortPastDates1() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2001, Calendar.MAY, 30, 12, 0);
         checkShortParse("2001-5-30", now, now); // should always work
@@ -292,6 +301,7 @@ public class FTPTimestampParserImplTest extends TestCase {
         checkShortParse("2001-5-30 -26 weeks", now, target);
     }
 
+    @Test
     public void testParseShortPastDates2() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2004, Calendar.AUGUST, 1, 12, 0);
         checkShortParse("2004-8-1", now, now); // should always work
@@ -304,6 +314,7 @@ public class FTPTimestampParserImplTest extends TestCase {
         checkShortParse("2004-8-1 -26 weeks", now, target);
     }
 
+    @Test
     public void testParseTimestamp() {
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR_OF_DAY, 1);
@@ -323,8 +334,8 @@ public class FTPTimestampParserImplTest extends TestCase {
         }
     }
 
+    @Test
     public void testParseTimestampAcrossTimeZones() {
-
         final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
@@ -380,6 +391,7 @@ public class FTPTimestampParserImplTest extends TestCase {
         }
     }
 
+    @Test
     public void testParseTimestampWithSlop() {
         final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.SECOND, 0);
