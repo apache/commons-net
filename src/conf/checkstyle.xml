@@ -19,20 +19,16 @@ limitations under the License.
 <!DOCTYPE module PUBLIC
     "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
     "https://checkstyle.org/dtds/configuration_1_3.dtd">
-
 <!-- Commons Net customization of default Checkstyle behavior -->
 <module name="Checker">
-
   <property name="localeLanguage" value="en"/>
   <module name="JavadocPackage">
     <!-- setting allowLegacy means it will check for package.html instead of just package-info.java -->
     <property name="allowLegacy" value="true"/>
   </module>
-
   <module name="FileTabCharacter">
     <property name="fileExtensions" value="java,xml"/>
   </module>
-
   <!-- Checks for white space at the end of the line -->
   <!-- See http://checkstyle.sourceforge.net/config_regexp.html -->
   <module name="RegexpSingleline">
@@ -40,18 +36,15 @@ limitations under the License.
     <property name="message" value="Line has trailing spaces." />
     <property name="fileExtensions" value="java" />
   </module>
-
   <!-- @author tags are deprecated -->
   <module name="RegexpSingleline">
     <property name="format" value="^\s+\*\s+@author\s" />
     <property name="message" value="Deprecated @author tag" />
     <property name="fileExtensions" value="java" />
   </module>
-
   <module name="LineLength">
     <property name="max" value="160"/>
   </module>
-
   <module name="TreeWalker">
     <module name="AvoidStarImport">
       <property name="excludes" value="org.junit.Assert"/>
@@ -59,13 +52,10 @@ limitations under the License.
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
     <module name="NeedBraces"/>
-
     <!-- Modifier Checks                                    -->
     <!-- See http://checkstyle.sf.net/config_modifiers.html -->
     <module name="ModifierOrder"/>
-
     <!--module name="RedundantModifier"/-->
-
     <!-- Checks for blocks. You know, those {}'s         -->
     <!-- See http://checkstyle.sf.net/config_blocks.html -->
     <!--module name="AvoidNestedBlocks"/-->
@@ -73,14 +63,11 @@ limitations under the License.
       <property name="option" value="text"/>
     </module>
     <module name="EmptyCatchBlock"></module>
-
     <module name="JavadocMethod">
       <property name="accessModifiers" value="public"/>
       <property name="allowMissingParamTags" value="true"/>
     </module>
-
     <module name="SuppressionCommentFilter"/>
-
     <!--
         Allow comment to suppress checkstyle for a single line
         e.g. // CHECKSTYLE IGNORE MagicNumber
@@ -95,9 +82,10 @@ limitations under the License.
       <property name="ordered" value="true"/>
       <property name="separated" value="true"/>
     </module>
-
+    <module name="WhitespaceAfter" />
+    <module name="WhitespaceAround" />
+    <module name="WhitespaceAroundCheck" />
   </module>
-
   <module name="SuppressionFilter">
     <!-- config_loc is used by Eclipse plugin -->
     <property name="file" value="${config_loc}/checkstyle-suppressions.xml"/>

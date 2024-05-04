@@ -129,7 +129,7 @@ public final class IMAPExportMbox {
                 final String line = replyStrings[i];
                 if (line.startsWith("Return-Path: ")) {
                     final String[] parts = line.split(" ", 2);
-                    if (!parts[1].equals("<>")) {// Don't replace default with blank
+                    if (!parts[1].equals("<>")) { // Don't replace default with blank
                         replyTo = parts[1];
                         if (replyTo.startsWith("<")) {
                             if (replyTo.endsWith(">")) {

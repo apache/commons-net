@@ -63,7 +63,8 @@ public final class rexec {
             try {
                 client.disconnect();
             } catch (final IOException f) {
-                /* ignored */}
+                /* ignored */
+            }
             e.printStackTrace();
             System.err.println("Could not execute command.");
             System.exit(1);

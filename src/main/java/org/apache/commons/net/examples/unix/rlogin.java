@@ -70,7 +70,8 @@ public final class rlogin {
             try {
                 client.disconnect();
             } catch (final IOException f) {
-                /* ignored */}
+                /* ignored */
+            }
             e.printStackTrace();
             System.err.println("rlogin authentication failed.");
             System.exit(1);

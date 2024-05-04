@@ -184,7 +184,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl {
 
     @Override
     public FTPFile parseFTPEntry(final String entry) {
-        if (entry.startsWith(" ")) {// leading space means no facts are present
+        if (entry.startsWith(" ")) { // leading space means no facts are present
             if (entry.length() > 1) { // is there a path name?
                 final FTPFile file = new FTPFile();
                 file.setRawListing(entry);

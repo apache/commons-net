@@ -462,7 +462,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             } else if (header.indexOf("Spool Files") >= 30) {
                 setType(JES_LEVEL_1_LIST_TYPE);
                 super.setRegex(JES_LEVEL_1_LIST_REGEX);
-            } else if (header.startsWith("JOBNAME") && header.indexOf("JOBID") > 8) {// header contains JOBNAME JOBID OWNER // STATUS CLASS
+            } else if (header.startsWith("JOBNAME") && header.indexOf("JOBID") > 8) { // header contains JOBNAME JOBID OWNER // STATUS CLASS
                 setType(JES_LEVEL_2_LIST_TYPE);
                 super.setRegex(JES_LEVEL_2_LIST_REGEX);
             } else {
