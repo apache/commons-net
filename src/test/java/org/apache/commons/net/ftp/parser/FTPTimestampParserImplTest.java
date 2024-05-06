@@ -189,7 +189,7 @@ public class FTPTimestampParserImplTest {
     }
 
     @Test
-    @Disabled
+//     @Disabled
     public void testNet710() throws ParseException {
         Calendar serverTime = Calendar.getInstance(TimeZone.getTimeZone("EDT"), Locale.US);
         serverTime.set(2022, 2, 16, 14, 0);
