@@ -23,7 +23,7 @@ permissions:
 jobs:
   build:
     timeout-minutes: 7
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       with:
@@ -33,17 +33,48 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: 8
-    - name: Look for deletefile failures
+    - name: Test NET710
       run: |
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+        cat <<'EOD' >src/test/java/org/apache/commons/net/ftp/parser/FTPTimestampNET710Test.java
+        package org.apache.commons.net.ftp.parser;
+
+
+        import java.text.ParseException;
+        import java.util.Calendar;
+        import java.util.Locale;
+        import java.util.TimeZone;
+
+        import org.junit.jupiter.api.Test;
+
+        /**
+        * Test NET710
+        */
+        public class FTPTimestampNET710Test {
+
+            @Test
+            public void testNet710() throws ParseException {
+                Calendar serverTime = Calendar.getInstance(TimeZone.getTimeZone("EDT"), Locale.US);
+                serverTime.set(2022, 2, 16, 14, 0);
+                Calendar p = new FTPTimestampParserImpl().parseTimestamp("Mar 13 02:33", serverTime);
+                System.out.println(p);
+            }
+
+        }
+        EOD
+        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=FTPTimestampNET710Test
+        git co rel/commons-net-3.8.0
+        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=FTPTimestampNET710Test
+    # - name: Look for deletefile failures
+    #   run: |
+    #     mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+    #     mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+    #     mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+    #     mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+    #     mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+    #     mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+    #     mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+    #     mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
+    #     mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=TFTPServerPathTest
     # - name: Test exec function
     #   run: |
     #     mvn -q exec:java
