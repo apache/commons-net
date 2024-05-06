@@ -63,7 +63,7 @@ jobs:
         }
         EOD
         mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=FTPTimestampNET710Test -Drat.skip
-        git checkout rel/commons-net-3.8.0
+        git checkout rel/commons-net-3.10.0
         mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=FTPTimestampNET710Test -Drat.skip
     # - name: Look for deletefile failures
     #   run: |
