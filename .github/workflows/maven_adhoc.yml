@@ -62,14 +62,13 @@ jobs:
 
         }
         EOD
+        # Try to stop git complaints
+        echo "FTPTimestampNET710Test.java" >>.gitignore
+        echo ".gitignore" >>.gitignore
         mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=FTPTimestampNET710Test -Drat.skip
-        git stash -u
         git checkout rel/commons-net-3.10.0
-        git stash pop
         mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=FTPTimestampNET710Test -Drat.skip
-        git stash -u
         git checkout rel/commons-net-3.9.0
-        git stash pop
         mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dtest=FTPTimestampNET710Test -Drat.skip
     # - name: Look for deletefile failures
     #   run: |
