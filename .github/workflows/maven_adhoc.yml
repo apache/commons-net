@@ -26,8 +26,9 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        tag: [ 3.10.0, 3.9.0, 3.8.0, 3.7.0 ]
-    runs-on: ubuntu-latest
+        tag: [ 3.10.0, 3.9.0, 3.8.0, 3.7 ]
+        os: [ ubuntu-latest, windows-latest, macos-13 ]
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       with:
