@@ -40,4 +40,4 @@ jobs:
         java-version: 8
     - name: Test NET710
       run: |
-        mvn -V --batch-mode --file pom.xml --no-transfer-progress test -Dnet.version=${{ matrix.tag }}
+        mvn -V --batch-mode --file pom.xml --no-transfer-progress test "-Dnet.version=${{ matrix.tag }}"
