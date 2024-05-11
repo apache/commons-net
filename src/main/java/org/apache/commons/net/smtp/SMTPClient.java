@@ -263,8 +263,8 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Sends the SMTP DATA command in preparation to send an email message. This method returns a DotTerminatedMessageWriter instance to which the message can be
-     * written. Null is returned if the DATA command fails.
+     * Sends the SMTP DATA command in preparation to send an email message. This method returns a DotTerminatedMessageWriter instance to which the message can
+     * be written. Null is returned if the DATA command fails.
      * <p>
      * You must not issue any commands to the SMTP server (i.e., call any (other methods) until you finish writing to the returned Writer instance and close it.
      * The SMTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned Writer actually writes directly to
