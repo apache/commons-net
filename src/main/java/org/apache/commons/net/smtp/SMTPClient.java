@@ -111,7 +111,7 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Add a recipient for a message using the SMTP RCPT command, specifying a forward relay path. The sender must be set first before any recipients may be
+     * Adds a recipient for a message using the SMTP RCPT command, specifying a forward relay path. The sender must be set first before any recipients may be
      * specified, otherwise the mail server will reject your commands.
      *
      * @param path The forward relay path pointing to the recipient.
@@ -126,7 +126,7 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Add a recipient for a message using the SMTP RCPT command, the recipient's email address. The sender must be set first before any recipients may be
+     * Adds a recipient for a message using the SMTP RCPT command, the recipient's email address. The sender must be set first before any recipients may be
      * specified, otherwise the mail server will reject your commands.
      *
      * @param address The recipient's email address.
@@ -213,16 +213,11 @@ public class SMTPClient extends SMTP {
      * @throws IOException                   If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
     public boolean login() throws IOException {
-        final String name;
-        final InetAddress host;
-
-        host = getLocalAddress();
-        name = host.getHostName();
-
+        final InetAddress host = getLocalAddress();
+        final String name = host.getHostName();
         if (name == null) {
             return false;
         }
-
         return SMTPReply.isPositiveCompletion(helo(name));
     }
 
@@ -268,7 +263,7 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Send the SMTP DATA command in preparation to send an email message. This method returns a DotTerminatedMessageWriter instance to which the message can be
+     * Sends the SMTP DATA command in preparation to send an email message. This method returns a DotTerminatedMessageWriter instance to which the message can be
      * written. Null is returned if the DATA command fails.
      * <p>
      * You must not issue any commands to the SMTP server (i.e., call any (other methods) until you finish writing to the returned Writer instance and close it.
@@ -298,7 +293,6 @@ public class SMTPClient extends SMTP {
         if (!SMTPReply.isPositiveIntermediate(data())) {
             return null;
         }
-
         return new DotTerminatedMessageWriter(writer);
     }
 
@@ -316,7 +310,7 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * A convenience method for sending short messages. This method fetches the Writer returned by {@link #sendMessageData sendMessageData() } and writes the
+     * Sends a short messages. This method fetches the Writer returned by {@link #sendMessageData sendMessageData() } and writes the
      * specified String to it. After writing the message, this method calls {@link #completePendingCommand completePendingCommand() } to finalize the
      * transaction and returns its success or failure.
      *
@@ -329,19 +323,16 @@ public class SMTPClient extends SMTP {
      */
     public boolean sendShortMessageData(final String message) throws IOException {
         try (final Writer writer = sendMessageData()) {
-
             if (writer == null) {
                 return false;
             }
-
             writer.write(message);
         }
-
         return completePendingCommand();
     }
 
     /**
-     * A convenience method for a sending short email without having to explicitly set the sender and recipient(s). This method sets the sender and recipient
+     * Sends a short email without having to explicitly set the sender and recipient(s). This method sets the sender and recipient
      * using {@link #setSender setSender } and {@link #addRecipient addRecipient }, and then sends the message using {@link #sendShortMessageData
      * sendShortMessageData }.
      *
@@ -358,16 +349,14 @@ public class SMTPClient extends SMTP {
         if (!setSender(sender)) {
             return false;
         }
-
         if (!addRecipient(recipient)) {
             return false;
         }
-
         return sendShortMessageData(message);
     }
 
     /**
-     * A convenience method for a sending short email without having to explicitly set the sender and recipient(s). This method sets the sender and recipients
+     * Sends a short email without having to explicitly set the sender and recipient(s). This method sets the sender and recipients
      * using {@link #setSender(String) setSender} and {@link #addRecipient(String) addRecipient}, and then sends the message using
      * {@link #sendShortMessageData(String) sendShortMessageData}.
      * <p>
@@ -385,23 +374,18 @@ public class SMTPClient extends SMTP {
      * @throws IOException                   If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
     public boolean sendSimpleMessage(final String sender, final String[] recipients, final String message) throws IOException {
-        boolean oneSuccess = false;
-        int count;
-
         if (!setSender(sender)) {
             return false;
         }
-
-        for (count = 0; count < recipients.length; count++) {
+        boolean oneSuccess = false;
+        for (int count = 0; count < recipients.length; count++) {
             if (addRecipient(recipients[count])) {
                 oneSuccess = true;
             }
         }
-
         if (!oneSuccess) {
             return false;
         }
-
         return sendShortMessageData(message);
     }
 
@@ -436,7 +420,7 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Verify that a user or email address is valid, i.e., that mail can be delivered to that mailbox on the server.
+     * Verifies that a user or email address is valid, i.e., that mail can be delivered to that mailbox on the server.
      *
      * @param user The user name or email address to validate.
      * @return True if the user name is valid, false if not.
@@ -446,10 +430,7 @@ public class SMTPClient extends SMTP {
      * @throws IOException                   If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
     public boolean verify(final String user) throws IOException {
-        final int result;
-
-        result = vrfy(user);
-
+        final int result = vrfy(user);
         return result == SMTPReply.ACTION_OK || result == SMTPReply.USER_NOT_LOCAL_WILL_FORWARD;
     }
 
