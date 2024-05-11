@@ -16,9 +16,11 @@
  */
 package org.apache.commons.net.examples.cidr;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import org.apache.commons.net.util.Charsets;
 import org.apache.commons.net.util.SubnetUtils;
 import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 
@@ -50,7 +52,7 @@ public class SubnetUtilsExample {
 
         final String prompt = "Enter an IP address (e.g. 192.168.0.10):";
         System.out.println(prompt);
-        try (final Scanner scanner = new Scanner(System.in)) {
+        try (final Scanner scanner = new Scanner(System.in, Charset.defaultCharset().name())) {
             while (scanner.hasNextLine()) {
                 final String address = scanner.nextLine();
                 System.out.println("The IP address [" + address + "] is " + (info.isInRange(address) ? "" : "not ") + "within the subnet [" + subnet + "]");
