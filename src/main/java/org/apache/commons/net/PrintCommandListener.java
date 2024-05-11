@@ -17,10 +17,10 @@
 
 package org.apache.commons.net;
 
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
+
+import org.apache.commons.net.io.Util;
 
 /**
  * This is a support class for some example programs. It is a sample implementation of the ProtocolCommandListener interface which just prints out to a
@@ -28,18 +28,7 @@ import java.nio.charset.Charset;
  *
  * @since 2.0
  */
-
 public class PrintCommandListener implements ProtocolCommandListener {
-
-    /**
-     * Creates a new PrintWriter using the default encoding.
-     *
-     * @param printStream the target PrintStream.
-     * @return a new PrintWriter.
-     */
-    private static PrintWriter newPrintWriter(final PrintStream printStream) {
-        return new PrintWriter(new OutputStreamWriter(printStream, Charset.defaultCharset()));
-    }
 
     private final PrintWriter writer;
     private final boolean nologin;
@@ -55,7 +44,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
      */
     @SuppressWarnings("resource")
     public PrintCommandListener(final PrintStream printStream) {
-        this(newPrintWriter(printStream));
+        this(Util.newPrintWriter(printStream));
     }
 
     /**
@@ -68,7 +57,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
      */
     @SuppressWarnings("resource")
     public PrintCommandListener(final PrintStream printStream, final boolean suppressLogin) {
-        this(newPrintWriter(printStream), suppressLogin);
+        this(Util.newPrintWriter(printStream), suppressLogin);
     }
 
     /**
@@ -82,7 +71,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
      */
     @SuppressWarnings("resource")
     public PrintCommandListener(final PrintStream printStream, final boolean suppressLogin, final char eolMarker) {
-        this(newPrintWriter(printStream), suppressLogin, eolMarker);
+        this(Util.newPrintWriter(printStream), suppressLogin, eolMarker);
     }
 
     /**
@@ -97,7 +86,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
      */
     @SuppressWarnings("resource")
     public PrintCommandListener(final PrintStream printStream, final boolean suppressLogin, final char eolMarker, final boolean showDirection) {
-        this(newPrintWriter(printStream), suppressLogin, eolMarker, showDirection);
+        this(Util.newPrintWriter(printStream), suppressLogin, eolMarker, showDirection);
     }
 
     /**

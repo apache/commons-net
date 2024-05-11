@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.nio.charset.Charset;
 import java.time.Duration;
 
 import org.apache.commons.net.echo.EchoTCPClient;
@@ -49,9 +50,10 @@ public final class echo {
         client.connect(host);
         try {
             System.out.println("Connected to " + host + ".");
-            final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-            try (PrintWriter echoOutput = new PrintWriter(new OutputStreamWriter(client.getOutputStream()), true);
-                    BufferedReader echoInput = new BufferedReader(new InputStreamReader(client.getInputStream()))) {
+            final Charset charset = Charset.defaultCharset();
+            final BufferedReader input = new BufferedReader(new InputStreamReader(System.in, charset));
+            try (PrintWriter echoOutput = new PrintWriter(new OutputStreamWriter(client.getOutputStream(), charset), true);
+                    BufferedReader echoInput = new BufferedReader(new InputStreamReader(client.getInputStream(), charset))) {
                 while ((line = input.readLine()) != null) {
                     echoOutput.println(line);
                     System.out.println(echoInput.readLine());
@@ -70,7 +72,8 @@ public final class echo {
         final BufferedReader input;
         final InetAddress address;
 
-        input = new BufferedReader(new InputStreamReader(System.in));
+        final Charset charset = Charset.defaultCharset();
+        input = new BufferedReader(new InputStreamReader(System.in, charset));
         address = InetAddress.getByName(host);
         try (EchoUDPClient client = new EchoUDPClient()) {
 
@@ -82,7 +85,7 @@ public final class echo {
             // Remember, there are no guarantees about the ordering of returned
             // UDP packets, so there is a chance the output may be jumbled.
             while ((line = input.readLine()) != null) {
-                data = line.getBytes();
+                data = line.getBytes(charset);
                 client.send(data, address);
                 count = 0;
                 do {
@@ -102,7 +105,7 @@ public final class echo {
                         System.err.println("InterruptedIOException: Timed out and dropped packet");
                         break;
                     }
-                    System.out.print(new String(data, 0, length));
+                    System.out.print(new String(data, 0, length, charset));
                     count += length;
                 } while (count < data.length);
 

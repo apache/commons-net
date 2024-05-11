@@ -21,9 +21,13 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.Socket;
+import java.nio.charset.Charset;
 
 import org.apache.commons.net.util.NetConstants;
 
@@ -37,6 +41,7 @@ import org.apache.commons.net.util.NetConstants;
  */
 
 public final class Util {
+
     /**
      * The default buffer size ({@value}) used by {@link #copyStream copyStream } and {@link #copyReader copyReader} and by the copyReader/copyStream methods if
      * a zero or negative buffer size is supplied.
@@ -281,6 +286,17 @@ public final class Util {
         }
 
         return total;
+    }
+
+    /**
+     * Creates a new PrintWriter using the default encoding.
+     *
+     * @param printStream the target PrintStream.
+     * @return a new PrintWriter.
+     * @since 3.11.0
+     */
+    public static PrintWriter newPrintWriter(final PrintStream printStream) {
+        return new PrintWriter(new OutputStreamWriter(printStream, Charset.defaultCharset()));
     }
 
     /** Cannot be instantiated. */

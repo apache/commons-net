@@ -22,7 +22,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.Duration;
@@ -39,6 +38,7 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
+import org.apache.commons.net.io.Util;
 import org.apache.commons.net.util.TrustManagerUtils;
 
 /**
@@ -280,7 +280,7 @@ public final class FTPClientExample {
         ftp.setListHiddenFiles(hidden);
 
         // suppress login details
-        ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
+        ftp.addProtocolCommandListener(new PrintCommandListener(Util.newPrintWriter(System.out), true));
 
         final FTPClientConfig config;
         if (serverType != null) {
