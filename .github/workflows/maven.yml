@@ -44,10 +44,6 @@ jobs:
             os: macos-13
             experimental: false
           - java: 8
-            # Java 8 not currently available
-            os: macos-latest
-            experimental: true
-          - java: 8
             os: windows-latest
             experimental: false
           # Update java 8/ubuntu to add deploy step
