@@ -17,8 +17,10 @@
 
 package org.apache.commons.net;
 
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 
 /**
  * This is a support class for some example programs. It is a sample implementation of the ProtocolCommandListener interface which just prints out to a
@@ -28,62 +30,75 @@ import java.io.PrintWriter;
  */
 
 public class PrintCommandListener implements ProtocolCommandListener {
+
+    /**
+     * @param printStream
+     * @return
+     */
+    private static PrintWriter newPrintWriter(final PrintStream printStream) {
+        return new PrintWriter(new OutputStreamWriter(printStream, Charset.defaultCharset()));
+    }
     private final PrintWriter writer;
     private final boolean nologin;
     private final char eolMarker;
+
     private final boolean directionMarker;
 
     /**
-     * Create the default instance which prints everything.
+     * Constructs an instance which prints everything using the default Charset.
      *
-     * @param stream where to write the commands and responses e.g. System.out
+     * @param printStream where to write the commands and responses e.g. System.out
      * @since 3.0
      */
-    public PrintCommandListener(final PrintStream stream) {
-        this(new PrintWriter(stream));
+    @SuppressWarnings("resource")
+    public PrintCommandListener(final PrintStream printStream) {
+        this(newPrintWriter(printStream));
     }
 
     /**
-     * Create an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
+     * Constructs an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
      *
-     * @param stream        where to write the commands and responses
+     * @param printStream        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
      *
      * @since 3.0
      */
-    public PrintCommandListener(final PrintStream stream, final boolean suppressLogin) {
-        this(new PrintWriter(stream), suppressLogin);
+    @SuppressWarnings("resource")
+    public PrintCommandListener(final PrintStream printStream, final boolean suppressLogin) {
+        this(newPrintWriter(printStream), suppressLogin);
     }
 
     /**
-     * Create an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
+     * Constructs an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
      *
-     * @param stream        where to write the commands and responses
+     * @param printStream        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
      * @param eolMarker     if non-zero, add a marker just before the EOL.
      *
      * @since 3.0
      */
-    public PrintCommandListener(final PrintStream stream, final boolean suppressLogin, final char eolMarker) {
-        this(new PrintWriter(stream), suppressLogin, eolMarker);
+    @SuppressWarnings("resource")
+    public PrintCommandListener(final PrintStream printStream, final boolean suppressLogin, final char eolMarker) {
+        this(newPrintWriter(printStream), suppressLogin, eolMarker);
     }
 
     /**
-     * Create an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
+     * Constructs an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
      *
-     * @param stream        where to write the commands and responses
+     * @param printStream        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
      * @param eolMarker     if non-zero, add a marker just before the EOL.
      * @param showDirection if {@code true}, add {@code "> "} or {@code "< "} as appropriate to the output
      *
      * @since 3.0
      */
-    public PrintCommandListener(final PrintStream stream, final boolean suppressLogin, final char eolMarker, final boolean showDirection) {
-        this(new PrintWriter(stream), suppressLogin, eolMarker, showDirection);
+    @SuppressWarnings("resource")
+    public PrintCommandListener(final PrintStream printStream, final boolean suppressLogin, final char eolMarker, final boolean showDirection) {
+        this(newPrintWriter(printStream), suppressLogin, eolMarker, showDirection);
     }
 
     /**
-     * Create the default instance which prints everything.
+     * Constructs the default instance which prints everything.
      *
      * @param writer where to write the commands and responses
      */
@@ -92,7 +107,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
     }
 
     /**
-     * Create an instance which optionally suppresses login command text.
+     * Constructs an instance which optionally suppresses login command text.
      *
      * @param writer        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
@@ -104,7 +119,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
     }
 
     /**
-     * Create an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
+     * Constructs an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
      *
      * @param writer        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
@@ -117,7 +132,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
     }
 
     /**
-     * Create an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
+     * Constructs an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
      *
      * @param writer        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
