@@ -18,6 +18,7 @@
 package org.apache.commons.net;
 
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.EventListener;
 
@@ -118,7 +119,7 @@ public class ProtocolCommandSupport implements Serializable {
         listeners.removeListener(listener);
     }
 
-    private void writeObject(final java.io.ObjectOutputStream out) {
+    private void writeObject(final ObjectOutputStream out) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
