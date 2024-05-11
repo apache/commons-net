@@ -32,12 +32,15 @@ import java.nio.charset.Charset;
 public class PrintCommandListener implements ProtocolCommandListener {
 
     /**
-     * @param printStream
-     * @return
+     * Creates a new PrintWriter using the default encoding.
+     *
+     * @param printStream the target PrintStream.
+     * @return a new PrintWriter.
      */
     private static PrintWriter newPrintWriter(final PrintStream printStream) {
         return new PrintWriter(new OutputStreamWriter(printStream, Charset.defaultCharset()));
     }
+
     private final PrintWriter writer;
     private final boolean nologin;
     private final char eolMarker;
