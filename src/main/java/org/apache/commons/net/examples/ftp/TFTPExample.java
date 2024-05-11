@@ -197,9 +197,7 @@ public final class TFTPExample {
 
     private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename, final TFTPClient tftp)
             throws IOException {
-        final boolean closed;
         FileInputStream input;
-
         // Try to open local file for reading
         try {
             input = new FileInputStream(localFilename);
@@ -207,9 +205,8 @@ public final class TFTPExample {
             tftp.close();
             throw new IOException("Error: could not open local file for reading.", e);
         }
-
         open(tftp);
-
+        final boolean closed;
         // Try to send local file via TFTP
         try {
             final String[] parts = hostname.split(":");
@@ -230,7 +227,6 @@ public final class TFTPExample {
             // Close local socket and input file
             closed = close(tftp, input);
         }
-
         return closed;
     }
 
