@@ -19,6 +19,7 @@ package org.apache.commons.net.tftp;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.nio.charset.Charset;
 
 /**
  * A final class derived from TFTPPacket defining the TFTP Error packet type.
@@ -157,7 +158,7 @@ public final class TFTPErrorPacket extends TFTPPacket {
         data[2] = (byte) ((error & 0xffff) >> 8);
         data[3] = (byte) (error & 0xff);
 
-        System.arraycopy(message.getBytes(), 0, data, 4, length);
+        System.arraycopy(message.getBytes(Charset.defaultCharset()), 0, data, 4, length);
 
         data[length + 4] = 0;
 
@@ -183,7 +184,7 @@ public final class TFTPErrorPacket extends TFTPPacket {
         data[2] = (byte) ((error & 0xffff) >> 8);
         data[3] = (byte) (error & 0xff);
 
-        System.arraycopy(message.getBytes(), 0, data, 4, length);
+        System.arraycopy(message.getBytes(Charset.defaultCharset()), 0, data, 4, length);
 
         data[length + 4] = 0;
 

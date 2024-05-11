@@ -159,15 +159,12 @@ public final class TFTPExample {
         final boolean closed;
         FileOutputStream output;
         final File file;
-
         file = new File(localFilename);
-
         // If file exists, don't overwrite it.
         if (file.exists()) {
             System.err.println("Error: " + localFilename + " already exists.");
             return false;
         }
-
         // Try to open local file for writing
         try {
             output = new FileOutputStream(file);
@@ -175,9 +172,7 @@ public final class TFTPExample {
             tftp.close();
             throw new IOException("Error: could not open local file for writing.", e);
         }
-
         open(tftp);
-
         // Try to receive remote file via TFTP
         try {
             final String[] parts = hostname.split(":");
@@ -198,7 +193,6 @@ public final class TFTPExample {
             // Close local socket and output file
             closed = close(tftp, output);
         }
-
         return closed;
     }
 

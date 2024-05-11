@@ -19,9 +19,11 @@ package org.apache.commons.net.examples.mail;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -133,30 +135,28 @@ public final class IMAPImportMbox {
         int loaded = 0;
         try {
             imap.setSoTimeout(6000);
-
-            final BufferedReader br = new BufferedReader(new FileReader(file)); // TODO charset?
-
-            String line;
-            final StringBuilder sb = new StringBuilder();
             boolean wanted = false; // Skip any leading rubbish
-            while ((line = br.readLine()) != null) {
-                if (line.startsWith("From ")) { // start of message; i.e. end of previous (if any)
-                    if (process(sb, imap, folder, total)) { // process previous message (if any)
-                        loaded++;
+            final StringBuilder sb = new StringBuilder();
+            try (BufferedReader br = Files.newBufferedReader(Paths.get(file), Charset.defaultCharset())) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.startsWith("From ")) { // start of message; i.e. end of previous (if any)
+                        if (process(sb, imap, folder, total)) { // process previous message (if any)
+                            loaded++;
+                        }
+                        sb.setLength(0);
+                        total++;
+                        wanted = wanted(total, line, msgNums, contains);
+                    } else if (startsWith(line, PATFROM)) { // Unescape ">+From " in body text
+                        line = line.substring(1);
                     }
-                    sb.setLength(0);
-                    total++;
-                    wanted = wanted(total, line, msgNums, contains);
-                } else if (startsWith(line, PATFROM)) { // Unescape ">+From " in body text
-                    line = line.substring(1);
-                }
-                // TODO process first Received: line to determine arrival date?
-                if (wanted) {
-                    sb.append(line);
-                    sb.append(CRLF);
+                    // TODO process first Received: line to determine arrival date?
+                    if (wanted) {
+                        sb.append(line);
+                        sb.append(CRLF);
+                    }
                 }
             }
-            br.close();
             if (wanted && process(sb, imap, folder, total)) { // last message (if any)
                 loaded++;
             }

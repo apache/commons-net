@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Locale;
 
 /**
@@ -40,7 +41,7 @@ final class Utils {
      */
     static String getPassword(final String user, String password) throws IOException {
         if ("-".equals(password)) { // stdin
-            final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            final BufferedReader in = new BufferedReader(new InputStreamReader(System.in, Charset.defaultCharset()));
             password = in.readLine();
         } else if ("*".equals(password)) { // console
             final Console con = System.console(); // Java 1.6

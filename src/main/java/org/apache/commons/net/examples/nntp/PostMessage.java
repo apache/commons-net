@@ -19,11 +19,13 @@ package org.apache.commons.net.examples.nntp;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.io.Util;
@@ -47,7 +49,7 @@ public final class PostMessage {
         final String organization;
         final String references;
         final BufferedReader stdin;
-        FileReader fileReader = null;
+        Reader fileReader = null;
         final SimpleNNTPHeader header;
         final NNTPClient client;
 
@@ -58,7 +60,7 @@ public final class PostMessage {
 
         server = args[0];
 
-        stdin = new BufferedReader(new InputStreamReader(System.in));
+        stdin = new BufferedReader(new InputStreamReader(System.in, Charset.defaultCharset()));
 
         try {
             System.out.print("From: ");
@@ -123,14 +125,14 @@ public final class PostMessage {
             fileName = stdin.readLine();
 
             try {
-                fileReader = new FileReader(fileName);
+                fileReader = Files.newBufferedReader(Paths.get(fileName), Charset.defaultCharset());
             } catch (final FileNotFoundException e) {
                 System.err.println("File not found. " + e.getMessage());
                 System.exit(1);
             }
 
             client = new NNTPClient();
-            client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
+            client.addProtocolCommandListener(new PrintCommandListener(Util.newPrintWriter(System.out), true));
 
             client.connect(server);
 

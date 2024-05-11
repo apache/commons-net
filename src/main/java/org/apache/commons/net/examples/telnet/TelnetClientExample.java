@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.StringTokenizer;
 
@@ -106,13 +107,14 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
                 final OutputStream outstr = tc.getOutputStream();
 
                 final byte[] buff = new byte[1024];
-                int ret_read = 0;
+                int readCount = 0;
 
                 do {
                     try {
-                        ret_read = System.in.read(buff);
-                        if (ret_read > 0) {
-                            final String line = new String(buff, 0, ret_read); // deliberate use of default charset
+                        readCount = System.in.read(buff);
+                        if (readCount > 0) {
+                            final Charset charset = Charset.defaultCharset();
+                            final String line = new String(buff, 0, readCount, charset); // deliberate use of default charset
                             if (line.startsWith("AYT")) {
                                 try {
                                     System.out.println("Sending AYT");
@@ -128,7 +130,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
                                             + tc.getRemoteOptionState(ii));
                                 }
                             } else if (line.startsWith("REGISTER")) {
-                                final StringTokenizer st = new StringTokenizer(new String(buff));
+                                final StringTokenizer st = new StringTokenizer(new String(buff, charset));
                                 try {
                                     st.nextToken();
                                     final int opcode = Integer.parseInt(st.nextToken());
@@ -149,7 +151,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
                                     }
                                 }
                             } else if (line.startsWith("UNREGISTER")) {
-                                final StringTokenizer st = new StringTokenizer(new String(buff));
+                                final StringTokenizer st = new StringTokenizer(new String(buff, charset));
                                 try {
                                     st.nextToken();
                                     final int opcode = Integer.parseInt(st.nextToken());
@@ -177,7 +179,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
                                 outstr.flush();
                             } else {
                                 try {
-                                    outstr.write(buff, 0, ret_read);
+                                    outstr.write(buff, 0, readCount);
                                     outstr.flush();
                                 } catch (final IOException e) {
                                     end_loop = true;
@@ -188,7 +190,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
                         System.err.println("Exception while reading keyboard:" + e.getMessage());
                         end_loop = true;
                     }
-                } while (ret_read > 0 && !end_loop);
+                } while (readCount > 0 && !end_loop);
 
                 try {
                     tc.disconnect();
@@ -243,14 +245,14 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
 
         try {
             final byte[] buff = new byte[1024];
-            int ret_read = 0;
+            int readCount = 0;
 
             do {
-                ret_read = instr.read(buff);
-                if (ret_read > 0) {
-                    System.out.print(new String(buff, 0, ret_read));
+                readCount = instr.read(buff);
+                if (readCount > 0) {
+                    System.out.print(new String(buff, 0, readCount, Charset.defaultCharset()));
                 }
-            } while (ret_read >= 0);
+            } while (readCount >= 0);
         } catch (final IOException e) {
             System.err.println("Exception while reading socket:" + e.getMessage());
         }

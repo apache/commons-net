@@ -19,11 +19,12 @@ package org.apache.commons.net.examples.mail;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public final class SMTPMail {
         String cc;
         final List<String> ccList = new ArrayList<>();
         final BufferedReader stdin;
-        FileReader fileReader = null;
+        BufferedReader fileReader = null;
         final Writer writer;
         final SimpleSMTPHeader header;
         final SMTPClient client;
@@ -61,7 +62,7 @@ public final class SMTPMail {
 
         server = args[0];
 
-        stdin = new BufferedReader(new InputStreamReader(System.in));
+        stdin = new BufferedReader(new InputStreamReader(System.in, Charset.defaultCharset()));
 
         try {
             System.out.print("From: ");
@@ -101,13 +102,13 @@ public final class SMTPMail {
             fileName = stdin.readLine();
 
             try {
-                fileReader = new FileReader(fileName);
+                fileReader = Files.newBufferedReader(Paths.get(fileName), Charset.defaultCharset());
             } catch (final FileNotFoundException e) {
                 System.err.println("File not found. " + e.getMessage());
             }
 
             client = new SMTPClient();
-            client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
+            client.addProtocolCommandListener(new PrintCommandListener(Util.newPrintWriter(System.out), true));
 
             client.connect(server);
 

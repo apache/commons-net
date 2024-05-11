@@ -18,12 +18,15 @@
 package org.apache.commons.net.examples.mail;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -318,20 +321,23 @@ public final class IMAPExportMbox {
         if (file.equals("-")) {
             mboxListener = null;
         } else if (file.startsWith("+")) {
-            final File mbox = new File(file.substring(1));
-            System.out.println("Appending to file " + mbox);
-            mboxListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, true)), eol, printHash, printMarker, checkSequence);
+            final Path mboxPath = Paths.get(file.substring(1));
+            System.out.println("Appending to file " + mboxPath);
+            mboxListener = new MboxListener(Files.newBufferedWriter(mboxPath, Charset.defaultCharset(), StandardOpenOption.CREATE, StandardOpenOption.APPEND),
+                    eol, printHash, printMarker, checkSequence);
         } else if (file.startsWith("-")) {
-            final File mbox = new File(file.substring(1));
-            System.out.println("Writing to file " + mbox);
-            mboxListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker, checkSequence);
+            final Path mboxPath = Paths.get(file.substring(1));
+            System.out.println("Writing to file " + mboxPath);
+            mboxListener = new MboxListener(Files.newBufferedWriter(mboxPath, Charset.defaultCharset(), StandardOpenOption.CREATE), eol, printHash, printMarker,
+                    checkSequence);
         } else {
-            final File mboxFile = new File(file);
-            if (mboxFile.exists() && mboxFile.length() > 0) {
-                throw new IOException("mailbox file: " + mboxFile + " already exists and is non-empty!");
+            final Path mboxPath = Paths.get(file);
+            if (Files.exists(mboxPath) && Files.size(mboxPath) > 0) {
+                throw new IOException("mailbox file: " + mboxPath + " already exists and is non-empty!");
             }
-            System.out.println("Creating file " + mboxFile);
-            mboxListener = new MboxListener(new BufferedWriter(new FileWriter(mboxFile)), eol, printHash, printMarker, checkSequence);
+            System.out.println("Creating file " + mboxPath);
+            mboxListener = new MboxListener(Files.newBufferedWriter(mboxPath, Charset.defaultCharset(), StandardOpenOption.CREATE), eol, printHash, printMarker,
+                    checkSequence);
         }
 
         final String path = uri.getPath();

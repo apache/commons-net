@@ -19,6 +19,7 @@ package org.apache.commons.net.tftp;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.nio.charset.Charset;
 
 /**
  * An abstract class derived from TFTPPacket definiing a TFTP Request packet type. It is subclassed by the
@@ -169,7 +170,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         data = new byte[fileLength + modeLength + 4];
         data[0] = 0;
         data[1] = (byte) type;
-        System.arraycopy(fileName.getBytes(), 0, data, 2, fileLength);
+        System.arraycopy(fileName.getBytes(Charset.defaultCharset()), 0, data, 2, fileLength);
         data[fileLength + 2] = 0;
         System.arraycopy(modeBytes[mode], 0, data, fileLength + 3, modeLength);
 
@@ -194,7 +195,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
 
         data[0] = 0;
         data[1] = (byte) type;
-        System.arraycopy(fileName.getBytes(), 0, data, 2, fileLength);
+        System.arraycopy(fileName.getBytes(Charset.defaultCharset()), 0, data, 2, fileLength);
         data[fileLength + 2] = 0;
         System.arraycopy(modeBytes[mode], 0, data, fileLength + 3, modeLength);
 
