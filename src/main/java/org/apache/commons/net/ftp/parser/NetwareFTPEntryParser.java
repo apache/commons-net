@@ -19,15 +19,17 @@ package org.apache.commons.net.ftp.parser;
 
 import java.text.ParseException;
 
+import org.apache.commons.net.ftp.Configurable;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * Implementation of FTPFileEntryParser and FTPFileListParser for Netware Systems. Note that some proprietary extensions for Novell-specific operations
+ * Implements {@link FTPFileEntryParser} and {@link Configurable} for Netware Systems. Note that some proprietary extensions for Novell-specific operations
  * are not supported. See <a href="http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html">
  * http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html</a> for more details.
  *
- * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
+ * @see FTPFileEntryParser Usage instructions.
  * @since 1.5
  */
 public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {

@@ -71,7 +71,7 @@ public class IMAP extends SocketClient {
 
     /**
      * <p>
-     * Implementation of IMAPChunkListener that returns {@code true} but otherwise does nothing.
+     * Implements {@link IMAPChunkListener} to returns {@code true} but otherwise does nothing.
      * </p>
      * <p>
      * This is intended for use with a suitable ProtocolCommandListener. If the IMAP response contains multiple-line data, the protocol listener will be called

@@ -1188,10 +1188,10 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Implementation of the {@link Configurable Configurable} interface. In the case of this class, configuring merely makes the config object available for
+     * Implements the {@link Configurable} interface. In the case of this class, configuring merely makes the config object available for
      * the factory methods that construct parsers.
      *
-     * @param config {@link FTPClientConfig FTPClientConfig} object used to provide non-standard configurations to the parser.
+     * @param config {@link FTPClientConfig} object used to provide non-standard configurations to the parser.
      * @since 1.4
      */
     @Override

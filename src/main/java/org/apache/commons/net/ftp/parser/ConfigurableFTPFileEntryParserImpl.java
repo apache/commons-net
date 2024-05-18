@@ -60,7 +60,7 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
     }
 
     /**
-     * Implementation of the {@link Configurable Configurable} interface. Configures this parser by delegating to the underlying Configurable FTPTimestampParser
+     * Implements the {@link Configurable Configurable} interface. Configures this parser by delegating to the underlying Configurable FTPTimestampParser
      * implementation, ' passing it the supplied {@link FTPClientConfig FTPClientConfig} if that is non-null or a default configuration defined by each concrete
      * subclass.
      *

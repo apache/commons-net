@@ -19,13 +19,15 @@ package org.apache.commons.net.ftp.parser;
 
 import java.text.ParseException;
 
+import org.apache.commons.net.ftp.Configurable;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * Implementation of FTPFileEntryParser and FTPFileListParser for OS2 Systems.
+ * Implements of {@link FTPFileEntryParser} and {@link Configurable} for OS/2 Systems.
  *
- * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
+ * @see FTPFileEntryParser Usage instructions.
  */
 public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 

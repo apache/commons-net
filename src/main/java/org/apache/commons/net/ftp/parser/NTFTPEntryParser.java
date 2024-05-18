@@ -23,11 +23,12 @@ import java.util.regex.Pattern;
 import org.apache.commons.net.ftp.Configurable;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * Implementation of FTPFileEntryParser and FTPFileListParser for NT Systems.
+ * Implements {@link FTPFileEntryParser} and {@link Configurable} for NT Systems.
  *
- * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
+ * @see FTPFileEntryParser Usage instructions.
  */
 public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 

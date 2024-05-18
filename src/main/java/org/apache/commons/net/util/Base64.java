@@ -151,7 +151,6 @@ public class Base64 {
         return new Base64().decode(base64String);
     }
 
-    // Implementation of integer encoding used for crypto
     /**
      * Decodes a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
      *

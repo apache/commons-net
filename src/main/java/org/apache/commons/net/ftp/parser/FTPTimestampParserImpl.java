@@ -131,7 +131,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
-     * Implementation of the {@link Configurable Configurable} interface. Configures this <code>FTPTimestampParser</code> according to the following logic:
+     * Implements the {@link Configurable Configurable} interface. Configures this <code>FTPTimestampParser</code> according to the following logic:
      * <p>
      * Sets up the {@link FTPClientConfig#setDefaultDateFormatStr(java.lang.String) defaultDateFormat} and optionally the
      * {@link FTPClientConfig#setRecentDateFormatStr(String) recentDateFormat} to values supplied in the config based on month names configured as follows:
