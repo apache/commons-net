@@ -31,7 +31,21 @@ import java.nio.charset.StandardCharsets;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@SuppressWarnings({ "deprecation" })
 public class Base64Test {
+
+    private void checkDecoders(final String expected, final byte[] actual) {
+        final byte[] decoded = Base64.decodeBase64(actual);
+        assertEquals(expected, new String(decoded, StandardCharsets.UTF_8));
+        assertEquals(expected, new String(java.util.Base64.getDecoder().decode(actual), StandardCharsets.UTF_8));
+    }
+
+    private void checkDecoders(final String expected, final String actual) {
+        final byte[] decoded = Base64.decodeBase64(actual);
+        assertEquals(expected, new String(decoded));
+        assertEquals(expected, new String(decoded, StandardCharsets.UTF_8));
+        assertEquals(expected, new String(java.util.Base64.getDecoder().decode(actual), StandardCharsets.UTF_8));
+    }
 
     @Test
     public void testBase64() {
@@ -75,36 +89,28 @@ public class Base64Test {
 
     @Test
     public void testDecodeBase64ByteArray() {
-        final byte[] base64Data = {'b', 'G', 'l', 'n', 'a', 'H', 'Q', 'g', 'd', 'w', '=', '='};
-        final byte[] decoded = Base64.decodeBase64(base64Data);
-        assertEquals("light w", new String(decoded, StandardCharsets.UTF_8));
+        checkDecoders("light w", new byte[] {'b', 'G', 'l', 'n', 'a', 'H', 'Q', 'g', 'd', 'w', '=', '='});
     }
 
     @Test
     public void testDecodeBase64String() {
-        final String base64Data = "bGlnaHQgdw==";
-        final byte[] decoded = Base64.decodeBase64(base64Data);
-        assertEquals("light w", new String(decoded, StandardCharsets.UTF_8));
+        checkDecoders("light w", "bGlnaHQgdw==");
     }
 
     @Test
     public void testDecodeByteArray() {
-        final byte[] base64Data = {'Z', 'm', '9', 'v', 'Y', 'm', 'F', 'y'};
-        final byte[] decoded = new Base64().decode(base64Data);
-        assertEquals("foobar", new String(decoded, StandardCharsets.UTF_8));
+        checkDecoders("foobar", new byte[] {'Z', 'm', '9', 'v', 'Y', 'm', 'F', 'y'});
     }
 
     @Test
     public void testDecodeByteArrayEmpty() {
-        final byte[] base64Data = {};
-        final byte[] decoded = new Base64().decode(base64Data);
-        assertArrayEquals(base64Data, decoded);
+        checkDecoders("", new byte[] {});
+
     }
 
     @Test
     public void testDecodeByteArrayNull() {
-        final byte[] decoded = new Base64().decode((byte[]) null);
-        assertNull(decoded);
+        assertNull(new Base64().decode((byte[]) null));
     }
 
     @Test
@@ -127,9 +133,7 @@ public class Base64Test {
 
     @Test
     public void testDecodeString() {
-        final String base64String = "SGVsbG8gV29ybGQh";
-        final byte[] decoded = new Base64().decode(base64String);
-        assertEquals("Hello World!", new String(decoded));
+        checkDecoders("Hello World!", "SGVsbG8gV29ybGQh");
     }
 
     @Test
