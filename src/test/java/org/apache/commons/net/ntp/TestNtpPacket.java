@@ -16,12 +16,15 @@
  */
 package org.apache.commons.net.ntp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.DatagramPacket;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TestNtpPacket {
 
@@ -56,29 +59,29 @@ public class TestNtpPacket {
         message.setReceiveTimeStamp(new TimeStamp(0xd55247194b6d9000L));
         message.setTransmitTime(new TimeStamp(0xd55247194b797000L));
 
-        Assert.assertEquals(-17, message.getPrecision());
-        Assert.assertEquals(4, message.getPoll());
-        Assert.assertEquals(100, message.getRootDelay());
-        Assert.assertEquals(3382, message.getRootDispersion());
-        Assert.assertEquals(0x81531472, message.getReferenceId());
-        Assert.assertNotNull(message.getReferenceTimeStamp());
-        Assert.assertEquals("NTP", message.getType());
-        Assert.assertEquals("Server", message.getModeName());
-        Assert.assertEquals("129.83.20.114", message.getReferenceIdString());
-        Assert.assertEquals(51, message.getRootDispersionInMillis());
-        Assert.assertEquals(message.getRootDelay() / 65.536, message.getRootDelayInMillisDouble(), 1e-13);
+        assertEquals(-17, message.getPrecision());
+        assertEquals(4, message.getPoll());
+        assertEquals(100, message.getRootDelay());
+        assertEquals(3382, message.getRootDispersion());
+        assertEquals(0x81531472, message.getReferenceId());
+        assertNotNull(message.getReferenceTimeStamp());
+        assertEquals("NTP", message.getType());
+        assertEquals("Server", message.getModeName());
+        assertEquals("129.83.20.114", message.getReferenceIdString());
+        assertEquals(51, message.getRootDispersionInMillis());
+        assertEquals(message.getRootDelay() / 65.536, message.getRootDelayInMillisDouble(), 1e-13);
 
         final DatagramPacket dp = message.getDatagramPacket(); // this creates a new datagram
-        Assert.assertNotNull(dp);
-        Assert.assertEquals(48, dp.getLength()); // fixed 48-byte length
+        assertNotNull(dp);
+        assertEquals(48, dp.getLength()); // fixed 48-byte length
 
         final NtpV3Packet message2 = new NtpV3Impl();
         final DatagramPacket dp2 = new DatagramPacket(ntpPacket, ntpPacket.length);
         message2.setDatagramPacket(dp2);
 
-        Assert.assertEquals(message2, message);
-        Assert.assertEquals(message2.hashCode(), message.hashCode());
-        Assert.assertEquals(message2.toString(), message.toString());
+        assertEquals(message2, message);
+        assertEquals(message2.hashCode(), message.hashCode());
+        assertEquals(message2.toString(), message.toString());
     }
 
     @Test
@@ -90,49 +93,49 @@ public class TestNtpPacket {
         message.setMode(4);
         message.setVersion(NtpV3Packet.VERSION_3);
 
-        Assert.assertEquals(4, message.getMode());
-        Assert.assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
-        Assert.assertEquals(2, message.getLeapIndicator());
+        assertEquals(4, message.getMode());
+        assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
+        assertEquals(2, message.getLeapIndicator());
 
         message.setLeapIndicator(2);
         message.setVersion(NtpV3Packet.VERSION_3);
         message.setMode(4);
 
-        Assert.assertEquals(4, message.getMode());
-        Assert.assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
-        Assert.assertEquals(2, message.getLeapIndicator());
+        assertEquals(4, message.getMode());
+        assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
+        assertEquals(2, message.getLeapIndicator());
 
         message.setMode(4);
         message.setLeapIndicator(2);
         message.setVersion(NtpV3Packet.VERSION_3);
 
-        Assert.assertEquals(4, message.getMode());
-        Assert.assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
-        Assert.assertEquals(2, message.getLeapIndicator());
+        assertEquals(4, message.getMode());
+        assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
+        assertEquals(2, message.getLeapIndicator());
 
         message.setMode(4);
         message.setVersion(NtpV3Packet.VERSION_3);
         message.setLeapIndicator(2);
 
-        Assert.assertEquals(4, message.getMode());
-        Assert.assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
-        Assert.assertEquals(2, message.getLeapIndicator());
+        assertEquals(4, message.getMode());
+        assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
+        assertEquals(2, message.getLeapIndicator());
 
         message.setVersion(NtpV3Packet.VERSION_3);
         message.setMode(4);
         message.setLeapIndicator(2);
 
-        Assert.assertEquals(4, message.getMode());
-        Assert.assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
-        Assert.assertEquals(2, message.getLeapIndicator());
+        assertEquals(4, message.getMode());
+        assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
+        assertEquals(2, message.getLeapIndicator());
 
         message.setVersion(NtpV3Packet.VERSION_3);
         message.setLeapIndicator(2);
         message.setMode(4);
 
-        Assert.assertEquals(4, message.getMode());
-        Assert.assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
-        Assert.assertEquals(2, message.getLeapIndicator());
+        assertEquals(4, message.getMode());
+        assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
+        assertEquals(2, message.getLeapIndicator());
     }
 
     @Test
@@ -147,7 +150,7 @@ public class TestNtpPacket {
         final NtpV3Packet message = new NtpV3Impl();
         final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
         message.setDatagramPacket(dp);
-        Assert.assertEquals(4, message.getMode());
+        assertEquals(4, message.getMode());
     }
 
     @Test
@@ -163,16 +166,16 @@ public class TestNtpPacket {
         message.setStratum(3);
         message.setReferenceId(0x81531472);
         // force hex-string reference id string
-        Assert.assertEquals("81531472", message.getReferenceIdString());
+        assertEquals("81531472", message.getReferenceIdString());
 
         message.setVersion(NtpV3Packet.VERSION_4);
         message.setStratum(1);
         message.setReferenceId(0x55534E4F); // USNO
         // force raw-string reference id string
-        Assert.assertEquals("USNO", message.getReferenceIdString());
+        assertEquals("USNO", message.getReferenceIdString());
 
         message.setReferenceId(0x47505300); // GPS
-        Assert.assertEquals("GPS", message.getReferenceIdString());
+        assertEquals("GPS", message.getReferenceIdString());
     }
 
     @Test
@@ -182,16 +185,16 @@ public class TestNtpPacket {
         message1.setDatagramPacket(dp);
         final NtpV3Packet message2 = new NtpV3Impl();
         message2.setDatagramPacket(dp);
-        Assert.assertEquals("hashCode", message1.hashCode(), message2.hashCode());
-        Assert.assertEquals(message1, message2);
+        assertEquals(message1.hashCode(), message2.hashCode(), "hashCode");
+        assertEquals(message1, message2);
 
         // now change the packet to force equals() => false
         message2.setMode(2);
-        Assert.assertTrue(message1.getMode() != message2.getMode());
-        Assert.assertNotEquals(message1, message2);
+        assertTrue(message1.getMode() != message2.getMode());
+        assertNotEquals(message1, message2);
 
         final NtpV3Packet message3 = null;
-        Assert.assertNotEquals(message3, message1);
+        assertNotEquals(message3, message1);
     }
 
 }

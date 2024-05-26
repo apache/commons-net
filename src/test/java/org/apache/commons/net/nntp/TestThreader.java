@@ -17,11 +17,12 @@
 
 package org.apache.commons.net.nntp;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the Threader
@@ -35,7 +36,7 @@ public class TestThreader {
     public void testEmptyArray() { // NET-539
         final Threader t = new Threader();
         final Threadable[] messages = EMPTY_THREADABLE_ARRAY;
-        Assert.assertNull(t.thread(messages));
+        assertNull(t.thread(messages));
     }
 
     @Test
@@ -43,7 +44,7 @@ public class TestThreader {
         final Threader t = new Threader();
         final Threadable[] messages = EMPTY_THREADABLE_ARRAY;
         final Iterable<Threadable> asList = Arrays.asList(messages);
-        Assert.assertNull(t.thread(asList));
+        assertNull(t.thread(asList));
     }
 
     @Test
@@ -51,7 +52,7 @@ public class TestThreader {
         final Threader t = new Threader();
         final Threadable[] messages = EMPTY_THREADABLE_ARRAY;
         final List<Threadable> asList = Arrays.asList(messages);
-        Assert.assertNull(t.thread(asList));
+        assertNull(t.thread(asList));
     }
 
     @Test
@@ -59,21 +60,21 @@ public class TestThreader {
     public void testNullArray() { // NET-539
         final Threader t = new Threader();
         final Threadable[] messages = null;
-        Assert.assertNull(t.thread(messages));
+        assertNull(t.thread(messages));
     }
 
     @Test
     public void testNullIterable() {
         final Threader t = new Threader();
         final Iterable<Threadable> messages = null;
-        Assert.assertNull(t.thread(messages));
+        assertNull(t.thread(messages));
     }
 
     @Test
     public void testNullList() {
         final Threader t = new Threader();
         final List<Threadable> messages = null;
-        Assert.assertNull(t.thread(messages));
+        assertNull(t.thread(messages));
     }
 
 }
