@@ -194,6 +194,7 @@ public class FTPHTTPClient extends FTPClient {
             final String auth = proxyUserName + ":" + proxyPassword;
             final String header = "Proxy-Authorization: Basic " + Base64.getEncoder().encodeToString(auth.getBytes(charset));
             output.write(header.getBytes(charset));
+            output.write(CRLF);
         }
         output.write(CRLF);
 
