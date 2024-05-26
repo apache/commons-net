@@ -380,7 +380,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Send the ADAT command with the specified authentication data.
+     * Sends the ADAT command with the specified authentication data.
      *
      * @param data The data to send with the command.
      * @return server reply.
@@ -395,7 +395,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * AUTH command.
+     * Sends the AUTH command.
      *
      * @throws SSLException If the server reply code equals neither "234" nor "334".
      * @throws IOException  If an I/O error occurs while either sending the command.
@@ -411,7 +411,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Send the AUTH command with the specified mechanism.
+     * Sends the AUTH command with the specified mechanism.
      *
      * @param mechanism The mechanism name to send with the command.
      * @return server reply.
@@ -423,7 +423,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Send the CCC command to the server. The CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance to be assigned to a plain
+     * Sends the CCC command to the server. The CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance to be assigned to a plain
      * {@link Socket} instances
      *
      * @return server reply.
@@ -447,7 +447,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Send the CONF command with the specified data.
+     * Sends the CONF command with the specified data.
      *
      * @param data The data to send with the command.
      * @return server reply.
@@ -462,7 +462,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Send the ENC command with the specified data.
+     * Sends the ENC command with the specified data.
      *
      * @param data The data to send with the command.
      * @return server reply.
@@ -477,7 +477,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Send the MIC command with the specified data.
+     * Sends the MIC command with the specified data.
      *
      * @param data The data to send with the command.
      * @return server reply.
