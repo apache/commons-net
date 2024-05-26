@@ -225,7 +225,10 @@ public class Base64 {
     }
 
     /**
-     * Encodes binary data using the base64 algorithm and chunks the encoded output into 76 character blocks
+     * Encodes binary data using the base64 algorithm and chunks the encoded output into 76 character blocks separated by CR-LF.
+     * <p>
+     * The return value ends in a CR-LF.
+     * </p>
      *
      * @param binaryData binary data to encode
      * @return Base64 characters chunked in 76 character blocks
@@ -235,7 +238,10 @@ public class Base64 {
     }
 
     /**
-     * Encodes binary data using the base64 algorithm into 76 character blocks separated by CRLF.
+     * Encodes binary data using the base64 algorithm into 76 character blocks separated by CR-LF.
+     * <p>
+     * The return value ends in a CR-LF.
+     * </p>
      * <p>
      * For a non-chunking version, see {@link #encodeBase64StringUnChunked(byte[])}.
      * </p>
