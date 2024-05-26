@@ -238,6 +238,7 @@ public class Base64 {
      * Encodes binary data using the base64 algorithm into 76 character blocks separated by CRLF.
      * <p>
      * For a non-chunking version, see {@link #encodeBase64StringUnChunked(byte[])}.
+     * </p>
      *
      * @param binaryData binary data to encode
      * @return String containing Base64 characters.
@@ -263,6 +264,7 @@ public class Base64 {
      * Encodes binary data using the base64 algorithm, without using chunking.
      * <p>
      * For a chunking version, see {@link #encodeBase64String(byte[])}.
+     * </p>
      *
      * @param binaryData binary data to encode
      * @return String containing Base64 characters.
@@ -851,7 +853,7 @@ public class Base64 {
     }
 
     /**
-     * Returns true if this Base64 object has buffered data for reading.
+     * Tests whether this Base64 object has buffered data for reading.
      *
      * @return true if there is Base64 object still available for reading.
      */
@@ -860,7 +862,7 @@ public class Base64 {
     }
 
     /**
-     * Returns our current encode mode. True if we're URL-SAFE, false otherwise.
+     * Tests whether our current encoding mode. True if we're URL-SAFE, false otherwise.
      *
      * @return true if we're in URL-SAFE mode, false otherwise.
      * @since 1.4
@@ -909,9 +911,9 @@ public class Base64 {
         eof = false;
     }
 
-    // Getters for use in testing
-
-    /** Doubles our buffer. */
+    /**
+     * Doubles our buffer.
+     */
     private void resizeBuffer() {
         if (buffer == null) {
             buffer = new byte[DEFAULT_BUFFER_SIZE];
