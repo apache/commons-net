@@ -71,8 +71,8 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <commons.net.trace_calls>false</commons.net.trace_calls>
         <commons.net.add_listener>false</commons.net.add_listener>
         <!-- JaCoCo: Don't make code coverage worse than: -->
-        <jacoco.skip>false</jacoco.skip>
         <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
+        <jacoco.skip>false</jacoco.skip>
         <!-- TODO Improve dismal coverage -->
         <commons.jacoco.classRatio>0.47</commons.jacoco.classRatio>
         <commons.jacoco.instructionRatio>0.41</commons.jacoco.instructionRatio>

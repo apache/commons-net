@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -37,17 +38,23 @@ import org.junit.Test;
 @SuppressWarnings({ "deprecation" })
 public class Base64Test {
 
+    private static String toString(final byte[] encodedData) {
+        return encodedData != null ? new String(encodedData, StandardCharsets.UTF_8) : null;
+    }
+
     private void checkDecoders(final String expected, final byte[] actual) {
         final byte[] decoded = Base64.decodeBase64(actual);
         assertEquals(expected, toString(decoded));
-        assertEquals(expected, new String(getJreDecoder().decode(actual), StandardCharsets.UTF_8));
+        assertEquals(expected, toString(actual != null ? getJreDecoder().decode(actual) : null));
+        assertEquals(expected, toString(new Base64().decode(actual)));
     }
 
     private void checkDecoders(final String expected, final String actual) {
         final byte[] decoded = Base64.decodeBase64(actual);
         assertEquals(expected, new String(decoded));
         assertEquals(expected, toString(decoded));
-        assertEquals(expected, new String(getJreDecoder().decode(actual), StandardCharsets.UTF_8));
+        assertEquals(expected, toString(actual != null ? getJreDecoder().decode(actual) : null));
+        assertEquals(expected, toString(new Base64().decode(actual)));
     }
 
     private Decoder getJreDecoder() {
@@ -62,6 +69,10 @@ public class Base64Test {
         return java.util.Base64.getMimeEncoder();
     }
 
+    private Encoder getJreUrlEncoder() {
+        return java.util.Base64.getUrlEncoder();
+    }
+
     @Test
     public void testBase64() {
         final Base64 b64 = new Base64();
@@ -72,7 +83,7 @@ public class Base64Test {
     public void testBase64Boolean() {
         final Base64 b64 = new Base64(true);
         assertTrue(b64.isUrlSafe());
-        assertArrayEquals(new byte[] { '\r', '\n' }, b64.getLineSeparator());
+        assertArrayEquals(new byte[] {}, b64.getLineSeparator());
     }
 
     @Test
@@ -120,6 +131,7 @@ public class Base64Test {
     @Test
     public void testDecodeByteArrayEmpty() {
         checkDecoders("", new byte[] {});
+        checkDecoders(null, (byte[]) null);
 
     }
 
@@ -242,7 +254,7 @@ public class Base64Test {
     public void testEncodeBase64ByteArrayEdges() {
         final byte[] binaryData = null;
         assertArrayEquals(binaryData, Base64.encodeBase64(binaryData));
-        final byte[] binaryData2 = new byte[0];
+        final byte[] binaryData2 = {};
         assertArrayEquals(binaryData2, Base64.encodeBase64(binaryData2));
     }
 
@@ -317,6 +329,22 @@ public class Base64Test {
         bytesToEncode = "<<???>>".getBytes();
         encodedData = Base64.encodeBase64URLSafe(bytesToEncode);
         assertEquals("PDw_Pz8-Pg", toString(encodedData));
+        // > 76 line length
+        bytesToEncode = "<<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>>".getBytes();
+        encodedData = Base64.encodeBase64URLSafe(bytesToEncode);
+        assertEquals(getJreUrlEncoder().withoutPadding().encodeToString(bytesToEncode), toString(encodedData));
+        final String encodedUrlSafe = "PDw_Pz8-Pjw8Pz8_Pj48PD8_Pz4-PDw_Pz8-Pjw8Pz8_Pj48PD8_Pz4-PDw_Pz8-Pjw8Pz8_Pj48PD8_Pz4-PDw_Pz8-Pjw8Pz8_Pj4";
+        assertEquals(encodedUrlSafe, toString(encodedData));
+        // instance
+        assertEquals(encodedUrlSafe, toString(new Base64(0, null, true).encode(bytesToEncode)));
+        assertEquals(encodedUrlSafe, toString(new Base64(1, null, true).encode(bytesToEncode)));
+        assertEquals(encodedUrlSafe, toString(new Base64(999, null, true).encode(bytesToEncode)));
+        assertEquals(encodedUrlSafe, toString(new Base64(0, new byte[0], true).encode(bytesToEncode)));
+        assertEquals(encodedUrlSafe, toString(new Base64(0, new byte[10], true).encode(bytesToEncode)));
+        assertEquals(encodedUrlSafe, toString(new Base64(0, Base64.CHUNK_SEPARATOR, true).encode(bytesToEncode)));
+        assertEquals(encodedUrlSafe, toString(new Base64(Base64.CHUNK_SIZE, Base64.CHUNK_SEPARATOR, true).encode(bytesToEncode)));
+        assertEquals(encodedUrlSafe, toString(new Base64(999, Base64.CHUNK_SEPARATOR, true).encode(bytesToEncode)));
+        assertEquals(encodedUrlSafe, toString(new Base64(true).encode(bytesToEncode)));
     }
 
     @Test
@@ -329,6 +357,11 @@ public class Base64Test {
         bytesToEncode = "<<???>>".getBytes();
         encodedData = Base64.encodeBase64URLSafeString(bytesToEncode);
         assertEquals("PDw_Pz8-Pg", encodedData);
+        // > 76 line length
+        bytesToEncode = "<<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>>".getBytes();
+        encodedData = Base64.encodeBase64URLSafeString(bytesToEncode);
+        assertEquals(getJreUrlEncoder().withoutPadding().encodeToString(bytesToEncode), encodedData);
+        assertEquals("PDw_Pz8-Pjw8Pz8_Pj48PD8_Pz4-PDw_Pz8-Pjw8Pz8_Pj48PD8_Pz4-PDw_Pz8-Pjw8Pz8_Pj48PD8_Pz4-PDw_Pz8-Pjw8Pz8_Pj4", encodedData);
     }
 
     @Test
@@ -336,6 +369,18 @@ public class Base64Test {
         final Base64 base64 = new Base64();
         final byte[] bytesToEncode = { 'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r' };
         assertEquals("bGlnaHQgd29y\r\n", new String(base64.encode(bytesToEncode), StandardCharsets.UTF_8));
+    }
+
+    @Test
+    public void testEncodeByteArrayEmpty() {
+        assertNull(new Base64().encode((byte[]) null));
+        final byte[] empty = {};
+        assertSame(empty, new Base64().encode(empty));
+    }
+
+    @Test
+    public void testEncodeByteArrayNull() {
+        assertNull(new Base64().encode((byte[]) null));
     }
 
     @Test
@@ -368,10 +413,6 @@ public class Base64Test {
     public void testIsBase64() {
         assertTrue(Base64.isBase64((byte) 'b'));
         assertFalse(Base64.isBase64((byte) ' '));
-    }
-
-    private String toString(byte[] encodedData) {
-        return new String(encodedData, StandardCharsets.UTF_8);
     }
 
 }

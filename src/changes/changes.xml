@@ -71,6 +71,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Guard against polynomial regular expression used on uncontrolled data in IMAPReply.TAGGED_RESPONSE.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Guard against polynomial regular expression used on uncontrolled data in IMAPReply.UNTAGGED_RESPONSE.</action>
       <action type="fix" issue="NET-730" dev="ggregory" due-to="Johannes Thalmair, Gary Gregory">Cannot connect to FTP server with HTTP proxy.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Base 64 Encoding with URL and Filename Safe Alphabet should not chunk per RFC 4648.</action>
       <!-- ADD -->
       <action type="add" issue="NET-726" dev="ggregory" due-to="PJ Fanning, Gary Gregory">Add protected getters to FTPSClient #204.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add SubnetUtils.toString().</action> 
