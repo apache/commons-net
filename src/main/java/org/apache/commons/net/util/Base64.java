@@ -553,7 +553,7 @@ public class Base64 {
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4).
      *                      If {@code lineLength <= 0}, then the output will not be divided into lines (chunks). Ignored when decoding.
-     * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
+     * @param lineSeparator Each line of encoded data will end with this sequence of bytes. Not used for decoding.
      * @throws IllegalArgumentException Thrown when the provided lineSeparator included some base64 characters.
      * @since 1.4
      */
@@ -575,7 +575,7 @@ public class Base64 {
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4).
      *                      If {@code lineLength <= 0}, then the output will not be divided into lines (chunks). Ignored when decoding.
-     * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
+     * @param lineSeparator Each line of encoded data will end with this sequence of bytes. Not used for decoding.
      * @param urlSafe       Instead of emitting '+' and '/' we emit '-' and '_' respectively. urlSafe is only applied to encode operations. Decoding seamlessly
      *                      handles both modes.
      * @throws IllegalArgumentException The provided lineSeparator included some base64 characters. That's not going to work!
