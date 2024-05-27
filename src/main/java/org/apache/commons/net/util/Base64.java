@@ -614,19 +614,19 @@ public class Base64 {
     /**
      * Decodes a byte array containing characters in the Base64 alphabet.
      *
-     * @param pArray A byte array containing Base64 character data
+     * @param source A byte array containing Base64 character data
      * @return a byte array containing binary data; will return {@code null} if provided byte array is {@code null}.
      */
-    public byte[] decode(final byte[] pArray) {
+    public byte[] decode(final byte[] source) {
         reset();
-        if (pArray == null || pArray.length == 0) {
-            return pArray;
+        if (source == null || source.length == 0) {
+            return source;
         }
-        final long len = pArray.length * 3 / 4;
+        final long len = source.length * 3 / 4;
         final byte[] buf = new byte[(int) len];
         setInitialBuffer(buf, 0, buf.length);
-        decode(pArray, 0, pArray.length);
-        decode(pArray, 0, -1); // Notify decoder of EOF.
+        decode(source, 0, source.length);
+        decode(source, 0, -1); // Notify decoder of EOF.
 
         // Would be nice to just return buf (like we sometimes do in the encode
         // logic), but we have no idea what the line-length was (could even be
@@ -715,30 +715,30 @@ public class Base64 {
     /**
      * Decodes a String containing characters in the Base64 alphabet.
      *
-     * @param pArray A String containing Base64 character data, must not be {@code null}
+     * @param source A String containing Base64 character data, must not be {@code null}
      * @return a byte array containing binary data
      * @since 1.4
      */
-    public byte[] decode(final String pArray) {
-        return decode(getBytesUtf8(pArray));
+    public byte[] decode(final String source) {
+        return decode(getBytesUtf8(source));
     }
 
     /**
      * Encodes a byte[] containing binary data, into a byte[] containing characters in the Base64 alphabet.
      *
-     * @param pArray a byte array containing binary data
+     * @param source a byte array containing binary data
      * @return A byte array containing only Base64 character data
      */
-    public byte[] encode(final byte[] pArray) {
+    public byte[] encode(final byte[] source) {
         reset();
-        if (pArray == null || pArray.length == 0) {
-            return pArray;
+        if (source == null || source.length == 0) {
+            return source;
         }
-        final long len = getEncodeLength(pArray, lineLength, lineSeparator);
+        final long len = getEncodeLength(source, lineLength, lineSeparator);
         byte[] buf = new byte[(int) len];
         setInitialBuffer(buf, 0, buf.length);
-        encode(pArray, 0, pArray.length);
-        encode(pArray, 0, -1); // Notify encoder of EOF.
+        encode(source, 0, source.length);
+        encode(source, 0, -1); // Notify encoder of EOF.
         // Encoder might have resized, even though it was unnecessary.
         if (buffer != buf) {
             readResults(buf, 0, buf.length);
@@ -838,16 +838,16 @@ public class Base64 {
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base64 alphabet.
      *
-     * @param pArray a byte array containing binary data
+     * @param source a byte array containing binary data
      * @return A String containing only Base64 character data
      * @since 1.4
      */
-    public String encodeToString(final byte[] pArray) {
-        return newStringUtf8(encode(pArray));
+    public String encodeToString(final byte[] source) {
+        return newStringUtf8(encode(source));
     }
 
-    private byte[] getBytesUtf8(final String pArray) {
-        return pArray.getBytes(StandardCharsets.UTF_8);
+    private byte[] getBytesUtf8(final String source) {
+        return source.getBytes(StandardCharsets.UTF_8);
     }
 
     int getLineLength() {
