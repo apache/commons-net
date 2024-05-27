@@ -46,9 +46,12 @@ import java.util.Objects;
  */
 @Deprecated
 public class Base64 {
+
     private static final int DEFAULT_BUFFER_RESIZE_FACTOR = 2;
 
     private static final int DEFAULT_BUFFER_SIZE = 8192;
+
+    private static final Base64 DECODER = new Base64();
 
     /**
      * Chunk size per RFC 2045 section 6.8.
@@ -108,9 +111,6 @@ public class Base64 {
     /** Mask used to extract 6 bits, used when encoding */
     private static final int MASK_6BITS = 0x3f;
 
-    /** Mask used to extract 8 bits, used in decoding base64 bytes */
-    private static final int MASK_8BITS = 0xff;
-
     // The static final fields above are used for the original static byte[] methods on Base64.
     // The private member fields below are used with the new streaming approach, which requires
     // some state be preserved between calls of encode() and decode().
@@ -137,7 +137,7 @@ public class Base64 {
      * @return Array containing decoded data.
      */
     public static byte[] decodeBase64(final byte[] base64Data) {
-        return new Base64().decode(base64Data);
+        return DECODER.decode(base64Data);
     }
 
     /**
@@ -148,18 +148,18 @@ public class Base64 {
      * @since 1.4
      */
     public static byte[] decodeBase64(final String base64String) {
-        return new Base64().decode(base64String);
+        return DECODER.decode(base64String);
     }
 
     /**
      * Decodes a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
      *
-     * @param pArray a byte array containing base64 character data
+     * @param source a byte array containing base64 character data
      * @return A BigInteger
      * @since 1.4
      */
-    public static BigInteger decodeInteger(final byte[] pArray) {
-        return new BigInteger(1, decodeBase64(pArray));
+    public static BigInteger decodeInteger(final byte[] source) {
+        return new BigInteger(1, decodeBase64(source));
     }
 
     /**
@@ -213,13 +213,11 @@ public class Base64 {
         if (binaryData == null || binaryData.length == 0) {
             return binaryData;
         }
-
         final long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0, isChunked ? CHUNK_SEPARATOR : NetConstants.EMPTY_BTYE_ARRAY);
         if (len > maxResultSize) {
             throw new IllegalArgumentException(
                     "Input array too big, the output array would be bigger (" + len + ") than the specified maxium size of " + maxResultSize);
         }
-
         final Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
         return b64.encode(binaryData);
     }
@@ -328,7 +326,6 @@ public class Base64 {
     private static long getEncodeLength(final byte[] pArray, int chunkSize, final byte[] chunkSeparator) {
         // base64 always encodes to multiples of 4.
         chunkSize = chunkSize / 4 * 4;
-
         long len = pArray.length * 4 / 3;
         final long mod = len % 4;
         if (mod != 0) {
@@ -404,7 +401,6 @@ public class Base64 {
         // round bitlen
         bitlen = bitlen + 7 >> 3 << 3;
         final byte[] bigBytes = bigInt.toByteArray();
-
         if (bigInt.bitLength() % 8 != 0 && bigInt.bitLength() / 8 + 1 == bitlen / 8) {
             return bigBytes;
         }
@@ -438,12 +434,6 @@ public class Base64 {
      * Line separator for encoding. Not used when decoding. Only used if lineLength > 0.
      */
     private final byte[] lineSeparator;
-
-    /**
-     * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
-     * <code>decodeSize = 3 + lineSeparator.length;</code>
-     */
-    private final int decodeSize;
 
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
@@ -594,7 +584,6 @@ public class Base64 {
         } else {
             this.encodeSize = 4;
         }
-        this.decodeSize = this.encodeSize - 1;
         if (containsBase64Byte(lineSeparator)) {
             final String sep = newStringUtf8(lineSeparator);
             throw new IllegalArgumentException("lineSeperator must not contain base64 characters: [" + sep + "]");
@@ -622,94 +611,7 @@ public class Base64 {
         if (source == null || source.length == 0) {
             return source;
         }
-        final long len = source.length * 3 / 4;
-        final byte[] buf = new byte[(int) len];
-        setInitialBuffer(buf, 0, buf.length);
-        decode(source, 0, source.length);
-        decode(source, 0, -1); // Notify decoder of EOF.
-
-        // Would be nice to just return buf (like we sometimes do in the encode
-        // logic), but we have no idea what the line-length was (could even be
-        // variable). So we cannot determine ahead of time exactly how big an
-        // array is necessary. Hence, the need to construct a 2nd byte array to
-        // hold the final result:
-
-        final byte[] result = new byte[pos];
-        readResults(result, 0, result.length);
-        return result;
-    }
-
-    /**
-     * <p>
-     * Decodes all of the provided data, starting at inPos, for inAvail bytes. Should be called at least twice: once with the data to decode, and once with
-     * inAvail set to "-1" to alert decoder that EOF has been reached. The "-1" call is not necessary when decoding, but it doesn't hurt, either.
-     * </p>
-     * <p>
-     * Ignores all non-base64 characters. This is how chunked (e.g. 76 character) data is handled, since CR and LF are silently ignored, but has implications
-     * for other bytes, too. This method subscribes to the garbage-in, garbage-out philosophy: it will not check the provided data for validity.
-     * </p>
-     * <p>
-     * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
-     * <p>
-     * See: <a href="https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">
-     * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
-     * </a>
-     *
-     * </p>
-     *
-     * @param in      byte[] array of ASCII data to base64 decode.
-     * @param inPos   Position to start reading data from.
-     * @param inAvail Amount of bytes available from input for encoding.
-     */
-    void decode(final byte[] in, int inPos, final int inAvail) {
-        if (eof) {
-            return;
-        }
-        if (inAvail < 0) {
-            eof = true;
-        }
-        for (int i = 0; i < inAvail; i++) {
-            if (buffer == null || buffer.length - pos < decodeSize) {
-                resizeBuffer();
-            }
-            final byte b = in[inPos++];
-            if (b == PAD) {
-                // We're done.
-                eof = true;
-                break;
-            }
-            if (b >= 0 && b < DECODE_TABLE.length) {
-                final int result = DECODE_TABLE[b];
-                if (result >= 0) {
-                    modulus = ++modulus % 4;
-                    x = (x << 6) + result;
-                    if (modulus == 0) {
-                        buffer[pos++] = (byte) (x >> 16 & MASK_8BITS);
-                        buffer[pos++] = (byte) (x >> 8 & MASK_8BITS);
-                        buffer[pos++] = (byte) (x & MASK_8BITS);
-                    }
-                }
-            }
-        }
-
-        // Two forms of EOF as far as base64 decoder is concerned: actual
-        // EOF (-1) and first time '=' character is encountered in stream.
-        // This approach makes the '=' padding characters completely optional.
-        if (eof && modulus != 0) {
-            x = x << 6;
-            switch (modulus) {
-            case 2:
-                x = x << 6;
-                buffer[pos++] = (byte) (x >> 16 & MASK_8BITS);
-                break;
-            case 3:
-                buffer[pos++] = (byte) (x >> 16 & MASK_8BITS);
-                buffer[pos++] = (byte) (x >> 8 & MASK_8BITS);
-                break;
-            default:
-                break; // other values ignored
-            }
-        }
+        return java.util.Base64.getDecoder().decode(source);
     }
 
     /**
@@ -720,7 +622,7 @@ public class Base64 {
      * @since 1.4
      */
     public byte[] decode(final String source) {
-        return decode(getBytesUtf8(source));
+        return java.util.Base64.getDecoder().decode(source);
     }
 
     /**
@@ -846,25 +748,12 @@ public class Base64 {
         return newStringUtf8(encode(source));
     }
 
-    private byte[] getBytesUtf8(final String source) {
-        return source.getBytes(StandardCharsets.UTF_8);
-    }
-
     int getLineLength() {
         return lineLength;
     }
 
     byte[] getLineSeparator() {
         return lineSeparator.clone();
-    }
-
-    /**
-     * Tests whether this Base64 object has buffered data for reading.
-     *
-     * @return true if there is Base64 object still available for reading.
-     */
-    boolean hasData() {
-        return this.buffer != null;
     }
 
     /**
