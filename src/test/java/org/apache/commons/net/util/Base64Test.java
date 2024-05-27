@@ -100,7 +100,7 @@ public class Base64Test {
 
     @Test
     public void testDecodeBase64ByteArray() {
-        checkDecoders("light w", new byte[] {'b', 'G', 'l', 'n', 'a', 'H', 'Q', 'g', 'd', 'w', '=', '='});
+        checkDecoders("light w", new byte[] { 'b', 'G', 'l', 'n', 'a', 'H', 'Q', 'g', 'd', 'w', '=', '=' });
     }
 
     @Test
@@ -110,7 +110,7 @@ public class Base64Test {
 
     @Test
     public void testDecodeByteArray() {
-        checkDecoders("foobar", new byte[] {'Z', 'm', '9', 'v', 'Y', 'm', 'F', 'y'});
+        checkDecoders("foobar", new byte[] { 'Z', 'm', '9', 'v', 'Y', 'm', 'F', 'y' });
     }
 
     @Test
@@ -133,6 +133,12 @@ public class Base64Test {
 
     private void testDecodeInteger(final BigInteger bi) {
         assertEquals(bi, Base64.decodeInteger(getJreEncoder().encode(bi.toByteArray())));
+    }
+
+    private void testEncodeInteger(final BigInteger bi) {
+        final byte[] decodedBytes = getJreDecoder().decode(Base64.encodeInteger(bi));
+        final BigInteger decoded = decodedBytes.length == 0 ? BigInteger.ZERO : new BigInteger(decodedBytes);
+        assertEquals(bi, decoded);
     }
 
     @Test
@@ -210,7 +216,7 @@ public class Base64Test {
 
     @Test
     public void testEncodeBase64Chunked() {
-        final byte[] bytesToEncode = {'f', 'o', 'o', 'b', 'a', 'r'};
+        final byte[] bytesToEncode = { 'f', 'o', 'o', 'b', 'a', 'r' };
         final byte[] encodedData = Base64.encodeBase64Chunked(bytesToEncode);
         assertEquals("Zm9vYmFy\r\n", new String(encodedData, StandardCharsets.UTF_8));
     }
@@ -257,14 +263,15 @@ public class Base64Test {
     @Test
     public void testEncodeByteArray() {
         final Base64 base64 = new Base64();
-        final byte[] bytesToEncode = {'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r'};
+        final byte[] bytesToEncode = { 'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r' };
         assertEquals("bGlnaHQgd29y\r\n", new String(base64.encode(bytesToEncode), StandardCharsets.UTF_8));
     }
 
     @Test
-    @Ignore
     public void testEncodeInteger() {
-        fail("Not yet implemented");
+        testEncodeInteger(BigInteger.ONE);
+        testEncodeInteger(BigInteger.TEN);
+        testEncodeInteger(BigInteger.ZERO);
     }
 
     @Test
@@ -276,7 +283,7 @@ public class Base64Test {
     @Test
     public void testEncodeToString() {
         final Base64 base64 = new Base64();
-        final byte[] bytesToEncode = {'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r'};
+        final byte[] bytesToEncode = { 'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r' };
         assertEquals("bGlnaHQgd29y\r\n", base64.encodeToString(bytesToEncode));
     }
 
