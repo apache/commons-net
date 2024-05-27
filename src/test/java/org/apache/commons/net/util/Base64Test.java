@@ -69,6 +69,10 @@ public class Base64Test {
         return java.util.Base64.getMimeEncoder();
     }
 
+    private Encoder getJreMimeEncoder(final int lineLength, final byte[] lineSeparator) {
+        return java.util.Base64.getMimeEncoder(lineLength, lineSeparator);
+    }
+
     private Encoder getJreUrlEncoder() {
         return java.util.Base64.getUrlEncoder();
     }
@@ -102,6 +106,18 @@ public class Base64Test {
         b64 = new Base64(8, new byte[] {});
         assertFalse(b64.isUrlSafe());
         assertArrayEquals(new byte[] {}, b64.getLineSeparator());
+        final String stringToEncode = "<<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>>";
+        byte[] encodedData = new Base64(Base64.CHUNK_SIZE, Base64.CHUNK_SEPARATOR).encode(stringToEncode.getBytes());
+        assertEquals("PDw/Pz8+Pjw8Pz8/Pj48PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj48PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj48\r\nPD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj4=\r\n", toString(encodedData));
+        assertEquals(getJreMimeEncoder().encodeToString(stringToEncode.getBytes()) + "\r\n", toString(encodedData));
+        assertEquals("PDw/Pz8+Pjw8Pz8/Pj48PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj48PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj48~PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj4=~",
+                toString(new Base64(Base64.CHUNK_SIZE, "~".getBytes()).encode(stringToEncode.getBytes())));
+        assertEquals(getJreMimeEncoder(Base64.CHUNK_SIZE, "~".getBytes()).encodeToString(stringToEncode.getBytes()) + "~",
+                toString(new Base64(Base64.CHUNK_SIZE, "~".getBytes()).encode(stringToEncode.getBytes())));
+        assertEquals(getJreMimeEncoder(Base64.CHUNK_SIZE - 2, "~~".getBytes()).encodeToString(stringToEncode.getBytes()) + "~~",
+                toString(new Base64(Base64.CHUNK_SIZE - 2, "~~".getBytes()).encode(stringToEncode.getBytes())));
+        assertEquals(getJreMimeEncoder(Base64.CHUNK_SIZE + 2, "~~~".getBytes()).encodeToString(stringToEncode.getBytes()) + "~~~",
+                toString(new Base64(Base64.CHUNK_SIZE + 2, "~~~".getBytes()).encode(stringToEncode.getBytes())));
     }
 
     @Test

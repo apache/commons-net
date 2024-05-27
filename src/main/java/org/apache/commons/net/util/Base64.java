@@ -49,10 +49,6 @@ import java.util.Objects;
 @Deprecated
 public class Base64 {
 
-    private static final int DEFAULT_BUFFER_RESIZE_FACTOR = 2;
-
-    private static final int DEFAULT_BUFFER_SIZE = 8192;
-
     /**
      * Chunk size per RFC 2045 section 6.8.
      *
@@ -72,24 +68,6 @@ public class Base64 {
     static final byte[] CHUNK_SEPARATOR = { '\r', '\n' };
 
     /**
-     * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet" equivalents as specified in Table 1 of RFC
-     * 2045.
-     *
-     * Thanks to "commons" project in ws.apache.org for <a href="https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">this code</a>.
-     */
-    private static final byte[] STANDARD_ENCODE_TABLE = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-            'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-            'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/' };
-
-    /**
-     * This is a copy of the STANDARD_ENCODE_TABLE above, but with + and / changed to - and _ to make the encoded Base64 results more URL-SAFE. This table is
-     * only used when the Base64's mode is set to URL-SAFE.
-     */
-    private static final byte[] URL_SAFE_ENCODE_TABLE = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-            'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-            'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_' };
-
-    /**
      * Byte used to pad output.
      */
     private static final byte PAD = '=';
@@ -107,9 +85,6 @@ public class Base64 {
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, 62, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1,
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, 63, -1, 26, 27, 28, 29, 30, 31, 32,
             33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51 };
-
-    /** Mask used to extract 6 bits, used when encoding */
-    private static final int MASK_6BITS = 0x3f;
 
     // The static final fields above are used for the original static byte[] methods on Base64.
     // The private member fields below are used with the new streaming approach, which requires
@@ -221,6 +196,14 @@ public class Base64 {
         return chunked ? encodeBase64Chunked(binaryData) : urlSafe ? encodeBase64URLSafe(binaryData) : encodeBase64(binaryData);
     }
 
+    private static byte[] encode(final byte[] binaryData, final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
+        if (isEmpty(binaryData)) {
+            return binaryData;
+        }
+        return lineLength > 0 ? encodeBase64Chunked(binaryData, lineLength, lineSeparator)
+                : urlSafe ? encodeBase64URLSafe(binaryData) : encodeBase64(binaryData);
+    }
+
     /**
      * Encodes binary data using the base64 algorithm and chunks the encoded output into 76 character blocks separated by CR-LF.
      * <p>
@@ -232,11 +215,15 @@ public class Base64 {
      * @throws ArithmeticException if the {@code binaryData} would overflows a byte[].
      */
     public static byte[] encodeBase64Chunked(final byte[] binaryData) {
-        final long encodeLength = getEncodeLength(binaryData, CHUNK_SIZE, CHUNK_SEPARATOR);
+        return encodeBase64Chunked(binaryData, CHUNK_SIZE, CHUNK_SEPARATOR);
+    }
+
+    private static byte[] encodeBase64Chunked(final byte[] binaryData, final int lineLength, final byte[] lineSeparator) {
+        final long encodeLength = getEncodeLength(binaryData, lineLength, lineSeparator);
         final byte[] dst = new byte[Math.toIntExact(encodeLength)];
-        getMimeEncoder().encode(binaryData, dst);
-        dst[dst.length - 2] = CHUNK_SEPARATOR[0];
-        dst[dst.length - 1] = CHUNK_SEPARATOR[1];
+        getMimeEncoder(lineLength, lineSeparator).encode(binaryData, dst);
+        // Copy chunk separator at the end
+        System.arraycopy(lineSeparator, 0, dst, dst.length - lineSeparator.length, lineSeparator.length);
         return dst;
     }
 
@@ -327,24 +314,24 @@ public class Base64 {
      * Pre-calculates the amount of space needed to base64-encode the supplied array.
      *
      * @param array          byte[] array which will later be encoded
-     * @param chunkSize      line-length of the output (<= 0 means no chunking) between each chunkSeparator (e.g. CRLF).
-     * @param chunkSeparator the sequence of bytes used to separate chunks of output (e.g. CRLF).
+     * @param lineSize      line-length of the output (<= 0 means no chunking) between each chunkSeparator (e.g. CRLF).
+     * @param linkSeparator the sequence of bytes used to separate chunks of output (e.g. CRLF).
      *
      * @return amount of space needed to encode the supplied array. Returns a long since a max-len array will require Integer.MAX_VALUE + 33%.
      */
-    static long getEncodeLength(final byte[] array, int chunkSize, final byte[] chunkSeparator) {
+    static long getEncodeLength(final byte[] array, int lineSize, final byte[] linkSeparator) {
         // base64 always encodes to multiples of 4.
-        chunkSize = chunkSize / 4 * 4;
+        lineSize = lineSize / 4 * 4;
         long len = array.length * 4 / 3;
         final long mod = len % 4;
         if (mod != 0) {
             len += 4 - mod;
         }
-        if (chunkSize > 0) {
-            final boolean lenChunksPerfectly = len % chunkSize == 0;
-            len += len / chunkSize * chunkSeparator.length;
+        if (lineSize > 0) {
+            final boolean lenChunksPerfectly = len % lineSize == 0;
+            len += len / lineSize * linkSeparator.length;
             if (!lenChunksPerfectly) {
-                len += chunkSeparator.length;
+                len += linkSeparator.length;
             }
         }
         return len;
@@ -356,6 +343,10 @@ public class Base64 {
 
     private static Encoder getMimeEncoder() {
         return java.util.Base64.getMimeEncoder();
+    }
+
+    private static Encoder getMimeEncoder(final int lineLength, final byte[] lineSeparator) {
+        return java.util.Base64.getMimeEncoder(lineLength, lineSeparator);
     }
 
     private static Encoder getUrlEncoder() {
@@ -445,12 +436,6 @@ public class Base64 {
     }
 
     /**
-     * Encode table to use: either STANDARD or URL_SAFE. Note: the DECODE_TABLE above remains static because it is able to decode both STANDARD and URL_SAFE
-     * streams, but the encodeTable must be a member variable, so we can switch between the two modes.
-     */
-    private final byte[] encodeTable;
-
-    /**
      * Line length for encoding. Not used when decoding. A value of zero or less implies no chunking of the base64 encoded data.
      */
     private final int lineLength;
@@ -461,47 +446,9 @@ public class Base64 {
     private final byte[] lineSeparator;
 
     /**
-     * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
-     * <code>encodeSize = 4 + lineSeparator.length;</code>
+     * Whether encoding is URL and filename safe, or not.
      */
-    private final int encodeSize;
-
-    /**
-     * Buffer for streaming.
-     */
-    private byte[] buffer;
-
-    /**
-     * Position where next character should be written in the buffer.
-     */
-    private int pos;
-
-    /**
-     * Position where next character should be read from the buffer.
-     */
-    private int readPos;
-
-    /**
-     * Variable tracks how many characters have been written to the current line. Only used when encoding. We use it to make sure each encoded line never goes
-     * beyond lineLength (if lineLength > 0).
-     */
-    private int currentLinePos;
-
-    /**
-     * Writes to the buffer only occur after every 3 reads when encoding, an every 4 reads when decoding. This variable helps track that.
-     */
-    private int modulus;
-
-    /**
-     * Boolean flag to indicate the EOF has been reached. Once EOF has been reached, this Base64 object becomes useless, and must be thrown away.
-     */
-    private boolean eof;
-
-    /**
-     * Placeholder for the 3 bytes we're dealing with for our base64 logic. Bitwise operations store and extract the base64 encoding or decoding from this
-     * variable.
-     */
-    private int x;
+    private final boolean urlSafe;
 
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
@@ -604,25 +551,11 @@ public class Base64 {
         this.lineLength = lineLength > 0 ? lineLength / 4 * 4 : 0;
         this.lineSeparator = new byte[lineSeparator.length];
         System.arraycopy(lineSeparator, 0, this.lineSeparator, 0, lineSeparator.length);
-        if (lineLength > 0) {
-            this.encodeSize = 4 + lineSeparator.length;
-        } else {
-            this.encodeSize = 4;
-        }
         if (containsBase64Byte(lineSeparator)) {
             final String sep = newStringUtf8(lineSeparator);
             throw new IllegalArgumentException("lineSeperator must not contain base64 characters: [" + sep + "]");
         }
-        this.encodeTable = urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE;
-    }
-
-    /**
-     * Returns the amount of buffered data available for reading.
-     *
-     * @return The amount of buffered data available for reading.
-     */
-    int avail() {
-        return buffer != null ? pos - readPos : 0;
+        this.urlSafe = urlSafe;
     }
 
     /**
@@ -632,7 +565,6 @@ public class Base64 {
      * @return a byte array containing binary data; will return {@code null} if provided byte array is {@code null}.
      */
     public byte[] decode(final byte[] source) {
-        reset();
         return isEmpty(source) ? source : getDecoder().decode(source);
     }
 
@@ -654,109 +586,7 @@ public class Base64 {
      * @return A byte array containing only Base64 character data
      */
     public byte[] encode(final byte[] source) {
-        reset();
-        if (isEmpty(source)) {
-            return source;
-        }
-        final long len = getEncodeLength(source, lineLength, lineSeparator);
-        byte[] buf = new byte[(int) len];
-        setInitialBuffer(buf, 0, buf.length);
-        encode(source, 0, source.length);
-        encode(source, 0, -1); // Notify encoder of EOF.
-        // Encoder might have resized, even though it was unnecessary.
-        if (buffer != buf) {
-            readResults(buf, 0, buf.length);
-        }
-        // In URL-SAFE mode we skip the padding characters, so sometimes our
-        // final length is a bit smaller.
-        if (isUrlSafe() && pos < buf.length) {
-            final byte[] smallerBuf = new byte[pos];
-            System.arraycopy(buf, 0, smallerBuf, 0, pos);
-            buf = smallerBuf;
-        }
-        return buf;
-    }
-
-    /**
-     * <p>
-     * Encodes all of the provided data, starting at inPos, for inAvail bytes. Must be called at least twice: once with the data to encode, and once with
-     * inAvail set to "-1" to alert encoder that EOF has been reached, so flush last remaining bytes (if not multiple of 3).
-     * </p>
-     * <p>
-     * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
-     * <p>
-     * See: <a href="https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">
-     * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
-     * </a>
-     * </p>
-     *
-     * @param in      byte[] array of binary data to base64 encode.
-     * @param inPos   Position to start reading data from.
-     * @param inAvail Amount of bytes available from input for encoding.
-     */
-    void encode(final byte[] in, int inPos, final int inAvail) {
-        if (eof) {
-            return;
-        }
-        // inAvail < 0 is how we're informed of EOF in the underlying data we're
-        // encoding.
-        if (inAvail < 0) {
-            eof = true;
-            if (buffer == null || buffer.length - pos < encodeSize) {
-                resizeBuffer();
-            }
-            switch (modulus) {
-            case 1:
-                buffer[pos++] = encodeTable[x >> 2 & MASK_6BITS];
-                buffer[pos++] = encodeTable[x << 4 & MASK_6BITS];
-                // URL-SAFE skips the padding to further reduce size.
-                if (encodeTable == STANDARD_ENCODE_TABLE) {
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
-                }
-                break;
-
-            case 2:
-                buffer[pos++] = encodeTable[x >> 10 & MASK_6BITS];
-                buffer[pos++] = encodeTable[x >> 4 & MASK_6BITS];
-                buffer[pos++] = encodeTable[x << 2 & MASK_6BITS];
-                // URL-SAFE skips the padding to further reduce size.
-                if (encodeTable == STANDARD_ENCODE_TABLE) {
-                    buffer[pos++] = PAD;
-                }
-                break;
-            default:
-                break; // other values ignored
-            }
-            if (lineLength > 0 && pos > 0) {
-                System.arraycopy(lineSeparator, 0, buffer, pos, lineSeparator.length);
-                pos += lineSeparator.length;
-            }
-        } else {
-            for (int i = 0; i < inAvail; i++) {
-                if (buffer == null || buffer.length - pos < encodeSize) {
-                    resizeBuffer();
-                }
-                modulus = ++modulus % 3;
-                int b = in[inPos++];
-                if (b < 0) {
-                    b += 256;
-                }
-                x = (x << 8) + b;
-                if (0 == modulus) {
-                    buffer[pos++] = encodeTable[x >> 18 & MASK_6BITS];
-                    buffer[pos++] = encodeTable[x >> 12 & MASK_6BITS];
-                    buffer[pos++] = encodeTable[x >> 6 & MASK_6BITS];
-                    buffer[pos++] = encodeTable[x & MASK_6BITS];
-                    currentLinePos += 4;
-                    if (lineLength > 0 && lineLength <= currentLinePos) {
-                        System.arraycopy(lineSeparator, 0, buffer, pos, lineSeparator.length);
-                        pos += lineSeparator.length;
-                        currentLinePos = 0;
-                    }
-                }
-            }
-        }
+        return encode(source, lineLength, lineSeparator, isUrlSafe());
     }
 
     /**
@@ -785,79 +615,6 @@ public class Base64 {
      * @since 1.4
      */
     public boolean isUrlSafe() {
-        return this.encodeTable == URL_SAFE_ENCODE_TABLE;
-    }
-
-    /**
-     * Extracts buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail bytes. Returns how many bytes were actually
-     * extracted.
-     *
-     * @param b      byte[] array to extract the buffered data into.
-     * @param bPos   position in byte[] array to start extraction at.
-     * @param bAvail amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
-     * @return The number of bytes successfully extracted into the provided byte[] array.
-     */
-    private int readResults(final byte[] b, final int bPos, final int bAvail) {
-        if (buffer != null) {
-            final int len = Math.min(avail(), bAvail);
-            if (buffer != b) {
-                System.arraycopy(buffer, readPos, b, bPos, len);
-                readPos += len;
-                if (readPos >= pos) {
-                    buffer = null;
-                }
-            } else {
-                // Re-using the original consumer's output array is only
-                // allowed for one round.
-                buffer = null;
-            }
-            return len;
-        }
-        return eof ? -1 : 0;
-    }
-
-    /**
-     * Resets this Base64 object to its initial newly constructed state.
-     */
-    private void reset() {
-        buffer = null;
-        pos = 0;
-        readPos = 0;
-        currentLinePos = 0;
-        modulus = 0;
-        eof = false;
-    }
-
-    /**
-     * Doubles our buffer.
-     */
-    private void resizeBuffer() {
-        if (buffer == null) {
-            buffer = new byte[DEFAULT_BUFFER_SIZE];
-            pos = 0;
-            readPos = 0;
-        } else {
-            final byte[] b = new byte[buffer.length * DEFAULT_BUFFER_RESIZE_FACTOR];
-            System.arraycopy(buffer, 0, b, 0, buffer.length);
-            buffer = b;
-        }
-    }
-
-    /**
-     * Sets the streaming buffer. This is a small optimization where we try to buffer directly to the consumer's output array for one round (if the consumer
-     * calls this method first) instead of starting our own buffer.
-     *
-     * @param out      byte[] array to buffer directly to.
-     * @param outPos   Position to start buffering into.
-     * @param outAvail Amount of bytes available for direct buffering.
-     */
-    private void setInitialBuffer(final byte[] out, final int outPos, final int outAvail) {
-        // We can re-use consumer's original output array under
-        // special circumstances, saving on some System.arraycopy().
-        if (out != null && out.length == outAvail) {
-            buffer = out;
-            pos = outPos;
-            readPos = outPos;
-        }
+        return urlSafe;
     }
 }
