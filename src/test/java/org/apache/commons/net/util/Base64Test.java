@@ -24,14 +24,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings({ "deprecation" })
