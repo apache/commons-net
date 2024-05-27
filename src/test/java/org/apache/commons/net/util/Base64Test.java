@@ -153,15 +153,39 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
     public void testEncodeBase64ByteArrayBoolean() {
-        fail("Not yet implemented");
+        final byte[] binaryData = { '1', '2', '3' };
+        byte[] encoded;
+        encoded = Base64.encodeBase64(binaryData, false);
+        assertNotNull(encoded);
+        assertEquals(4, encoded.length);
+        encoded = Base64.encodeBase64(binaryData, false);
+        assertNotNull(encoded);
+        assertEquals(4, encoded.length);
+        encoded = Base64.encodeBase64(binaryData, true);
+        assertNotNull(encoded);
+        assertEquals(6, encoded.length); // always adds trailer
+        encoded = Base64.encodeBase64(binaryData, true);
+        assertNotNull(encoded);
+        assertEquals(6, encoded.length);
     }
 
     @Test
-    @Ignore
     public void testEncodeBase64ByteArrayBooleanBoolean() {
-        fail("Not yet implemented");
+        final byte[] binaryData = { '1', '2', '3' };
+        byte[] encoded;
+        encoded = Base64.encodeBase64(binaryData, false, false);
+        assertNotNull(encoded);
+        assertEquals(4, encoded.length);
+        encoded = Base64.encodeBase64(binaryData, false, false);
+        assertNotNull(encoded);
+        assertEquals(4, encoded.length);
+        encoded = Base64.encodeBase64(binaryData, true, false);
+        assertNotNull(encoded);
+        assertEquals(6, encoded.length); // always adds trailer
+        encoded = Base64.encodeBase64(binaryData, true, false);
+        assertNotNull(encoded);
+        assertEquals(6, encoded.length);
     }
 
     @Test
