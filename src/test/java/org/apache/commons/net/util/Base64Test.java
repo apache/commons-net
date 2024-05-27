@@ -142,12 +142,6 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
-    public void testDecodeObject() {
-        fail("Not yet implemented");
-    }
-
-    @Test
     public void testDecodeString() {
         checkDecoders("Hello World!", "SGVsbG8gV29ybGQh");
     }
