@@ -28,6 +28,8 @@ import static org.junit.Assert.fail;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,14 +40,22 @@ public class Base64Test {
     private void checkDecoders(final String expected, final byte[] actual) {
         final byte[] decoded = Base64.decodeBase64(actual);
         assertEquals(expected, new String(decoded, StandardCharsets.UTF_8));
-        assertEquals(expected, new String(java.util.Base64.getDecoder().decode(actual), StandardCharsets.UTF_8));
+        assertEquals(expected, new String(getJreDecoder().decode(actual), StandardCharsets.UTF_8));
     }
 
     private void checkDecoders(final String expected, final String actual) {
         final byte[] decoded = Base64.decodeBase64(actual);
         assertEquals(expected, new String(decoded));
         assertEquals(expected, new String(decoded, StandardCharsets.UTF_8));
-        assertEquals(expected, new String(java.util.Base64.getDecoder().decode(actual), StandardCharsets.UTF_8));
+        assertEquals(expected, new String(getJreDecoder().decode(actual), StandardCharsets.UTF_8));
+    }
+
+    private Decoder getJreDecoder() {
+        return java.util.Base64.getDecoder();
+    }
+
+    private Encoder getJreEncoder() {
+        return java.util.Base64.getEncoder();
     }
 
     @Test
@@ -122,7 +132,7 @@ public class Base64Test {
     }
 
     private void testDecodeInteger(final BigInteger bi) {
-        assertEquals(bi, Base64.decodeInteger(java.util.Base64.getEncoder().encode(bi.toByteArray())));
+        assertEquals(bi, Base64.decodeInteger(getJreEncoder().encode(bi.toByteArray())));
     }
 
     @Test
