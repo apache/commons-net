@@ -127,6 +127,7 @@ public class Base64Test {
         assertFalse(b64.isUrlSafe());
         b64 = new Base64(8, new byte[] {}, true);
         assertTrue(b64.isUrlSafe());
+        assertThrows(IllegalArgumentException.class, () -> new Base64(8, new byte[] { 'A' }, false));
     }
 
     @Test
