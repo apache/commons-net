@@ -239,21 +239,26 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
     public void testEncodeBase64URLSafe() {
-        fail("Not yet implemented");
+        final byte[] bytesToEncode = "Many hands make light work.".getBytes();
+        final byte[] encodedData = Base64.encodeBase64URLSafe(bytesToEncode);
+        assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", new String(encodedData, StandardCharsets.UTF_8));
+        // TODO more
     }
 
     @Test
-    @Ignore
     public void testEncodeBase64URLSafeString() {
-        fail("Not yet implemented");
+        final byte[] bytesToEncode = "Many hands make light work.".getBytes();
+        final String encodedData = Base64.encodeBase64URLSafeString(bytesToEncode);
+        assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", encodedData);
+        // TODO more
     }
 
     @Test
-    @Ignore
     public void testEncodeByteArray() {
-        fail("Not yet implemented");
+        final Base64 base64 = new Base64();
+        final byte[] bytesToEncode = {'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r'};
+        assertEquals("bGlnaHQgd29y\r\n", new String(base64.encode(bytesToEncode), StandardCharsets.UTF_8));
     }
 
     @Test
