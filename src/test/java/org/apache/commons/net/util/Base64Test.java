@@ -428,8 +428,10 @@ public class Base64Test {
 
     @Test
     public void testIsBase64() {
+        assertTrue(Base64.isBase64((byte) '='));
         assertTrue(Base64.isBase64((byte) 'b'));
         assertFalse(Base64.isBase64((byte) ' '));
+        assertFalse(Base64.isBase64((byte) -1));
     }
 
 }
