@@ -26,6 +26,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.Ignore;
@@ -114,9 +115,14 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
     public void testDecodeInteger() {
-        fail("Not yet implemented");
+        testDecodeInteger(BigInteger.ONE);
+        testDecodeInteger(BigInteger.TEN);
+        testDecodeInteger(BigInteger.ZERO);
+    }
+
+    private void testDecodeInteger(final BigInteger bi) {
+        assertEquals(bi, Base64.decodeInteger(java.util.Base64.getEncoder().encode(bi.toByteArray())));
     }
 
     @Test
