@@ -39,14 +39,14 @@ public class Base64Test {
 
     private void checkDecoders(final String expected, final byte[] actual) {
         final byte[] decoded = Base64.decodeBase64(actual);
-        assertEquals(expected, new String(decoded, StandardCharsets.UTF_8));
+        assertEquals(expected, toString(decoded));
         assertEquals(expected, new String(getJreDecoder().decode(actual), StandardCharsets.UTF_8));
     }
 
     private void checkDecoders(final String expected, final String actual) {
         final byte[] decoded = Base64.decodeBase64(actual);
         assertEquals(expected, new String(decoded));
-        assertEquals(expected, new String(decoded, StandardCharsets.UTF_8));
+        assertEquals(expected, toString(decoded));
         assertEquals(expected, new String(getJreDecoder().decode(actual), StandardCharsets.UTF_8));
     }
 
@@ -56,6 +56,10 @@ public class Base64Test {
 
     private Encoder getJreEncoder() {
         return java.util.Base64.getEncoder();
+    }
+
+    private Encoder getJreMimeEncoder() {
+        return java.util.Base64.getMimeEncoder();
     }
 
     @Test
@@ -135,12 +139,6 @@ public class Base64Test {
         assertEquals(bi, Base64.decodeInteger(getJreEncoder().encode(bi.toByteArray())));
     }
 
-    private void testEncodeInteger(final BigInteger bi) {
-        final byte[] decodedBytes = getJreDecoder().decode(Base64.encodeInteger(bi));
-        final BigInteger decoded = decodedBytes.length == 0 ? BigInteger.ZERO : new BigInteger(decodedBytes);
-        assertEquals(bi, decoded);
-    }
-
     @Test
     public void testDecodeNullString() {
         final Base64 base64 = new Base64();
@@ -153,27 +151,53 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64ByteArray() {
-        final byte[] binaryData = null;
-        assertArrayEquals(binaryData, Base64.encodeBase64(binaryData));
-    }
-
-    @Test
     public void testEncodeBase64ByteArrayBoolean() {
         final byte[] binaryData = { '1', '2', '3' };
+        final byte[] urlUnsafeData = "<<???>>".getBytes();
+        final byte[] urlUnsafeDataChunky = "<<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>>".getBytes();
         byte[] encoded;
+        // Boolean parameter: "isChunked".
+        //
+        // isChunked false
         encoded = Base64.encodeBase64(binaryData, false);
         assertNotNull(encoded);
         assertEquals(4, encoded.length);
+        assertEquals(Base64.getEncodeLength(binaryData, Base64.CHUNK_SIZE, Base64.CHUNK_SEPARATOR) - 2, encoded.length);
+        assertEquals(getJreEncoder().encodeToString(binaryData), toString(encoded));
+        assertEquals("MTIz", toString(encoded));
+        // URL unsafe
+        // <<???>>
+        encoded = Base64.encodeBase64(urlUnsafeData, false);
+        assertEquals("PDw/Pz8+Pg==", toString(encoded));
+        encoded = Base64.encodeBase64(urlUnsafeDataChunky, false);
+        assertEquals(getJreEncoder().encodeToString(urlUnsafeDataChunky), toString(encoded));
+        //
+        // isChunked false
         encoded = Base64.encodeBase64(binaryData, false);
         assertNotNull(encoded);
         assertEquals(4, encoded.length);
+        assertEquals(Base64.getEncodeLength(binaryData, Base64.CHUNK_SIZE, Base64.CHUNK_SEPARATOR) - 2, encoded.length);
+        assertEquals("MTIz", toString(encoded));
+        //
+        // isChunked true
         encoded = Base64.encodeBase64(binaryData, true);
         assertNotNull(encoded);
         assertEquals(6, encoded.length); // always adds trailer
+        assertEquals(Base64.getEncodeLength(binaryData, Base64.CHUNK_SIZE, Base64.CHUNK_SEPARATOR), encoded.length);
+        assertEquals("MTIz\r\n", toString(encoded));
+        // URL unsafe
+        // <<???>>
+        encoded = Base64.encodeBase64(urlUnsafeData, true);
+        assertEquals("PDw/Pz8+Pg==\r\n", toString(encoded));
+        encoded = Base64.encodeBase64(urlUnsafeDataChunky, true);
+        assertEquals(getJreMimeEncoder().encodeToString(urlUnsafeDataChunky) + "\r\n", toString(encoded));
+        //
+        // isChunked true
         encoded = Base64.encodeBase64(binaryData, true);
         assertNotNull(encoded);
         assertEquals(6, encoded.length);
+        assertEquals(Base64.getEncodeLength(binaryData, Base64.CHUNK_SIZE, Base64.CHUNK_SEPARATOR), encoded.length);
+        assertEquals("MTIz\r\n", toString(encoded));
     }
 
     @Test
@@ -215,29 +239,47 @@ public class Base64Test {
     }
 
     @Test
+    public void testEncodeBase64ByteArrayEdges() {
+        final byte[] binaryData = null;
+        assertArrayEquals(binaryData, Base64.encodeBase64(binaryData));
+        final byte[] binaryData2 = new byte[0];
+        assertArrayEquals(binaryData2, Base64.encodeBase64(binaryData2));
+    }
+
+    @Test
     public void testEncodeBase64Chunked() {
-        final byte[] bytesToEncode = { 'f', 'o', 'o', 'b', 'a', 'r' };
-        final byte[] encodedData = Base64.encodeBase64Chunked(bytesToEncode);
-        assertEquals("Zm9vYmFy\r\n", new String(encodedData, StandardCharsets.UTF_8));
+        byte[] bytesToEncode = { 'f', 'o', 'o', 'b', 'a', 'r' };
+        byte[] encodedData = Base64.encodeBase64Chunked(bytesToEncode);
+        assertEquals("Zm9vYmFy\r\n", toString(encodedData));
+        // URL unsafe data
+        // <<???>>
+        bytesToEncode = "<<???>>".getBytes();
+        encodedData = Base64.encodeBase64Chunked(bytesToEncode);
+        assertEquals("PDw/Pz8+Pg==\r\n", toString(encodedData));
         // > 76
         final byte[] chunkMe = ArrayFill.fill(new byte[Base64.CHUNK_SIZE * 2], (byte) 'A');
         final byte[] chunked = Base64.encodeBase64Chunked(chunkMe);
         assertEquals('\r', chunked[chunked.length - 2]);
         assertEquals('\n', chunked[chunked.length - 1]);
-        assertArrayEquals(ArrayUtils.addAll(java.util.Base64.getMimeEncoder().encode(chunkMe), Base64.CHUNK_SEPARATOR), chunked);
+        assertArrayEquals(ArrayUtils.addAll(getJreMimeEncoder().encode(chunkMe), Base64.CHUNK_SEPARATOR), chunked);
     }
 
     @Test
     public void testEncodeBase64StringByteArray() {
-        final String stringToEncode = "Many hands make light work.";
-        final String encodedData = Base64.encodeBase64String(stringToEncode.getBytes());
+        String stringToEncode = "Many hands make light work.";
+        String encodedData = Base64.encodeBase64String(stringToEncode.getBytes());
         assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu\r\n", encodedData);
+        // URL unsafe data
+        // <<???>>
+        stringToEncode = "<<???>>";
+        encodedData = Base64.encodeBase64String(stringToEncode.getBytes());
+        assertEquals("PDw/Pz8+Pg==\r\n", encodedData);
         // > 76
         final byte[] chunkMe = ArrayFill.fill(new byte[Base64.CHUNK_SIZE * 2], (byte) 'A');
         final String chunked = Base64.encodeBase64String(chunkMe);
         assertEquals('\r', chunked.charAt(chunked.length() - 2));
         assertEquals('\n', chunked.charAt(chunked.length() - 1));
-        assertEquals(java.util.Base64.getMimeEncoder().encodeToString(chunkMe) + "\r\n", chunked);
+        assertEquals(getJreMimeEncoder().encodeToString(chunkMe) + "\r\n", chunked);
     }
 
     @Test
@@ -251,25 +293,42 @@ public class Base64Test {
 
     @Test
     public void testEncodeBase64StringUnChunked() {
-        final byte[] bytesToEncode = "Many hands make light work.".getBytes();
-        final String encodedData = Base64.encodeBase64StringUnChunked(bytesToEncode);
+        byte[] bytesToEncode = "Many hands make light work.".getBytes();
+        String encodedData = Base64.encodeBase64StringUnChunked(bytesToEncode);
         assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", encodedData);
+        // URL unsafe data
+        // <<???>>
+        bytesToEncode = "<<???>>".getBytes();
+        encodedData = Base64.encodeBase64StringUnChunked(bytesToEncode);
+        assertEquals("PDw/Pz8+Pg==", encodedData);
+        // > 76
+        final byte[] chunkMe = ArrayFill.fill(new byte[Base64.CHUNK_SIZE * 2], (byte) 'A');
+        final String chunked = Base64.encodeBase64StringUnChunked(chunkMe);
+        assertEquals(getJreEncoder().encodeToString(chunkMe), chunked);
     }
 
     @Test
     public void testEncodeBase64URLSafe() {
-        final byte[] bytesToEncode = "Many hands make light work.".getBytes();
-        final byte[] encodedData = Base64.encodeBase64URLSafe(bytesToEncode);
-        assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", new String(encodedData, StandardCharsets.UTF_8));
-        // TODO more
+        byte[] bytesToEncode = "Many hands make light work.".getBytes();
+        byte[] encodedData = Base64.encodeBase64URLSafe(bytesToEncode);
+        assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", toString(encodedData));
+        // URL unsafe data
+        // <<???>>
+        bytesToEncode = "<<???>>".getBytes();
+        encodedData = Base64.encodeBase64URLSafe(bytesToEncode);
+        assertEquals("PDw_Pz8-Pg", toString(encodedData));
     }
 
     @Test
     public void testEncodeBase64URLSafeString() {
-        final byte[] bytesToEncode = "Many hands make light work.".getBytes();
-        final String encodedData = Base64.encodeBase64URLSafeString(bytesToEncode);
+        byte[] bytesToEncode = "Many hands make light work.".getBytes();
+        String encodedData = Base64.encodeBase64URLSafeString(bytesToEncode);
         assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", encodedData);
-        // TODO more
+        // URL unsafe data
+        // <<???>>
+        bytesToEncode = "<<???>>".getBytes();
+        encodedData = Base64.encodeBase64URLSafeString(bytesToEncode);
+        assertEquals("PDw_Pz8-Pg", encodedData);
     }
 
     @Test
@@ -284,6 +343,12 @@ public class Base64Test {
         testEncodeInteger(BigInteger.ONE);
         testEncodeInteger(BigInteger.TEN);
         testEncodeInteger(BigInteger.ZERO);
+    }
+
+    private void testEncodeInteger(final BigInteger bi) {
+        final byte[] decodedBytes = getJreDecoder().decode(Base64.encodeInteger(bi));
+        final BigInteger decoded = decodedBytes.length == 0 ? BigInteger.ZERO : new BigInteger(decodedBytes);
+        assertEquals(bi, decoded);
     }
 
     @Test
@@ -303,6 +368,10 @@ public class Base64Test {
     public void testIsBase64() {
         assertTrue(Base64.isBase64((byte) 'b'));
         assertFalse(Base64.isBase64((byte) ' '));
+    }
+
+    private String toString(byte[] encodedData) {
+        return new String(encodedData, StandardCharsets.UTF_8);
     }
 
 }

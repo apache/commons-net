@@ -19,6 +19,8 @@ package org.apache.commons.net.util;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.Objects;
 
 /**
@@ -230,9 +232,15 @@ public class Base64 {
      *
      * @param binaryData binary data to encode
      * @return Base64 characters chunked in 76 character blocks
+     * @throws ArithmeticException if the {@code binaryData} would overflows a byte[].
      */
     public static byte[] encodeBase64Chunked(final byte[] binaryData) {
-        return encodeBase64(binaryData, true);
+        final long encodeLength = getEncodeLength(binaryData, CHUNK_SIZE, CHUNK_SEPARATOR);
+        final byte[] dst = new byte[Math.toIntExact(encodeLength)];
+        getMimeEncoder().encode(binaryData, dst);
+        dst[dst.length - 2] = CHUNK_SEPARATOR[0];
+        dst[dst.length - 1] = CHUNK_SEPARATOR[1];
+        return dst;
     }
 
     /**
@@ -249,7 +257,7 @@ public class Base64 {
      * @since 1.4
      */
     public static String encodeBase64String(final byte[] binaryData) {
-        return java.util.Base64.getMimeEncoder().encodeToString(binaryData) + "\r\n";
+        return getMimeEncoder().encodeToString(binaryData) + "\r\n";
     }
 
     /**
@@ -275,7 +283,7 @@ public class Base64 {
      * @since 3.2
      */
     public static String encodeBase64StringUnChunked(final byte[] binaryData) {
-        return newStringUtf8(encodeBase64(binaryData, false));
+        return getEncoder().encodeToString(binaryData);
     }
 
     /**
@@ -314,19 +322,23 @@ public class Base64 {
         return encodeBase64(toIntegerBytes(bigInt), false);
     }
 
+    private static Decoder getDecoder() {
+        return java.util.Base64.getDecoder();
+    }
+
     /**
      * Pre-calculates the amount of space needed to base64-encode the supplied array.
      *
-     * @param pArray         byte[] array which will later be encoded
+     * @param array          byte[] array which will later be encoded
      * @param chunkSize      line-length of the output (<= 0 means no chunking) between each chunkSeparator (e.g. CRLF).
      * @param chunkSeparator the sequence of bytes used to separate chunks of output (e.g. CRLF).
      *
      * @return amount of space needed to encode the supplied array. Returns a long since a max-len array will require Integer.MAX_VALUE + 33%.
      */
-    private static long getEncodeLength(final byte[] pArray, int chunkSize, final byte[] chunkSeparator) {
+    static long getEncodeLength(final byte[] array, int chunkSize, final byte[] chunkSeparator) {
         // base64 always encodes to multiples of 4.
         chunkSize = chunkSize / 4 * 4;
-        long len = pArray.length * 4 / 3;
+        long len = array.length * 4 / 3;
         final long mod = len % 4;
         if (mod != 0) {
             len += 4 - mod;
@@ -339,6 +351,14 @@ public class Base64 {
             }
         }
         return len;
+    }
+
+    private static Encoder getEncoder() {
+        return java.util.Base64.getEncoder();
+    }
+
+    private static Encoder getMimeEncoder() {
+        return java.util.Base64.getMimeEncoder();
     }
 
     /**
@@ -395,7 +415,7 @@ public class Base64 {
      * @param bigInt <code>BigInteger</code> to be converted
      * @return a byte array representation of the BigInteger parameter
      */
-    static byte[] toIntegerBytes(final BigInteger bigInt) {
+    private static byte[] toIntegerBytes(final BigInteger bigInt) {
         Objects.requireNonNull(bigInt, "bigInt");
         int bitlen = bigInt.bitLength();
         // round bitlen
@@ -611,7 +631,7 @@ public class Base64 {
         if (source == null || source.length == 0) {
             return source;
         }
-        return java.util.Base64.getDecoder().decode(source);
+        return getDecoder().decode(source);
     }
 
     /**
@@ -622,7 +642,7 @@ public class Base64 {
      * @since 1.4
      */
     public byte[] decode(final String source) {
-        return java.util.Base64.getDecoder().decode(source);
+        return getDecoder().decode(source);
     }
 
     /**
