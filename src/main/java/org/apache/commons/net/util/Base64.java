@@ -69,7 +69,7 @@ public class Base64 {
      *
      * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
-    private static final byte[] CHUNK_SEPARATOR = { '\r', '\n' };
+    static final byte[] CHUNK_SEPARATOR = { '\r', '\n' };
 
     /**
      * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet" equivalents as specified in Table 1 of RFC

@@ -30,6 +30,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
 
+import org.apache.commons.lang3.ArrayFill;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
 @SuppressWarnings({ "deprecation" })
@@ -217,6 +219,12 @@ public class Base64Test {
         final byte[] bytesToEncode = { 'f', 'o', 'o', 'b', 'a', 'r' };
         final byte[] encodedData = Base64.encodeBase64Chunked(bytesToEncode);
         assertEquals("Zm9vYmFy\r\n", new String(encodedData, StandardCharsets.UTF_8));
+        // > 76
+        final byte[] chunkMe = ArrayFill.fill(new byte[Base64.CHUNK_SIZE * 2], (byte) 'A');
+        final byte[] chunked = Base64.encodeBase64Chunked(chunkMe);
+        assertEquals('\r', chunked[chunked.length - 2]);
+        assertEquals('\n', chunked[chunked.length - 1]);
+        assertArrayEquals(ArrayUtils.addAll(java.util.Base64.getMimeEncoder().encode(chunkMe), Base64.CHUNK_SEPARATOR), chunked);
     }
 
     @Test
@@ -224,6 +232,12 @@ public class Base64Test {
         final String stringToEncode = "Many hands make light work.";
         final String encodedData = Base64.encodeBase64String(stringToEncode.getBytes());
         assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu\r\n", encodedData);
+        // > 76
+        final byte[] chunkMe = ArrayFill.fill(new byte[Base64.CHUNK_SIZE * 2], (byte) 'A');
+        final String chunked = Base64.encodeBase64String(chunkMe);
+        assertEquals('\r', chunked.charAt(chunked.length() - 2));
+        assertEquals('\n', chunked.charAt(chunked.length() - 1));
+        assertEquals(java.util.Base64.getMimeEncoder().encodeToString(chunkMe) + "\r\n", chunked);
     }
 
     @Test
