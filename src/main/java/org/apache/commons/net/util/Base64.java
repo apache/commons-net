@@ -249,7 +249,7 @@ public class Base64 {
      * @since 1.4
      */
     public static String encodeBase64String(final byte[] binaryData) {
-        return newStringUtf8(encodeBase64(binaryData, true));
+        return java.util.Base64.getMimeEncoder().encodeToString(binaryData) + "\r\n";
     }
 
     /**
