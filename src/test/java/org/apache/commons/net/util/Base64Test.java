@@ -275,12 +275,6 @@ public class Base64Test {
     }
 
     @Test
-    @Ignore
-    public void testEncodeObject() {
-        fail("Not yet implemented");
-    }
-
-    @Test
     public void testEncodeToString() {
         final Base64 base64 = new Base64();
         final byte[] bytesToEncode = { 'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r' };
@@ -297,12 +291,6 @@ public class Base64Test {
     public void testIsBase64() {
         assertTrue(Base64.isBase64((byte) 'b'));
         assertFalse(Base64.isBase64((byte) ' '));
-    }
-
-    @Test
-    @Ignore
-    public void testToIntegerBytes() {
-        fail("Not yet implemented");
     }
 
 }
