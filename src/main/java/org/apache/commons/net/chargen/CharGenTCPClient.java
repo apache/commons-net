@@ -35,14 +35,19 @@ import org.apache.commons.net.SocketClient;
  */
 
 public final class CharGenTCPClient extends SocketClient {
+
     /** The systat port value of 11 according to RFC 866. */
     public static final int SYSTAT_PORT = 11;
+
     /** The netstat port value of 19. */
     public static final int NETSTAT_PORT = 15;
+
     /** The quote of the day port value of 17 according to RFC 865. */
     public static final int QUOTE_OF_DAY_PORT = 17;
+
     /** The character generator port value of 19 according to RFC 864. */
     public static final int CHARGEN_PORT = 19;
+
     /** The default chargen port. It is set to 19 according to RFC 864. */
     public static final int DEFAULT_PORT = 19;
 
