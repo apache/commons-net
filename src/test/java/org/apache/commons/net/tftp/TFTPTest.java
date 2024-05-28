@@ -149,7 +149,7 @@ public class TFTPTest extends TestCase {
             out.delete();
         }
     }
-    
+
     public void testGetModeName() {
         assertNotNull(TFTP.getModeName(0));
         assertNotNull(TFTP.getModeName(1));
