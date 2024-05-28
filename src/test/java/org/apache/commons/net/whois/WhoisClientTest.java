@@ -30,6 +30,11 @@ import org.junit.jupiter.api.Test;
 public class WhoisClientTest {
 
     @Test
+    public void testConstructor() {
+        assertDoesNotThrow(WhoisClient::new);
+    }
+
+    @Test
     public void testDefaultPort() {
         assertEquals(WhoisClient.DEFAULT_PORT, new WhoisClient().getDefaultPort());
     }
@@ -37,11 +42,6 @@ public class WhoisClientTest {
     @Test
     public void testDisconnect() throws IOException {
         new WhoisClient().disconnect();
-    }
-
-    @Test
-    public void testConstructor() {
-        assertDoesNotThrow(WhoisClient::new);
     }
 
 }

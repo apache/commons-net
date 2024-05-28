@@ -29,17 +29,17 @@ import org.junit.jupiter.api.Test;
  */
 public class DaytimeUDPClientTest {
 
-    @SuppressWarnings("resource")
-    @Test
-    public void testConstructor() {
-        assertDoesNotThrow(DaytimeUDPClient::new);
-    }
-
     @Test
     public void testClose() {
         try (DaytimeUDPClient client = new DaytimeUDPClient()) {
             // empty
         }
+    }
+
+    @SuppressWarnings("resource")
+    @Test
+    public void testConstructor() {
+        assertDoesNotThrow(DaytimeUDPClient::new);
     }
 
     @Test

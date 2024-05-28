@@ -30,12 +30,12 @@ import org.junit.jupiter.api.Test;
 public class TFTPErrorPacketTest {
 
     @Test
-    public void testToString() throws UnknownHostException {
-        assertNotNull(new TFTPErrorPacket(InetAddress.getLocalHost(), 0, 0, "").toString());
+    public void testNewDatagram() throws UnknownHostException {
+        assertNotNull(new TFTPErrorPacket(InetAddress.getLocalHost(), 0, 0, "").newDatagram());
     }
 
     @Test
-    public void testNewDatagram() throws UnknownHostException {
-        assertNotNull(new TFTPErrorPacket(InetAddress.getLocalHost(), 0, 0, "").newDatagram());
+    public void testToString() throws UnknownHostException {
+        assertNotNull(new TFTPErrorPacket(InetAddress.getLocalHost(), 0, 0, "").toString());
     }
 }

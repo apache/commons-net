@@ -34,14 +34,14 @@ public class CharsetsTest {
         assertEquals(StandardCharsets.UTF_8, Charsets.toCharset(StandardCharsets.UTF_8.name()));
     }
 
+    @Test
+    public void testToCharsetDefault() {
+        assertEquals(StandardCharsets.UTF_8, Charsets.toCharset(null, StandardCharsets.UTF_8.name()));
+    }
+
     @SuppressWarnings("deprecation")
     @Test
     public void testToConstructor() {
         assertDoesNotThrow(Charsets::new);
-    }
-
-    @Test
-    public void testToCharsetDefault() {
-        assertEquals(StandardCharsets.UTF_8, Charsets.toCharset(null, StandardCharsets.UTF_8.name()));
     }
 }

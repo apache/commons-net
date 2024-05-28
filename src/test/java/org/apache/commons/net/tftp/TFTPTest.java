@@ -122,13 +122,6 @@ public class TFTPTest extends TestCase {
         }
     }
 
-    public void testSend() throws IOException {
-        try (TFTP tftp = new TFTP()) {
-            tftp.open();
-            tftp.send(new TFTPDataPacket(InetAddress.getLocalHost(), tftp.getLocalPort(), 0, new byte[10]));
-        }
-    }
-
     private void testDownload(final int mode, final File file) throws IOException {
         // Create our TFTP instance to handle the file transfer.
         try (TFTPClient tftp = new TFTPClient()) {
@@ -168,6 +161,13 @@ public class TFTPTest extends TestCase {
     public void testHugeUploads() throws Exception {
         for (int i = 5; i < FILES.length; i++) {
             testUpload(TFTP.BINARY_MODE, FILES[i]);
+        }
+    }
+
+    public void testSend() throws IOException {
+        try (TFTP tftp = new TFTP()) {
+            tftp.open();
+            tftp.send(new TFTPDataPacket(InetAddress.getLocalHost(), tftp.getLocalPort(), 0, new byte[10]));
         }
     }
 

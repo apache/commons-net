@@ -137,6 +137,14 @@ public class Base64 {
         return new BigInteger(1, decodeBase64(source));
     }
 
+    private static byte[] encode(final byte[] binaryData, final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
+        if (isEmpty(binaryData)) {
+            return binaryData;
+        }
+        return lineLength > 0 ? encodeBase64Chunked(binaryData, lineLength, lineSeparator)
+                : urlSafe ? encodeBase64URLSafe(binaryData) : encodeBase64(binaryData);
+    }
+
     /**
      * Encodes binary data using the base64 algorithm but does not chunk the output.
      *
@@ -194,14 +202,6 @@ public class Base64 {
                     "Input array too big, the output array would be bigger (" + len + ") than the specified maxium size of " + maxResultSize);
         }
         return chunked ? encodeBase64Chunked(binaryData) : urlSafe ? encodeBase64URLSafe(binaryData) : encodeBase64(binaryData);
-    }
-
-    private static byte[] encode(final byte[] binaryData, final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
-        if (isEmpty(binaryData)) {
-            return binaryData;
-        }
-        return lineLength > 0 ? encodeBase64Chunked(binaryData, lineLength, lineSeparator)
-                : urlSafe ? encodeBase64URLSafe(binaryData) : encodeBase64(binaryData);
     }
 
     /**

@@ -30,12 +30,12 @@ import org.junit.jupiter.api.Test;
 public class TFTPDataPacketTest {
 
     @Test
-    public void testToString() throws UnknownHostException {
-        assertNotNull(new TFTPDataPacket(InetAddress.getLocalHost(), 0, 0, new byte[0]).toString());
+    public void testNewDatagram() throws UnknownHostException {
+        assertNotNull(new TFTPDataPacket(InetAddress.getLocalHost(), 0, 0, new byte[0]).newDatagram());
     }
 
     @Test
-    public void testNewDatagram() throws UnknownHostException {
-        assertNotNull(new TFTPDataPacket(InetAddress.getLocalHost(), 0, 0, new byte[0]).newDatagram());
+    public void testToString() throws UnknownHostException {
+        assertNotNull(new TFTPDataPacket(InetAddress.getLocalHost(), 0, 0, new byte[0]).toString());
     }
 }
