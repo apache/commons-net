@@ -50,8 +50,8 @@ public class TimeTCPClientTest extends TestCase {
         server1.start();
     }
 
-    /*
-     * tests the times retrieved via the Time protocol implementation.
+    /**
+     * Tests the times retrieved via the Time protocol implementation.
      */
     public void testCompareTimes() throws Exception {
         openConnections();
@@ -97,8 +97,8 @@ public class TimeTCPClientTest extends TestCase {
         assertTrue(Math.abs(time2 - clientTime2) < 5000);
     }
 
-    /*
-     * tests the constant basetime used by TimeClient against tha computed from Calendar class.
+    /**
+     * Tests the constant basetime used by TimeClient against tha computed from Calendar class.
      */
     public void testInitial() {
         final TimeZone utcZone = TimeZone.getTimeZone("UTC");
