@@ -60,15 +60,10 @@ public final class DaytimeUDPClient extends DatagramSocketClient {
      * @throws IOException If an error occurs while retrieving the time.
      */
     public String getTime(final InetAddress host, final int port) throws IOException {
-        final DatagramPacket sendPacket;
-        final DatagramPacket receivePacket;
-
-        sendPacket = new DatagramPacket(dummyData, dummyData.length, host, port);
-        receivePacket = new DatagramPacket(timeData, timeData.length);
-
+        final DatagramPacket sendPacket = new DatagramPacket(dummyData, dummyData.length, host, port);
+        final DatagramPacket receivePacket = new DatagramPacket(timeData, timeData.length);
         checkOpen().send(sendPacket);
         checkOpen().receive(receivePacket);
-
         return new String(receivePacket.getData(), 0, receivePacket.getLength(), getCharset());
     }
 
