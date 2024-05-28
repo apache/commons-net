@@ -33,15 +33,21 @@ import org.apache.commons.net.DatagramSocketClient;
  * @see DaytimeTCPClient
  */
 public final class DaytimeUDPClient extends DatagramSocketClient {
-    /** The default daytime port. It is set to 13 according to RFC 867. */
+
+    /**
+     * The default daytime port. It is set to 13 according to RFC 867.
+     */
     public static final int DEFAULT_PORT = 13;
 
     private final byte[] dummyData = new byte[1];
-    // Received dates should be less than 256 bytes
+
+    /**
+     * Received dates should be less than 256 bytes.
+     */
     private final byte[] timeData = new byte[256];
 
     /**
-     * Same as <code>getTime(host, DaytimeUDPClient.DEFAULT_PORT);</code>
+     * Shorthand for <code>getTime(host, DaytimeUDPClient.DEFAULT_PORT);</code>
      *
      * @param host the host
      * @return the time
@@ -52,7 +58,7 @@ public final class DaytimeUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Retrieves the time string from the specified server and port and returns it.
+     * Gets the time string from the specified server and port and returns it.
      *
      * @param host The address of the server.
      * @param port The port of the service.
