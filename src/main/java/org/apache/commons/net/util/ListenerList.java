@@ -26,8 +26,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  */
-
 public class ListenerList implements Serializable, Iterable<EventListener> {
+
     private static final long serialVersionUID = -1934227607974228213L;
 
     private final CopyOnWriteArrayList<EventListener> listeners;

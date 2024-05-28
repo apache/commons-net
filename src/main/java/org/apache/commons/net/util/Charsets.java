@@ -35,7 +35,7 @@ public class Charsets {
     public static Charset toCharset(final String charsetName) {
         return charsetName == null ? Charset.defaultCharset() : Charset.forName(charsetName);
     }
-    
+
     /**
      * Returns a charset object for the given charset name.
      *
