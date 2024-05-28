@@ -17,6 +17,8 @@
 
 package org.apache.commons.net.ftp;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -83,11 +85,57 @@ public class FTPClientTest extends TestCase {
         super(name);
     }
 
+    public void testCopyStreamListener() {
+        final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        assertNull(client.getCopyStreamListener());
+    }
+
+    public void testGetActivePort() {
+        final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        assertEquals(0, client.getActivePort());
+    }
+
+    public void testGetAutodetectUTF8() {
+        final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        assertFalse(client.getAutodetectUTF8());
+    }
+
+    public void testGetBufferSize() {
+        final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        assertEquals(0, client.getBufferSize());
+    }
+
+    public void testGetControlKeepAliveReplyTimeout() {
+        final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        assertEquals(1_000, client.getControlKeepAliveReplyTimeout());
+    }
+    
+    public void testGetControlKeepAliveTimeout() {
+        final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        assertEquals(0, client.getControlKeepAliveTimeout());
+    }
+    
+    public void testGetCslDebug() {
+        final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        assertNull(client.getCslDebug());
+    }
+    
+    public void testGetPassiveLocalIPAddress() {
+        final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        assertNull(client.getPassiveLocalIPAddress());
+    }
+    
+    public void testGetPassivePort() {
+        final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        assertEquals(-1, client.getPassivePort());
+    }
+    
     public void testParseClient() {
         for (int i = 0; i < TESTS.length; i += 2) {
             assertEquals("Failed to parse", TESTS[i + 1], FTPClient.parsePathname(TESTS[i]));
         }
     }
+    
 
     public void testParsePassiveModeReplyForLocalAddressWithNatWorkaround() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
