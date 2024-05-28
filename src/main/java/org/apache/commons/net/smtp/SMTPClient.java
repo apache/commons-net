@@ -378,8 +378,8 @@ public class SMTPClient extends SMTP {
             return false;
         }
         boolean oneSuccess = false;
-        for (int count = 0; count < recipients.length; count++) {
-            if (addRecipient(recipients[count])) {
+        for (final String recipient : recipients) {
+            if (addRecipient(recipient)) {
                 oneSuccess = true;
             }
         }

@@ -107,7 +107,7 @@ public class Base64Test {
         assertFalse(b64.isUrlSafe());
         assertArrayEquals(new byte[] {}, b64.getLineSeparator());
         final String stringToEncode = "<<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>>";
-        byte[] encodedData = new Base64(Base64.CHUNK_SIZE, Base64.CHUNK_SEPARATOR).encode(stringToEncode.getBytes());
+        final byte[] encodedData = new Base64(Base64.CHUNK_SIZE, Base64.CHUNK_SEPARATOR).encode(stringToEncode.getBytes());
         assertEquals("PDw/Pz8+Pjw8Pz8/Pj48PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj48PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj48\r\nPD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj4=\r\n", toString(encodedData));
         assertEquals(getJreMimeEncoder().encodeToString(stringToEncode.getBytes()) + "\r\n", toString(encodedData));
         assertEquals("PDw/Pz8+Pjw8Pz8/Pj48PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj48PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj48~PD8/Pz4+PDw/Pz8+Pjw8Pz8/Pj4=~",

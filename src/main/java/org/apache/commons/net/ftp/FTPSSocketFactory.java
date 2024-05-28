@@ -47,7 +47,7 @@ public class FTPSSocketFactory extends SocketFactory {
      */
     @Deprecated
     public java.net.ServerSocket createServerSocket(final int port) throws IOException {
-        return this.init(this.context.getServerSocketFactory().createServerSocket(port));
+        return init(this.context.getServerSocketFactory().createServerSocket(port));
     }
 
     /**
@@ -59,7 +59,7 @@ public class FTPSSocketFactory extends SocketFactory {
      */
     @Deprecated
     public java.net.ServerSocket createServerSocket(final int port, final int backlog) throws IOException {
-        return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
+        return init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
     }
 
     /**
@@ -72,7 +72,7 @@ public class FTPSSocketFactory extends SocketFactory {
      */
     @Deprecated
     public java.net.ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress) throws IOException {
-        return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
+        return init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
 
     // Override the default implementation

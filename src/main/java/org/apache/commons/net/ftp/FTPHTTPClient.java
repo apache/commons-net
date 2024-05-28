@@ -142,13 +142,13 @@ public class FTPHTTPClient extends FTPClient {
                 return null;
             }
             _parsePassiveModeReply(_replyLines.get(0));
-            passiveHost = this.getPassiveHost();
+            passiveHost = getPassiveHost();
         }
 
         final Socket socket = _socketFactory_.createSocket(proxyHost, proxyPort);
         final InputStream is = socket.getInputStream();
         final OutputStream os = socket.getOutputStream();
-        tunnelHandshake(passiveHost, this.getPassivePort(), is, os);
+        tunnelHandshake(passiveHost, getPassivePort(), is, os);
         if (getRestartOffset() > 0 && !restart(getRestartOffset())) {
             socket.close();
             return null;

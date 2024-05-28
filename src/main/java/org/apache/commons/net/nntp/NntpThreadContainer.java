@@ -49,7 +49,7 @@ final class NntpThreadContainer {
     // with very large Threadable trees
     void flush() {
         if (parent != null && threadable == null) {
-            throw new IllegalStateException("no threadable in " + this.toString());
+            throw new IllegalStateException("no threadable in " + toString());
         }
 
         parent = null;

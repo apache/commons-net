@@ -255,7 +255,7 @@ public enum FTPCmd {
      * @return The FTP protcol command string corresponding to a specified command code.
      */
     public final String getCommand() {
-        return this.name();
+        return name();
     }
 
 }

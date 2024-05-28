@@ -44,7 +44,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         }
 
         protected void close() {
-            TelnetClientTest.this.closeConnection(this.server, this.client, this.port);
+            closeConnection(this.server, this.client, this.port);
         }
     }
 
