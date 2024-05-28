@@ -60,6 +60,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * @see RLoginClient
  */
 public class RCommandClient extends RExecClient {
+
     /**
      * The default rshell port. Set to 514 in BSD Unix.
      */

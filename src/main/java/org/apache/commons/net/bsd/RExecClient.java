@@ -48,8 +48,8 @@ import org.apache.commons.net.util.NetConstants;
  * @see RCommandClient
  * @see RLoginClient
  */
-
 public class RExecClient extends SocketClient {
+
     /**
      * @since 3.3
      */
