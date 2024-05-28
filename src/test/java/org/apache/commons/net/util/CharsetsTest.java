@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.util;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.charset.StandardCharsets;
@@ -31,6 +32,12 @@ public class CharsetsTest {
     @Test
     public void testToCharset() {
         assertEquals(StandardCharsets.UTF_8, Charsets.toCharset(StandardCharsets.UTF_8.name()));
+    }
+
+    @SuppressWarnings("deprecation")
+    @Test
+    public void testToConstructor() {
+        assertDoesNotThrow(Charsets::new);
     }
 
     @Test

@@ -35,7 +35,7 @@ public class Charsets {
     public static Charset toCharset(final String charsetName) {
         return charsetName == null ? Charset.defaultCharset() : Charset.forName(charsetName);
     }
-
+    
     /**
      * Returns a charset object for the given charset name.
      *
@@ -46,5 +46,15 @@ public class Charsets {
      */
     public static Charset toCharset(final String charsetName, final String defaultCharsetName) {
         return charsetName == null ? Charset.forName(defaultCharsetName) : Charset.forName(charsetName);
+    }
+
+    /**
+     * Depreacted.
+     *
+     * @deprecated Will be removed in 2.0.
+     */
+    @Deprecated
+    public Charsets() {
+        // empty
     }
 }
