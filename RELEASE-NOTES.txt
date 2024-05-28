@@ -1,5 +1,59 @@
-              Apache Commons Net 3.10.0
-                  RELEASE NOTES
+Apache Commons Net 3.11.0
+Release Notes
+
+The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.11.0.
+
+Apache Commons Net library contains a collection of network utilities and protocol implementations.
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
+
+
+Maintenance and bug fix release (Java 8 or above).
+
+For complete information on Apache Commons Net, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Net website:
+
+https://commons.apache.org/proper/commons-net/
+
+Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
+
+New features
+------------
+
+o NET-726:  Add protected getters to FTPSClient #204. Thanks to PJ Fanning, Gary Gregory.
+o           Add SubnetUtils.toString(). Thanks to Gary Gregory.
+o           Add Maven property project.build.outputTimestamp for build reproducibility. Thanks to Gary Gregory.
+o           Add FTP.DEFLATE_TRANSFER_MODE to support the "deflate" compression format in FTPClient.setFileTransferMode(int). Thanks to Georg Voss, Gary Gregory.
+o           Add org.apache.commons.net.SocketClient.checkOpenOutputStream(). Thanks to Gary Gregory.
+
+Fixed Bugs
+----------
+
+o           Precompile regular expression in UnixFTPEntryParser.preParse(List<String>). Thanks to Gary Gregory.
+o           Guard against polynomial regular expression used on uncontrolled data in VMSVersioningFTPEntryParser.REGEX. Thanks to Gary Gregory.
+o           Guard against polynomial regular expression used on uncontrolled data in IMAPReply.TAGGED_RESPONSE. Thanks to Gary Gregory.
+o           Guard against polynomial regular expression used on uncontrolled data in IMAPReply.UNTAGGED_RESPONSE. Thanks to Gary Gregory.
+o NET-730:  Cannot connect to FTP server with HTTP proxy. Thanks to Johannes Thalmair, Gary Gregory.
+o           Base 64 Encoding with URL and Filename Safe Alphabet should not chunk per RFC 4648. Thanks to Gary Gregory.
+o           Deprecate org.apache.commons.net.util.Charsets.Charsets() for removal. Thanks to Gary Gregory.
+o           Deprecate org.apache.commons.net.util.TrustManagerUtils.TrustManagerUtils() for removal. Thanks to Gary Gregory.
+
+Changes
+-------
+
+o           Bump commons-parent from 62 to 70 #238. Thanks to Dependabot, Gary Gregory.
+o           Bump org.codehaus.mojo:exec-maven-plugin from 3.1.0 to 3.2.0, #221. Thanks to Dependabot.
+o           Bump commons-lang3 from 3.13.0 to 3.14.0. Thanks to Gary Gregory.
+o           Bump commons-io from 2.15.0 to 2.16.1 #236, #240. Thanks to Gary Gregory.
+
+
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
+
+Enjoy!
+-Apache Commons Net team
+
+-----------------------------------------------------------------------------
+Apache Commons Net 3.10.0
+Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.10.0.
 
@@ -16,10 +70,9 @@ https://commons.apache.org/proper/commons-net/
 
 Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
 
-Changes in this version include:
-===============================
+New features
+------------
 
-New features:
 o           Add and use DatagramSocketClient.setDefaultTimeout(Duration) and deprecate DatagramSocketClient.setDefaultTimeout(int). Thanks to Gary Gregory.
 o           Add and use TFTP.DEFAULT_TIMEOUT_DURATION and deprecate org.apache.commons.net.tftp.TFTP.DEFAULT_TIMEOUT. Thanks to Gary Gregory.
 o           Add and use DatagramSocketClient#getSoTimeoutDuration(). Thanks to Gary Gregory.
@@ -33,7 +86,9 @@ o           Add Base64 missing tests and documentation fixes #161. Thanks to KuK
 o           Add FTPFile tests and fix Javadoc typos #162. Thanks to KuKa, Gary Gregory.
 o           Add IMAPReply tests and documentation fixes #165. Thanks to KuKa, Gary Gregory, Bruno P. Kinoshita.
 
-Fixed Bugs:
+Fixed Bugs
+----------
+
 o NET-650:  Delegate host resolution to Socket.connect() #138. Thanks to Matthew McGillis, exceptionfactory, sebbASF.
 o           Fixes many grammar issues and typos in JavaDoc and code comments #141. Thanks to Martin Wiesner, Gary Gregory, sebbASF.
 o           Remove redundant (null) initializations and other clean ups #155. Thanks to Martin Wiesner, Gary Gregory.
@@ -56,7 +111,9 @@ o           Replace use of org.apache.commons.net.util.Base64 with java.util.Bas
 o           Replace use of org.apache.commons.net.util.Base64 with java.util.Base64 in org.apache.commons.net.pop3. Thanks to Gary Gregory.
 o           Replace use of org.apache.commons.net.util.Base64 with java.util.Base64 in org.apache.commons.net.smtp. Thanks to Gary Gregory.
 
-Changes:
+Changes
+-------
+
 o           Bump commons-parent from 54 to 62 #132, #137, #153. Thanks to Dependabot.
 o           Bump commons-io from 2.11.0 to 2.14.0. Thanks to Gary Gregory.
 o           Bump commons-lang3 from 3.12.0 to 3.13.0. Thanks to Gary Gregory.
@@ -69,8 +126,8 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-              Apache Commons Net 3.9.0
-                  RELEASE NOTES
+Apache Commons Net 3.9.0
+Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.9.0.
 
@@ -87,10 +144,9 @@ https://commons.apache.org/proper/commons-net/
 
 Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
 
-Changes in this version include:
-===============================
+New features
+------------
 
-New features:
 o           [FTP] Add FTPClient.mdtmInstant(String). Thanks to Gary Gregory.
 o           [FTP] Add MLSxEntryParser.parseGmtInstant(String). Thanks to Gary Gregory.
 o           [FTP] Add FTPClient.getControlKeepAliveReplyTimeoutDuration(). Thanks to Gary Gregory.
@@ -102,7 +158,9 @@ o           [FTP] Add FTPClient.setDataTimeout(Duration). Thanks to Gary Gregory
 o           [FTP] Add FTPFile.getTimestampInstant(). Thanks to Gary Gregory.
 o           Add github/codeql-action. Thanks to Gary Gregory.
 
-Fixed Bugs:
+Fixed Bugs
+----------
+
 o NET-708:  Use yyyy instead of YYYY in SimpleDateFormat #97. Thanks to XenoAmess.
 o           Prevent serialization of the 4 classes that implement Serializable.
             It is not useful and is unlikely to work properly.
@@ -115,7 +173,9 @@ o           Simplify conditions avoiding extra operations #88. Thanks to Arturo 
 o           Remove reflection from SSLSocketUtils. Thanks to Gary Gregory.
 o NET-707:  Process files with spaces in name for OS400 #95. Thanks to Dmytro Sylaiev, sebbASF, Gary Gregory.
 
-Changes:
+Changes
+-------
+
 o           Bump actions/cache from 2.1.6 to 3.0.11 #93, #102, #115, #116. Thanks to Dependabot, Gary Gregory.
 o           Bump actions/checkout from 2.3.4 to 3.1.0 #89, #91, #100, #114. Thanks to Dependabot, Gary Gregory.
 o           Bump actions/upload-artifact from 3.1.0 to 3.1.1 #124. Thanks to Dependabot.
@@ -136,8 +196,8 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-              Apache Commons Net 3.8.0
-                  RELEASE NOTES
+Apache Commons Net 3.8.0
+Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.8.0.
 
@@ -154,20 +214,23 @@ https://commons.apache.org/proper/commons-net/
 
 Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
 
-Changes in this version include:
-===============================
+New features
+------------
 
-New features:
 o           Add and use NetConstants. Thanks to Arturo Bernal, Gary Gregory.
 o           Add and use SocketClient.applySocketAttributes(). Thanks to Gary Gregory.
 o           Add FTPClient.hasFeature(FTPCmd). Thanks to Gary Gregory.
 o           Add FTPClient.mdtmCalendar(String). Thanks to Gary Gregory.
 
-Fixed Bugs:
+Fixed Bugs
+----------
+
 o           Fix concurrent counting of chunks in IMAPExportMbox. Thanks to Gary Gregory.
 o           Fix possible if rare NPEs in tests. Thanks to Gary Gregory.
 
-Changes:
+Changes
+-------
+
 o           Bump actions/checkout from v2.3.3 to v2.3.4 #69. Thanks to Dependabot.
 o NET-685:  Update SocketClient default connect timeout from ? to 60 seconds #51. Thanks to Simo385.
 o NET-695:  Apply SocketClient timeout after connection but before SSL negotiation. Thanks to Gary Gregory, Possibly Cott.
@@ -182,8 +245,8 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-              Apache Commons Net 3.7.2
-                  RELEASE NOTES
+Apache Commons Net 3.7.2
+Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7.2.
 
@@ -200,15 +263,16 @@ https://commons.apache.org/proper/commons-net/
 
 Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
 
-Changes in this version include:
-===============================
+Fixed Bugs
+----------
 
-Fixed Bugs:
 o NET-689:  Host name is not set on the SSLSocket causing isEndpointCheckingEnabled to fail. Thanks to Charlie, Gary Gregory.
 o           Fix possible socket and input stream leak on socket exception in org.apache.commons.net.ftp.FTPClient._retrieveFile(String, String, OutputStream). Thanks to Dependabot.
 o NET-690:  Performance issue when using the FTPClient to retrieve files #65. Thanks to payal-meh, Gary Gregory.
 
-Changes:
+Changes
+-------
+
 o NET-691:  Improve Javadoc for IMAPSClient #68. Thanks to Lewis John McGibbney.
 o           Bump actions/setup-java from v1.4.2 to v1.4.3 #62. Thanks to Dependabot.
 o           Bump junit from 4.13 to 4.13.1 #67. Thanks to Dependabot.
@@ -221,8 +285,8 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-              Apache Commons Net 3.7.1
-                  RELEASE NOTES
+Apache Commons Net 3.7.1
+Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7.1
 
@@ -239,10 +303,9 @@ https://commons.apache.org/proper/commons-net/
 
 Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
 
-Changes in this version include:
-===============================
+Fixed Bugs
+----------
 
-Fixed Bugs:
 o NET-687:  [FTPS] javax.net.ssl.SSLException: Unsupported or unrecognized SSL message, #59. Thanks to Gary Gregory, Mikael, j-verse.
 o NET-673:  Update actions/checkout from v2.3.1 to v2.3.3 #56, #61. Thanks to Dependabot.
 o NET-673:  Update actions/setup-java from v1.4.0 to v1.4.2 #58. Thanks to Dependabot.
@@ -255,8 +318,8 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-              Apache Commons Net 3.7
-                  RELEASE NOTES
+Apache Commons Net 3.7
+Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7
 
@@ -272,7 +335,9 @@ The examples are not part of the public API, so this does not affect compatibili
 
 Changes in this version include:
 
-New features:
+New features
+------------
+
 o NET-646:  ALLO FTP Command for files >2GB
 o NET-615:  IMAPClient could simplify using empty arguments
 o NET-614:  IMAP fails to quote/encode mailbox names
@@ -283,7 +348,9 @@ o           Add POP3ExportMbox example code
 o NET-674:  FTPListParseEngine should support listing via MLSD Thanks to Chris Steingen.
 o NET-660:  Next and Previous IP Address in SubnetUtils.SubnetInfo Thanks to Nagabhushan S N.
 
-Fixed Bugs:
+Fixed Bugs
+----------
+
 o NET-673:  IMAPClient.APPEND does not always calculate the correct length
 o NET-643:  NPE when closing telnet stream Thanks to Vasily.
 o NET-641:  SubnetUtils.SubnetInfo.isInRange("0.0.0.0") returns true for CIDR/31, 32 Thanks to pin_ptr.
@@ -298,7 +365,9 @@ o NET-663:  NullPointerException when FTPClient remote verification fails Thanks
 o NET-649:  227 Entering Passive Mode Thanks to Filipe Bojikian Rissi.
 o NET-682:  MVSFTPEntryParser doesn't support Record Formats of U Thanks to richard.
 
-Changes:
+Changes
+-------
+
 o NET-633:  Add XOAUTH2 to IMAP and SMTP Thanks to n0rm1e.
 o NET-632:  FTPHTTPClient - support for encoding other than UTF-8 Thanks to prakapenka.
 o NET-626:  SubnetUtils#SubnetUtils - improved comment Thanks to Makoto Sakaguchi.
@@ -317,3 +386,5 @@ patches, or suggestions for improvement, see the Apache Commons Net website:
 https://commons.apache.org/proper/commons-net/
 
 Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
+
+-----------------------------------------------------------------------------

@@ -64,7 +64,7 @@ The <action> type attribute can be add,update,fix,remove.
     -->
 
   <body>
-    <release version="3.11.0" date="YYYY-MM-DD" description="Maintenance and bug fix release (Java 8 or above).">
+    <release version="3.11.0" date="2024-05-28" description="Maintenance and bug fix release (Java 8 or above).">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Precompile regular expression in UnixFTPEntryParser.preParse(List&lt;String&gt;).</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Guard against polynomial regular expression used on uncontrolled data in VMSVersioningFTPEntryParser.REGEX.</action>

@@ -51,7 +51,8 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <checkstyle.configdir>src/conf</checkstyle.configdir>
         <spotbugs.configdir>src/conf</spotbugs.configdir>
         <!-- Current release -->
-        <commons.release.versionBump>3.11.0</commons.release.versionBump>
+        <commons.release.version>3.11.0</commons.release.version>
+        <commons.release.next>3.11.1</commons.release.next>
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
         <project.build.outputTimestamp>2024-01-01T00:00:00Z</project.build.outputTimestamp>
