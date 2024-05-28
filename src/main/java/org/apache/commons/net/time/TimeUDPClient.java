@@ -45,6 +45,15 @@ public final class TimeUDPClient extends DatagramSocketClient {
      */
     public static final long SECONDS_1900_TO_1970 = 2208988800L;
 
+    static long toTime(final byte[] timeData) {
+        long time = 0L;
+        time |= (timeData[0] & 0xff) << 24 & 0xffffffffL;
+        time |= (timeData[1] & 0xff) << 16 & 0xffffffffL;
+        time |= (timeData[2] & 0xff) << 8 & 0xffffffffL;
+        time |= timeData[3] & 0xff & 0xffffffffL;
+        return time;
+    }
+
     /**
      * Same as <code>getTime(host, DEFAULT_PORT);</code>
      *
@@ -98,13 +107,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
         checkOpen().send(sendPacket);
         checkOpen().receive(receivePacket);
 
-        long time = 0L;
-        time |= (timeData[0] & 0xff) << 24 & 0xffffffffL;
-        time |= (timeData[1] & 0xff) << 16 & 0xffffffffL;
-        time |= (timeData[2] & 0xff) << 8 & 0xffffffffL;
-        time |= timeData[3] & 0xff & 0xffffffffL;
-
-        return time;
+        return toTime(timeData);
     }
 
 }
