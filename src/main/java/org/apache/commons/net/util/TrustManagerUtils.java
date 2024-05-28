@@ -106,4 +106,14 @@ public final class TrustManagerUtils {
         return CHECK_SERVER_VALIDITY;
     }
 
+    /**
+     * Depreacted.
+     *
+     * @deprecated Will be removed in 2.0.
+     */
+    @Deprecated
+    public TrustManagerUtils() {
+        // empty
+    }
+
 }
