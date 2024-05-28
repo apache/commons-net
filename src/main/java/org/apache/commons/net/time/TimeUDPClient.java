@@ -36,6 +36,7 @@ import org.apache.commons.net.DatagramSocketClient;
  */
 
 public final class TimeUDPClient extends DatagramSocketClient {
+
     /** The default time port. It is set to 37 according to RFC 868. */
     public static final int DEFAULT_PORT = 37;
 
@@ -43,9 +44,6 @@ public final class TimeUDPClient extends DatagramSocketClient {
      * The number of seconds between 00:00 1 January 1900 and 00:00 1 January 1970. This value can be useful for converting time values to other formats.
      */
     public static final long SECONDS_1900_TO_1970 = 2208988800L;
-
-    private final byte[] dummyData = new byte[1];
-    private final byte[] timeData = new byte[4];
 
     /**
      * Same as <code>getTime(host, DEFAULT_PORT);</code>
@@ -91,6 +89,9 @@ public final class TimeUDPClient extends DatagramSocketClient {
      * @throws IOException If an error occurs while retrieving the time.
      */
     public long getTime(final InetAddress host, final int port) throws IOException {
+        final byte[] dummyData = new byte[1];
+        final byte[] timeData = new byte[4];
+
         final DatagramPacket sendPacket = new DatagramPacket(dummyData, dummyData.length, host, port);
         final DatagramPacket receivePacket = new DatagramPacket(timeData, timeData.length);
 
