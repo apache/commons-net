@@ -26,7 +26,14 @@ import org.junit.jupiter.api.Test;
 public class TimeUDPClientTest {
 
     @Test
-    public void test() {
+    public void testConstructor() {
+        try (TimeUDPClient client = new TimeUDPClient()) {
+            // empty
+        }
+    }
+
+    @Test
+    public void testToTime() {
         final byte[] timeData = new byte[4];
         assertEquals(0, TimeUDPClient.toTime(timeData));
     }
