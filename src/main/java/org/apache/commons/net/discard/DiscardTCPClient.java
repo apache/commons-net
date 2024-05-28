@@ -29,8 +29,8 @@ import org.apache.commons.net.SocketClient;
  *
  * @see DiscardUDPClient
  */
-
 public class DiscardTCPClient extends SocketClient {
+
     /** The default discard port. It is set to 9 according to RFC 863. */
     public static final int DEFAULT_PORT = 9;
 
@@ -42,7 +42,7 @@ public class DiscardTCPClient extends SocketClient {
     }
 
     /**
-     * Returns an OutputStream through which you may write data to the server. You should NOT close the OutputStream when you're finished reading from it.
+     * Gets an OutputStream through which you may write data to the server. You should NOT close the OutputStream when you're finished reading from it.
      * Rather, you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } to clean up properly.
      *
      * @return An OutputStream through which you can write data to the server.
