@@ -39,6 +39,7 @@ public class CharGenUDPClientTest {
     @Test
     public void testReceiver() throws IOException {
         try (CharGenUDPClient client = new CharGenUDPClient()) {
+            // Not connected
             assertThrows(NullPointerException.class, client::receive);
         }
     }
@@ -46,6 +47,7 @@ public class CharGenUDPClientTest {
     @Test
     public void testSend() throws IOException {
         try (CharGenUDPClient client = new CharGenUDPClient()) {
+            // Not connected
             assertThrows(NullPointerException.class, () -> client.send(InetAddress.getLocalHost()));
             assertThrows(NullPointerException.class, () -> client.send(InetAddress.getLocalHost(), CharGenUDPClient.DEFAULT_PORT));
         }
