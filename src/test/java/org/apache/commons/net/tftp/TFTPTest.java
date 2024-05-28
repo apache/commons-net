@@ -16,12 +16,15 @@
  */
 package org.apache.commons.net.tftp;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
 
 import junit.framework.TestCase;
 
@@ -38,7 +41,7 @@ public class TFTPTest extends TestCase {
     private static final String FILE_PREFIX = "tftp-";
     private static final File[] FILES = new File[8];
 
-    static int testsLeftToRun = 6;
+    static int testsLeftToRun = 9; // TODO Nasty hack.
 
     // only want to do this once...
     static {
@@ -111,6 +114,18 @@ public class TFTPTest extends TestCase {
         }
     }
 
+    public void testDiscardPackets() {
+        try (TFTP tftp = new TFTP()) {
+            assertThrows(NullPointerException.class, tftp::discardPackets);
+        }
+    }
+
+    public void testSend() {
+        try (TFTP tftp = new TFTP()) {
+            assertThrows(NullPointerException.class, () -> tftp.send(new TFTPDataPacket(InetAddress.getLocalHost(), 0, 0, new byte[0])));
+        }
+    }
+
     private void testDownload(final int mode, final File file) throws IOException {
         // Create our TFTP instance to handle the file transfer.
         try (TFTPClient tftp = new TFTPClient()) {
@@ -133,6 +148,11 @@ public class TFTPTest extends TestCase {
             // delete the downloaded file
             out.delete();
         }
+    }
+    
+    public void testGetModeName() {
+        assertNotNull(TFTP.getModeName(0));
+        assertNotNull(TFTP.getModeName(1));
     }
 
     public void testHugeDownloads() throws Exception {
