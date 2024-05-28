@@ -69,7 +69,7 @@ public final class DaytimeUDPClient extends DatagramSocketClient {
         checkOpen().send(sendPacket);
         checkOpen().receive(receivePacket);
 
-        return new String(receivePacket.getData(), 0, receivePacket.getLength(), getCharset()); // Java 1.6 can use getCharset()
+        return new String(receivePacket.getData(), 0, receivePacket.getLength(), getCharset());
     }
 
 }
