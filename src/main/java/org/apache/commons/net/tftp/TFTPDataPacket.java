@@ -96,11 +96,9 @@ public final class TFTPDataPacket extends TFTPPacket {
      */
     public TFTPDataPacket(final InetAddress destination, final int port, final int blockNumber, final byte[] data, final int offset, final int length) {
         super(TFTPPacket.DATA, destination, port);
-
         this.blockNumber = blockNumber;
         this.data = data;
         this.offset = offset;
-
         this.length = Math.min(length, MAX_DATA_LENGTH);
     }
 

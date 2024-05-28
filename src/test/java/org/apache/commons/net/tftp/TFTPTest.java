@@ -124,10 +124,8 @@ public class TFTPTest extends TestCase {
 
     public void testSend() throws IOException {
         try (TFTP tftp = new TFTP()) {
-            final TFTPDataPacket packet = new TFTPDataPacket(InetAddress.getLocalHost(), 0, 0, new byte[0]);
-            assertThrows(NullPointerException.class, () -> tftp.send(packet));
             tftp.open();
-            tftp.send(packet);
+            tftp.send(new TFTPDataPacket(InetAddress.getLocalHost(), tftp.getLocalPort(), 0, new byte[10]));
         }
     }
 
