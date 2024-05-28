@@ -18,6 +18,10 @@
 package org.apache.commons.net.time;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.net.InetAddress;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,6 +33,24 @@ public class TimeUDPClientTest {
     public void testConstructor() {
         try (TimeUDPClient client = new TimeUDPClient()) {
             // empty
+        }
+    }
+
+    @Test
+    public void testGetDate() {
+        try (TimeUDPClient client = new TimeUDPClient()) {
+            // Not connected failures
+            assertThrows(NullPointerException.class, () -> client.getDate(InetAddress.getLocalHost()));
+            assertThrows(NullPointerException.class, () -> client.getDate(InetAddress.getLocalHost(), TimeUDPClient.DEFAULT_PORT));
+        }
+    }
+
+    @Test
+    public void testGetTime() {
+        try (TimeUDPClient client = new TimeUDPClient()) {
+            // Not connected failures
+            assertThrows(NullPointerException.class, () -> client.getTime(InetAddress.getLocalHost()));
+            assertThrows(NullPointerException.class, () -> client.getTime(InetAddress.getLocalHost(), TimeUDPClient.DEFAULT_PORT));
         }
     }
 
