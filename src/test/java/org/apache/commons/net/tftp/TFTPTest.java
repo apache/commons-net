@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import junit.framework.TestCase;
 
@@ -114,15 +115,20 @@ public class TFTPTest extends TestCase {
         }
     }
 
-    public void testDiscardPackets() {
+    public void testDiscardPackets() throws IOException {
         try (TFTP tftp = new TFTP()) {
             assertThrows(NullPointerException.class, tftp::discardPackets);
+            tftp.open();
+            tftp.discardPackets();
         }
     }
 
-    public void testSend() {
+    public void testSend() throws IOException {
         try (TFTP tftp = new TFTP()) {
-            assertThrows(NullPointerException.class, () -> tftp.send(new TFTPDataPacket(InetAddress.getLocalHost(), 0, 0, new byte[0])));
+            final TFTPDataPacket packet = new TFTPDataPacket(InetAddress.getLocalHost(), 0, 0, new byte[0]);
+            assertThrows(NullPointerException.class, () -> tftp.send(packet));
+            tftp.open();
+            tftp.send(packet);
         }
     }
 
