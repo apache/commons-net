@@ -79,6 +79,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add SubnetUtils.toString().</action> 
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add Maven property project.build.outputTimestamp for build reproducibility.</action>
       <action type="add" dev="ggregory" due-to="Georg Voss, Gary Gregory">Add FTP.DEFLATE_TRANSFER_MODE to support the "deflate" compression format in FTPClient.setFileTransferMode(int).</action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.net.SocketClient.checkOpenOutputStream().</action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump commons-parent from 62 to 70 #238.</action>
       <action type="update" dev="ggregory" due-to="Dependabot">Bump org.codehaus.mojo:exec-maven-plugin from 3.1.0 to 3.2.0, #221.</action>

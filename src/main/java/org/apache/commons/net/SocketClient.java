@@ -27,6 +27,7 @@ import java.net.Proxy;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.Charset;
+import java.util.Objects;
 
 import javax.net.ServerSocketFactory;
 import javax.net.SocketFactory;
@@ -178,6 +179,20 @@ public abstract class SocketClient {
      */
     protected void applySocketAttributes() throws SocketException {
         _socket_.setSoTimeout(_timeout_);
+    }
+
+    /**
+     * Gets the non-null OutputStream or throws {@link NullPointerException}.
+     *
+     * <p>
+     * This method does not allocate resources.
+     * </p>
+     *
+     * @return the non-null OutputStream.
+     * @since 3.11.0
+     */
+    protected OutputStream checkOpenOutputStream() {
+        return Objects.requireNonNull(_output_, "OutputStream");
     }
 
     private void closeQuietly(final Closeable close) {

@@ -113,7 +113,7 @@ public class FingerClient extends SocketClient {
         final byte[] encodedQuery = buffer.toString().getBytes(Charsets.toCharset(encoding).name()); // Java 1.6 can use
                                                                                                      // charset directly
 
-        output = new DataOutputStream(new BufferedOutputStream(_output_, 1024));
+        output = new DataOutputStream(new BufferedOutputStream(checkOpenOutputStream(), 1024));
         output.write(encodedQuery, 0, encodedQuery.length);
         output.flush();
 
