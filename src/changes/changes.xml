@@ -64,7 +64,12 @@ The <action> type attribute can be add,update,fix,remove.
     -->
 
   <body>
-    <release version="3.11.0" date="2024-05-28" description="Maintenance and bug fix release (Java 8 or above).">
+    <release version="3.11.1" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+      <!-- FIX -->
+      <!-- ADD -->
+      <!-- UPDATE -->
+    </release>
+    <release version="3.11.0" date="2024-05-28" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Precompile regular expression in UnixFTPEntryParser.preParse(List&lt;String&gt;).</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Guard against polynomial regular expression used on uncontrolled data in VMSVersioningFTPEntryParser.REGEX.</action>
@@ -86,7 +91,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-lang3 from 3.13.0 to 3.14.0.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-io from 2.15.0 to 2.16.1 #236, #240.</action>
     </release>
-    <release version="3.10.0" date="2023-10-01" description="Maintenance and bug fix release (Java 8 or above).">
+    <release version="3.10.0" date="2023-10-01" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         Add and use DatagramSocketClient.setDefaultTimeout(Duration) and deprecate DatagramSocketClient.setDefaultTimeout(int).
@@ -199,7 +204,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump commons-lang3 from 3.12.0 to 3.13.0.
       </action>
     </release>
-    <release version="3.9.0" date="2022-11-26" description="Maintenance and bug fix release (Java 8 or above).">
+    <release version="3.9.0" date="2022-11-26" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <action type="fix" issue="NET-708" dev="ggregory" due-to="XenoAmess">
         Use yyyy instead of YYYY in SimpleDateFormat #97.
@@ -298,7 +303,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump commons-parent from 53 to 54 #112.
       </action>
     </release>
-    <release version="3.8.0" date="2021-02-13" description="Maintenance and bug fix release (Java 7 or above).">
+    <release version="3.8.0" date="2021-02-13" description="This is a feature and maintenance release. Java 7 or later is required.">
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
         Add and use NetConstants.
@@ -336,7 +341,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump actions/cache from v2 to v2.1.4 #73.
       </action>
     </release>
-    <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release (Java 7 or above).">
+    <release version="3.7.2" date="2020-10-14" description="This is a feature and maintenance release. Java 7 or later is required.">
       <action issue="NET-689" type="fix" dev="ggregory" due-to="Charlie, Gary Gregory">
         Host name is not set on the SSLSocket causing isEndpointCheckingEnabled to fail.
       </action>
@@ -358,7 +363,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump junit from 4.13 to 4.13.1 #67.
       </action>
     </release>
-    <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release (Java 7 or above).">
+    <release version="3.7.1" date="2020-09-30" description="This is a feature and maintenance release. Java 7 or later is required.">
       <action issue="NET-687" type="fix" dev="ggregory" due-to="Gary Gregory, Mikael, j-verse">
         [FTPS] javax.net.ssl.SSLException: Unsupported or unrecognized SSL message, #59.
       </action>
