@@ -82,7 +82,7 @@ public final class IMAPReply {
      * Don't look for more than 80 backslashes.
      * Don't look for more than 80 character.
      */
-    private static final String UNTAGGED_RESPONSE = "^\\* (\\S{1,80}).{0,80}";
+    private static final String UNTAGGED_RESPONSE = "^\\* (\\S{1,80}).{0,160}";
 
     private static final Pattern UNTAGGED_PATTERN = Pattern.compile(UNTAGGED_RESPONSE);
     private static final Pattern LITERAL_PATTERN = Pattern.compile("\\{(\\d+)\\}$"); // {dd}

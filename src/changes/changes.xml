@@ -66,6 +66,7 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="3.11.1" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
+      <action type="fix" dev="ggregory" due-to="Stuart Maclean, Gary Gregory">Allow longer data in pattern IMAPReply.UNTAGGED_RESPONSE.</action>
       <!-- ADD -->
       <!-- UPDATE -->
     </release>
