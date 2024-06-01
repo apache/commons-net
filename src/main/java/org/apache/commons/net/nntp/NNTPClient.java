@@ -1174,7 +1174,7 @@ public class NNTPClient extends NNTP {
         return new DotTerminatedMessageReader(_reader_);
     }
 
-    /***
+    /**
      * Same as <code>selectArticle((String) null, articleId)</code>. Useful for retrieving the current article number.
      *
      * @param pointer to the article
