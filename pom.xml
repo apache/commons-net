@@ -217,9 +217,10 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                         <phase>package</phase>
                         <configuration>
                             <target>
-                                <jar destfile="target/commons-net-ftp-${project.version}.jar">
+                                <jar destfile="target/commons-net-ftp-${project.version}.jar" modificationtime="${project.build.outputTimestamp}">
                                     <metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt" />
                                     <manifest>
+                                        <attribute name="Created-By" value="maven-antrun-plugin"/>
                                         <attribute name="Extension-Name" value="org.apache.commons.net" />
                                         <attribute name="Specification-Title" value="${project.name}" />
                                         <attribute name="Implementation-Title" value="${project.name}" />
@@ -238,9 +239,10 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                                 </jar>
                                 <!-- Create the binary examples jar, which will be added to the binary zip/tgz, but not deployed 
                                     independently to Maven -->
-                                <jar destfile="target/commons-net-examples-${project.version}.jar">
+                                <jar destfile="target/commons-net-examples-${project.version}.jar" modificationtime="${project.build.outputTimestamp}">
                                     <metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt" />
                                     <manifest>
+                                        <attribute name="Created-By" value="maven-antrun-plugin"/>
                                         <attribute name="Extension-Name" value="org.apache.commons.net" />
                                         <attribute name="Specification-Title" value="${project.name}" />
                                         <attribute name="Implementation-Title" value="${project.name}" />
