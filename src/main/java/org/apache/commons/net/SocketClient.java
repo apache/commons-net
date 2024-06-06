@@ -692,6 +692,7 @@ public abstract class SocketClient {
      * @throws SocketException never (but subclasses may wish to do so)
      * @since 2.0
      */
+    @SuppressWarnings("unused") // subclasses may throw SocketException
     public void setReceiveBufferSize(final int size) throws SocketException {
         receiveBufferSize = size;
     }
@@ -703,6 +704,7 @@ public abstract class SocketClient {
      * @throws SocketException never thrown, but subclasses might want to do so
      * @since 2.0
      */
+    @SuppressWarnings("unused") // subclasses may throw SocketException
     public void setSendBufferSize(final int size) throws SocketException {
         sendBufferSize = size;
     }
