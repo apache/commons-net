@@ -17,8 +17,6 @@
 
 package org.apache.commons.net.ftp;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
