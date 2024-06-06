@@ -20,7 +20,6 @@ package org.apache.commons.net.chargen;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
 import java.net.InetAddress;
 
 import org.junit.jupiter.api.Test;
@@ -37,7 +36,7 @@ public class CharGenUDPClientTest {
     }
 
     @Test
-    public void testReceiver() throws IOException {
+    public void testReceiver() {
         try (CharGenUDPClient client = new CharGenUDPClient()) {
             // Not connected
             assertThrows(NullPointerException.class, client::receive);
@@ -45,7 +44,7 @@ public class CharGenUDPClientTest {
     }
 
     @Test
-    public void testSend() throws IOException {
+    public void testSend() {
         try (CharGenUDPClient client = new CharGenUDPClient()) {
             // Not connected
             assertThrows(NullPointerException.class, () -> client.send(InetAddress.getLocalHost()));
