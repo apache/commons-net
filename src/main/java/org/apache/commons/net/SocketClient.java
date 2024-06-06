@@ -319,8 +319,9 @@ public abstract class SocketClient {
      * Disconnects the socket connection. You should call this method after you've finished using the class instance and also before you call {@link #connect
      * connect() } again. _isConnected_ is set to false, _socket_ is set to null, _input_ is set to null, and _output_ is set to null.
      *
-     * @throws IOException If there is an error closing the socket.
+     * @throws IOException not thrown, subclasses may throw.
      */
+    @SuppressWarnings("unused") // subclasses may throw IOException
     public void disconnect() throws IOException {
         closeQuietly(_socket_);
         closeQuietly(_input_);
