@@ -51,14 +51,14 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <checkstyle.configdir>src/conf</checkstyle.configdir>
         <spotbugs.configdir>src/conf</spotbugs.configdir>
         <!-- Current release -->
-        <commons.release.version>3.11.0</commons.release.version>
-        <commons.release.next>3.11.1</commons.release.next>
+        <commons.release.version>3.11.1</commons.release.version>
+        <commons.release.next>3.11.2</commons.release.next>
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
         <project.build.outputTimestamp>2024-05-31T15:08:27Z</project.build.outputTimestamp>
         <!-- Release plugin defines -->
         <!-- Previous version of the component (used for reporting binary compatibility check)-->
-        <commons.bc.version>3.10.0</commons.bc.version>
+        <commons.bc.version>3.11.0</commons.bc.version>
         <commons.release.isDistModule>true</commons.release.isDistModule>
         <!--
           Define the following in ~/.m2/settings.xml in an active profile:

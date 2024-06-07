@@ -1,3 +1,35 @@
+Apache Commons Net 3.11.1
+Release Notes
+
+The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.11.1.
+
+Apache Commons Net library contains a collection of network utilities and protocol implementations.
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
+
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+For complete information on Apache Commons Net, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Net website:
+
+https://commons.apache.org/proper/commons-net/
+
+Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
+
+
+Fixed Bugs
+----------
+
+o           Allow longer data in pattern IMAPReply.UNTAGGED_RESPONSE. Thanks to Stuart Maclean, Gary Gregory.
+o           Fix Reproducible Builds issues #259. Thanks to Hervé Boutemy, Gary Gregory.
+
+
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
+
+Enjoy!
+-Apache Commons Net team
+
+-----------------------------------------------------------------------------
 Apache Commons Net 3.11.0
 Release Notes
 
