@@ -68,11 +68,12 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <!-- ADD -->
       <!-- UPDATE -->
+      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 70 to 71 #261.</action> 
     </release>
     <release version="3.11.1" date="2024-06-07" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Stuart Maclean, Gary Gregory">Allow longer data in pattern IMAPReply.UNTAGGED_RESPONSE.</action>
-      <action type="fix" dev="ggregory" due-to="Hervé Boutemy, Gary Gregory">Fix Reproducible Builds issues #259.</action> 
+      <action type="fix" dev="ggregory" due-to="Hervé Boutemy, Gary Gregory">Fix Reproducible Builds issues #259.</action>
       <!-- ADD -->
       <!-- UPDATE -->
     </release>
