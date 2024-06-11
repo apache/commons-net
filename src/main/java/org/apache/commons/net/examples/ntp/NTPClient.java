@@ -23,6 +23,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.text.NumberFormat;
 import java.time.Duration;
+import java.util.Objects;
 
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.NtpUtils;
@@ -161,8 +162,8 @@ public final class NTPClient {
         info.computeDetails(); // compute offset/delay if not already done
         final Long offsetMillis = info.getOffset();
         final Long delayMillis = info.getDelay();
-        final String delay = delayMillis == null ? "N/A" : delayMillis.toString();
-        final String offset = offsetMillis == null ? "N/A" : offsetMillis.toString();
+        final String delay = Objects.toString(delayMillis, "N/A");
+        final String offset = Objects.toString(offsetMillis, "N/A");
 
         System.out.println(" Roundtrip delay(ms)=" + delay + ", clock offset(ms)=" + offset); // offset in ms
     }
