@@ -45,7 +45,7 @@ import org.apache.commons.net.ntp.TimeStamp;
  */
 public final class NTPClient {
 
-    private static final String OWN_CLOCK_IP_ADDRESS = "127.127.1.0";
+    private static final String OWN_CLOCK_IP_ADDRESS = "127.127.1.0"; // NOPMD
     private static final NumberFormat numberFormat = new DecimalFormat("0.00");
 
     public static void main(final String[] args) {
