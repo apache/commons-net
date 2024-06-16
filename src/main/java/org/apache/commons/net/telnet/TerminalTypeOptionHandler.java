@@ -76,19 +76,14 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler {
      */
     @Override
     public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength) {
-        if (suboptionData != null && suboptionLength > 1 && termType != null) {
-            if (suboptionData[0] == TERMINAL_TYPE && suboptionData[1] == TERMINAL_TYPE_SEND) {
-                final int[] response = new int[termType.length() + 2];
-
-                response[0] = TERMINAL_TYPE;
-                response[1] = TERMINAL_TYPE_IS;
-
-                for (int ii = 0; ii < termType.length(); ii++) {
-                    response[ii + 2] = termType.charAt(ii);
-                }
-
-                return response;
+        if (suboptionData != null && suboptionLength > 1 && termType != null && suboptionData[0] == TERMINAL_TYPE && suboptionData[1] == TERMINAL_TYPE_SEND) {
+            final int[] response = new int[termType.length() + 2];
+            response[0] = TERMINAL_TYPE;
+            response[1] = TERMINAL_TYPE_IS;
+            for (int ii = 0; ii < termType.length(); ii++) {
+                response[ii + 2] = termType.charAt(ii);
             }
+            return response;
         }
         return null;
     }
