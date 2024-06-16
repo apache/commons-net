@@ -586,7 +586,7 @@ public class FTPClient extends FTP implements Configurable {
     /** Map of FEAT responses. If null, has not been initialized. */
     private HashMap<String, Set<String>> featuresMap;
 
-    private boolean ipAddressFromPasvResponse = Boolean.getBoolean(FTPClient.FTP_IP_ADDRESS_FROM_PASV_RESPONSE);
+    private boolean ipAddressFromPasvResponse = Boolean.getBoolean(FTP_IP_ADDRESS_FROM_PASV_RESPONSE);
 
     /**
      * Default FTPClient constructor. Creates a new FTPClient instance with the data connection mode set to <code>ACTIVE_LOCAL_DATA_CONNECTION_MODE</code>,
@@ -1899,10 +1899,10 @@ public class FTPClient extends FTP implements Configurable {
         reportActiveExternalHost = null;
         activeMinPort = 0;
         activeMaxPort = 0;
-        fileType = FTP.ASCII_FILE_TYPE;
-        fileStructure = FTP.FILE_STRUCTURE;
-        fileFormat = FTP.NON_PRINT_TEXT_FORMAT;
-        fileTransferMode = FTP.STREAM_TRANSFER_MODE;
+        fileType = ASCII_FILE_TYPE;
+        fileStructure = FILE_STRUCTURE;
+        fileFormat = NON_PRINT_TEXT_FORMAT;
+        fileTransferMode = STREAM_TRANSFER_MODE;
         restartOffset = 0;
         systemName = null;
         entryParser = null;
@@ -3040,7 +3040,7 @@ public class FTPClient extends FTP implements Configurable {
     public boolean setFileType(final int fileType) throws IOException {
         if (FTPReply.isPositiveCompletion(type(fileType))) {
             this.fileType = fileType;
-            this.fileFormat = FTP.NON_PRINT_TEXT_FORMAT;
+            this.fileFormat = NON_PRINT_TEXT_FORMAT;
             return true;
         }
         return false;
