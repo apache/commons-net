@@ -55,7 +55,7 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
         return listeners.iterator();
     }
 
-    private void readObject(final ObjectInputStream in) {
+    private void readObject(final ObjectInputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
@@ -67,7 +67,7 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
         listeners.remove(listener);
     }
 
-    private void writeObject(final ObjectOutputStream out) {
+    private void writeObject(final ObjectOutputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
