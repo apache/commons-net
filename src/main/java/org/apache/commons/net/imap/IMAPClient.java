@@ -263,7 +263,7 @@ public class IMAPClient extends IMAP {
             args.append(message);
             return doCommand(IMAPCommand.APPEND, args.toString());
         }
-        args.append('{').append(message.getBytes(IMAP.__DEFAULT_ENCODING).length).append('}'); // length of message
+        args.append('{').append(message.getBytes(__DEFAULT_ENCODING).length).append('}'); // length of message
         final int status = sendCommand(IMAPCommand.APPEND, args.toString());
         return IMAPReply.isContinuation(status) // expecting continuation response
                 && IMAPReply.isSuccess(sendData(message)); // if so, send the data
