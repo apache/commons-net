@@ -250,7 +250,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
                     queue.notify();
                 }
 
-                return ch;
+                return ch; // NOPMD TODO?
             }
         }
     }
@@ -422,7 +422,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
             /* TERMINAL-TYPE option (end) */
             }
 
-            break;
+            break; // NOPMD TODO?
         }
 
         return ch;
