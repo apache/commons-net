@@ -60,7 +60,7 @@ public final class TFTPDataPacket extends TFTPPacket {
      * @throws TFTPPacketException If the datagram isn't a valid TFTP data packet.
      */
     TFTPDataPacket(final DatagramPacket datagram) throws TFTPPacketException {
-        super(TFTPPacket.DATA, datagram.getAddress(), datagram.getPort());
+        super(DATA, datagram.getAddress(), datagram.getPort());
 
         this.data = datagram.getData();
         this.offset = 4;
@@ -95,7 +95,7 @@ public final class TFTPDataPacket extends TFTPPacket {
      * @param length      The length of the data.
      */
     public TFTPDataPacket(final InetAddress destination, final int port, final int blockNumber, final byte[] data, final int offset, final int length) {
-        super(TFTPPacket.DATA, destination, port);
+        super(DATA, destination, port);
         this.blockNumber = blockNumber;
         this.data = data;
         this.offset = offset;
