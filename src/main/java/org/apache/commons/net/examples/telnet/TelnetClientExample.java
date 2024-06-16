@@ -214,19 +214,19 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
     public void receivedNegotiation(final int negotiation_code, final int option_code) {
         String command;
         switch (negotiation_code) {
-        case TelnetNotificationHandler.RECEIVED_DO:
+        case RECEIVED_DO:
             command = "DO";
             break;
-        case TelnetNotificationHandler.RECEIVED_DONT:
+        case RECEIVED_DONT:
             command = "DONT";
             break;
-        case TelnetNotificationHandler.RECEIVED_WILL:
+        case RECEIVED_WILL:
             command = "WILL";
             break;
-        case TelnetNotificationHandler.RECEIVED_WONT:
+        case RECEIVED_WONT:
             command = "WONT";
             break;
-        case TelnetNotificationHandler.RECEIVED_COMMAND:
+        case RECEIVED_COMMAND:
             command = "COMMAND";
             break;
         default:
