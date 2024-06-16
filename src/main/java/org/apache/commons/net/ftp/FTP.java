@@ -409,7 +409,7 @@ public class FTP extends SocketClient {
             __commandBuffer.append(' ');
             __commandBuffer.append(args);
         }
-        __commandBuffer.append(SocketClient.NETASCII_EOL);
+        __commandBuffer.append(NETASCII_EOL);
         return __commandBuffer.toString();
     }
 
@@ -673,7 +673,7 @@ public class FTP extends SocketClient {
         final StringBuilder buffer = new StringBuilder(256);
         for (final String line : _replyLines) {
             buffer.append(line);
-            buffer.append(SocketClient.NETASCII_EOL);
+            buffer.append(NETASCII_EOL);
         }
         _newReplyString = false;
         return _replyString = buffer.toString();
