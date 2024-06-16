@@ -54,27 +54,26 @@ public final class NTPClient {
             System.exit(1);
         }
 
-        final NTPUDPClient client = new NTPUDPClient();
-        // We want to timeout if a response takes longer than 10 seconds
-        client.setDefaultTimeout(Duration.ofSeconds(10));
-        try {
-            client.open();
-            for (final String arg : args) {
-                System.out.println();
-                try {
-                    final InetAddress hostAddr = InetAddress.getByName(arg);
-                    System.out.println("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
-                    final TimeInfo info = client.getTime(hostAddr);
-                    processResponse(info);
-                } catch (final IOException ioe) {
-                    ioe.printStackTrace();
+        try (NTPUDPClient client = new NTPUDPClient()) {
+            // We want to timeout if a response takes longer than 10 seconds
+            client.setDefaultTimeout(Duration.ofSeconds(10));
+            try {
+                client.open();
+                for (final String arg : args) {
+                    System.out.println();
+                    try {
+                        final InetAddress hostAddr = InetAddress.getByName(arg);
+                        System.out.println("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
+                        final TimeInfo info = client.getTime(hostAddr);
+                        processResponse(info);
+                    } catch (final IOException ioe) {
+                        ioe.printStackTrace();
+                    }
                 }
+            } catch (final SocketException e) {
+                e.printStackTrace();
             }
-        } catch (final SocketException e) {
-            e.printStackTrace();
         }
-
-        client.close();
     }
 
     /**
