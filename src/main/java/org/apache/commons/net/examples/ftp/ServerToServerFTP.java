@@ -18,6 +18,7 @@
 package org.apache.commons.net.examples.ftp;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 
 import org.apache.commons.net.PrintCommandListener;
@@ -74,7 +75,9 @@ public final class ServerToServerFTP {
         password2 = args[6];
         file2 = args[7];
 
-        listener = new PrintCommandListener(Util.newPrintWriter(System.out), true);
+        @SuppressWarnings("resource") // Don't close System.out
+        final PrintWriter printWriter = Util.newPrintWriter(System.out);
+        listener = new PrintCommandListener(printWriter, true);
         ftp1 = new FTPClient();
         ftp1.addProtocolCommandListener(listener);
         ftp2 = new FTPClient();
