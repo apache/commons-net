@@ -24,9 +24,10 @@ import java.util.Collections;
 import org.apache.commons.net.util.NetConstants;
 
 /**
- * This is a class that contains the basic state needed for message retrieval and threading. With thanks to Jamie Zawinski (jwz@jwz.org)
+ * Basic state needed for message retrieval and threading. With thanks to Jamie Zawinski (jwz@jwz.org)
  */
 public class Article implements Threadable {
+
     /**
      * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
      *
@@ -122,23 +123,48 @@ public class Article implements Threadable {
         simplifiedSubject = null;
     }
 
+    /**
+     * Gets the article ID.
+     *
+     * @return the article ID.
+     */
     public String getArticleId() {
         return articleId;
     }
 
+    /**
+     * Gets the article number.
+     *
+     * @return the article number.
+     */
     @Deprecated
     public int getArticleNumber() {
         return (int) articleNumber;
     }
 
+    /**
+     * Gets the article number.
+     *
+     * @return the article number.
+     */
     public long getArticleNumberLong() {
         return articleNumber;
     }
 
+    /**
+     * Gets the article date header.
+     *
+     * @return the article date header.
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * Gets the article from header.
+     *
+     * @return the article from header.
+     */
     public String getFrom() {
         return from;
     }
@@ -155,6 +181,11 @@ public class Article implements Threadable {
         return references.toArray(NetConstants.EMPTY_STRING_ARRAY);
     }
 
+    /**
+     * Gets the article subject.
+     *
+     * @return the article subject.
+     */
     public String getSubject() {
         return subject;
     }
@@ -183,13 +214,23 @@ public class Article implements Threadable {
         articleId = string;
     }
 
+    /**
+     * Sets the article number.
+     *
+     * @param articleNumber  the article number.
+     */
     @Deprecated
-    public void setArticleNumber(final int a) {
-        articleNumber = a;
+    public void setArticleNumber(final int articleNumber) {
+        this.articleNumber = articleNumber;
     }
 
-    public void setArticleNumber(final long l) {
-        articleNumber = l;
+    /**
+     * Sets the article number.
+     *
+     * @param articleNumber  the article number.
+     */
+    public void setArticleNumber(final long articleNumber) {
+        this.articleNumber = articleNumber;
     }
 
     @Override
@@ -198,12 +239,22 @@ public class Article implements Threadable {
         flushSubjectCache();
     }
 
-    public void setDate(final String string) {
-        date = string;
+    /**
+     * Sets the article date header.
+     *
+     * @param date  the article date header.
+     */
+    public void setDate(final String date) {
+        this.date = date;
     }
 
-    public void setFrom(final String string) {
-        from = string;
+    /**
+     * Sets the article from header.
+     *
+     * @param from  the article from header.
+     */
+    public void setFrom(final String from) {
+        this.from = from;
     }
 
     @Override
@@ -212,8 +263,13 @@ public class Article implements Threadable {
         flushSubjectCache();
     }
 
-    public void setSubject(final String string) {
-        subject = string;
+    /**
+     * Sets the article subject.
+     *
+     * @param subject  the article subject.
+     */
+    public void setSubject(final String subject) {
+        this.subject = subject;
     }
 
     @Override
