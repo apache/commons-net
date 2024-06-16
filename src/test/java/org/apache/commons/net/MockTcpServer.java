@@ -35,7 +35,7 @@ import java.net.Socket;
  *      // other fields and constructors are omitted for brevity
  *     {@literal @Override}
  *     protected void processClientSocket(final Socket clientSocket) throws Exception {
- *         try (final PrintWriter pw = new PrintWriter(clientSocket.getOutputStream())) {
+ *         try (PrintWriter pw = new PrintWriter(clientSocket.getOutputStream())) {
  *             pw.write("Hello, World!");
  *             pw.flush();
  *         }
@@ -131,7 +131,7 @@ public abstract class MockTcpServer implements Runnable, Closeable {
     @Override
     public final void run() {
         while (running) {
-            try (final Socket clientSocket = serverSocket.accept()) {
+            try (Socket clientSocket = serverSocket.accept()) {
                 processClientSocket(clientSocket);
             } catch (final IOException e) {
                 System.err.println("IOException on MockWebServer serverSocket.accept(): " + e);

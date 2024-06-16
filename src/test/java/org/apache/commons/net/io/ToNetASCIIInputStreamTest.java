@@ -32,7 +32,7 @@ public class ToNetASCIIInputStreamTest {
         final byte[] data = input.getBytes(StandardCharsets.US_ASCII);
         final byte[] expected = expect.getBytes(StandardCharsets.US_ASCII);
         final InputStream source = new ByteArrayInputStream(data);
-        try (final ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source)) {
+        try (ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source)) {
             final byte[] output = new byte[data.length * 2]; // cannot be longer than twice the input
 
             final int length = byByte ? getSingleBytes(toNetASCII, output) : getBuffer(toNetASCII, output);

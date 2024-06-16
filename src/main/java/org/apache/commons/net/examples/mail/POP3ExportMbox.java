@@ -129,7 +129,7 @@ public final class POP3ExportMbox {
                     System.out.println("Writing dir: " + mbox);
                     // Currently POP3Client uses iso-8859-1
                     for (int i = 1; i <= count; i++) {
-                        try (final OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(new File(mbox, i + ".eml")),
+                        try (OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(new File(mbox, i + ".eml")),
                                 StandardCharsets.ISO_8859_1)) {
                             writeFile(pop3, fw, i);
                         }
@@ -137,7 +137,7 @@ public final class POP3ExportMbox {
                 } else {
                     System.out.println("Writing file: " + mbox);
                     // Currently POP3Client uses iso-8859-1
-                    try (final OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox), StandardCharsets.ISO_8859_1)) {
+                    try (OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox), StandardCharsets.ISO_8859_1)) {
                         for (int i = 1; i <= count; i++) {
                             writeMbox(pop3, fw, i);
                         }
@@ -158,7 +158,7 @@ public final class POP3ExportMbox {
     }
 
     private static void writeFile(final POP3Client pop3, final OutputStreamWriter fw, final int i) throws IOException {
-        try (final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i)) {
+        try (BufferedReader r = (BufferedReader) pop3.retrieveMessage(i)) {
             String line;
             while ((line = r.readLine()) != null) {
                 fw.write(line);
@@ -172,7 +172,7 @@ public final class POP3ExportMbox {
                 = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy");
         final String replyTo = "MAILER-DAEMON"; // default
         final Date received = new Date();
-        try (final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i)) {
+        try (BufferedReader r = (BufferedReader) pop3.retrieveMessage(i)) {
             fw.append("From ");
             fw.append(replyTo);
             fw.append(' ');

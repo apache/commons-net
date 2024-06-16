@@ -703,7 +703,7 @@ public class FTPClient extends FTP implements Configurable {
         if (dataConnectionMode == ACTIVE_LOCAL_DATA_CONNECTION_MODE) {
             // if no activePortRange was set (correctly) -> getActivePort() = 0
             // -> new ServerSocket(0) -> bind to any free local port
-            try (final ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress())) {
+            try (ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress())) {
                 // Try EPRT only if remote server is over IPv6, if not use PORT,
                 // because EPRT has no advantage over PORT on IPv4.
                 // It could even have the disadvantage,
@@ -2356,11 +2356,11 @@ public class FTPClient extends FTP implements Configurable {
      */
     public String[] listNames(final String pathname) throws IOException {
         final ArrayList<String> results = new ArrayList<>();
-        try (final Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(pathname))) {
+        try (Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(pathname))) {
             if (socket == null) {
                 return null;
             }
-            try (final BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     results.add(line);

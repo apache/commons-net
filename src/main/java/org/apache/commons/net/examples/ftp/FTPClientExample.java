@@ -355,7 +355,7 @@ public final class FTPClientExample {
             ftp.setUseEPSVwithIPv4(useEpsvWithIPv4);
 
             if (storeFile) {
-                try (final InputStream input = new FileInputStream(local)) {
+                try (InputStream input = new FileInputStream(local)) {
                     ftp.storeFile(remote, input);
                 }
 
@@ -446,7 +446,7 @@ public final class FTPClientExample {
                     System.out.println("Failed: " + ftp.getReplyString());
                 }
             } else {
-                try (final OutputStream output = new FileOutputStream(local)) {
+                try (OutputStream output = new FileOutputStream(local)) {
                     ftp.retrieveFile(remote, output);
                 }
 

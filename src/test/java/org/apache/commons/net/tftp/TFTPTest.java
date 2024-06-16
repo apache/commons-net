@@ -68,7 +68,7 @@ public class TFTPTest extends TestCase {
      * Create a file, size specified in bytes
      */
     private static File createFile(final File file, final int size) throws IOException {
-        try (final OutputStream os = new BufferedOutputStream(new FileOutputStream(file))) {
+        try (OutputStream os = new BufferedOutputStream(new FileOutputStream(file))) {
             final byte[] temp = "0".getBytes();
             for (int i = 0; i < size; i++) {
                 os.write(temp);
@@ -134,7 +134,7 @@ public class TFTPTest extends TestCase {
             out.delete();
             assertFalse("Couldn't clear output location", out.exists());
 
-            try (final FileOutputStream output = new FileOutputStream(out)) {
+            try (FileOutputStream output = new FileOutputStream(out)) {
                 tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
             }
 
@@ -196,7 +196,7 @@ public class TFTPTest extends TestCase {
             in.delete();
             assertFalse("Couldn't clear output location", in.exists());
 
-            try (final FileInputStream fis = new FileInputStream(file)) {
+            try (FileInputStream fis = new FileInputStream(file)) {
                 tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
             }
 

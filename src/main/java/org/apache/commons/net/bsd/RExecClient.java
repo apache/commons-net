@@ -81,7 +81,7 @@ public class RExecClient extends SocketClient {
     InputStream createErrorStream() throws IOException {
         final Socket socket;
 
-        try (final ServerSocket server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress())) {
+        try (ServerSocket server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress())) {
             _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8)); // $NON-NLS-1$
             _output_.write(NULL_CHAR);
             _output_.flush();

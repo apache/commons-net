@@ -98,7 +98,7 @@ public final class MockDaytimeTCPServer extends MockTcpServer {
 
     @Override
     protected void processClientSocket(final Socket clientSocket) throws Exception {
-        try (final PrintWriter pw = new PrintWriter(clientSocket.getOutputStream())) {
+        try (PrintWriter pw = new PrintWriter(clientSocket.getOutputStream())) {
             final Clock nextClock = Objects.requireNonNull(responseQueue.poll(5, TimeUnit.SECONDS), "Could not obtain next clock for DaytimeTCPMockServer");
             final ZonedDateTime dateTime = ZonedDateTime.now(nextClock);
             pw.write(dateTime.format(DAYTIME_DATA_FORMAT));

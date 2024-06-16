@@ -721,7 +721,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         final byte[] expected1 = { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '1' };
         final byte[] expected2 = { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '2' };
 
-        try (final PipedOutputStream po = new PipedOutputStream(); final PipedInputStream pi = new PipedInputStream(po)) {
+        try (PipedOutputStream po = new PipedOutputStream(); final PipedInputStream pi = new PipedInputStream(po)) {
 
             final OutputStream os = STANDARD.server.getOutputStream();
             final OutputStream ostc = STANDARD.client.getOutputStream();

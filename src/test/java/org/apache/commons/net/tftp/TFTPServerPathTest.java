@@ -122,14 +122,14 @@ public class TFTPServerPathTest {
         tftpClient.setSoTimeout(Duration.ofMillis(2000));
 
         // we can read file
-        try (final OutputStream os = Files.newOutputStream(fileToWrite)) {
+        try (OutputStream os = Files.newOutputStream(fileToWrite)) {
             final String writeFileName = fileToRead.getFileName().toString();
             final int bytesRead = tftpClient.receiveFile(writeFileName, TFTP.BINARY_MODE, os, serverAddress, serverPort);
             assertEquals(fileToReadContentLength, bytesRead);
         }
 
         // but we cannot write to it
-        try (final InputStream is = Files.newInputStream(fileToRead)) {
+        try (InputStream is = Files.newInputStream(fileToRead)) {
             final String readFileName = fileToRead.getFileName().toString();
             final IOException exception = assertThrows(IOException.class, () -> tftpClient.sendFile(readFileName, TFTP.BINARY_MODE, is, serverAddress, serverPort));
             assertEquals("Error code 4 received: Write not allowed by server.", exception.getMessage());
@@ -148,14 +148,14 @@ public class TFTPServerPathTest {
         tftpClient.setSoTimeout(Duration.ofMillis(2000));
 
         // we cannot read file
-        try (final OutputStream os = Files.newOutputStream(fileToWrite)) {
+        try (OutputStream os = Files.newOutputStream(fileToWrite)) {
             final String readFileName = fileToRead.getFileName().toString();
             final IOException exception = assertThrows(IOException.class, () -> tftpClient.receiveFile(readFileName, TFTP.BINARY_MODE, os, serverAddress, serverPort));
             assertEquals("Error code 4 received: Read not allowed by server.", exception.getMessage());
         }
 
         // but we can write to it
-        try (final InputStream is = Files.newInputStream(fileToRead)) {
+        try (InputStream is = Files.newInputStream(fileToRead)) {
             deleteFile(fileToWrite, false);
             final String writeFileName = fileToWrite.getFileName().toString();
             tftpClient.sendFile(writeFileName, TFTP.BINARY_MODE, is, serverAddress, serverPort);
@@ -172,7 +172,7 @@ public class TFTPServerPathTest {
         tftpClient = new TFTPClient();
         tftpClient.open();
 
-        try (final InputStream is = Files.newInputStream(fileToRead)) {
+        try (InputStream is = Files.newInputStream(fileToRead)) {
             final IOException exception = assertThrows(IOException.class, () -> tftpClient.sendFile("../foo", TFTP.BINARY_MODE, is, serverAddress, serverPort));
             assertEquals("Error code 0 received: Cannot access files outside of TFTP server root.", exception.getMessage());
             assertFalse(Files.exists(serverDirectory.resolve("foo")), "file created when it should not have been");
@@ -195,14 +195,14 @@ public class TFTPServerPathTest {
         Files.write(fileToRead, content);
 
         // send file
-        try (final InputStream is = Files.newInputStream(fileToRead)) {
+        try (InputStream is = Files.newInputStream(fileToRead)) {
             deleteFile(fileToWrite, false);
             final String writeFileName = fileToWrite.getFileName().toString();
             tftpClient.sendFile(writeFileName, TFTP.BINARY_MODE, is, serverAddress, serverPort);
         }
 
         // then verify it contents
-        try (final OutputStream os = Files.newOutputStream(fileToWrite)) {
+        try (OutputStream os = Files.newOutputStream(fileToWrite)) {
             final String readFileName = fileToRead.getFileName().toString();
             final int readBytes = tftpClient.receiveFile(readFileName, TFTP.BINARY_MODE, os, serverAddress, serverPort);
             assertEquals(content.length, readBytes);

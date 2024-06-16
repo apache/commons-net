@@ -88,7 +88,7 @@ public class MainTest {
         final String sourceFile = new File(URLDecoder.decode(codeSource.getLocation().getFile(), StandardCharsets.UTF_8.name())).getCanonicalPath();
         final Properties p = new Properties();
         if (sourceFile.endsWith(".jar")) {
-            try (final JarFile jf = new JarFile(sourceFile)) {
+            try (JarFile jf = new JarFile(sourceFile)) {
                 final Enumeration<JarEntry> e = jf.entries();
                 while (e.hasMoreElements()) {
                     final JarEntry je = e.nextElement();
@@ -112,7 +112,7 @@ public class MainTest {
     public void testCheckExamplesPropertiesIsComplete() throws Exception {
         final Properties cp = scanClasses();
         final Properties fp = new Properties();
-        try (final InputStream inputStream = this.getClass().getResourceAsStream("examples.properties")) {
+        try (InputStream inputStream = this.getClass().getResourceAsStream("examples.properties")) {
             fp.load(inputStream);
         }
         @SuppressWarnings("unchecked") // OK

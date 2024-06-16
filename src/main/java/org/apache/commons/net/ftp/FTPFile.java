@@ -421,7 +421,7 @@ public class FTPFile implements Serializable {
             return "[Invalid: could not parse file entry]";
         }
         final StringBuilder sb = new StringBuilder();
-        try (final Formatter fmt = new Formatter(sb)) {
+        try (Formatter fmt = new Formatter(sb)) {
             sb.append(formatType());
             sb.append(permissionToString(USER_ACCESS));
             sb.append(permissionToString(GROUP_ACCESS));

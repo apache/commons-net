@@ -51,7 +51,7 @@ public class SubnetUtilsExample {
 
         final String prompt = "Enter an IP address (e.g. 192.168.0.10):";
         System.out.println(prompt);
-        try (final Scanner scanner = new Scanner(System.in, Charset.defaultCharset().name())) {
+        try (Scanner scanner = new Scanner(System.in, Charset.defaultCharset().name())) {
             while (scanner.hasNextLine()) {
                 final String address = scanner.nextLine();
                 System.out.println("The IP address [" + address + "] is " + (info.isInRange(address) ? "" : "not ") + "within the subnet [" + subnet + "]");

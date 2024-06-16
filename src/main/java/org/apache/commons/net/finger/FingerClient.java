@@ -145,7 +145,7 @@ public class FingerClient extends SocketClient {
         int read;
         final StringBuilder result = new StringBuilder(buffer.length);
 
-        try (final BufferedReader input = new BufferedReader(new InputStreamReader(getInputStream(longOutput, user), getCharset()))) {
+        try (BufferedReader input = new BufferedReader(new InputStreamReader(getInputStream(longOutput, user), getCharset()))) {
             while (true) {
                 read = input.read(buffer, 0, buffer.length);
                 if (read <= 0) {

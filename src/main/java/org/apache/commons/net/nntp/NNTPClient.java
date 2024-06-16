@@ -399,7 +399,7 @@ public class NNTPClient extends NNTP {
             return null;
         }
 
-        try (final StringWriter help = new StringWriter(); final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
+        try (StringWriter help = new StringWriter(); BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
             Util.copyReader(reader, help);
             return help.toString();
         }
@@ -426,7 +426,7 @@ public class NNTPClient extends NNTP {
         }
 
         final Vector<String> list = new Vector<>();
-        try (final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
+        try (BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -516,7 +516,7 @@ public class NNTPClient extends NNTP {
             return null;
         }
 
-        try (final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
+        try (BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
             String line;
             final ArrayList<String> list = new ArrayList<>();
             while ((line = reader.readLine()) != null) {
@@ -602,7 +602,7 @@ public class NNTPClient extends NNTP {
         final Vector<NewsgroupInfo> list = new Vector<>(2048);
 
         String line;
-        try (final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
+        try (BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
             while ((line = reader.readLine()) != null) {
                 final NewsgroupInfo tmp = parseNewsgroupListEntry(line);
                 if (tmp == null) {
