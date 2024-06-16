@@ -128,7 +128,7 @@ public class TFTPClient extends TFTP {
 
         totalBytesReceived = 0;
 
-        if (mode == TFTP.ASCII_MODE) {
+        if (mode == ASCII_MODE) {
             output = new FromNetASCIIOutputStream(output);
         }
 
@@ -296,7 +296,7 @@ public class TFTPClient extends TFTP {
 
         totalBytesSent = 0L;
 
-        if (mode == TFTP.ASCII_MODE) {
+        if (mode == ASCII_MODE) {
             input = new ToNetASCIIInputStream(input);
         }
 
