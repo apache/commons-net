@@ -31,8 +31,9 @@ public class SSLSocketUtils {
      * Enable the HTTPS endpoint identification algorithm on an SSLSocket.
      *
      * @param socket the SSL socket
-     * @return {@code true} on success
+     * @return Always returns {@code true}
      */
+    // TODO for 4.0: becomes a void method.
     public static boolean enableEndpointNameVerification(final SSLSocket socket) {
         final SSLParameters sslParameters = socket.getSSLParameters();
         sslParameters.setEndpointIdentificationAlgorithm("HTTPS");
