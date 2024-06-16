@@ -21,8 +21,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Locale;
 
-import org.apache.commons.net.PrintCommandListener;
-import org.apache.commons.net.io.Util;
+import org.apache.commons.net.examples.PrintCommandListeners;
 import org.apache.commons.net.pop3.POP3Client;
 import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
@@ -77,7 +76,7 @@ public final class POP3Mail {
         pop3.setDefaultTimeout(60000);
 
         // suppress login details
-        pop3.addProtocolCommandListener(new PrintCommandListener(Util.newPrintWriter(System.out), true));
+        pop3.addProtocolCommandListener(PrintCommandListeners.sysOutPrintCommandListener());
 
         try {
             pop3.connect(server);

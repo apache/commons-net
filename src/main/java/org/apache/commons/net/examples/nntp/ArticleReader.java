@@ -19,11 +19,9 @@ package org.apache.commons.net.examples.nntp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.SocketException;
 
-import org.apache.commons.net.PrintCommandListener;
-import org.apache.commons.net.io.Util;
+import org.apache.commons.net.examples.PrintCommandListeners;
 import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NewsgroupInfo;
 
@@ -45,9 +43,7 @@ public class ArticleReader {
         final String articleSpec = args.length >= 3 ? args[2] : null;
 
         final NNTPClient client = new NNTPClient();
-        @SuppressWarnings("resource")
-        final PrintWriter printWriter = Util.newPrintWriter(System.out);
-        client.addProtocolCommandListener(new PrintCommandListener(printWriter, true));
+        client.addProtocolCommandListener(PrintCommandListeners.sysOutPrintCommandListener());
         client.connect(hostname);
 
         if (args.length == 5) { // Optional auth

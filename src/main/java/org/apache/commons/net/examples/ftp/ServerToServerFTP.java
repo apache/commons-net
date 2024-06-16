@@ -18,14 +18,12 @@
 package org.apache.commons.net.examples.ftp;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 
-import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ProtocolCommandListener;
+import org.apache.commons.net.examples.PrintCommandListeners;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.commons.net.io.Util;
 
 /**
  * This is an example program demonstrating how to use the FTPClient class. This program arranges a server to server file transfer that transfers a file from
@@ -75,9 +73,7 @@ public final class ServerToServerFTP {
         password2 = args[6];
         file2 = args[7];
 
-        @SuppressWarnings("resource") // Don't close System.out
-        final PrintWriter printWriter = Util.newPrintWriter(System.out);
-        listener = new PrintCommandListener(printWriter, true);
+        listener = PrintCommandListeners.sysOutPrintCommandListener();
         ftp1 = new FTPClient();
         ftp1.addProtocolCommandListener(listener);
         ftp2 = new FTPClient();

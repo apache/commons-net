@@ -20,8 +20,7 @@ package org.apache.commons.net.examples.nntp;
 import java.io.IOException;
 import java.net.SocketException;
 
-import org.apache.commons.net.PrintCommandListener;
-import org.apache.commons.net.io.Util;
+import org.apache.commons.net.examples.PrintCommandListeners;
 import org.apache.commons.net.nntp.Article;
 import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NewsgroupInfo;
@@ -42,7 +41,7 @@ public class MessageThreading {
         final String newsgroup = args[1];
 
         final NNTPClient client = new NNTPClient();
-        client.addProtocolCommandListener(new PrintCommandListener(Util.newPrintWriter(System.out), true));
+        client.addProtocolCommandListener(PrintCommandListeners.sysOutPrintCommandListener());
         client.connect(hostname);
 
         if (args.length == 4) { // Optional auth

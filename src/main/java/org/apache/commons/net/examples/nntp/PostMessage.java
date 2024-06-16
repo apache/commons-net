@@ -27,7 +27,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.apache.commons.net.PrintCommandListener;
+import org.apache.commons.net.examples.PrintCommandListeners;
 import org.apache.commons.net.io.Util;
 import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NNTPReply;
@@ -132,7 +132,7 @@ public final class PostMessage {
             }
 
             client = new NNTPClient();
-            client.addProtocolCommandListener(new PrintCommandListener(Util.newPrintWriter(System.out), true));
+            client.addProtocolCommandListener(PrintCommandListeners.sysOutPrintCommandListener());
 
             client.connect(server);
 

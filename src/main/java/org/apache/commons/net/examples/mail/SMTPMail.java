@@ -28,7 +28,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.net.PrintCommandListener;
+import org.apache.commons.net.examples.PrintCommandListeners;
 import org.apache.commons.net.io.Util;
 import org.apache.commons.net.smtp.SMTPClient;
 import org.apache.commons.net.smtp.SMTPReply;
@@ -108,7 +108,7 @@ public final class SMTPMail {
             }
 
             client = new SMTPClient();
-            client.addProtocolCommandListener(new PrintCommandListener(Util.newPrintWriter(System.out), true));
+            client.addProtocolCommandListener(PrintCommandListeners.sysOutPrintCommandListener());
 
             client.connect(server);
 
