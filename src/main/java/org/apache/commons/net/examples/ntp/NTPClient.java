@@ -37,7 +37,7 @@ import org.apache.commons.net.ntp.TimeStamp;
  * (NTP) service port on a specified server, retrieves the time, and prints it to standard output along with the fields from the NTP message header (e.g.
  * stratum level, reference id, poll interval, root delay, mode, ...) See <A HREF="ftp://ftp.rfc-editor.org/in-notes/rfc868.txt"> the spec </A> for details.
  * <p>
- * Usage: NTPClient <hostname-or-address-list>
+ * Usage: NTPClient {@code <hostname-or-address-list>}
  * </p>
  * <p>
  * Example: NTPClient clock.psu.edu
