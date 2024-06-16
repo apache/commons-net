@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.ftp;
 
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Calendar;
@@ -289,7 +290,7 @@ public class FTPFile implements Serializable {
         return sb.toString();
     }
 
-    private void readObject(final java.io.ObjectInputStream in) {
+    private void readObject(final ObjectInputStream in) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
