@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -161,10 +160,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
      * @throws IOException                   If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @throws NoSuchAlgorithmException      If the CRAM hash algorithm cannot be instantiated by the Java runtime system.
      * @throws InvalidKeyException           If the CRAM hash algorithm failed to use the given password.
-     * @throws InvalidKeySpecException       If the CRAM hash algorithm failed to use the given password.
      */
     public boolean auth(final AuthenticatingSMTPClient.AUTH_METHOD method, final String user, final String password)
-            throws IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
+            throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         if (!SMTPReply.isPositiveIntermediate(sendCommand(SMTPCommand.AUTH, AUTH_METHOD.getAuthName(method)))) {
             return false;
         }
