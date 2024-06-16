@@ -44,6 +44,7 @@ import org.apache.commons.net.ntp.TimeStamp;
  */
 public final class NTPClient {
 
+    private static final String OWN_CLOCK_IP_ADDRESS = "127.127.1.0";
     private static final NumberFormat numberFormat = new java.text.DecimalFormat("0.00");
 
     public static void main(final String[] args) {
@@ -108,7 +109,7 @@ public final class NTPClient {
         String refAddr = NtpUtils.getHostAddress(refId);
         String refName = null;
         if (refId != 0) {
-            if (refAddr.equals("127.127.1.0")) {
+            if (refAddr.equals(OWN_CLOCK_IP_ADDRESS)) {
                 refName = "LOCAL"; // This is the ref address for the Local Clock
             } else if (stratum >= 2) {
                 // If reference id has 127.127 prefix then it uses its own reference clock
