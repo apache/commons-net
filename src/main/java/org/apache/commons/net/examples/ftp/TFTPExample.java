@@ -70,7 +70,7 @@ public final class TFTPExample {
         final String localFilename;
         final String remoteFilename;
         final TFTPClient tftp;
-        int timeout = 60000;
+        int timeout = 60_000;
         boolean verbose = false;
 
         // Parse options
