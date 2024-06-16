@@ -46,7 +46,7 @@ public final class TFTPAckPacket extends TFTPPacket {
      * @throws TFTPPacketException If the datagram isn't a valid TFTP acknowledgement packet.
      */
     TFTPAckPacket(final DatagramPacket datagram) throws TFTPPacketException {
-        super(TFTPPacket.ACKNOWLEDGEMENT, datagram.getAddress(), datagram.getPort());
+        super(ACKNOWLEDGEMENT, datagram.getAddress(), datagram.getPort());
         final byte[] data;
 
         data = datagram.getData();
@@ -66,7 +66,7 @@ public final class TFTPAckPacket extends TFTPPacket {
      * @param blockNumber The block number being acknowledged.
      */
     public TFTPAckPacket(final InetAddress destination, final int port, final int blockNumber) {
-        super(TFTPPacket.ACKNOWLEDGEMENT, destination, port);
+        super(ACKNOWLEDGEMENT, destination, port);
         this.blockNumber = blockNumber;
     }
 
