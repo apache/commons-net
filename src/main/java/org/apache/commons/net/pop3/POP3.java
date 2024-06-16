@@ -190,7 +190,7 @@ public class POP3 extends SocketClient {
 
         for (final String entry : replyLines) {
             buffer.append(entry);
-            buffer.append(SocketClient.NETASCII_EOL);
+            buffer.append(NETASCII_EOL);
         }
 
         return buffer.toString();
@@ -282,7 +282,7 @@ public class POP3 extends SocketClient {
             __commandBuffer.append(' ');
             __commandBuffer.append(args);
         }
-        __commandBuffer.append(SocketClient.NETASCII_EOL);
+        __commandBuffer.append(NETASCII_EOL);
 
         final String message = __commandBuffer.toString();
         writer.write(message);
