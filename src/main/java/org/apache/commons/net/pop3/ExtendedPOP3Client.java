@@ -26,7 +26,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * A POP3 Cilent class with protocol and authentication extensions support (RFC2449 and RFC2195).
+ * A POP3 Client class with protocol and authentication extensions support (RFC2449 and RFC2195).
  *
  * @see POP3Client
  * @since 3.0
@@ -66,7 +66,7 @@ public class ExtendedPOP3Client extends POP3SClient {
     /**
      * The default ExtendedPOP3Client constructor. Creates a new Extended POP3 Client.
      *
-     * @throws NoSuchAlgorithmException on error
+     * @throws NoSuchAlgorithmException Never thrown here.
      */
     public ExtendedPOP3Client() throws NoSuchAlgorithmException {
     }
