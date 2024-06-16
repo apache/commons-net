@@ -31,9 +31,9 @@ import java.io.OutputStream;
  * </p>
  */
 final class TelnetOutputStream extends OutputStream {
+    private static final boolean CONVERT_TO_CRLF = true;
     private final TelnetClient client;
     // TODO there does not appear to be any way to change this value - should it be a ctor parameter?
-    private final boolean convertCRtoCRLF = true;
     private boolean lastWasCR;
 
     TelnetOutputStream(final TelnetClient client) {
@@ -95,7 +95,7 @@ final class TelnetOutputStream extends OutputStream {
             if (client.requestedWont(TelnetOption.BINARY)) // i.e. ASCII
             {
                 if (lastWasCR) {
-                    if (convertCRtoCRLF) {
+                    if (CONVERT_TO_CRLF) {
                         client.sendByte('\n');
                         if (ch == '\n') // i.e. was CRLF anyway
                         {
