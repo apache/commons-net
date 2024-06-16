@@ -20,7 +20,6 @@ package org.apache.commons.net.pop3;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 
 import javax.crypto.Mac;
@@ -82,10 +81,9 @@ public class ExtendedPOP3Client extends POP3SClient {
      * @throws IOException              If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @throws NoSuchAlgorithmException If the CRAM hash algorithm cannot be instantiated by the Java runtime system.
      * @throws InvalidKeyException      If the CRAM hash algorithm failed to use the given password.
-     * @throws InvalidKeySpecException  If the CRAM hash algorithm failed to use the given password.
      */
     public boolean auth(final AUTH_METHOD method, final String user, final String password)
-            throws IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
+            throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         if (sendCommand(POP3Command.AUTH, method.getAuthName()) != POP3Reply.OK_INT) {
             return false;
         }
