@@ -303,7 +303,7 @@ public class NNTP extends SocketClient {
             throw new MalformedServerReplyException("Could not parse response code.\nServer Reply: " + replyString);
         }
 
-        fireReplyReceived(replyCode, replyString + SocketClient.NETASCII_EOL);
+        fireReplyReceived(replyCode, replyString + NETASCII_EOL);
 
         if (replyCode == NNTPReply.SERVICE_DISCONTINUED) {
             throw new NNTPConnectionClosedException("NNTP response 400 received.  Server closed connection.");
@@ -647,7 +647,7 @@ public class NNTP extends SocketClient {
             __commandBuffer.append(' ');
             __commandBuffer.append(args);
         }
-        __commandBuffer.append(SocketClient.NETASCII_EOL);
+        __commandBuffer.append(NETASCII_EOL);
 
         final String message;
         _writer_.write(message = __commandBuffer.toString());
