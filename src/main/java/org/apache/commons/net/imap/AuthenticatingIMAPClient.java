@@ -149,10 +149,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
      * @throws IOException              If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @throws NoSuchAlgorithmException If the CRAM hash algorithm cannot be instantiated by the Java runtime system.
      * @throws InvalidKeyException      If the CRAM hash algorithm failed to use the given password.
-     * @throws InvalidKeySpecException  If the CRAM hash algorithm failed to use the given password.
      */
     public boolean auth(final AuthenticatingIMAPClient.AUTH_METHOD method, final String user, final String password)
-            throws IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
+            throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         if (!IMAPReply.isContinuation(sendCommand(IMAPCommand.AUTHENTICATE, method.getAuthName()))) {
             return false;
         }
