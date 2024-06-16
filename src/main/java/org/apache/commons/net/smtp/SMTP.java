@@ -265,7 +265,7 @@ public class SMTP extends SocketClient {
 
         for (final String line : replyLines) {
             buffer.append(line);
-            buffer.append(SocketClient.NETASCII_EOL);
+            buffer.append(NETASCII_EOL);
         }
 
         newReplyString = false;
@@ -526,7 +526,7 @@ public class SMTP extends SocketClient {
             __commandBuffer.append(args);
         }
 
-        __commandBuffer.append(SocketClient.NETASCII_EOL);
+        __commandBuffer.append(NETASCII_EOL);
 
         final String message = __commandBuffer.toString();
         writer.write(message);
