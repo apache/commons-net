@@ -196,10 +196,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
 
                         do {
                             try {
-                                if ((ch = read(mayBlock)) < 0) { // must be EOF
-                                    if (ch != WOULD_BLOCK) {
-                                        return ch;
-                                    }
+                                if ((ch = read(mayBlock)) < 0 && ch != WOULD_BLOCK) {
+                                    // must be EOF
+                                    return ch;
                                 }
                             } catch (final InterruptedIOException e) {
                                 synchronized (queue) {
