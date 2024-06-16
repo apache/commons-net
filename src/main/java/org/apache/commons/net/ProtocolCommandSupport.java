@@ -102,7 +102,7 @@ public class ProtocolCommandSupport implements Serializable {
         return listeners.getListenerCount();
     }
 
-    private void readObject(final ObjectInputStream in) {
+    private void readObject(final ObjectInputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
@@ -119,7 +119,7 @@ public class ProtocolCommandSupport implements Serializable {
         listeners.removeListener(listener);
     }
 
-    private void writeObject(final ObjectOutputStream out) {
+    private void writeObject(final ObjectOutputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
