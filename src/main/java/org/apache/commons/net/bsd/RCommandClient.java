@@ -214,8 +214,9 @@ public class RCommandClient extends RExecClient {
         super.connect(hostname, port, localAddr, localPort);
     }
 
-    // Overrides method in RExecClient in order to implement proper
-    // port number limitations.
+    /**
+     * Overrides method in RExecClient in order to implement proper port number limitations.
+     */
     @Override
     InputStream createErrorStream() throws IOException {
         final Socket socket;
