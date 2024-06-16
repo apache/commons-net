@@ -119,10 +119,10 @@ public class RCommandClient extends RExecClient {
         for (localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
             try {
                 _socket_ = _socketFactory_.createSocket(host, port, localAddr, localPort);
+                break;
             } catch (final SocketException e) {
                 continue;
             }
-            break;
         }
 
         if (localPort < MIN_CLIENT_PORT) {
