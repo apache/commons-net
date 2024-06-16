@@ -403,6 +403,12 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         return utcFormatter.format(ntpDate);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param ignored ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     private void writeObject(final ObjectOutputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }

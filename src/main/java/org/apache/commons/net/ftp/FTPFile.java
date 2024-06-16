@@ -478,6 +478,12 @@ public class FTPFile implements Serializable {
         return getRawListing();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param ignored ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     private void writeObject(final ObjectOutputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }

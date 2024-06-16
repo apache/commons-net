@@ -59,14 +59,19 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
-    /*
+    /**
      * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
      */
-
     public void removeListener(final EventListener listener) {
         listeners.remove(listener);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param ignored ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     private void writeObject(final ObjectOutputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
