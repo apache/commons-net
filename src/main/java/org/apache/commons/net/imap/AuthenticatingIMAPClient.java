@@ -65,7 +65,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
          *
          * @return The name of the given authentication method suitable for the server.
          */
-        public final String getAuthName() {
+        public String getAuthName() {
             return authName;
         }
     }

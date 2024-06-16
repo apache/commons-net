@@ -62,7 +62,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
          * @param method The authentication method to get the name for.
          * @return The name of the given authentication method suitable for the server.
          */
-        public static final String getAuthName(final AUTH_METHOD method) {
+        public static String getAuthName(final AUTH_METHOD method) {
             if (method.equals(PLAIN)) {
                 return "PLAIN";
             }
