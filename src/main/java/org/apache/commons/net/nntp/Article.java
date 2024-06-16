@@ -98,8 +98,8 @@ public class Article implements Threadable {
     }
 
     @Deprecated
-
     public void addHeaderField(final String name, final String val) {
+        // empty
     }
 
     /**
