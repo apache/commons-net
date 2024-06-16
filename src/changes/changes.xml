@@ -70,6 +70,8 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Remove InvalidKeySpecException from AuthenticatingIMAPClient.authenticate(AUTH_METHOD, String, String) never throws, it's not thrown.</action> 
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Remove InvalidKeySpecException from ExtendedPOP3Client.auth(AUTH_METHOD, String, String) never throws, it's not thrown.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Remove InvalidKeySpecException from org.apache.commons.net.smtp.AuthenticatingSMTPClient.auth(AUTH_METHOD, String, String) never throws, it's not thrown.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix SpotBugs RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE in SSLSocketUtils.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix some PMD issues.</action>      
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 70 to 71 #261.</action> 

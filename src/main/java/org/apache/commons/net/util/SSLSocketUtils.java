@@ -35,12 +35,9 @@ public class SSLSocketUtils {
      */
     public static boolean enableEndpointNameVerification(final SSLSocket socket) {
         final SSLParameters sslParameters = socket.getSSLParameters();
-        if (sslParameters != null) {
-            sslParameters.setEndpointIdentificationAlgorithm("HTTPS");
-            socket.setSSLParameters(sslParameters);
-            return true;
-        }
-        return false;
+        sslParameters.setEndpointIdentificationAlgorithm("HTTPS");
+        socket.setSSLParameters(sslParameters);
+        return true;
     }
 
     private SSLSocketUtils() {
