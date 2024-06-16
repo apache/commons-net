@@ -276,7 +276,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Registers a new TelnetOptionHandler for this telnet to use.
+     * Registers a new TelnetOptionHandler for this Telnet to use.
      *
      * @param opthand   option handler to be registered.
      * @throws InvalidTelnetOptionException - The option code is invalid.
@@ -592,7 +592,7 @@ class Telnet extends SocketClient {
     }
 
     /**
-     * Registers a notification handler to which will be sent notifications of received telnet option negotiation commands.
+     * Registers a notification handler to which will be sent notifications of received Telnet option negotiation commands.
      *
      * @param notifhand   TelnetNotificationHandler to be registered
      */

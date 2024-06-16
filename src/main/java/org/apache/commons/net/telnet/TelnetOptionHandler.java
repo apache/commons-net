@@ -18,7 +18,7 @@
 package org.apache.commons.net.telnet;
 
 /**
- * The TelnetOptionHandler class is the base class to be used for implementing handlers for telnet options.
+ * The TelnetOptionHandler class is the base class to be used for implementing handlers for Telnet options.
  * <p>
  * TelnetOptionHandler implements basic option handling functionality and defines abstract methods that must be implemented to define subnegotiation behavior.
  * </p>

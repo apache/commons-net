@@ -117,7 +117,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
     }
 
     // synchronized(client) critical sections are to protect against
-    // TelnetOutputStream writing through the telnet client at same time
+    // TelnetOutputStream writing through the Telnet client at same time
     // as a processDo/Will/etc. command invoked from TelnetInputStream
     // tries to write. Returns true if buffer was previously empty.
     private boolean processChar(final int ch) throws InterruptedException {
@@ -256,7 +256,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
     }
 
     // synchronized(client) critical sections are to protect against
-    // TelnetOutputStream writing through the telnet client at same time
+    // TelnetOutputStream writing through the Telnet client at same time
     // as a processDo/Will/etc. command invoked from TelnetInputStream
     // tries to write.
     /**

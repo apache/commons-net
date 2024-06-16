@@ -105,7 +105,7 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Registers a new TelnetOptionHandler for this telnet client to use.
+     * Registers a new TelnetOptionHandler for this Telnet client to use.
      *
      * @param opthand   option handler to be registered.
      *
@@ -143,8 +143,8 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Disconnects the telnet session, closing the input and output streams as well as the socket. If you have references to the input and output streams of the
-     * telnet connection, you should not close them yourself, but rather call disconnect to properly close the connection.
+     * Disconnects the Telnet session, closing the input and output streams as well as the socket. If you have references to the input and output streams of the
+     * Telnet connection, you should not close them yourself, but rather call disconnect to properly close the connection.
      */
     @Override
     public void disconnect() throws IOException {
@@ -170,10 +170,10 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Returns the telnet connection input stream. You should not close the stream when you finish with it. Rather, you should call {@link #disconnect
+     * Returns the Telnet connection input stream. You should not close the stream when you finish with it. Rather, you should call {@link #disconnect
      * disconnect }.
      *
-     * @return The telnet connection input stream.
+     * @return The Telnet connection input stream.
      */
     public InputStream getInputStream() {
         return input;
@@ -195,10 +195,10 @@ public class TelnetClient extends Telnet {
     /* Code Section added for supporting AYT (start) */
 
     /**
-     * Returns the telnet connection output stream. You should not close the stream when you finish with it. Rather, you should call {@link #disconnect
+     * Returns the Telnet connection output stream. You should not close the stream when you finish with it. Rather, you should call {@link #disconnect
      * disconnect }.
      *
-     * @return The telnet connection output stream.
+     * @return The Telnet connection output stream.
      */
     public OutputStream getOutputStream() {
         return output;
@@ -324,7 +324,7 @@ public class TelnetClient extends Telnet {
 
     /**
      * Sends a protocol-specific subnegotiation message to the remote peer. {@link TelnetClient} will add the IAC SB &amp; IAC SE framing bytes; the first byte
-     * in {@code message} should be the appropriate telnet option code.
+     * in {@code message} should be the appropriate Telnet option code.
      *
      * <p>
      * This method does not wait for any response. Subnegotiation messages sent by the remote end can be handled by registering an approrpriate

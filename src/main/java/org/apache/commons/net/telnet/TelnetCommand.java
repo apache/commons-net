@@ -18,7 +18,7 @@
 package org.apache.commons.net.telnet;
 
 /**
- * The TelnetCommand class cannot be instantiated and only serves as a storehouse for telnet command constants.
+ * The TelnetCommand class cannot be instantiated and only serves as a storehouse for Telnet command constants.
  *
  * @see org.apache.commons.net.telnet.Telnet
  * @see org.apache.commons.net.telnet.TelnetClient
@@ -99,10 +99,10 @@ public final class TelnetCommand {
     private static final int LAST_COMMAND = EOF;
 
     /**
-     * Returns the string representation of the telnet protocol command corresponding to the given command code.
+     * Returns the string representation of the Telnet protocol command corresponding to the given command code.
      *
-     * @param code The command code of the telnet protocol command.
-     * @return The string representation of the telnet protocol command.
+     * @param code The command code of the Telnet protocol command.
+     * @return The string representation of the Telnet protocol command.
      */
     public static String getCommand(final int code) {
         return commandString[FIRST_COMMAND - code];

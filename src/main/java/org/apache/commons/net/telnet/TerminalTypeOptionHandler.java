@@ -18,7 +18,7 @@
 package org.apache.commons.net.telnet;
 
 /**
- * Implements the telnet terminal type option RFC 1091.
+ * Implements the Telnet terminal type option RFC 1091.
  */
 public class TerminalTypeOptionHandler extends TelnetOptionHandler {
     /**

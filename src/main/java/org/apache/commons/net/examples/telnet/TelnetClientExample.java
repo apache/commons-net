@@ -95,7 +95,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
                 final Thread reader = new Thread(new TelnetClientExample());
                 tc.registerNotifHandler(new TelnetClientExample());
                 System.out.println("TelnetClientExample");
-                System.out.println("Type AYT to send an AYT telnet command");
+                System.out.println("Type AYT to send an AYT Telnet command");
                 System.out.println("Type OPT to print a report of status of options (0-24)");
                 System.out.println("Type REGISTER to register a new SimpleOptionHandler");
                 System.out.println("Type UNREGISTER to unregister an OptionHandler");
@@ -260,7 +260,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
         try {
             tc.disconnect();
         } catch (final IOException e) {
-            System.err.println("Exception while closing telnet:" + e.getMessage());
+            System.err.println("Exception while closing Telnet:" + e.getMessage());
         }
     }
 }

@@ -18,7 +18,7 @@
 package org.apache.commons.net.telnet;
 
 /**
- * The TelnetOption class cannot be instantiated and only serves as a storehouse for telnet option constants.
+ * The TelnetOption class cannot be instantiated and only serves as a storehouse for Telnet option constants.
  * <p>
  * Details regarding Telnet option specification can be found in RFC 855.
  * </p>
@@ -262,10 +262,10 @@ public class TelnetOption {
             "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Extended-Options-List" };
 
     /**
-     * Returns the string representation of the telnet protocol option corresponding to the given option code.
+     * Returns the string representation of the Telnet protocol option corresponding to the given option code.
      *
-     * @param code The option code of the telnet protocol option
-     * @return The string representation of the telnet protocol option.
+     * @param code The option code of the Telnet protocol option
+     * @return The string representation of the Telnet protocol option.
      */
     public static final String getOption(final int code) {
         if (optionString[code].isEmpty()) {

@@ -18,7 +18,7 @@
 package org.apache.commons.net.telnet;
 
 /**
- * The TelnetNotificationHandler interface can be used to handle notification of options negotiation commands received on a telnet session.
+ * The TelnetNotificationHandler interface can be used to handle notification of options negotiation commands received on a Telnet session.
  * <p>
  * The user can implement this interface and register a TelnetNotificationHandler by using the registerNotificationHandler() of TelnetClient to be notified of
  * option negotiation commands.

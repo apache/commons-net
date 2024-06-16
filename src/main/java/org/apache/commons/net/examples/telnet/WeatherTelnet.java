@@ -24,9 +24,9 @@ import org.apache.commons.net.telnet.TelnetClient;
 
 /**
  * This is an example of a trivial use of the TelnetClient class. It connects to the weather server at the University of Michigan, um-weather.sprl.umich.edu
- * port 3000, and allows the user to interact with the server via standard input. You could use this example to connect to any telnet server, but it is
+ * port 3000, and allows the user to interact with the server via standard input. You could use this example to connect to any Telnet server, but it is
  * obviously not general purpose because it reads from standard input a line at a time, making it inconvenient for use with a remote interactive shell. The
- * TelnetClient class used by itself is mostly intended for automating access to telnet resources rather than interactive use.
+ * TelnetClient class used by itself is mostly intended for automating access to Telnet resources rather than interactive use.
  */
 
 // This class requires the IOUtil support class!
