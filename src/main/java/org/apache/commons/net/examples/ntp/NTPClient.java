@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.util.Objects;
@@ -45,7 +46,7 @@ import org.apache.commons.net.ntp.TimeStamp;
 public final class NTPClient {
 
     private static final String OWN_CLOCK_IP_ADDRESS = "127.127.1.0";
-    private static final NumberFormat numberFormat = new java.text.DecimalFormat("0.00");
+    private static final NumberFormat numberFormat = new DecimalFormat("0.00");
 
     public static void main(final String[] args) {
         if (args.length == 0) {
