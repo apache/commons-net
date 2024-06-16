@@ -261,16 +261,6 @@ public class TelnetClient extends Telnet {
         this.inputListener = listener;
     }
 
-    /**
-     * Registers a notification handler to which will be sent notifications of received telnet option negotiation commands.
-     *
-     * @param notifhand   TelnetNotificationHandler to be registered
-     */
-    @Override
-    public void registerNotifHandler(final TelnetNotificationHandler notifhand) {
-        super.registerNotifHandler(notifhand);
-    }
-
     /* Code Section added for supporting spystreams (start) */
     /**
      * Registers an OutputStream for spying what's going on in the TelnetClient session.
@@ -394,11 +384,4 @@ public class TelnetClient extends Telnet {
         this.inputListener = null;
     }
 
-    /**
-     * Unregisters the current notification handler.
-     */
-    @Override
-    public void unregisterNotifHandler() {
-        super.unregisterNotifHandler();
-    }
 }
