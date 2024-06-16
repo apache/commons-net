@@ -63,19 +63,19 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
          * @return The name of the given authentication method suitable for the server.
          */
         public static final String getAuthName(final AUTH_METHOD method) {
-            if (method.equals(AUTH_METHOD.PLAIN)) {
+            if (method.equals(PLAIN)) {
                 return "PLAIN";
             }
-            if (method.equals(AUTH_METHOD.CRAM_MD5)) {
+            if (method.equals(CRAM_MD5)) {
                 return "CRAM-MD5";
             }
-            if (method.equals(AUTH_METHOD.LOGIN)) {
+            if (method.equals(LOGIN)) {
                 return "LOGIN";
             }
-            if (method.equals(AUTH_METHOD.XOAUTH)) {
+            if (method.equals(XOAUTH)) {
                 return "XOAUTH";
             }
-            if (method.equals(AUTH_METHOD.XOAUTH2)) {
+            if (method.equals(XOAUTH2)) {
                 return "XOAUTH2";
             }
             return null;
