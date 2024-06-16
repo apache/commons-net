@@ -102,9 +102,9 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * Callback method called when TelnetClient receives an option negotiation command. <p>
      *
-     * @param negotiation_code - type of negotiation command received (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT) <p>
+     * @param negotiation_code   type of negotiation command received (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT) <p>
      *
-     * @param option_code - code of the option negotiated <p>
+     * @param option_code   code of the option negotiated <p>
      */
     @Override
     public void receivedNegotiation(final int negotiation_code, final int option_code) {

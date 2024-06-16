@@ -39,7 +39,7 @@ public interface FTPTimestampParser {
     /**
      * Parses the supplied datestamp parameter. This parameter typically would have been pulled from a longer FTP listing via the regular expression mechanism
      *
-     * @param timestampStr - the timestamp portion of the FTP directory listing to be parsed
+     * @param timestampStr   the timestamp portion of the FTP directory listing to be parsed
      * @return a <code>java.util.Calendar</code> object initialized to the date parsed by the parser
      * @throws ParseException if none of the parser mechanisms belonging to the implementor can parse the input.
      */

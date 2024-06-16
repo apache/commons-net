@@ -33,11 +33,11 @@ public class TelnetTestResponder implements Runnable {
      * Constructs a new instance. Starts a new thread for the reader.
      * <p>
      *
-     * @param is      - InputStream on which to read.
-     * @param os      - OutputStream on which to answer.
-     * @param inputs  - Array of waited for Strings.
-     * @param outputs - Array of answers.
-     * @param timeout - milliseconds
+     * @param is        InputStream on which to read.
+     * @param os        OutputStream on which to answer.
+     * @param inputs    Array of waited for Strings.
+     * @param outputs   Array of answers.
+     * @param timeout   milliseconds
      */
     public TelnetTestResponder(final InputStream is, final OutputStream os, final String inputs[], final String outputs[], final long timeout) {
         _is = is;

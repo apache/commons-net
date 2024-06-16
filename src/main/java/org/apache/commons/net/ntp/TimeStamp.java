@@ -59,8 +59,8 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Left-pad 8-character hexadecimal string with 0's
      *
-     * @param buf - StringBuilder which is appended with leading 0's.
-     * @param l   - a long.
+     * @param buf   StringBuilder which is appended with leading 0's.
+     * @param l     a long.
      */
     private static void appendHexString(final StringBuilder buf, final long l) {
         final String s = Long.toHexString(l);
@@ -157,7 +157,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Parses the string argument as a NTP hexidecimal timestamp representation string (e.g. "c1a089bd.fc904f6d").
      *
-     * @param s - hexstring.
+     * @param s   hexstring.
      * @return the Timestamp represented by the argument in hexidecimal.
      * @throws NumberFormatException - if the string does not contain a parsable timestamp.
      */
@@ -224,7 +224,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Constructs a newly allocated NTP timestamp object that represents the Java Date argument.
      *
-     * @param d - the Date to be represented by the Timestamp object.
+     * @param d   the Date to be represented by the Timestamp object.
      */
     public TimeStamp(final Date d) {
         ntpTime = d == null ? 0 : toNtpTime(d.getTime());
@@ -253,7 +253,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Compares two Timestamps numerically.
      *
-     * @param anotherTimeStamp - the <code>TimeStamp</code> to be compared.
+     * @param anotherTimeStamp   the <code>TimeStamp</code> to be compared.
      * @return the value <code>0</code> if the argument TimeStamp is equal to this TimeStamp; a value less than <code>0</code> if this TimeStamp is numerically
      *         less than the TimeStamp argument; and a value greater than <code>0</code> if this TimeStamp is numerically greater than the TimeStamp argument
      *         (signed comparison).

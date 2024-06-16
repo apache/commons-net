@@ -41,8 +41,8 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler {
     /**
      * Constructor for the WindowSizeOptionHandler. Initial and accept behavior flags are set to false
      *
-     * @param nWidth  - Window width.
-     * @param nHeight - Window Height
+     * @param nWidth    Window width.
+     * @param nHeight   Window Height
      */
     public WindowSizeOptionHandler(final int nWidth, final int nHeight) {
         super(TelnetOption.WINDOW_SIZE, false, false, false, false);
@@ -55,12 +55,12 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler {
      * Constructor for the WindowSizeOptionHandler. Allows defining desired initial setting for local/remote activation of this option and behavior in case a
      * local/remote activation request for this option is received.
      *
-     * @param nWidth       - Window width.
-     * @param nHeight      - Window Height
-     * @param initlocal    - if set to true, a {@code WILL} is sent upon connection.
-     * @param initremote   - if set to true, a {@code DO} is sent upon connection.
-     * @param acceptlocal  - if set to true, any {@code DO} request is accepted.
-     * @param acceptremote - if set to true, any {@code WILL} request is accepted.
+     * @param nWidth         Window width.
+     * @param nHeight        Window Height
+     * @param initlocal      if set to true, a {@code WILL} is sent upon connection.
+     * @param initremote     if set to true, a {@code DO} is sent upon connection.
+     * @param acceptlocal    if set to true, any {@code DO} request is accepted.
+     * @param acceptremote   if set to true, any {@code WILL} request is accepted.
      */
     public WindowSizeOptionHandler(final int nWidth, final int nHeight, final boolean initlocal, final boolean initremote, final boolean acceptlocal,
             final boolean acceptremote) {

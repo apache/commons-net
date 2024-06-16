@@ -238,7 +238,7 @@ public interface NtpV3Packet {
     /**
      * Sets leap indicator.
      *
-     * @param li - leap indicator code
+     * @param li   leap indicator code
      */
     void setLeapIndicator(int li);
 
@@ -252,7 +252,7 @@ public interface NtpV3Packet {
     /**
      * Sets originate timestamp given NTP TimeStamp object.
      *
-     * @param ts - timestamp
+     * @param ts   timestamp
      */
     void setOriginateTimeStamp(TimeStamp ts);
 
@@ -274,7 +274,7 @@ public interface NtpV3Packet {
     /**
      * Sets receive timestamp given NTP TimeStamp object.
      *
-     * @param ts - timestamp
+     * @param ts   timestamp
      */
     void setReceiveTimeStamp(TimeStamp ts);
 
@@ -288,7 +288,7 @@ public interface NtpV3Packet {
     /**
      * Sets the reference timestamp given NTP TimeStamp object.
      *
-     * @param ts - timestamp
+     * @param ts   timestamp
      */
     void setReferenceTime(TimeStamp ts);
 
@@ -317,7 +317,7 @@ public interface NtpV3Packet {
     /**
      * Sets the {@code transmit} timestamp given NTP TimeStamp object.
      *
-     * @param ts - timestamp
+     * @param ts   timestamp
      */
     void setTransmitTime(TimeStamp ts);
 

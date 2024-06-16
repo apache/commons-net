@@ -107,7 +107,7 @@ public class TelnetClient extends Telnet {
     /**
      * Registers a new TelnetOptionHandler for this telnet client to use.
      *
-     * @param opthand - option handler to be registered.
+     * @param opthand   option handler to be registered.
      *
      * @throws InvalidTelnetOptionException on error
      * @throws IOException                  on error
@@ -132,7 +132,7 @@ public class TelnetClient extends Telnet {
     /**
      * Unregisters a TelnetOptionHandler.
      *
-     * @param optcode - Code of the option to be unregistered.
+     * @param optcode   Code of the option to be unregistered.
      *
      * @throws InvalidTelnetOptionException on error
      * @throws IOException                  on error
@@ -182,7 +182,7 @@ public class TelnetClient extends Telnet {
     /**
      * Returns the state of the option on the local side.
      *
-     * @param option - Option to be checked.
+     * @param option   Option to be checked.
      *
      * @return The state of the option on the local side.
      */
@@ -216,7 +216,7 @@ public class TelnetClient extends Telnet {
     /**
      * Returns the state of the option on the remote side.
      *
-     * @param option - Option to be checked.
+     * @param option   Option to be checked.
      *
      * @return The state of the option on the remote side.
      */
@@ -264,7 +264,7 @@ public class TelnetClient extends Telnet {
     /**
      * Registers a notification handler to which will be sent notifications of received telnet option negotiation commands.
      *
-     * @param notifhand - TelnetNotificationHandler to be registered
+     * @param notifhand   TelnetNotificationHandler to be registered
      */
     @Override
     public void registerNotifHandler(final TelnetNotificationHandler notifhand) {
@@ -275,7 +275,7 @@ public class TelnetClient extends Telnet {
     /**
      * Registers an OutputStream for spying what's going on in the TelnetClient session.
      *
-     * @param spystream - OutputStream on which session activity will be echoed.
+     * @param spystream   OutputStream on which session activity will be echoed.
      */
     public void registerSpyStream(final OutputStream spystream) {
         super._registerSpyStream(spystream);
@@ -284,7 +284,7 @@ public class TelnetClient extends Telnet {
     /**
      * Sends an {@code Are You There (AYT)} sequence and waits for the result.
      *
-     * @param timeout - Time to wait for a response.
+     * @param timeout   Time to wait for a response.
      *
      * @return true if AYT received a response, false otherwise.
      *
@@ -300,7 +300,7 @@ public class TelnetClient extends Telnet {
     /**
      * Sends an {@code Are You There (AYT)} sequence and waits for the result.
      *
-     * @param timeout - Time to wait for a response (millis.)
+     * @param timeout   Time to wait for a response (millis.)
      *
      * @return true if AYT received a response, false otherwise
      *

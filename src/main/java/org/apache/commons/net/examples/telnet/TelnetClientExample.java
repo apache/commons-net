@@ -207,8 +207,8 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
     /**
      * Callback method called when TelnetClient receives an option negotiation command.
      *
-     * @param negotiation_code - type of negotiation command received (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
-     * @param option_code      - code of the option negotiated
+     * @param negotiation_code   type of negotiation command received (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
+     * @param option_code        code of the option negotiated
      */
     @Override
     public void receivedNegotiation(final int negotiation_code, final int option_code) {

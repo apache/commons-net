@@ -32,10 +32,10 @@ public class EchoOptionHandler extends TelnetOptionHandler {
      * Constructor for the EchoOptionHandler. Allows defining desired initial setting for local/remote activation of this option and behavior in case a
      * local/remote activation request for this option is received.
      *
-     * @param initlocal    - if set to true, a WILL is sent upon connection.
-     * @param initremote   - if set to true, a DO is sent upon connection.
-     * @param acceptlocal  - if set to true, any DO request is accepted.
-     * @param acceptremote - if set to true, any WILL request is accepted.
+     * @param initlocal      if set to true, a WILL is sent upon connection.
+     * @param initremote     if set to true, a DO is sent upon connection.
+     * @param acceptlocal    if set to true, any DO request is accepted.
+     * @param acceptremote   if set to true, any WILL request is accepted.
      */
     public EchoOptionHandler(final boolean initlocal, final boolean initremote, final boolean acceptlocal, final boolean acceptremote) {
         super(TelnetOption.ECHO, initlocal, initremote, acceptlocal, acceptremote);

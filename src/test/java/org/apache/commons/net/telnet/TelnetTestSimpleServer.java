@@ -33,7 +33,7 @@ public class TelnetTestSimpleServer implements Runnable {
     /*
      * test of client-driven subnegotiation. <p>
      *
-     * @param port - server port on which to listen.
+     * @param port   server port on which to listen.
      *
      * @throws IOException on error
      */
