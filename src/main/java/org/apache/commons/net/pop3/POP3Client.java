@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.pop3;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.security.MessageDigest;
@@ -35,7 +36,7 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
  * {@link org.apache.commons.net.MalformedServerReplyException} , which is a subclass of IOException. A MalformedServerReplyException will be thrown when the
  * reply received from the server deviates enough from the protocol specification that it cannot be interpreted in a useful manner despite attempts to be as
  * lenient as possible.
- *
+ * </p>
  *
  * @see POP3MessageInfo
  * @see org.apache.commons.net.io.DotTerminatedMessageReader
@@ -116,8 +117,8 @@ public class POP3Client extends POP3 {
 
     /**
      * Delete a message from the POP3 server. The message is only marked for deletion by the server. If you decide to unmark the message, you must issue a
-     * {@link #reset reset } command. Messages marked for deletion are only deleted by the server on {@link #logout logout }.
-     * A deletion attempt can only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } .
+     * {@link #reset()} command. Messages marked for deletion are only deleted by the server on {@link #logout()}. A deletion attempt can only succeed if
+     * the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE}.
      *
      * @param messageId The message number to delete.
      * @return True if the deletion attempt was successful, false if not.
@@ -132,8 +133,8 @@ public class POP3Client extends POP3 {
 
     /**
      * List an individual message. A list attempt can only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE
-     * TRANSACTION_STATE } . Returns a POP3MessageInfo instance containing the number of the listed message and the size of the message in bytes. Returns null
-     * if the list attempt fails (e.g., if the specified message number does not exist).
+     * TRANSACTION_STATE}. Returns a POP3MessageInfo instance containing the number of the listed message and the size of the message in bytes. Returns null if
+     * the list attempt fails (e.g., if the specified message number does not exist).
      *
      * @param messageId The number of the message list.
      * @return A POP3MessageInfo instance containing the number of the listed message and the size of the message in bytes. Returns null if the list attempt
@@ -151,8 +152,8 @@ public class POP3Client extends POP3 {
     }
 
     /**
-     * List all messages. A list attempt can only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
-     * . Returns an array of POP3MessageInfo instances, each containing the number of a message and its size in bytes. If there are no messages, this method
+     * List all messages. A list attempt can only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE} .
+     * Returns an array of POP3MessageInfo instances, each containing the number of a message and its size in bytes. If there are no messages, this method
      * returns a zero length array. If the list attempt fails, it returns null.
      *
      * @return An array of POP3MessageInfo instances representing all messages in the order they appear in the mailbox, each containing the number of a message
@@ -181,7 +182,7 @@ public class POP3Client extends POP3 {
 
     /**
      * List the unique identifier for a message. A list attempt can only succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } . Returns a POP3MessageInfo instance containing the number of the listed
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE} . Returns a POP3MessageInfo instance containing the number of the listed
      * message and the unique identifier for that message. Returns null if the list attempt fails (e.g., if the specified message number does not exist).
      *
      * @param messageId The number of the message list.
@@ -201,7 +202,7 @@ public class POP3Client extends POP3 {
 
     /**
      * List the unique identifiers for all messages. A list attempt can only succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } . Returns an array of POP3MessageInfo instances, each containing the number
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE} . Returns an array of POP3MessageInfo instances, each containing the number
      * of a message and its unique identifier. If there are no messages, this method returns a zero length array. If the list attempt fails, it returns null.
      *
      * @return An array of POP3MessageInfo instances representing all messages in the order they appear in the mailbox, each containing the number of a message
@@ -229,12 +230,11 @@ public class POP3Client extends POP3 {
     }
 
     /**
-     * Login to the POP3 server with the given user and password. You must first connect to the server with
-     * {@link org.apache.commons.net.SocketClient#connect connect } before attempting to log in. A login attempt is only valid if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE }. After logging in, the client enters the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }.
+     * Login to the POP3 server with the given user and password. You must first connect to the server with {@link org.apache.commons.net.SocketClient#connect
+     * connect} before attempting to log in. A login attempt is only valid if the client is in the {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE
+     * AUTHORIZATION_STATE }. After logging in, the client enters the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE}.
      *
-     * @param user The account name being logged in to.
+     * @param user     The account name being logged in to.
      * @param password The plain text password of the account.
      * @return True if the login attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of logging in.
@@ -260,16 +260,17 @@ public class POP3Client extends POP3 {
     /**
      * Login to the POP3 server with the given username and authentication information. Use this method when connecting to a server requiring authentication
      * using the APOP command. Because the timestamp produced in the greeting banner varies from server to server, it is not possible to consistently extract
-     * the information. Therefore, after connecting to the server, you must call {@link org.apache.commons.net.pop3.POP3#getReplyString getReplyString } and
+     * the information. Therefore, after connecting to the server, you must call {@link org.apache.commons.net.pop3.POP3#getReplyString getReplyString} and
      * parse out the timestamp information yourself.
      * <p>
-     * You must first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect } before attempting to log in. A login attempt is
-     * only valid if the client is in the {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE }. After logging in, the client
-     * enters the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }. After connecting, you must parse out the server specific
-     * information to use as a timestamp, and pass that information to this method. The secret is a shared secret known to you and the server. See RFC 1939 for
-     * more details regarding the APOP command.
+     * You must first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect} before attempting to log in. A login attempt is
+     * only valid if the client is in the {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE }. After logging in, the client enters
+     * the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }. After connecting, you must parse out the server specific information
+     * to use as a timestamp, and pass that information to this method. The secret is a shared secret known to you and the server. See RFC 1939 for more details
+     * regarding the APOP command.
+     * </p>
      *
-     * @param user  The account name being logged in to.
+     * @param user      The account name being logged in to.
      * @param timestamp The timestamp string to combine with the secret.
      * @param secret    The shared secret which produces the MD5 digest when combined with the timestamp.
      * @return True if the login attempt was successful, false if not.
@@ -315,7 +316,7 @@ public class POP3Client extends POP3 {
     }
 
     /**
-     * Logout of the POP3 server. To fully disconnect from the server you must call {@link org.apache.commons.net.pop3.POP3#disconnect disconnect }. A logout
+     * Logout of the POP3 server. To fully disconnect from the server you must call {@link org.apache.commons.net.pop3.POP3#disconnect disconnect}. A logout
      * attempt is valid in any state. If the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } , it enters the
      * {@link org.apache.commons.net.pop3.POP3#UPDATE_STATE UPDATE_STATE } on a successful logout.
      *
@@ -366,11 +367,12 @@ public class POP3Client extends POP3 {
      * instance. The POP3 protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the POP3 connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
+     * </p>
      *
      * @param messageId The number of the message to fetch.
-     * @return A DotTerminatedMessageReader instance from which the entire message can be read. This can safely be cast to a {@link java.io.BufferedReader
-     *         BufferedReader} in order to use the {@link java.io.BufferedReader#readLine() BufferedReader#readLine()} method. Returns null if the retrieval
-     *         attempt fails (e.g., if the specified message number does not exist).
+     * @return A DotTerminatedMessageReader instance from which the entire message can be read. This can safely be cast to a {@link BufferedReader} in order to
+     *         use the {@link BufferedReader#readLine() } method. Returns null if the retrieval attempt fails (e.g., if the specified message number does not
+     *         exist).
      * @throws IOException If a network I/O error occurs in the process of sending the retrieve message command.
      */
     public Reader retrieveMessage(final int messageId) throws IOException {
@@ -389,15 +391,16 @@ public class POP3Client extends POP3 {
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
      * <p>
      * You must not issue any commands to the POP3 server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
-     * instance. The POP3 protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader
-     * actually reads directly from the POP3 connection. After the end of message has been reached, new commands can be executed and their replies read.
-     * If you do not follow these requirements, your program will not work properly.
+     * instance. The POP3 protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
+     * reads directly from the POP3 connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
+     * follow these requirements, your program will not work properly.
+     * </p>
      *
      * @param messageId The number of the message to fetch.
      * @param numLines  The top number of lines to fetch. This must be &gt;= 0.
      * @return A DotTerminatedMessageReader instance from which the specified top number of lines of the message can be read. This can safely be cast to a
-     *         {@link java.io.BufferedReader BufferedReader} in order to use the {@link java.io.BufferedReader#readLine() BufferedReader#readLine()} method.
-     *         Returns null if the retrieval attempt fails (e.g., if the specified message number does not exist).
+     *         {@link BufferedReader} in order to use the {@link BufferedReader#readLine()} method. Returns null if the retrieval attempt fails (e.g., if the
+     *         specified message number does not exist).
      * @throws IOException If a network I/O error occurs in the process of sending the top command.
      */
     public Reader retrieveMessageTop(final int messageId, final int numLines) throws IOException {
