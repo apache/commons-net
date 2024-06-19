@@ -78,6 +78,60 @@
     <Bug pattern="SING_SINGLETON_HAS_NONPRIVATE_CONSTRUCTOR" />
   </Match>
 
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.examples.unix.chargen" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+  </Match>
+
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.examples.unix.daytime" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+  </Match>
+
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.examples.unix.echo" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+  </Match>
+
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.examples.unix.finger" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+  </Match>
+
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.examples.unix.fwhois" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+  </Match>
+
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.examples.unix.rdate" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+  </Match>
+
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.examples.unix.rexec" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+  </Match>
+
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.examples.unix.rlogin" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+  </Match>
+
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.examples.unix.rshell" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+  </Match>
+
   <!-- Used externally -->
   <Match>
     <Class name="org.apache.commons.net.pop3.POP3MessageInfo" />
@@ -87,7 +141,6 @@
     </Or>
     <Bug code="UrF" />
   </Match>
-
 
   <!-- Don't check examples -->
   <Match>
