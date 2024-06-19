@@ -133,9 +133,13 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl {
     }
 
     /**
-     * Create the parser for MSLT and MSLD listing entries This class is immutable, so one can use {@link #getInstance()} instead.
+     * Creates the parser for MSLT and MSLD listing entries This class is immutable, so one can use {@link #getInstance()} instead.
+     *
+     * @deprecated Use {@link #getInstance()}.
      */
+    @Deprecated
     public MLSxEntryParser() {
+        // empty
     }
 
     // perm-fact = "Perm" "=" *pvals

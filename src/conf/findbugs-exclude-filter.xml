@@ -72,6 +72,12 @@
     <Bug code="UrF" />
   </Match>
 
+  <!-- Deprecated code -->
+  <Match>
+    <Class name="org.apache.commons.net.ftp.parser.MLSxEntryParser" />
+    <Bug pattern="SING_SINGLETON_HAS_NONPRIVATE_CONSTRUCTOR" />
+  </Match>
+
   <!-- Used externally -->
   <Match>
     <Class name="org.apache.commons.net.pop3.POP3MessageInfo" />
