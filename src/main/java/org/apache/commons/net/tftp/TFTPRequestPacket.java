@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.tftp;
 
+
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.nio.charset.Charset;
@@ -89,22 +90,23 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
             throw new TFTPPacketException("TFTP operator code does not match type.");
         }
 
-        final StringBuilder buffer = new StringBuilder();
 
         int index = 2;
         int length = datagram.getLength();
+        final byte[] fileNameBytes = new  byte[length];
 
         while (index < length && data[index] != 0) {
-            buffer.append((char) data[index]);
+            fileNameBytes[index] = data[index];
             ++index;
         }
 
-        this.fileName = buffer.toString();
+        this.fileName = new String(fileNameBytes, Charset.defaultCharset()).trim();
 
         if (index >= length) {
             throw new TFTPPacketException("Bad file name and mode format.");
         }
 
+        final StringBuilder buffer = new StringBuilder();
         buffer.setLength(0);
         ++index; // need to advance beyond the end of string marker
         while (index < length && data[index] != 0) {
