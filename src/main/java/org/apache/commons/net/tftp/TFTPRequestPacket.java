@@ -164,13 +164,14 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         final int modeLength;
         final byte[] data;
 
-        fileLength = fileName.length();
+        byte[] fileNameBytes = fileName.getBytes(Charset.defaultCharset());
+        fileLength = fileNameBytes.length;
         modeLength = modeBytes[mode].length;
 
         data = new byte[fileLength + modeLength + 4];
         data[0] = 0;
         data[1] = (byte) type;
-        System.arraycopy(fileName.getBytes(Charset.defaultCharset()), 0, data, 2, fileLength);
+        System.arraycopy(fileNameBytes, 0, data, 2, fileLength);
         data[fileLength + 2] = 0;
         System.arraycopy(modeBytes[mode], 0, data, fileLength + 3, modeLength);
 
@@ -190,12 +191,13 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         final int fileLength;
         final int modeLength;
 
-        fileLength = fileName.length();
+        byte[] fileNameBytes = fileName.getBytes(Charset.defaultCharset());
+        fileLength = fileNameBytes.length;
         modeLength = modeBytes[mode].length;
 
         data[0] = 0;
         data[1] = (byte) type;
-        System.arraycopy(fileName.getBytes(Charset.defaultCharset()), 0, data, 2, fileLength);
+        System.arraycopy(fileNameBytes, 0, data, 2, fileLength);
         data[fileLength + 2] = 0;
         System.arraycopy(modeBytes[mode], 0, data, fileLength + 3, modeLength);
 
