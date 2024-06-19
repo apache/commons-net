@@ -110,8 +110,7 @@ public class FingerClient extends SocketClient {
         buffer.append(NETASCII_EOL);
 
         // Note: Charsets.toCharset() returns the platform default for null input
-        final byte[] encodedQuery = buffer.toString().getBytes(Charsets.toCharset(encoding).name()); // Java 1.6 can use
-                                                                                                     // charset directly
+        final byte[] encodedQuery = buffer.toString().getBytes(Charsets.toCharset(encoding));
 
         output = new DataOutputStream(new BufferedOutputStream(checkOpenOutputStream(), 1024));
         output.write(encodedQuery, 0, encodedQuery.length);
