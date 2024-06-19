@@ -31,9 +31,9 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
- * Parser class for MSLT and MLSD replies. See RFC 3659.
+ * Parses {@code MSLT} and {@code MLSD} replies. See <a href="https://datatracker.ietf.org/doc/html/rfc3659">RFC 3659</a>.
  * <p>
- * Format is as follows:
+ * The format is as follows:
  * </p>
  *
  * <pre>
