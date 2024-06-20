@@ -132,6 +132,20 @@
     <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
   </Match>
 
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.nntp.Article" />
+    <Field name="kid"/>
+    <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE" />
+  </Match>
+
+  <!-- Keep for binary compatibility -->
+  <Match>
+    <Class name="org.apache.commons.net.nntp.Article" />
+    <Field name="next"/>
+    <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE" />
+  </Match>
+
   <!-- Used externally -->
   <Match>
     <Class name="org.apache.commons.net.pop3.POP3MessageInfo" />

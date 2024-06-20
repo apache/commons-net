@@ -19,19 +19,22 @@ package org.apache.commons.net.nntp;
 
 /**
  * A placeholder interface for threadable message objects Author: Rory Winston (rwinston@checkfree.com)
+ *
+ * @param <T> The Threadable implementation.
  */
-public interface Threadable {
+public interface Threadable<T extends Threadable<T>> {
+
     boolean isDummy();
 
-    Threadable makeDummy();
+    T makeDummy();
 
     String messageThreadId();
 
     String[] messageThreadReferences();
 
-    void setChild(Threadable child);
+    void setChild(T child);
 
-    void setNext(Threadable next);
+    void setNext(T next);
 
     String simplifiedSubject();
 

@@ -26,7 +26,7 @@ import org.apache.commons.net.util.NetConstants;
 /**
  * Basic state needed for message retrieval and threading. With thanks to Jamie Zawinski (jwz@jwz.org)
  */
-public class Article implements Threadable {
+public class Article implements Threadable<Article> {
 
     /**
      * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
@@ -92,7 +92,21 @@ public class Article implements Threadable {
 
     private boolean isReply;
 
-    public Article kid, next;
+    /**
+     * Will be private in 4.0.
+     *
+     * @deprecated Use {@link #setChild(Article)} and {@link #getChild()}.
+     */
+    @Deprecated
+    public Article kid;
+
+    /**
+     * Will be private in 4.0.
+     *
+     * @deprecated Use {@link #setNext(Article)} and {@link #getNext()}.
+     */
+    @Deprecated
+    public Article next;
 
     public Article() {
         articleNumber = -1; // isDummy
@@ -152,6 +166,16 @@ public class Article implements Threadable {
     }
 
     /**
+     * Gets the child article.
+     *
+     * @return the child article.
+     * @since 3.12.0
+     */
+    public Article getChild() {
+        return kid;
+    }
+
+    /**
      * Gets the article date header.
      *
      * @return the article date header.
@@ -167,6 +191,16 @@ public class Article implements Threadable {
      */
     public String getFrom() {
         return from;
+    }
+
+    /**
+     * Gets the next article.
+     *
+     * @return the next article.
+     * @since 3.12.0
+     */
+    public Article getNext() {
+        return next;
     }
 
     /**
@@ -196,7 +230,7 @@ public class Article implements Threadable {
     }
 
     @Override
-    public Threadable makeDummy() {
+    public Article makeDummy() {
         return new Article();
     }
 
@@ -234,8 +268,8 @@ public class Article implements Threadable {
     }
 
     @Override
-    public void setChild(final Threadable child) {
-        this.kid = (Article) child;
+    public void setChild(Article child) {
+        this.kid = child;
         flushSubjectCache();
     }
 
@@ -258,8 +292,8 @@ public class Article implements Threadable {
     }
 
     @Override
-    public void setNext(final Threadable next) {
-        this.next = (Article) next;
+    public void setNext(Article next) {
+        this.next = next;
         flushSubjectCache();
     }
 
@@ -279,8 +313,6 @@ public class Article implements Threadable {
         }
         return simplifiedSubject;
     }
-
-    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     /**
      * Attempts to parse the subject line for some typical reply signatures, and strip them out
