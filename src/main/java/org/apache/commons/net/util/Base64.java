@@ -600,6 +600,11 @@ public class Base64 {
         return newStringUtf8(encode(source));
     }
 
+    @Override
+    public final void finalize() {
+        // CT: Be wary of letting constructors throw exceptions. (CT_CONSTRUCTOR_THROW)
+    }
+
     int getLineLength() {
         return lineLength;
     }
