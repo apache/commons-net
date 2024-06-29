@@ -47,7 +47,6 @@ Apache Commons Net
 [![Coverage Status](https://codecov.io/gh/apache/commons-net/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-net)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/?gav=true)
 [![Javadocs](https://javadoc.io/badge/commons-net/commons-net/3.11.1.svg)](https://javadoc.io/doc/commons-net/commons-net/3.11.1)
-[![CodeQL](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-net/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-net)
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
