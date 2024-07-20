@@ -100,6 +100,13 @@ public class IMAPReplyTest {
     @Test
     public void testGetReplyCodeOkLine() throws IOException {
         assertEquals(IMAPReply.OK, IMAPReply.getReplyCode("A001 OK LOGIN completed"));
+        assertEquals(IMAPReply.OK,
+                IMAPReply.getReplyCode("AAAA OK [CAPABILITY IMAP4rev1 SASL-IR LOGIN-REFERRALS ID ENABLE IDLE SORT"
+                        + " SORT=DISPLAY THREAD=REFERENCES THREAD=REFS THREAD=ORDEREDSUBJECT"
+                        + " MULTIAPPEND URL-PARTIAL CATENATE UNSELECT CHILDREN NAMESPACE UIDPLUS"
+                        + " LIST-EXTENDED I18NLEVEL=1 CONDSTORE QRESYNC ESEARCH ESORT SEARCHRES WITHIN"
+                        + " CONTEXT=SEARCH LIST-STATUS BINARY MOVE SNIPPET=FUZZY PREVIEW=FUZZY PREVIEW"
+                        + " STATUS=SIZE SAVEDATE XLIST LITERAL+ NOTIFY SPECIAL-USE] Logged in"));
     }
 
     @Test

@@ -67,9 +67,9 @@ public final class IMAPReply {
      *
      * Don't look for more than 80 letters.
      * Don't look for more than 80 non-whitespace.
-     * Don't look for more than 80 character.
+     * Don't look for more than 500 character.
      */
-    private static final String TAGGED_RESPONSE = "^\\w{1,80} (\\S{1,80}).{0,80}";
+    private static final String TAGGED_RESPONSE = "^\\w{1,80} (\\S{1,80}).{0,500}";
 
     /**
      * Tag cannot contain: + ( ) { SP CTL % * " \ ]
