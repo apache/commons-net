@@ -99,8 +99,7 @@ public class IMAPReplyTest {
 
     @Test
     public void testGetReplyCodeOkLine() throws IOException {
-        final String okLine = "A001 OK LOGIN completed";
-        assertEquals(IMAPReply.OK, IMAPReply.getReplyCode(okLine));
+        assertEquals(IMAPReply.OK, IMAPReply.getReplyCode("A001 OK LOGIN completed"));
     }
 
     @Test
