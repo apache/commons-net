@@ -38,8 +38,8 @@ public final class NTPUDPClient extends DatagramSocketClient {
 
     /**
      * Retrieves the time information from the specified server on the default NTP port and returns it. The time is the number of milliseconds since 00:00
-     * (midnight) 1 January 1900 UTC, as specified by RFC 1305. This method reads the raw NTP packet and constructs a <i>TimeInfo</i> object that allows access
-     * to all the fields of the NTP message header.
+     * (midnight) 1 January 1900 UTC, as specified by RFC 1305. This method reads the raw NTP packet and constructs a <em>TimeInfo</em> object that allows
+     * access to all the fields of the NTP message header.
      *
      * @param host The address of the server.
      * @return The time value retrieved from the server.
@@ -51,8 +51,8 @@ public final class NTPUDPClient extends DatagramSocketClient {
 
     /**
      * Retrieves the time information from the specified server and port and returns it. The time is the number of milliseconds since 00:00 (midnight) 1 January
-     * 1900 UTC, as specified by RFC 1305. This method reads the raw NTP packet and constructs a <i>TimeInfo</i> object that allows access to all the fields of
-     * the NTP message header.
+     * 1900 UTC, as specified by RFC 1305. This method reads the raw NTP packet and constructs a <em>TimeInfo</em> object that allows access to all the fields
+     * of the NTP message header.
      *
      * @param host The address of the server.
      * @param port The port of the service.
