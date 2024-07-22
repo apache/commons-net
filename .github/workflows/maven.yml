@@ -51,9 +51,13 @@ jobs:
             os: ubuntu-latest
             experimental: false
             deploy: true
-#        include:
-#          - java: 22-ea
-#            experimental: true        
+          # Experimental builds
+          - java: 23-ea
+            experimental: true        
+            os: ubuntu-latest
+          - java: 24-ea
+            experimental: true        
+            os: ubuntu-latest
 
     runs-on: ${{ matrix.os }}
     steps:
