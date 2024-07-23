@@ -31,11 +31,13 @@ import org.apache.commons.net.SocketClient;
  * @see DaytimeUDPClient
  */
 public final class DaytimeTCPClient extends SocketClient {
+
     /** The default daytime port. It is set to 13 according to RFC 867. */
     public static final int DEFAULT_PORT = 13;
 
-    // Received dates will likely be less than 64 characters.
-    // This is a temporary buffer used while receiving data.
+    /**
+     * Received dates will likely be less than 64 characters. This is a temporary buffer used while receiving data.
+     */
     private final char[] buffer = new char[64];
 
     /**
@@ -46,7 +48,7 @@ public final class DaytimeTCPClient extends SocketClient {
     }
 
     /**
-     * Retrieves the time string from the server and returns it. The server will have closed the connection at this point, so you should call
+     * Gets the time string from the server and returns it. The server will have closed the connection at this point, so you should call
      * {@link org.apache.commons.net.SocketClient#disconnect disconnect } after calling this method. To retrieve another time, you must initiate another
      * connection with {@link org.apache.commons.net.SocketClient#connect connect } before calling <code>getTime()</code> again.
      *
