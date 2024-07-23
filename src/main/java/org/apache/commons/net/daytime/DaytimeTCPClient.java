@@ -56,14 +56,11 @@ public final class DaytimeTCPClient extends SocketClient {
      * @throws IOException If an error occurs while fetching the time string.
      */
     public String getTime() throws IOException {
-        int read;
         final StringBuilder result = new StringBuilder(buffer.length);
-        final BufferedReader reader;
-
-        reader = new BufferedReader(new InputStreamReader(_input_, getCharset()));
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(_input_, getCharset()));
 
         while (true) {
-            read = reader.read(buffer, 0, buffer.length);
+            int read = reader.read(buffer, 0, buffer.length);
             if (read <= 0) {
                 break;
             }
