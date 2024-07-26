@@ -166,7 +166,7 @@ public class IMAPClient extends IMAP {
         UNSEEN
     }
 
-    // --------- commands available in all states
+    // commands available in all states
 
     /**
      * The status data items defined in RFC 3501.
@@ -188,7 +188,7 @@ public class IMAPClient extends IMAP {
 
     private static final String DQUOTE_S = "\"";
 
-    // --------- commands available in the not-authenticated state
+    // commands available in the not-authenticated state
     // STARTTLS skipped - see IMAPSClient.
     // AUTHENTICATE skipped - see AuthenticatingIMAPClient.
 
@@ -205,7 +205,7 @@ public class IMAPClient extends IMAP {
         return append(mailboxName, null, null);
     }
 
-    // --------- commands available in the authenticated state
+    // commands available in the authenticated state
 
     /**
      * Send an APPEND command to the server.
@@ -406,7 +406,7 @@ public class IMAPClient extends IMAP {
         return true;
     }
 
-    // --------- commands available in the selected state
+    // commands available in the selected state
 
     /**
      * Send a LOGOUT command to the server. To fully disconnect from the server you must call disconnect(). A logout attempt is valid in any state. If the
