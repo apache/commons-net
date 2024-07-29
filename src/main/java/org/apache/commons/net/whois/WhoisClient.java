@@ -55,7 +55,7 @@ public final class WhoisClient extends FingerClient {
     public static final int DEFAULT_PORT = 43;
 
     /**
-     * The default whois constructor. Initializes the default port to <code>DEFAULT_PORT</code>.
+     * The default whois constructor. Initializes the default port to {@code DEFAULT_PORT}.
      */
     public WhoisClient() {
         setDefaultPort(DEFAULT_PORT);
