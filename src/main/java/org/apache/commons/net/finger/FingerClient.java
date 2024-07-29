@@ -58,7 +58,7 @@ public class FingerClient extends SocketClient {
     private final transient char[] buffer = new char[1024];
 
     /**
-     * The default FingerClient constructor. Initializes the default port to <code>DEFAULT_PORT</code>.
+     * The default FingerClient constructor. Initializes the default port to {@code DEFAULT_PORT}.
      */
     public FingerClient() {
         setDefaultPort(DEFAULT_PORT);
@@ -121,7 +121,7 @@ public class FingerClient extends SocketClient {
 
     /**
      * Fingers the connected host and returns the output as a String. You must first connect to a finger server before calling this method, and you should
-     * disconnect afterward. This is equivalent to calling <code>query(longOutput, "")</code>.
+     * disconnect afterward. This is equivalent to calling {@code query(longOutput, "")}.
      *
      * @param longOutput Set to true if long output is requested, false if not.
      * @return The result of the finger query.
