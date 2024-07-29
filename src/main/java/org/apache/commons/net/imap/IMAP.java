@@ -126,7 +126,7 @@ public class IMAP extends SocketClient {
     private final char[] initialID = { 'A', 'A', 'A', 'A' };
 
     /**
-     * The default IMAPClient constructor. Initializes the state to <code>DISCONNECTED_STATE</code>.
+     * The default IMAPClient constructor. Initializes the state to {@code DISCONNECTED_STATE}.
      */
     public IMAP() {
         setDefaultPort(DEFAULT_PORT);
@@ -157,7 +157,7 @@ public class IMAP extends SocketClient {
     }
 
     /**
-     * Disconnects the client from the server, and sets the state to <code>DISCONNECTED_STATE</code>. The reply text information from the last issued command
+     * Disconnects the client from the server, and sets the state to {@code DISCONNECTED_STATE}. The reply text information from the last issued command
      * is voided to allow garbage collection of the memory used to store that information.
      *
      * @throws IOException If there is an error in disconnecting.
@@ -427,7 +427,7 @@ public class IMAP extends SocketClient {
     }
 
     /**
-     * Sets IMAP client state. This must be one of the <code>_STATE</code> constants.
+     * Sets IMAP client state. This must be one of the {@code _STATE} constants.
      *
      * @param state The new state.
      */
