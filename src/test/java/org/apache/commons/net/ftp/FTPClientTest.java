@@ -107,33 +107,32 @@ public class FTPClientTest extends TestCase {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertEquals(1_000, client.getControlKeepAliveReplyTimeout());
     }
-    
+
     public void testGetControlKeepAliveTimeout() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertEquals(0, client.getControlKeepAliveTimeout());
     }
-    
+
     public void testGetCslDebug() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertNull(client.getCslDebug());
     }
-    
+
     public void testGetPassiveLocalIPAddress() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertNull(client.getPassiveLocalIPAddress());
     }
-    
+
     public void testGetPassivePort() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertEquals(-1, client.getPassivePort());
     }
-    
+
     public void testParseClient() {
         for (int i = 0; i < TESTS.length; i += 2) {
             assertEquals("Failed to parse", TESTS[i + 1], FTPClient.parsePathname(TESTS[i]));
         }
     }
-    
 
     public void testParsePassiveModeReplyForLocalAddressWithNatWorkaround() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
