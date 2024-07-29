@@ -28,6 +28,7 @@ public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTe
         for (int ii = 0; ii < a1.length; ii++) {
             if (a1[ii] != a2[ii]) {
                 result = false;
+                break;
             }
         }
         return result;
