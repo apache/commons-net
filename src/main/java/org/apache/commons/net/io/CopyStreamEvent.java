@@ -46,7 +46,7 @@ public class CopyStreamEvent extends EventObject {
      * @param source                The source of the event.
      * @param totalBytesTransferred The total number of bytes transferred so far during a copy operation.
      * @param bytesTransferred      The number of bytes transferred during the write that triggered the CopyStreamEvent.
-     * @param streamSize            The number of bytes in the stream being copied. This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the size is unknown.
+     * @param streamSize            The number of bytes in the stream being copied. This may be set to {@code UNKNOWN_STREAM_SIZE} if the size is unknown.
      */
     public CopyStreamEvent(final Object source, final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
         super(source);
@@ -65,7 +65,7 @@ public class CopyStreamEvent extends EventObject {
     }
 
     /**
-     * Returns the size of the stream being copied. This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the size is unknown.
+     * Returns the size of the stream being copied. This may be set to {@code UNKNOWN_STREAM_SIZE} if the size is unknown.
      *
      * @return The size of the stream being copied.
      */
