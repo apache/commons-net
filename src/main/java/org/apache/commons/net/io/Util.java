@@ -81,7 +81,7 @@ public final class Util {
     }
 
     /**
-     * Same as <code>copyReader(source, dest, DEFAULT_COPY_BUFFER_SIZE);</code>
+     * Same as {@code copyReader(source, dest, DEFAULT_COPY_BUFFER_SIZE);}
      *
      * @param source where to copy from
      * @param dest   where to copy to
@@ -169,7 +169,7 @@ public final class Util {
     }
 
     /**
-     * Same as <code>copyStream(source, dest, DEFAULT_COPY_BUFFER_SIZE);</code>
+     * Same as {@code copyStream(source, dest, DEFAULT_COPY_BUFFER_SIZE);}
      *
      * @param source where to copy from
      * @param dest   where to copy to
