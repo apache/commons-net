@@ -212,7 +212,7 @@ public class TimeInfo {
 
     /**
      * Compares this object against the specified object. The result is {@code true} if and only if the argument is not {@code null} and is a
-     * <code>TimeStamp</code> object that contains the same values as this object.
+     * {@code TimeStamp} object that contains the same values as this object.
      *
      * @param obj the object to compare with.
      * @return {@code true} if the objects are the same; {@code false} otherwise.
