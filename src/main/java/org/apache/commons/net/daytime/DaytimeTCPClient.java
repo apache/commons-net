@@ -60,7 +60,7 @@ public final class DaytimeTCPClient extends SocketClient {
         final BufferedReader reader = new BufferedReader(new InputStreamReader(_input_, getCharset()));
 
         while (true) {
-            int read = reader.read(buffer, 0, buffer.length);
+            final int read = reader.read(buffer, 0, buffer.length);
             if (read <= 0) {
                 break;
             }
