@@ -39,9 +39,9 @@ import org.apache.commons.net.io.CRLFLineReader;
  * You should keep in mind that the NNTP server may choose to prematurely close a connection if the client has been idle for longer than a given time period or
  * if the server is being shutdown by the operator or some other reason. The NNTP class will detect a premature NNTP server connection closing when it receives
  * a {@link org.apache.commons.net.nntp.NNTPReply#SERVICE_DISCONTINUED NNTPReply.SERVICE_DISCONTINUED } response to a command. When that occurs, the NNTP class
- * method encountering that reply will throw an {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} . <code>NNTPConectionClosedException</code> is
- * a subclass of <code>IOException</code> and therefore need not be caught separately, but if you are going to catch it separately, its catch block must
- * appear before the more general <code>IOException</code> catch block. When you encounter an
+ * method encountering that reply will throw an {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} . {@code NNTPConectionClosedException} is
+ * a subclass of {@code IOException} and therefore need not be caught separately, but if you are going to catch it separately, its catch block must
+ * appear before the more general {@code IOException} catch block. When you encounter an
  * {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect() } to properly
  * clean up the system resources used by NNTP. Before disconnecting, you may check the last reply code and text with {@link #getReplyCode getReplyCode } and
  * {@link #getReplyString getReplyString }.
@@ -89,7 +89,7 @@ public class NNTP extends SocketClient {
     protected ProtocolCommandSupport _commandSupport_;
 
     /**
-     * The default NNTP constructor. Sets the default port to <code>DEFAULT_PORT</code> and initializes internal data structures for saving NNTP reply
+     * The default NNTP constructor. Sets the default port to {@code DEFAULT_PORT} and initializes internal data structures for saving NNTP reply
      * information.
      */
     public NNTP() {
@@ -313,7 +313,7 @@ public class NNTP extends SocketClient {
 
     /**
      * Returns the integer value of the reply code of the last NNTP reply. You will usually only use this method after you connect to the NNTP server to check
-     * that the connection was successful since <code>connect</code> is of type void.
+     * that the connection was successful since {@code connect} is of type void.
      *
      * @return The integer value of the reply code of the last NNTP reply.
      */
