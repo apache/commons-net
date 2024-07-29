@@ -52,11 +52,11 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     private static final Pattern TOTAL_PATTERN = Pattern.compile("^total \\d+$");
 
     /**
-     * Some Linux distributions are now shipping an FTP server which formats file listing dates in an all-numeric format: <code>"yyyy-MM-dd HH:mm</code>. This
+     * Some Linux distributions are now shipping an FTP server which formats file listing dates in an all-numeric format: {@code "yyyy-MM-dd HH:mm}. This
      * is a very welcome development, and hopefully it will soon become the standard. However, since it is so new, for now, and possibly forever, we merely
      * accommodate it, but do not make it the default.
      * <p>
-     * For now end users may specify this format only via <code>UnixFTPEntryParser(FTPClientConfig)</code>. Steve Cohen - 2005-04-17
+     * For now end users may specify this format only via {@code UnixFTPEntryParser(FTPClientConfig)}. Steve Cohen - 2005-04-17
      */
     public static final FTPClientConfig NUMERIC_DATE_CONFIG = new FTPClientConfig(FTPClientConfig.SYST_UNIX, NUMERIC_DATE_FORMAT, null);
 
@@ -158,8 +158,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parses a line of a unix (standard) FTP server file listing and converts it into a usable format in the form of an <code>FTPFile</code> instance. If the
-     * file listing line doesn't describe a file, <code>null</code> is returned, otherwise a <code>FTPFile</code> instance representing the files in the
+     * Parses a line of a unix (standard) FTP server file listing and converts it into a usable format in the form of an {@code FTPFile} instance. If the
+     * file listing line doesn't describe a file, {@code null} is returned, otherwise a {@code FTPFile} instance representing the files in the
      * directory is returned.
      *
      * @param entry A line of text from the file listing
