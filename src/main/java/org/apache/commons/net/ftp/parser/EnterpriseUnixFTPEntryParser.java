@@ -69,8 +69,8 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl {
     }
 
     /**
-     * Parses a line of a unix FTP server file listing and converts it into a usable format in the form of an <code>FTPFile</code> instance. If the file
-     * listing line doesn't describe a file, <code>null</code> is returned, otherwise a <code>FTPFile</code> instance representing the files in the
+     * Parses a line of a unix FTP server file listing and converts it into a usable format in the form of an {@code FTPFile} instance. If the file
+     * listing line doesn't describe a file, {@code null} is returned, otherwise a {@code FTPFile} instance representing the files in the
      * directory is returned.
      *
      * @param entry A line of text from the file listing
