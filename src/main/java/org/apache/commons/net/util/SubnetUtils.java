@@ -154,7 +154,7 @@ public class SubnetUtils {
         }
 
         /**
-         * Tests if the parameter <code>address</code> is in the range of usable endpoint addresses for this subnet. This excludes the network and broadcast
+         * Tests if the parameter {@code address} is in the range of usable endpoint addresses for this subnet. This excludes the network and broadcast
          * addresses by default. Use {@link SubnetUtils#setInclusiveHostCount(boolean)} to change this.
          *
          * @param address the address to check
@@ -172,7 +172,7 @@ public class SubnetUtils {
         }
 
         /**
-         * Tests if the parameter <code>address</code> is in the range of usable endpoint addresses for this subnet. This excludes the network and broadcast
+         * Tests if the parameter {@code address} is in the range of usable endpoint addresses for this subnet. This excludes the network and broadcast
          * addresses. Use {@link SubnetUtils#setInclusiveHostCount(boolean)} to change this.
          *
          * @param address A dot-delimited IPv4 address, e.g. "192.168.0.1"
