@@ -62,7 +62,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * The default constructor for a UnixFTPEntryParser object.
      *
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     *                                  sign that {@code REGEX} is not a valid regular expression.
      */
     public MacOsPeterFTPEntryParser() {
         this(null);
@@ -73,7 +73,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     *                                  sign that {@code REGEX} is not a valid regular expression.
      * @since 1.4
      */
     public MacOsPeterFTPEntryParser(final FTPClientConfig config) {
@@ -92,8 +92,8 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
     /**
-     * Parses a line of a unix (standard) FTP server file listing and converts it into a usable format in the form of an <code>FTPFile</code> instance. If the
-     * file listing line doesn't describe a file, <code>null</code> is returned, otherwise a <code>FTPFile</code> instance representing the files in the
+     * Parses a line of a unix (standard) FTP server file listing and converts it into a usable format in the form of an {@code FTPFile} instance. If the
+     * file listing line doesn't describe a file, {@code null} is returned, otherwise a {@code FTPFile} instance representing the files in the
      * directory is returned.
      *
      * @param entry A line of text from the file listing
