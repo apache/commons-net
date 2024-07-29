@@ -51,7 +51,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * returned by {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream() } . However, it is possible to tell the rshd daemon to return the
  * standard error stream over a separate connection, readable from the input stream returned by {@link org.apache.commons.net.bsd.RExecClient#getErrorStream
  * getErrorStream() } . You can specify that a separate connection should be created for standard error by setting the boolean
- * <code>separateErrorStream</code> parameter of {@link #rcommand rcommand() } to <code>true</code>. The standard input of the remote process can be written
+ * {@code separateErrorStream} parameter of {@link #rcommand rcommand() } to {@code true}. The standard input of the remote process can be written
  * to through the output stream returned by {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputStream() } .
  * </p>
  *
@@ -77,7 +77,7 @@ public class RCommandClient extends RExecClient {
     public static final int MAX_CLIENT_PORT = 1023;
 
     /**
-     * The default RCommandClient constructor. Initializes the default port to <code>DEFAULT_PORT</code>.
+     * The default RCommandClient constructor. Initializes the default port to {@code DEFAULT_PORT}.
      */
     public RCommandClient() {
         setDefaultPort(DEFAULT_PORT);
@@ -134,7 +134,7 @@ public class RCommandClient extends RExecClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the specified local address and port. The local port must lie
-     * between <code>MIN_CLIENT_PORT</code> and <code>MAX_CLIENT_PORT</code> or an IllegalArgumentException will be thrown. Before returning,
+     * between {@code MIN_CLIENT_PORT} and {@code MAX_CLIENT_PORT} or an IllegalArgumentException will be thrown. Before returning,
      * {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_() } is called to perform connection initialization actions.
      *
      * @param host      The remote host.
@@ -192,7 +192,7 @@ public class RCommandClient extends RExecClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the specified local address and port. The local port must lie
-     * between <code>MIN_CLIENT_PORT</code> and <code>MAX_CLIENT_PORT</code> or an IllegalArgumentException will be thrown. Before returning,
+     * between {@code MIN_CLIENT_PORT} and {@code MAX_CLIENT_PORT} or an IllegalArgumentException will be thrown. Before returning,
      * {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_() } is called to perform connection initialization actions.
      *
      * @param hostname  The name of the remote host.
@@ -248,7 +248,7 @@ public class RCommandClient extends RExecClient {
     }
 
     /**
-     * Same as <code>rcommand(localUserName, remoteUserName, command, false);</code>
+     * Same as {@code rcommand(localUserName, remoteUserName, command, false);}
      *
      * @param localUser  the local user
      * @param remoteUser the remote user
