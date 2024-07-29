@@ -77,9 +77,9 @@ public final class NTPClient {
     }
 
     /**
-     * Process <code>TimeInfo</code> object and print its details.
+     * Process {@code TimeInfo} object and print its details.
      *
-     * @param info <code>TimeInfo</code> object.
+     * @param info {@code TimeInfo} object.
      */
     public static void processResponse(final TimeInfo info) {
         final NtpV3Packet message = info.getMessage();
