@@ -51,9 +51,9 @@ import org.apache.commons.net.util.NetConstants;
  * You should keep in mind that the FTP server may choose to prematurely close a connection if the client has been idle for longer than a given time period
  * (usually 900 seconds). The FTP class will detect a premature FTP server connection closing when it receives a
  * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE } response to a command. When that occurs, the FTP class
- * method encountering that reply will throw an {@link org.apache.commons.net.ftp.FTPConnectionClosedException}. <code>FTPConectionClosedException</code> is a
- * subclass of <code>IOException</code> and therefore need not be caught separately, but if you are going to catch it separately, its catch block must appear
- * before the more general <code>IOException</code> catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you
+ * method encountering that reply will throw an {@link org.apache.commons.net.ftp.FTPConnectionClosedException}. {@code FTPConectionClosedException} is a
+ * subclass of {@code IOException} and therefore need not be caught separately, but if you are going to catch it separately, its catch block must appear
+ * before the more general {@code IOException} catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you
  * must disconnect the connection with {@link #disconnect disconnect() } to properly clean up the system resources used by FTP. Before disconnecting, you may
  * check the last reply code and text with {@link #getReplyCode getReplyCode }, {@link #getReplyString getReplyString }, and {@link #getReplyStrings
  * getReplyStrings}. You may avoid server disconnections while the client is idle by periodically sending NOOP commands to the server.
@@ -80,85 +80,85 @@ public class FTP extends SocketClient {
 
     /**
      * A constant used to indicate the file(s) being transferred should be treated as ASCII. This is the default file type. All constants ending in
-     * <code>FILE_TYPE</code> are used to indicate file types.
+     * {@code FILE_TYPE} are used to indicate file types.
      */
     public static final int ASCII_FILE_TYPE = 0;
 
     /**
      * A constant used to indicate the file(s) being transferred should be treated as EBCDIC. Note however that there are several EBCDIC formats. All
-     * constants ending in <code>FILE_TYPE</code> are used to indicate file types.
+     * constants ending in {@code FILE_TYPE} are used to indicate file types.
      */
     public static final int EBCDIC_FILE_TYPE = 1;
 
     /**
      * A constant used to indicate the file(s) being transferred should be treated as a binary image, i.e., no translations should be performed. All constants
-     * ending in <code>FILE_TYPE</code> are used to indicate file types.
+     * ending in {@code FILE_TYPE} are used to indicate file types.
      */
     public static final int BINARY_FILE_TYPE = 2;
 
     /**
-     * A constant used to indicate the file(s) being transferred should be treated as a local type. All constants ending in <code>FILE_TYPE</code> are used to
+     * A constant used to indicate the file(s) being transferred should be treated as a local type. All constants ending in {@code FILE_TYPE} are used to
      * indicate file types.
      */
     public static final int LOCAL_FILE_TYPE = 3;
 
     /**
-     * A constant used for text files to indicate a non-print text format. This is the default format. All constants ending in <code>TEXT_FORMAT</code> are used
+     * A constant used for text files to indicate a non-print text format. This is the default format. All constants ending in {@code TEXT_FORMAT} are used
      * to indicate text formatting for text transfers (both ASCII and EBCDIC).
      */
     public static final int NON_PRINT_TEXT_FORMAT = 4;
 
     /**
-     * A constant used to indicate a text file contains format vertical format control characters. All constants ending in <code>TEXT_FORMAT</code> are used to
+     * A constant used to indicate a text file contains format vertical format control characters. All constants ending in {@code TEXT_FORMAT} are used to
      * indicate text formatting for text transfers (both ASCII and EBCDIC).
      */
     public static final int TELNET_TEXT_FORMAT = 5;
 
     /**
-     * A constant used to indicate a text file contains ASA vertical format control characters. All constants ending in <code>TEXT_FORMAT</code> are used to
+     * A constant used to indicate a text file contains ASA vertical format control characters. All constants ending in {@code TEXT_FORMAT} are used to
      * indicate text formatting for text transfers (both ASCII and EBCDIC).
      */
     public static final int CARRIAGE_CONTROL_TEXT_FORMAT = 6;
 
     /**
      * A constant used to indicate a file is to be treated as a continuous sequence of bytes. This is the default structure. All constants ending in
-     * <code>_STRUCTURE</code> are used to indicate file structure for file transfers.
+     * {@code _STRUCTURE} are used to indicate file structure for file transfers.
      */
     public static final int FILE_STRUCTURE = 7;
 
     /**
-     * A constant used to indicate a file is to be treated as a sequence of records. All constants ending in <code>_STRUCTURE</code> are used to indicate file
+     * A constant used to indicate a file is to be treated as a sequence of records. All constants ending in {@code _STRUCTURE} are used to indicate file
      * structure for file transfers.
      */
     public static final int RECORD_STRUCTURE = 8;
 
     /**
-     * A constant used to indicate a file is to be treated as a set of independent indexed pages. All constants ending in <code>_STRUCTURE</code> are used to
+     * A constant used to indicate a file is to be treated as a set of independent indexed pages. All constants ending in {@code _STRUCTURE} are used to
      * indicate file structure for file transfers.
      */
     public static final int PAGE_STRUCTURE = 9;
 
     /**
      * A constant used to indicate a file is to be transferred as a stream of bytes. This is the default transfer mode. All constants ending in
-     * <code>TRANSFER_MODE</code> are used to indicate file transfer modes.
+     * {@code TRANSFER_MODE} are used to indicate file transfer modes.
      */
     public static final int STREAM_TRANSFER_MODE = 10;
 
     /**
-     * A constant used to indicate a file is to be transferred as a series of blocks. All constants ending in <code>TRANSFER_MODE</code> are used to indicate
+     * A constant used to indicate a file is to be transferred as a series of blocks. All constants ending in {@code TRANSFER_MODE} are used to indicate
      * file transfer modes.
      */
     public static final int BLOCK_TRANSFER_MODE = 11;
 
     /**
-     * A constant used to indicate a file is to be transferred as FTP compressed data. All constants ending in <code>TRANSFER_MODE</code> are used to indicate
+     * A constant used to indicate a file is to be transferred as FTP compressed data. All constants ending in {@code TRANSFER_MODE} are used to indicate
      * file transfer modes. Currently unused.
      */
     public static final int COMPRESSED_TRANSFER_MODE = 12;
 
     /**
      * A constant used to indicate a file is to be transferred as FTP (un)compressing data in the "deflate" compression format. All constants ending in
-     * <code>TRANSFER_MODE</code> are used to indicate file transfer modes.
+     * {@code TRANSFER_MODE} are used to indicate file transfer modes.
      *
      * See the Internet Draft <a href="https://datatracker.ietf.org/doc/html/draft-preston-ftpext-deflate-04">Deflate transmission mode for FTP</a>
      */
@@ -166,7 +166,7 @@ public class FTP extends SocketClient {
 
 //    /**
 //     * A constant used to indicate a file is to be transferred as FTP (un)compressing data in the GZIP compression format. All constants ending in
-//     * <code>TRANSFER_MODE</code> are used to indicate file transfer modes.
+//     * {@code TRANSFER_MODE} are used to indicate file transfer modes.
 //     */
 //    public static final int GZIP_TRANSFER_MODE = 14;
 
@@ -219,7 +219,7 @@ public class FTP extends SocketClient {
     protected BufferedWriter _controlOutput_;
 
     /**
-     * The default FTP constructor. Sets the default port to <code>DEFAULT_PORT</code> and initializes internal data structures for saving FTP reply
+     * The default FTP constructor. Sets the default port to {@code DEFAULT_PORT} and initializes internal data structures for saving FTP reply
      * information.
      */
     public FTP() {
@@ -653,7 +653,7 @@ public class FTP extends SocketClient {
 
     /**
      * Returns the integer value of the reply code of the last FTP reply. You will usually only use this method after you connect to the FTP server to check
-     * that the connection was successful since <code>connect</code> is of type void.
+     * that the connection was successful since {@code connect} is of type void.
      *
      * @return The integer value of the reply code of the last FTP reply.
      */
@@ -806,7 +806,7 @@ public class FTP extends SocketClient {
      * A convenience method to send the FTP MFMT command to the server, receive the reply, and return the reply code.
      *
      * @param pathname The pathname for which mtime is to be changed
-     * @param timeval  Timestamp in <code>yyyyMMDDhhmmss</code> format
+     * @param timeval  Timestamp in {@code yyyyMMDDhhmmss} format
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -902,7 +902,7 @@ public class FTP extends SocketClient {
     /**
      * A convenience method to send the FTP MODE command to the server, receive the reply, and return the reply code.
      *
-     * @param mode The transfer mode to use (one of the <code>TRANSFER_MODE</code> constants).
+     * @param mode The transfer mode to use (one of the {@code TRANSFER_MODE} constants).
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1409,7 +1409,7 @@ public class FTP extends SocketClient {
     /**
      * A convenience method to send the FTP STRU command to the server, receive the reply, and return the reply code.
      *
-     * @param structure The structure of the file (one of the <code>_STRUCTURE</code> constants).
+     * @param structure The structure of the file (one of the {@code _STRUCTURE} constants).
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1436,7 +1436,7 @@ public class FTP extends SocketClient {
     /**
      * A convenience method to send the FTP TYPE command to the server, receive the reply, and return the reply code.
      *
-     * @param fileType The type of the file (one of the <code>FILE_TYPE</code> constants).
+     * @param fileType The type of the file (one of the {@code FILE_TYPE} constants).
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1450,8 +1450,8 @@ public class FTP extends SocketClient {
     /**
      * A convenience method to send the FTP TYPE command for text files to the server, receive the reply, and return the reply code.
      *
-     * @param fileType         The type of the file (one of the <code>FILE_TYPE</code> constants).
-     * @param formatOrByteSize The format of the file (one of the <code>_FORMAT</code> constants). In the case of <code>LOCAL_FILE_TYPE</code>, the byte size.
+     * @param fileType         The type of the file (one of the {@code FILE_TYPE} constants).
+     * @param formatOrByteSize The format of the file (one of the {@code _FORMAT} constants). In the case of {@code LOCAL_FILE_TYPE}, the byte size.
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
