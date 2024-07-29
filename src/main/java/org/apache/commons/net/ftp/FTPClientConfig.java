@@ -41,11 +41,11 @@ import java.util.TreeMap;
  * <h2>Examples of use of FTPClientConfig</h2> Use cases: You are trying to access a server that
  * <ul>
  * <li>lists files with timestamps that use month names in languages other than English</li>
- * <li>lists files with timestamps that use date formats other than the American English "standard" <code>MM dd yyyy</code></li>
+ * <li>lists files with timestamps that use date formats other than the American English "standard" {@code MM dd yyyy}</li>
  * <li>is in different time zone and you need accurate timestamps for dependency checking as in Ant</li>
  * </ul>
  * <p>
- * Unpaged (whole list) access on a UNIX server that uses French month names but uses the "standard" <code>MMM d yyyy</code> date formatting
+ * Unpaged (whole list) access on a UNIX server that uses French month names but uses the "standard" {@code MMM d yyyy} date formatting
  *
  * <pre>
  * FTPClient f = FTPClient();
@@ -79,7 +79,7 @@ import java.util.TreeMap;
  * </pre>
  * <p>
  * Unpaged (whole list) access on a VMS server that uses month names in a language not {@link #getSupportedLanguageCodes() supported} by the system. but uses
- * the "standard" <code>MMM d yyyy</code> date formatting
+ * the "standard" {@code MMM d yyyy} date formatting
  *
  * <pre>
  * FTPClient f = FTPClient();
@@ -245,10 +245,10 @@ public class FTPClientConfig {
 
     /**
      * Looks up the supplied language code in the internally maintained table of language codes. Returns a DateFormatSymbols object configured with short month
-     * names corresponding to the code. If there is no corresponding entry in the table, the object returned will be that for <code>Locale.US</code>
+     * names corresponding to the code. If there is no corresponding entry in the table, the object returned will be that for {@code Locale.US}
      *
      * @param languageCode See {@link #setServerLanguageCode(String) serverLanguageCode}
-     * @return a DateFormatSymbols object configured with short month names corresponding to the supplied code, or with month names for <code>Locale.US</code>
+     * @return a DateFormatSymbols object configured with short month names corresponding to the supplied code, or with month names for {@code Locale.US}
      *         if there is no corresponding entry in the internal table.
      */
     public static DateFormatSymbols lookupDateFormatSymbols(final String languageCode) {
@@ -431,8 +431,8 @@ public class FTPClientConfig {
 
     /**
      * Getter for the serverSystemKey property. This property specifies the general type of server to which the client connects. Should be either one of the
-     * <code>FTPClientConfig.SYST_*</code> codes or else the fully qualified class name of a parser implementing both the <code>FTPFileEntryParser</code> and
-     * <code>Configurable</code> interfaces.
+     * {@code FTPClientConfig.SYST_*} codes or else the fully qualified class name of a parser implementing both the {@code FTPFileEntryParser} and
+     * {@code Configurable} interfaces.
      *
      * @return Returns the serverSystemKey property.
      */
@@ -487,10 +487,10 @@ public class FTPClientConfig {
      * <p>
      * setter for the defaultDateFormatStr property. This property specifies the main date format that will be used by a parser configured by this configuration
      * to parse file timestamps. If this is not specified, such a parser will use as a default value, the most commonly used format which will be in as used in
-     * <code>en_US</code> locales.
+     * {@code en_US} locales.
      * </p>
      * <p>
-     * This should be in the format described for <code>java.text.SimpleDateFormat</code>. property.
+     * This should be in the format described for {@code java.text.SimpleDateFormat}. property.
      * </p>
      *
      * @param defaultDateFormatStr The defaultDateFormatStr to set.
@@ -527,7 +527,7 @@ public class FTPClientConfig {
      * This is used primarily in unix-based systems.
      * </p>
      * <p>
-     * This should be in the format described for <code>java.text.SimpleDateFormat</code>.
+     * This should be in the format described for {@code java.text.SimpleDateFormat}.
      * </p>
      *
      * @param recentDateFormatStr The recentDateFormatStr to set.
@@ -545,16 +545,16 @@ public class FTPClientConfig {
      * recentDateFormatStr} are using numeric or alphabetic month names.
      * </p>
      * <p>
-     * If the code supplied is not supported here, <code>en_US</code> month names will be used. We are supporting here those language codes which, when a
-     * <code>java.util.Locale</code> is constructed using it, and a <code>java.text.SimpleDateFormat</code> is constructed using that Locale, the array
-     * returned by the SimpleDateFormat's <code>getShortMonths()</code> method consists solely of three 8-bit ASCII character strings. Additionally, languages
+     * If the code supplied is not supported here, {@code en_US} month names will be used. We are supporting here those language codes which, when a
+     * {@code java.util.Locale} is constructed using it, and a {@code java.text.SimpleDateFormat} is constructed using that Locale, the array
+     * returned by the SimpleDateFormat's {@code getShortMonths()} method consists solely of three 8-bit ASCII character strings. Additionally, languages
      * which do not meet this requirement are included if a common alternative set of short month names is known to be used. This means that users who can tell
      * us of additional such encodings may get them added to the list of supported languages by contacting the Apache Commons Net team.
      * </p>
      * <p>
      * <strong> Please note that this attribute will NOT be used to determine a locale-based date format for the language. </strong> Experience has shown that
-     * many if not most FTP servers outside the United States employ the standard <code>en_US</code> date format orderings of <code>MMM d yyyy</code> and
-     * <code>MMM d HH:mm</code> and attempting to deduce this automatically here would cause more problems than it would solve. The date format must be changed
+     * many if not most FTP servers outside the United States employ the standard {@code en_US} date format orderings of {@code MMM d yyyy} and
+     * {@code MMM d HH:mm} and attempting to deduce this automatically here would cause more problems than it would solve. The date format must be changed
      * via the {@link #setDefaultDateFormatStr(String) defaultDateFormatStr} and/or {@link #setRecentDateFormatStr(String) recentDateFormatStr} parameters.
      * </p>
      *
@@ -570,8 +570,8 @@ public class FTPClientConfig {
      * file listings. This might be particularly useful to clients such as Ant that try to use these timestamps for dependency checking.
      * </p>
      * <p>
-     * This should be one of the identifiers used by <code>java.util.TimeZone</code> to refer to time zones, for example, <code>America/Chicago</code> or
-     * <code>Asia/Rangoon</code>.
+     * This should be one of the identifiers used by {@code java.util.TimeZone} to refer to time zones, for example, {@code America/Chicago} or
+     * {@code Asia/Rangoon}.
      * </p>
      *
      * @param serverTimeZoneId The serverTimeZoneId to set.
@@ -588,7 +588,7 @@ public class FTPClientConfig {
      * <p>
      * This should be a string containing twelve strings each composed of three characters, delimited by pipe (|) characters. Currently, only 8-bit ASCII
      * characters are known to be supported. For example, a set of month names used by a hypothetical Icelandic FTP server might conceivably be specified as
-     * <code>"jan|feb|mar|apr|ma&#xED;|j&#xFA;n|j&#xFA;l|&#xE1;g&#xFA;|sep|okt|n&#xF3;v|des"</code>.
+     * {@code "jan|feb|mar|apr|ma&#xED;|j&#xFA;n|j&#xFA;l|&#xE1;g&#xFA;|sep|okt|n&#xF3;v|des"}.
      * </p>
      *
      * @param shortMonthNames The value to set to the shortMonthNames property.
