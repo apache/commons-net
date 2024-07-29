@@ -41,7 +41,7 @@ public final class DaytimeTCPClient extends SocketClient {
     private final char[] buffer = new char[64];
 
     /**
-     * The default DaytimeTCPClient constructor. It merely sets the default port to <code>DEFAULT_PORT</code>.
+     * The default DaytimeTCPClient constructor. It merely sets the default port to {@code DEFAULT_PORT}.
      */
     public DaytimeTCPClient() {
         setDefaultPort(DEFAULT_PORT);
@@ -50,7 +50,7 @@ public final class DaytimeTCPClient extends SocketClient {
     /**
      * Gets the time string from the server and returns it. The server will have closed the connection at this point, so you should call
      * {@link org.apache.commons.net.SocketClient#disconnect disconnect } after calling this method. To retrieve another time, you must initiate another
-     * connection with {@link org.apache.commons.net.SocketClient#connect connect } before calling <code>getTime()</code> again.
+     * connection with {@link org.apache.commons.net.SocketClient#connect connect } before calling {@code getTime()} again.
      *
      * @return The time string retrieved from the server.
      * @throws IOException If an error occurs while fetching the time string.
