@@ -69,7 +69,7 @@ public class Main {
             if (l.isEmpty()) {
                 return;
             }
-            l.sort(null);
+            Collections.sort(l);
             System.out.println("\nAliases and their classes:");
             for (final String s : l) {
                 System.out.printf("%-25s %s%n", s, fp.getProperty(s));
