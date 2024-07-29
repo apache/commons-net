@@ -36,7 +36,7 @@ public final class EchoTCPClient extends DiscardTCPClient {
     public static final int DEFAULT_PORT = 7;
 
     /**
-     * The default EchoTCPClient constructor. It merely sets the default port to <code>DEFAULT_PORT</code>.
+     * The default EchoTCPClient constructor. It merely sets the default port to {@code DEFAULT_PORT}.
      */
     public EchoTCPClient() {
         setDefaultPort(DEFAULT_PORT);
