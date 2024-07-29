@@ -68,7 +68,7 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
      * a parser object of this class is instantiated and is returned; otherwise it attempts to interpret the key as an identifier commonly used by the FTP SYST
      * command to identify systems.
      * <p>
-     * If <code>key</code> is not recognized as a fully qualified class name known to the system, this method will then attempt to see whether it
+     * If {@code key} is not recognized as a fully qualified class name known to the system, this method will then attempt to see whether it
      * <b>contains</b> a string identifying one of the known parsers. This comparison is <b>case-insensitive</b>. The intent here is where possible, to select
      * as keys strings which are returned by the SYST command on the systems which the corresponding parser successfully parses. This enables this factory to be
      * used in the auto-detection system.
