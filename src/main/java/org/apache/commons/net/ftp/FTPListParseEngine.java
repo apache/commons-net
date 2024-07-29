@@ -35,13 +35,13 @@ import org.apache.commons.net.util.Charsets;
  * <p>
  * The first part consists of reading the raw input into an internal list of strings. Every item in this list corresponds to an actual file. All extraneous
  * matter emitted by the server will have been removed by the end of this phase. This is accomplished in conjunction with the FTPFileEntryParser associated with
- * this engine, by calling its methods <code>readNextEntry()</code> - which handles the issue of what delimits one entry from another, usually but not always a
- * line feed and <code>preParse()</code> - which handles removal of extraneous matter such as the preliminary lines of a listing, removal of duplicates on
+ * this engine, by calling its methods {@code readNextEntry()} - which handles the issue of what delimits one entry from another, usually but not always a
+ * line feed and {@code preParse()} - which handles removal of extraneous matter such as the preliminary lines of a listing, removal of duplicates on
  * versioning systems, etc.
  * <p>
  * The second part is composed of the actual parsing, again in conjunction with the particular parser used by this engine. This is controlled by an iterator
- * over the internal list of strings. This may be done either in block mode, by calling the <code>getNext()</code> and <code>getPrevious()</code> methods to
- * provide "paged" output of less than the whole list at one time, or by calling the <code>getFiles()</code> method to return the entire list.
+ * over the internal list of strings. This may be done either in block mode, by calling the {@code getNext()} and {@code getPrevious()} methods to
+ * provide "paged" output of less than the whole list at one time, or by calling the {@code getFiles()} method to return the entire list.
  * <p>
  * Examples:
  * <p>
@@ -143,15 +143,15 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Returns an array of at most <code>quantityRequested</code> FTPFile objects starting at this object's internal iterator's current position. If fewer than
-     * <code>quantityRequested</code> such elements are available, the returned array will have a length equal to the number of entries at and after the
+     * Returns an array of at most {@code quantityRequested} FTPFile objects starting at this object's internal iterator's current position. If fewer than
+     * {@code quantityRequested} such elements are available, the returned array will have a length equal to the number of entries at and after the
      * current position. If no such entries are found, this array will have a length of 0.
      *
      * After this method is called this object's internal iterator is advanced by a number of positions equal to the size of the array returned.
      *
      * @param quantityRequested the maximum number of entries we want to get.
      *
-     * @return an array of at most <code>quantityRequested</code> FTPFile objects starting at the current position of this iterator within its list and at least
+     * @return an array of at most {@code quantityRequested} FTPFile objects starting at the current position of this iterator within its list and at least
      *         the number of elements which exist in the list at and after its current position.
      *         <p>
      *         <b> NOTE:</b> This array may contain null members if any of the individual file listings failed to parse. The caller should check each entry for
@@ -174,17 +174,17 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Returns an array of at most <code>quantityRequested</code> FTPFile objects starting at this object's internal iterator's current position, and working
+     * Returns an array of at most {@code quantityRequested} FTPFile objects starting at this object's internal iterator's current position, and working
      * back toward the beginning.
      *
-     * If fewer than <code>quantityRequested</code> such elements are available, the returned array will have a length equal to the number of entries at and
+     * If fewer than {@code quantityRequested} such elements are available, the returned array will have a length equal to the number of entries at and
      * after the current position. If no such entries are found, this array will have a length of 0.
      *
      * After this method is called this object's internal iterator is moved back by a number of positions equal to the size of the array returned.
      *
      * @param quantityRequested the maximum number of entries we want to get.
      *
-     * @return an array of at most <code>quantityRequested</code> FTPFile objects starting at the current position of this iterator within its list and at least
+     * @return an array of at most {@code quantityRequested} FTPFile objects starting at the current position of this iterator within its list and at least
      *         the number of elements which exist in the list at and after its current position. This array will be in the same order as the underlying list
      *         (not reversed).
      *         <p>
@@ -225,8 +225,8 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Internal method for reading (and closing) the input into the <code>entries</code> list. After this method has completed, <code>entries</code> will
-     * contain a collection of entries (as defined by <code>FTPFileEntryParser.readNextEntry()</code>), but this may contain various non-entry preliminary lines
+     * Internal method for reading (and closing) the input into the {@code entries} list. After this method has completed, {@code entries} will
+     * contain a collection of entries (as defined by {@code FTPFileEntryParser.readNextEntry()}), but this may contain various non-entry preliminary lines
      * from the server output, duplicates, and other data that will not be part of the final listing.
      *
      * @param inputStream The socket stream on which the input will be read.
