@@ -36,7 +36,7 @@ import org.apache.commons.net.MockTcpServer;
  * The MockDaytimeTCPServer class is a simple TCP implementation of a server for the Daytime Protocol described in <a href="https://datatracker.ietf.org/doc/html/rfc867">RFC 867</a>.
  * <p>
  * Listens for TCP socket connections on the daytime protocol port and writes the local day time to socket {@code outputStream} as {@link String}
- * in format <code>EEEE, MMMM d, uuuu, HH:mm:ss-z</code>.
+ * in format {@code EEEE, MMMM d, uuuu, HH:mm:ss-z}.
  * See the <a href="https://datatracker.ietf.org/doc/html/rfc867"> RFC-867 spec </a> for more details.
  * <p>
  * <p>
