@@ -86,7 +86,7 @@ public class POP3 extends SocketClient {
     protected ProtocolCommandSupport _commandSupport_;
 
     /**
-     * The default POP3Client constructor. Initializes the state to <code>DISCONNECTED_STATE</code>.
+     * The default POP3Client constructor. Initializes the state to {@code DISCONNECTED_STATE}.
      */
     public POP3() {
         setDefaultPort(DEFAULT_PORT);
@@ -98,7 +98,7 @@ public class POP3 extends SocketClient {
     }
 
     /**
-     * Performs connection initialization and sets state to <code>AUTHORIZATION_STATE</code>.
+     * Performs connection initialization and sets state to {@code AUTHORIZATION_STATE}.
      */
     @Override
     protected void _connectAction_() throws IOException {
@@ -110,7 +110,7 @@ public class POP3 extends SocketClient {
     }
 
     /**
-     * Disconnects the client from the server, and sets the state to <code>DISCONNECTED_STATE</code>. The reply text information from the last issued command
+     * Disconnects the client from the server, and sets the state to {@code DISCONNECTED_STATE}. The reply text information from the last issued command
      * is voided to allow garbage collection of the memory used to store that information.
      *
      * @throws IOException If there is an error in disconnecting.
@@ -180,7 +180,7 @@ public class POP3 extends SocketClient {
     /**
      * Returns the reply to the last command sent to the server. The value is a single string containing all the reply lines including newlines. If the reply is
      * a single line, but its format ndicates it should be a multiline reply, then you must call {@link #getAdditionalReply getAdditionalReply() } to fetch the
-     * rest of the reply, and then call <code>getReplyString</code> again. You only have to worry about this if you are implementing your own client using the
+     * rest of the reply, and then call {@code getReplyString} again. You only have to worry about this if you are implementing your own client using the
      * {@link #sendCommand sendCommand } methods.
      *
      * @return The last server response.
@@ -199,7 +199,7 @@ public class POP3 extends SocketClient {
     /**
      * Returns an array of lines received as a reply to the last command sent to the server. The lines have end of lines truncated. If the reply is a single
      * line, but its format ndicates it should be a multiline reply, then you must call {@link #getAdditionalReply getAdditionalReply() } to fetch the rest of
-     * the reply, and then call <code>getReplyStrings</code> again. You only have to worry about this if you are implementing your own client using the
+     * the reply, and then call {@code getReplyStrings} again. You only have to worry about this if you are implementing your own client using the
      * {@link #sendCommand sendCommand } methods.
      *
      * @return The last server response.
@@ -297,7 +297,7 @@ public class POP3 extends SocketClient {
     /**
      * Sets the internal POP3 state.
      *
-     * @param state the new state. This must be one of the <code>_STATE</code> constants.
+     * @param state the new state. This must be one of the {@code _STATE} constants.
      */
     public void setState(final int state) {
         popState = state;
