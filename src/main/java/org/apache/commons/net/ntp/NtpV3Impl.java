@@ -79,7 +79,7 @@ public class NtpV3Impl implements NtpV3Packet {
 
     /**
      * Compares this object against the specified object. The result is {@code true} if and only if the argument is not {@code null} and is a
-     * <code>NtpV3Impl</code> object that contains the same values as this object.
+     * {@code NtpV3Impl} object that contains the same values as this object.
      *
      * @param obj the object to compare with.
      * @return {@code true} if the objects are the same; {@code false} otherwise.
@@ -242,7 +242,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Returns the reference time as defined in RFC-1305.
      *
-     * @return the reference time as <code>TimeStamp</code> object. Never returns null.
+     * @return the reference time as {@code TimeStamp} object. Never returns null.
      */
     @Override
     public TimeStamp getReferenceTimeStamp() {
@@ -450,7 +450,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Sets originate timestamp given NTP TimeStamp object. If <code>ts</code> is null then zero time is used.
+     * Sets originate timestamp given NTP TimeStamp object. If {@code ts} is null then zero time is used.
      *
      * @param ts NTP timestamp
      */
@@ -481,7 +481,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Sets receive timestamp given NTP TimeStamp object. If <code>ts</code> is null then zero time is used.
+     * Sets receive timestamp given NTP TimeStamp object. If {@code ts} is null then zero time is used.
      *
      * @param ts timestamp
      */
@@ -501,7 +501,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Sets Reference time with NTP timestamp. If <code>ts</code> is null then zero time is used.
+     * Sets Reference time with NTP timestamp. If {@code ts} is null then zero time is used.
      *
      * @param ts NTP timestamp
      */
@@ -560,7 +560,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Sets transmit time with NTP timestamp. If <code>ts</code> is null then zero time is used.
+     * Sets transmit time with NTP timestamp. If {@code ts} is null then zero time is used.
      *
      * @param ts NTP timestamp
      */
