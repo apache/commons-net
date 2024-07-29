@@ -41,7 +41,7 @@ import org.apache.commons.net.util.NetConstants;
  * By default, the standard output and standard error streams of the remote process are transmitted over the same connection, readable from the input stream
  * returned by {@link #getInputStream getInputStream()}. However, it is possible to tell the rexecd daemon to return the standard error stream over a separate
  * connection, readable from the input stream returned by {@link #getErrorStream getErrorStream()}. You can specify that a separate connection should be created
- * for standard error by setting the boolean <code>separateErrorStream</code> parameter of {@link #rexec rexec()} to <code>true</code>. The standard input
+ * for standard error by setting the boolean {@code separateErrorStream} parameter of {@link #rexec rexec()} to {@code true}. The standard input
  * of the remote process can be written to through the output stream returned by {@link #getOutputStream getOutputSream()}.
  *
  * @see SocketClient
@@ -63,13 +63,13 @@ public class RExecClient extends SocketClient {
     private boolean remoteVerificationEnabled;
 
     /**
-     * If a separate error stream is requested, <code>_errorStream_</code> will point to an InputStream from which the standard error of the remote process can
-     * be read (after a call to rexec()). Otherwise, <code>_errorStream_</code> will be null.
+     * If a separate error stream is requested, {@code _errorStream_} will point to an InputStream from which the standard error of the remote process can
+     * be read (after a call to rexec()). Otherwise, {@code _errorStream_} will be null.
      */
     protected InputStream _errorStream_;
 
     /**
-     * The default RExecClient constructor. Initializes the default port to <code>DEFAULT_PORT</code>.
+     * The default RExecClient constructor. Initializes the default port to {@code DEFAULT_PORT}.
      */
     public RExecClient() {
         _errorStream_ = null;
@@ -152,7 +152,7 @@ public class RExecClient extends SocketClient {
     }
 
     /**
-     * Same as <code>rexec(user, password, command, false);</code>
+     * Same as {@code rexec(user, password, command, false);}
      *
      * @param user the user name
      * @param password the password
