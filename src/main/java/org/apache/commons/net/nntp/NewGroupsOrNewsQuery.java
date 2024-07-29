@@ -168,7 +168,7 @@ public final class NewGroupsOrNewsQuery {
 
     /**
      * Add a newsgroup to the list of newsgroups being queried. Newsgroups added this way are only meaningful to the NEWNEWS command. Newsgroup names may
-     * include the <code>*</code> wildcard, as in <code>comp.lang.*</code> or <code>comp.lang.java.*</code>. Adding at least one newsgroup is mandatory for
+     * include the {@code *} wildcard, as in {@code comp.lang.*} or {@code comp.lang.java.*}. Adding at least one newsgroup is mandatory for
      * the NEWNEWS command.
      *
      * @param newsgroup The newsgroup to add to the list of groups to be checked for new news.
@@ -229,8 +229,8 @@ public final class NewGroupsOrNewsQuery {
 
     /**
      * Add a newsgroup to the list of newsgroups being queried, but indicate that group should not be checked for new news. Newsgroups added this way are only
-     * meaningful to the NEWNEWS command. Newsgroup names may include the <code>*</code> wildcard, as in <code>comp.lang.*</code> or
-     * <code>comp.lang.java.*</code>.
+     * meaningful to the NEWNEWS command. Newsgroup names may include the {@code *} wildcard, as in {@code comp.lang.*} or
+     * {@code comp.lang.java.*}.
      * <p>
      * The following would create a query that searched for new news in all comp.lang.java newsgroups except for comp.lang.java.advocacy.
      * </p>
