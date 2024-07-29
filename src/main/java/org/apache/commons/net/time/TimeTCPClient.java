@@ -42,7 +42,7 @@ public final class TimeTCPClient extends SocketClient {
     public static final long SECONDS_1900_TO_1970 = 2208988800L;
 
     /**
-     * The default TimeTCPClient constructor. It merely sets the default port to <code>DEFAULT_PORT</code>.
+     * The default TimeTCPClient constructor. It merely sets the default port to {@code DEFAULT_PORT}.
      */
     public TimeTCPClient() {
         setDefaultPort(DEFAULT_PORT);
@@ -53,7 +53,7 @@ public final class TimeTCPClient extends SocketClient {
      * <p>
      * The server will have closed the connection at this point, so you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } after
      * calling this method. To retrieve another time, you must initiate another connection with {@link org.apache.commons.net.SocketClient#connect connect }
-     * before calling <code>getDate()</code> again.
+     * before calling {@code getDate()} again.
      *
      * @return A Date value containing the time retrieved from the server converted to the local time zone.
      * @throws IOException If an error occurs while fetching the time.
@@ -68,7 +68,7 @@ public final class TimeTCPClient extends SocketClient {
      * <p>
      * The server will have closed the connection at this point, so you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } after
      * calling this method. To retrieve another time, you must initiate another connection with {@link org.apache.commons.net.SocketClient#connect connect }
-     * before calling <code>getTime()</code> again.
+     * before calling {@code getTime()} again.
      *
      * @return The time value retrieved from the server.
      * @throws IOException If an error occurs while fetching the time.
