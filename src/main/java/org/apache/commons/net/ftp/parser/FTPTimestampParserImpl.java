@@ -131,15 +131,15 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
-     * Implements the {@link Configurable Configurable} interface. Configures this <code>FTPTimestampParser</code> according to the following logic:
+     * Implements the {@link Configurable Configurable} interface. Configures this {@code FTPTimestampParser} according to the following logic:
      * <p>
      * Sets up the {@link FTPClientConfig#setDefaultDateFormatStr(java.lang.String) defaultDateFormat} and optionally the
      * {@link FTPClientConfig#setRecentDateFormatStr(String) recentDateFormat} to values supplied in the config based on month names configured as follows:
      * </p>
      * <ul>
-     * <li>If a {@link FTPClientConfig#setShortMonthNames(String) shortMonthString} has been supplied in the <code>config</code>, use that to parse parse
+     * <li>If a {@link FTPClientConfig#setShortMonthNames(String) shortMonthString} has been supplied in the {@code config}, use that to parse parse
      * timestamps.</li>
-     * <li>Otherwise, if a {@link FTPClientConfig#setServerLanguageCode(String) serverLanguageCode} has been supplied in the <code>config</code>, use the month
+     * <li>Otherwise, if a {@link FTPClientConfig#setServerLanguageCode(String) serverLanguageCode} has been supplied in the {@code config}, use the month
      * names represented by that {@link FTPClientConfig#lookupDateFormatSymbols(String) language} to parse timestamps.</li>
      * <li>otherwise use default English month names</li>
      * </ul>
