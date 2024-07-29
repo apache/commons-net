@@ -115,15 +115,15 @@ import org.apache.commons.net.util.NetConstants;
  * FTP reply code causing a success or failure, you must call {@link org.apache.commons.net.ftp.FTP#getReplyCode getReplyCode } after a success or failure.
  * </p>
  * <p>
- * The default settings for FTPClient are for it to use <code>FTP.ASCII_FILE_TYPE</code>, <code>FTP.NON_PRINT_TEXT_FORMAT</code>,
- * <code>FTP.STREAM_TRANSFER_MODE</code>, and <code>FTP.FILE_STRUCTURE</code>. The only file types directly supported are <code>FTP.ASCII_FILE_TYPE</code>
- * and <code>FTP.BINARY_FILE_TYPE</code>. Because there are at least 4 different EBCDIC encodings, we have opted not to provide direct support for EBCDIC. To
+ * The default settings for FTPClient are for it to use {@code FTP.ASCII_FILE_TYPE}, {@code FTP.NON_PRINT_TEXT_FORMAT},
+ * {@code FTP.STREAM_TRANSFER_MODE}, and {@code FTP.FILE_STRUCTURE}. The only file types directly supported are {@code FTP.ASCII_FILE_TYPE}
+ * and {@code FTP.BINARY_FILE_TYPE}. Because there are at least 4 different EBCDIC encodings, we have opted not to provide direct support for EBCDIC. To
  * transfer EBCDIC and other unsupported file types you must create your own filter InputStreams and OutputStreams and wrap them around the streams returned or
  * required by the FTPClient methods. FTPClient uses the {@link ToNetASCIIOutputStream NetASCII} filter streams to provide transparent handling of ASCII files.
  * We will consider incorporating EBCDIC support if there is enough demand.
  * </p>
  * <p>
- * <code>FTP.NON_PRINT_TEXT_FORMAT</code>, <code>FTP.STREAM_TRANSFER_MODE</code>, and <code>FTP.FILE_STRUCTURE</code> are the only supported formats,
+ * {@code FTP.NON_PRINT_TEXT_FORMAT}, {@code FTP.STREAM_TRANSFER_MODE}, and {@code FTP.FILE_STRUCTURE} are the only supported formats,
  * transfer modes, and file structures.
  * </p>
  * <p>
@@ -140,9 +140,9 @@ import org.apache.commons.net.util.NetConstants;
  * You should keep in mind that the FTP server may choose to prematurely close a connection if the client has been idle for longer than a given time period
  * (usually 900 seconds). The FTPClient class will detect a premature FTP server connection closing when it receives a
  * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE } response to a command. When that occurs, the FTP class
- * method encountering that reply will throw an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} . <code>FTPConnectionClosedException</code> is a
- * subclass of <code>IOException</code> and therefore need not be caught separately, but if you are going to catch it separately, its catch block must appear
- * before the more general <code>IOException</code> catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you
+ * method encountering that reply will throw an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} . {@code FTPConnectionClosedException} is a
+ * subclass of {@code IOException} and therefore need not be caught separately, but if you are going to catch it separately, its catch block must appear
+ * before the more general {@code IOException} catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you
  * must disconnect the connection with {@link #disconnect disconnect() } to properly clean up the system resources used by FTPClient. Before disconnecting, you
  * may check the last reply code and text with {@link org.apache.commons.net.ftp.FTP#getReplyCode getReplyCode },
  * {@link org.apache.commons.net.ftp.FTP#getReplyString getReplyString }, and {@link org.apache.commons.net.ftp.FTP#getReplyStrings getReplyStrings}. You may
@@ -205,7 +205,7 @@ import org.apache.commons.net.util.NetConstants;
  * </p>
  * <ul>
  * <li>use languages other than English</li>
- * <li>use date formats other than the American English "standard" <code>MM d yyyy</code></li>
+ * <li>use date formats other than the American English "standard" {@code MM d yyyy}</li>
  * <li>are in different time zones and you need accurate timestamps for dependency checking as in Ant</li>
  * </ul>
  * see {@link FTPClientConfig FTPClientConfig}.
@@ -589,9 +589,9 @@ public class FTPClient extends FTP implements Configurable {
     private boolean ipAddressFromPasvResponse = Boolean.getBoolean(FTP_IP_ADDRESS_FROM_PASV_RESPONSE);
 
     /**
-     * Default FTPClient constructor. Creates a new FTPClient instance with the data connection mode set to <code>ACTIVE_LOCAL_DATA_CONNECTION_MODE</code>,
-     * the file type set to <code>FTP.ASCII_FILE_TYPE</code>, the file format set to <code>FTP.NON_PRINT_TEXT_FORMAT</code>, the file structure set to
-     * <code>FTP.FILE_STRUCTURE</code>, and the transfer mode set to <code>FTP.STREAM_TRANSFER_MODE</code>.
+     * Default FTPClient constructor. Creates a new FTPClient instance with the data connection mode set to {@code ACTIVE_LOCAL_DATA_CONNECTION_MODE},
+     * the file type set to {@code FTP.ASCII_FILE_TYPE}, the file format set to {@code FTP.NON_PRINT_TEXT_FORMAT}, the file structure set to
+     * {@code FTP.FILE_STRUCTURE}, and the transfer mode set to {@code FTP.STREAM_TRANSFER_MODE}.
      * <p>
      * The list parsing auto-detect feature can be configured to use lenient future dates (short dates may be up to one day in the future) as follows:
      * </p>
@@ -1306,7 +1306,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the current data connection mode to <code>ACTIVE_LOCAL_DATA_CONNECTION_MODE</code>. No communication with the FTP server is conducted, but this
+     * Sets the current data connection mode to {@code ACTIVE_LOCAL_DATA_CONNECTION_MODE}. No communication with the FTP server is conducted, but this
      * causes all future data transfers to require the FTP server to connect to the client's data port. Additionally, to accommodate differences between socket
      * implementations on different platforms, this method causes the client to issue a PORT command before every data transfer.
      */
@@ -1317,9 +1317,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the current data connection mode to <code>PASSIVE_LOCAL_DATA_CONNECTION_MODE</code>. Use this method only for data transfers between the client
+     * Sets the current data connection mode to {@code PASSIVE_LOCAL_DATA_CONNECTION_MODE}. Use this method only for data transfers between the client
      * and server. This method causes a PASV (or EPSV) command to be issued to the server before the opening of every data connection, telling the server to
-     * open a data port to which the client will connect to conduct data transfers. The FTPClient will stay in <code>PASSIVE_LOCAL_DATA_CONNECTION_MODE</code>
+     * open a data port to which the client will connect to conduct data transfers. The FTPClient will stay in {@code PASSIVE_LOCAL_DATA_CONNECTION_MODE}
      * until the mode is changed by calling some other method such as {@link #enterLocalActiveMode enterLocalActiveMode() }
      * <p>
      * <b>N.B.</b> currently calling any connect method will reset the mode to ACTIVE_LOCAL_DATA_CONNECTION_MODE.
@@ -1334,7 +1334,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the current data connection mode to <code>ACTIVE_REMOTE_DATA_CONNECTION</code>. Use this method only for server to server data transfers. This
+     * Sets the current data connection mode to {@code ACTIVE_REMOTE_DATA_CONNECTION}. Use this method only for server to server data transfers. This
      * method issues a PORT command to the server, indicating the other server and port to which it should connect for data transfers. You must call this method
      * before EVERY server to server transfer attempt. The FTPClient will NOT automatically continue to issue PORT commands. You also must remember to call
      * {@link #enterLocalActiveMode enterLocalActiveMode() } if you wish to return to the normal data connection mode.
@@ -1358,7 +1358,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the current data connection mode to <code>PASSIVE_REMOTE_DATA_CONNECTION_MODE</code>. Use this method only for server to server data transfers.
+     * Sets the current data connection mode to {@code PASSIVE_REMOTE_DATA_CONNECTION_MODE}. Use this method only for server to server data transfers.
      * This method issues a PASV command to the server, telling it to open a data port to which the active server will connect to conduct data transfers. You
      * must call this method before EVERY server to server transfer attempt. The FTPClient will NOT automatically continue to issue PASV commands. You also must
      * remember to call {@link #enterLocalActiveMode enterLocalActiveMode() } if you wish to return to the normal data connection mode.
@@ -1573,9 +1573,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Returns the current data connection mode (one of the <code>_DATA_CONNECTION_MODE</code> constants).
+     * Returns the current data connection mode (one of the {@code _DATA_CONNECTION_MODE} constants).
      *
-     * @return The current data connection mode (one of the <code>_DATA_CONNECTION_MODE</code> constants).
+     * @return The current data connection mode (one of the {@code _DATA_CONNECTION_MODE} constants).
      */
     public int getDataConnectionMode() {
         return dataConnectionMode;
@@ -1646,7 +1646,7 @@ public class FTPClient extends FTP implements Configurable {
      * 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
-     * @return A string representing the last file modification time in <code>yyyyMMDDhhmmss</code> format.
+     * @return A string representing the last file modification time in {@code yyyyMMDDhhmmss} format.
      * @throws IOException if an I/O error occurs.
      * @since 2.0
      */
@@ -1949,14 +1949,14 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Using the default autodetect mechanism, initialize an FTPListParseEngine object containing a raw file information for the current working directory on
      * the server This information is obtained through the LIST command. This object is then capable of being iterated to return a sequence of FTPFile objects
-     * with information filled in by the <code>FTPFileEntryParser</code> used.
+     * with information filled in by the {@code FTPFileEntryParser} used.
      * <p>
      * This method differs from using the listFiles() methods in that expensive FTPFile objects are not created until needed which may be an advantage on large
      * lists.
      * </p>
      *
      * @return A FTPListParseEngine object that holds the raw information and is capable of providing parsed FTPFile objects, one for each file containing
-     *         information contained in the given path in the format determined by the <code>parser</code> parameter. Null will be returned if a data
+     *         information contained in the given path in the format determined by the {@code parser} parameter. Null will be returned if a data
      *         connection cannot be opened. If the current working directory contains no files, an empty array will be the return.
      *
      * @throws FTPConnectionClosedException                                    If the FTP server prematurely closes the connection as a result of the client
@@ -1999,7 +1999,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Using the default autodetect mechanism, initialize an FTPListParseEngine object containing a raw file information for the supplied directory. This
      * information is obtained through the LIST command. This object is then capable of being iterated to return a sequence of FTPFile objects with information
-     * filled in by the <code>FTPFileEntryParser</code> used.
+     * filled in by the {@code FTPFileEntryParser} used.
      * <p>
      * The server may or may not expand glob expressions. You should avoid using glob expressions because the return format for glob listings differs from
      * server to server and will likely cause this method to fail.
@@ -2025,7 +2025,7 @@ public class FTPClient extends FTP implements Configurable {
      * @param pathname the starting directory
      *
      * @return A FTPListParseEngine object that holds the raw information and is capable of providing parsed FTPFile objects, one for each file containing
-     *         information contained in the given path in the format determined by the <code>parser</code> parameter. Null will be returned if a data
+     *         information contained in the given path in the format determined by the {@code parser} parameter. Null will be returned if a data
      *         connection cannot be opened. If the current working directory contains no files, an empty array will be the return.
      *
      * @throws FTPConnectionClosedException                                    If the FTP server prematurely closes the connection as a result of the client
@@ -2044,7 +2044,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Using the supplied parser key, initialize an FTPListParseEngine object containing a raw file information for the supplied directory. This information is
      * obtained through the LIST command. This object is then capable of being iterated to return a sequence of FTPFile objects with information filled in by
-     * the <code>FTPFileEntryParser</code> used.
+     * the {@code FTPFileEntryParser} used.
      * <p>
      * The server may or may not expand glob expressions. You should avoid using glob expressions because the return format for glob listings differs from
      * server to server and will likely cause this method to fail.
@@ -2054,14 +2054,14 @@ public class FTPClient extends FTP implements Configurable {
      * lists.
      * </p>
      *
-     * @param parserKey A string representing a designated code or fully-qualified class name of an <code>FTPFileEntryParser</code> that should be used to
+     * @param parserKey A string representing a designated code or fully-qualified class name of an {@code FTPFileEntryParser} that should be used to
      *                  parse each server file listing. May be {@code null}, in which case the code checks first the system property {@link #FTP_SYSTEM_TYPE},
      *                  and if that is not defined the SYST command is used to provide the value. To allow for arbitrary system types, the return from the SYST
      *                  command is used to look up an alias for the type in the {@link #SYSTEM_TYPE_PROPERTIES} properties file if it is available.
      * @param pathname  the starting directory
      *
      * @return A FTPListParseEngine object that holds the raw information and is capable of providing parsed FTPFile objects, one for each file containing
-     *         information contained in the given path in the format determined by the <code>parser</code> parameter. Null will be returned if a data
+     *         information contained in the given path in the format determined by the {@code parser} parameter. Null will be returned if a data
      *         connection cannot be opened. If the current working directory contains no files, an empty array will be the return.
      *
      * @throws FTPConnectionClosedException                                    If the FTP server prematurely closes the connection as a result of the client
@@ -2152,7 +2152,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Using the default system autodetect mechanism, obtain a list of directories contained in the current working directory.
      * <p>
-     * This information is obtained through the LIST command. The contents of the returned array is determined by the<code>FTPFileEntryParser</code> used.
+     * This information is obtained through the LIST command. The contents of the returned array is determined by the{@code FTPFileEntryParser} used.
      * </p>
      * <p>
      * N.B. the LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
@@ -2184,7 +2184,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Using the default system autodetect mechanism, obtain a list of directories contained in the specified directory.
      * <p>
-     * This information is obtained through the LIST command. The contents of the returned array is determined by the<code>FTPFileEntryParser</code> used.
+     * This information is obtained through the LIST command. The contents of the returned array is determined by the{@code FTPFileEntryParser} used.
      * </p>
      * <p>
      * N.B. the LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
@@ -2217,7 +2217,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Using the default system autodetect mechanism, obtain a list of file information for the current working directory.
      * <p>
-     * This information is obtained through the LIST command. The contents of the returned array is determined by the<code>FTPFileEntryParser</code> used.
+     * This information is obtained through the LIST command. The contents of the returned array is determined by the{@code FTPFileEntryParser} used.
      * </p>
      * <p>
      * N.B. the LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
@@ -2250,7 +2250,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Using the default system autodetect mechanism, obtain a list of file information for the current working directory or for just a single file.
      * <p>
-     * This information is obtained through the LIST command. The contents of the returned array is determined by the<code>FTPFileEntryParser</code> used.
+     * This information is obtained through the LIST command. The contents of the returned array is determined by the{@code FTPFileEntryParser} used.
      * </p>
      * <p>
      * N.B. the LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
@@ -2283,7 +2283,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Version of {@link #listFiles(String)} which allows a filter to be provided. For example: <code>listFiles("site", FTPFileFilters.DIRECTORY);</code>
+     * Version of {@link #listFiles(String)} which allows a filter to be provided. For example: {@code listFiles("site", FTPFileFilters.DIRECTORY);}
      *
      * @param pathname the initial path, may be null
      * @param filter   the filter, non-null
@@ -2638,7 +2638,7 @@ public class FTPClient extends FTP implements Configurable {
     // For server to server transfers
     /**
      * Initiate a server to server file transfer. This method tells the server to which the client is connected to append to a given file on the other server.
-     * The other server must have had a <code>remoteRetrieve</code> issued to it by another FTPClient.
+     * The other server must have had a {@code remoteRetrieve} issued to it by another FTPClient.
      *
      * @param fileName The name of the file to be appended to, or if the file does not exist, the name to call the file being stored.
      *
@@ -2674,7 +2674,7 @@ public class FTPClient extends FTP implements Configurable {
 
     /**
      * Initiate a server to server file transfer. This method tells the server to which the client is connected to store a file on the other server using the
-     * given file name. The other server must have had a <code>remoteRetrieve</code> issued to it by another FTPClient.
+     * given file name. The other server must have had a {@code remoteRetrieve} issued to it by another FTPClient.
      *
      * @param fileName The name to call the file that is to be stored.
      * @return True if successfully completed, false if not.
@@ -2692,8 +2692,8 @@ public class FTPClient extends FTP implements Configurable {
 
     /**
      * Initiate a server to server file transfer. This method tells the server to which the client is connected to store a file on the other server using a
-     * unique file name. The other server must have had a <code>remoteRetrieve</code> issued to it by another FTPClient. Many FTP servers require that a base
-     * file name be given from which the unique file name can be derived. For those servers use the other version of <code>remoteStoreUnique</code>
+     * unique file name. The other server must have had a {@code remoteRetrieve} issued to it by another FTPClient. Many FTP servers require that a base
+     * file name be given from which the unique file name can be derived. For those servers use the other version of {@code remoteStoreUnique}
      *
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -2710,7 +2710,7 @@ public class FTPClient extends FTP implements Configurable {
 
     /**
      * Initiate a server to server file transfer. This method tells the server to which the client is connected to store a file on the other server using a
-     * unique file name based on the given file name. The other server must have had a <code>remoteRetrieve</code> issued to it by another FTPClient.
+     * unique file name based on the given file name. The other server must have had a {@code remoteRetrieve} issued to it by another FTPClient.
      *
      * @param fileName The name on which to base the file name of the file that is to be stored.
      * @return True if successfully completed, false if not.
@@ -2759,7 +2759,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Restart a <code>STREAM_TRANSFER_MODE</code> file transfer starting from the given offset. This will only work on FTP servers supporting the REST comand
+     * Restart a {@code STREAM_TRANSFER_MODE} file transfer starting from the given offset. This will only work on FTP servers supporting the REST comand
      * for the stream transfer mode. However, most FTP servers support this. Any subsequent file transfer will start reading or writing the remote file from the
      * indicated offset.
      *
@@ -2985,9 +2985,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the file structure. The default structure is <code>FTP.FILE_STRUCTURE</code> if this method is never called or if a connect method is called.
+     * Sets the file structure. The default structure is {@code FTP.FILE_STRUCTURE} if this method is never called or if a connect method is called.
      *
-     * @param structure The structure of the file (one of the FTP class <code>_STRUCTURE</code> constants).
+     * @param structure The structure of the file (one of the FTP class {@code _STRUCTURE} constants).
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -3003,10 +3003,10 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the transfer mode. The default transfer mode <code>FTP.STREAM_TRANSFER_MODE</code> if this method is never called or if a connect method is
+     * Sets the transfer mode. The default transfer mode {@code FTP.STREAM_TRANSFER_MODE} if this method is never called or if a connect method is
      * called.
      *
-     * @param mode The new transfer mode to use (one of the FTP class <code>_TRANSFER_MODE</code> constants).
+     * @param mode The new transfer mode to use (one of the FTP class {@code _TRANSFER_MODE} constants).
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -3022,15 +3022,15 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the file type to be transferred. This should be one of <code>FTP.ASCII_FILE_TYPE</code>, <code>FTP.BINARY_FILE_TYPE</code>, etc. The file type
+     * Sets the file type to be transferred. This should be one of {@code FTP.ASCII_FILE_TYPE}, {@code FTP.BINARY_FILE_TYPE}, etc. The file type
      * only needs to be set when you want to change the type. After changing it, the new type stays in effect until you change it again. The default file type
-     * is <code>FTP.ASCII_FILE_TYPE</code> if this method is never called. <br>
+     * is {@code FTP.ASCII_FILE_TYPE} if this method is never called. <br>
      * The server default is supposed to be ASCII (see RFC 959), however many ftp servers default to BINARY. <b>To ensure correct operation with all servers,
      * always specify the appropriate file type after connecting to the server.</b> <br>
      * <p>
      * <b>N.B.</b> currently calling any connect method will reset the type to FTP.ASCII_FILE_TYPE.
      *
-     * @param fileType The <code>_FILE_TYPE</code> constant indicating the type of file.
+     * @param fileType The {@code _FILE_TYPE} constant indicating the type of file.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -3047,19 +3047,19 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the file type to be transferred and the format. The type should be one of <code>FTP.ASCII_FILE_TYPE</code>, <code>FTP.BINARY_FILE_TYPE</code>,
+     * Sets the file type to be transferred and the format. The type should be one of {@code FTP.ASCII_FILE_TYPE}, {@code FTP.BINARY_FILE_TYPE},
      * etc. The file type only needs to be set when you want to change the type. After changing it, the new type stays in effect until you change it again. The
-     * default file type is <code>FTP.ASCII_FILE_TYPE</code> if this method is never called. <br>
+     * default file type is {@code FTP.ASCII_FILE_TYPE} if this method is never called. <br>
      * The server default is supposed to be ASCII (see RFC 959), however many ftp servers default to BINARY. <b>To ensure correct operation with all servers,
      * always specify the appropriate file type after connecting to the server.</b> <br>
-     * The format should be one of the FTP class <code>TEXT_FORMAT</code> constants, or if the type is <code>FTP.LOCAL_FILE_TYPE</code>, the format should
-     * be the byte size for that type. The default format is <code>FTP.NON_PRINT_TEXT_FORMAT</code> if this method is never called.
+     * The format should be one of the FTP class {@code TEXT_FORMAT} constants, or if the type is {@code FTP.LOCAL_FILE_TYPE}, the format should
+     * be the byte size for that type. The default format is {@code FTP.NON_PRINT_TEXT_FORMAT} if this method is never called.
      * <p>
      * <b>N.B.</b> currently calling any connect method will reset the type to FTP.ASCII_FILE_TYPE and the formatOrByteSize to FTP.NON_PRINT_TEXT_FORMAT.
      * </p>
      *
-     * @param fileType         The <code>_FILE_TYPE</code> constant indicating the type of file.
-     * @param formatOrByteSize The format of the file (one of the <code>_FORMAT</code> constants). In the case of <code>LOCAL_FILE_TYPE</code>, the byte size.
+     * @param fileType         The {@code _FILE_TYPE} constant indicating the type of file.
+     * @param formatOrByteSize The format of the file (one of the {@code _FORMAT} constants). In the case of {@code LOCAL_FILE_TYPE}, the byte size.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -3091,7 +3091,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * You can set this to true if you would like to get hidden files when {@link #listFiles} too. A <code>LIST -a</code> will be issued to the ftp server. It
+     * You can set this to true if you would like to get hidden files when {@link #listFiles} too. A {@code LIST -a} will be issued to the ftp server. It
      * depends on your ftp server if you need to call this method, also don't expect to get rid of hidden files if you call this method with "false".
      *
      * @param listHiddenFiles true if hidden files should be listed
@@ -3104,13 +3104,13 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP MFMT command (not supported by all servers) which sets the last modified time of a file.
      *
-     * The timestamp should be in the form <code>yyyyMMDDhhmmss</code>. It should also be in GMT, but not all servers honor this.
+     * The timestamp should be in the form {@code yyyyMMDDhhmmss}. It should also be in GMT, but not all servers honor this.
      *
      * An FTP server would indicate its support of this feature by including "MFMT" in its response to the FEAT command, which may be retrieved by
      * FTPClient.features()
      *
      * @param pathname The file path for which last modified time is to be changed.
-     * @param timeval  The timestamp to set to, in <code>yyyyMMDDhhmmss</code> format.
+     * @param timeval  The timestamp to set to, in {@code yyyyMMDDhhmmss} format.
      * @return true if successfully set, false if not
      * @throws IOException if an I/O error occurs.
      * @since 2.2
