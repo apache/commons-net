@@ -244,7 +244,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * The default constructor for a OS400FTPEntryParser object.
      *
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     *                                  sign that {@code REGEX} is not a valid regular expression.
      */
     public OS400FTPEntryParser() {
         this(null);
@@ -255,7 +255,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     *                                  sign that {@code REGEX} is not a valid regular expression.
      * @since 1.4
      */
     public OS400FTPEntryParser(final FTPClientConfig config) {
