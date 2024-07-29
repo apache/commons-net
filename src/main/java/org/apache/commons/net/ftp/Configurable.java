@@ -24,7 +24,7 @@ public interface Configurable {
 
     /**
      * @param config the object containing the configuration data
-     * @throws IllegalArgumentException if the elements of the <code>config</code> are somehow inadequate to configure the Configurable object.
+     * @throws IllegalArgumentException if the elements of the {@code config} are somehow inadequate to configure the Configurable object.
      */
     void configure(FTPClientConfig config);
 }
