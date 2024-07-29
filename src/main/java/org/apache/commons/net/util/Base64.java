@@ -369,7 +369,7 @@ public class Base64 {
     }
 
     /**
-     * Returns whether or not the <code>octet</code> is in the base 64 alphabet.
+     * Returns whether or not the {@code octet} is in the base 64 alphabet.
      *
      * @param octet The value to test
      * @return {@code true} if the value is defined in the base 64 alphabet, {@code false} otherwise.
@@ -406,9 +406,9 @@ public class Base64 {
     }
 
     /**
-     * Returns a byte-array representation of a <code>BigInteger</code> without sign bit.
+     * Returns a byte-array representation of a {@code BigInteger} without sign bit.
      *
-     * @param bigInt <code>BigInteger</code> to be converted
+     * @param bigInt {@code BigInteger} to be converted
      * @return a byte array representation of the BigInteger parameter
      */
     private static byte[] toIntegerBytes(final BigInteger bigInt) {
