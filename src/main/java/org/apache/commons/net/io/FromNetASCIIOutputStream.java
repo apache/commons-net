@@ -26,7 +26,7 @@ import java.io.OutputStream;
  * for representing a newline, with the local line separator representation. You would use this class to implement ASCII file transfers requiring conversion
  * from NETASCII.
  * <p>
- * Because of the translation process, a call to <code>flush()</code> will not flush the last byte written if that byte was a carriage return. A call to
+ * Because of the translation process, a call to {@code flush()} will not flush the last byte written if that byte was a carriage return. A call to
  * {@link #close close() }, however, will flush the carriage return.
  */
 
