@@ -268,7 +268,7 @@ public class Article implements Threadable<Article> {
     }
 
     @Override
-    public void setChild(Article child) {
+    public void setChild(final Article child) {
         this.kid = child;
         flushSubjectCache();
     }
@@ -292,7 +292,7 @@ public class Article implements Threadable<Article> {
     }
 
     @Override
-    public void setNext(Article next) {
+    public void setNext(final Article next) {
         this.next = next;
         flushSubjectCache();
     }
