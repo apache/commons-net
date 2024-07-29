@@ -94,6 +94,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
 
             if (a1[ii] != a2[ii]) {
                 result = false;
+                break;
             }
         }
         return result;
