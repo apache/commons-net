@@ -150,7 +150,7 @@ public abstract class SocketClient {
      * This method sets the timeout on the just opened socket to the default timeout set by {@link #setDefaultTimeout setDefaultTimeout() }, sets _input_ and
      * _output_ to the socket's InputStream and OutputStream respectively, and sets _isConnected_ to true.
      * <p>
-     * Subclasses overriding this method should start by calling <code>super._connectAction_()</code> first to ensure the initialization of the aforementioned
+     * Subclasses overriding this method should start by calling {@code super._connectAction_()} first to ensure the initialization of the aforementioned
      * protected variables.
      *
      * @throws IOException (SocketException) if a problem occurs with the socket
