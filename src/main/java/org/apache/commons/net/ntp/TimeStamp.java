@@ -52,7 +52,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     protected static final long msb1baseTime = -2208988800000L;
 
     /**
-     * Default NTP date string format. E.g. Fri, Sep 12 2003 21:06:23.860. See <code>java.text.SimpleDateFormat</code> for code descriptions.
+     * Default NTP date string format. E.g. Fri, Sep 12 2003 21:06:23.860. See {@code java.text.SimpleDateFormat} for code descriptions.
      */
     public static final String NTP_DATE_FORMAT = "EEE, MMM dd yyyy HH:mm:ss.SSS";
 
@@ -192,7 +192,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     }
 
     /**
-     * Converts 64-bit NTP timestamp value to a <code>String</code>. The NTP timestamp value is represented as hexadecimal string with seconds separated by
+     * Converts 64-bit NTP timestamp value to a {@code String}. The NTP timestamp value is represented as hexadecimal string with seconds separated by
      * fractional seconds by a decimal point; e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
      *
      * @param ntpTime the 64 bit timestamp
@@ -253,9 +253,9 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Compares two Timestamps numerically.
      *
-     * @param anotherTimeStamp   the <code>TimeStamp</code> to be compared.
-     * @return the value <code>0</code> if the argument TimeStamp is equal to this TimeStamp; a value less than <code>0</code> if this TimeStamp is numerically
-     *         less than the TimeStamp argument; and a value greater than <code>0</code> if this TimeStamp is numerically greater than the TimeStamp argument
+     * @param anotherTimeStamp   the {@code TimeStamp} to be compared.
+     * @return the value {@code 0} if the argument TimeStamp is equal to this TimeStamp; a value less than {@code 0} if this TimeStamp is numerically
+     *         less than the TimeStamp argument; and a value greater than {@code 0} if this TimeStamp is numerically greater than the TimeStamp argument
      *         (signed comparison).
      */
     @Override
@@ -267,7 +267,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
 
     /**
      * Compares this object against the specified object. The result is {@code true} if and only if the argument is not {@code null} and is a
-     * <code>Long</code> object that contains the same <code>long</code> value as this object.
+     * {@code Long} object that contains the same {@code long} value as this object.
      *
      * @param obj the object to compare with.
      * @return {@code true} if the objects are the same; {@code false} otherwise.
@@ -317,8 +317,8 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     }
 
     /**
-     * Computes a hash code for this Timestamp. The result is the exclusive OR of the two halves of the primitive <code>long</code> value represented by this
-     * <code>TimeStamp</code> object. That is, the hash code is the value of the expression: <blockquote>
+     * Computes a hash code for this Timestamp. The result is the exclusive OR of the two halves of the primitive {@code long} value represented by this
+     * {@code TimeStamp} object. That is, the hash code is the value of the expression: <blockquote>
      *
      * <pre>
      * {@code
@@ -349,7 +349,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     }
 
     /**
-     * Converts this <code>TimeStamp</code> object to a <code>String</code> of the form: <blockquote>
+     * Converts this {@code TimeStamp} object to a {@code String} of the form: <blockquote>
      *
      * <pre>
      * EEE, MMM dd yyyy HH:mm:ss.SSS
@@ -369,7 +369,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     }
 
     /**
-     * Converts this <code>TimeStamp</code> object to a <code>String</code>. The NTP timestamp 64-bit long value is represented as hexadecimal string with
+     * Converts this {@code TimeStamp} object to a {@code String}. The NTP timestamp 64-bit long value is represented as hexadecimal string with
      * seconds separated by fractional seconds by a decimal point; e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
      *
      * @return NTP timestamp 64-bit long value as hexadecimal string with seconds separated by fractional seconds.
@@ -384,7 +384,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      */
 
     /**
-     * Converts this <code>TimeStamp</code> object to a <code>String</code> of the form: <blockquote>
+     * Converts this {@code TimeStamp} object to a {@code String} of the form: <blockquote>
      *
      * <pre>
      * EEE, MMM dd yyyy HH:mm:ss.SSS UTC
