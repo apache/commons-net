@@ -51,8 +51,8 @@ public class SimpleNNTPHeader {
     /**
      * Creates a new SimpleNNTPHeader instance initialized with the given from and subject header field values.
      *
-     * @param from    The value of the <code>From:</code> header field. This should be the article poster's email address.
-     * @param subject The value of the <code>Subject:</code> header field. This should be the subject of the article.
+     * @param from    The value of the {@code From:} header field. This should be the article poster's email address.
+     * @param subject The value of the {@code Subject:} header field. This should be the subject of the article.
      */
     public SimpleNNTPHeader(final String from, final String subject) {
         this.from = from;
@@ -82,7 +82,7 @@ public class SimpleNNTPHeader {
     }
 
     /**
-     * Adds a newsgroup to the article <code>Newsgroups:</code> field.
+     * Adds a newsgroup to the article {@code Newsgroups:} field.
      *
      * @param newsgroup The newsgroup to add to the article's newsgroup distribution list.
      */
@@ -94,7 +94,7 @@ public class SimpleNNTPHeader {
     }
 
     /**
-     * Returns the address used in the <code>From:</code> header field.
+     * Returns the address used in the {@code From:} header field.
      *
      * @return The from address.
      */
@@ -103,7 +103,7 @@ public class SimpleNNTPHeader {
     }
 
     /**
-     * Returns the contents of the <code>Newsgroups:</code> header field.
+     * Returns the contents of the {@code Newsgroups:} header field.
      *
      * @return The comma-separated list of newsgroups to which the article is being posted.
      */
@@ -112,7 +112,7 @@ public class SimpleNNTPHeader {
     }
 
     /**
-     * Returns the subject used in the <code>Subject:</code> header field.
+     * Returns the subject used in the {@code Subject:} header field.
      *
      * @return The subject.
      */
