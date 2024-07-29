@@ -42,7 +42,7 @@ public final class RelayPath {
 
     /**
      * Add a mail relay host to the relay path. Hosts are added left to right. For example, the following will create the path
-     * <code><b> &lt; @bar.com,@foo.com:foobar@foo.com &gt; </b></code>
+     * {@code <b> &lt; @bar.com,@foo.com:foobar@foo.com &gt; </b>}
      *
      * <pre>
      * path = new RelayPath("foobar@foo.com");
