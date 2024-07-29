@@ -40,7 +40,7 @@ public final class EchoUDPClient extends DiscardUDPClient {
     private final DatagramPacket receivePacket = new DatagramPacket(NetConstants.EMPTY_BTYE_ARRAY, 0);
 
     /**
-     * Same as <code>receive(data, data.length)</code>
+     * Same as {@code receive(data, data.length)}
      *
      * @param data the buffer to receive the input
      * @return the number of bytes
@@ -67,7 +67,7 @@ public final class EchoUDPClient extends DiscardUDPClient {
         return receivePacket.getLength();
     }
 
-    /** Same as <code>send(data, data.length, host)</code> */
+    /** Same as {@code send(data, data.length, host)} */
     @Override
     public void send(final byte[] data, final InetAddress host) throws IOException {
         send(data, data.length, host, DEFAULT_PORT);
