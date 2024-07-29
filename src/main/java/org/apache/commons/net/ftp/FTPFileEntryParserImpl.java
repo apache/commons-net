@@ -40,7 +40,7 @@ public abstract class FTPFileEntryParserImpl implements FTPFileEntryParser {
      *
      * @param original Original list after it has been created from the server stream
      *
-     * @return <code>original</code> unmodified.
+     * @return {@code original} unmodified.
      */
     @Override
     public List<String> preParse(final List<String> original) {
