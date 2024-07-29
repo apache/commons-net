@@ -67,7 +67,7 @@ public class SimpleNTPServer implements Runnable {
     /**
      * Creates SimpleNTPServer.
      *
-     * @param port the local port the server socket is bound to, or <code>zero</code> for a system selected free port.
+     * @param port the local port the server socket is bound to, or {@code zero} for a system selected free port.
      * @throws IllegalArgumentException if port number less than 0
      */
     public SimpleNTPServer(final int port) {
