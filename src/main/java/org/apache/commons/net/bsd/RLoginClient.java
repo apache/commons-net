@@ -50,7 +50,7 @@ public class RLoginClient extends RCommandClient {
     public static final int DEFAULT_PORT = 513;
 
     /**
-     * The default RLoginClient constructor. Initializes the default port to <code>DEFAULT_PORT</code>.
+     * The default RLoginClient constructor. Initializes the default port to {@code DEFAULT_PORT}.
      */
     public RLoginClient() {
         setDefaultPort(DEFAULT_PORT);
