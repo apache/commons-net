@@ -58,9 +58,9 @@ public class SimpleSMTPHeader {
     /**
      * Creates a new SimpleSMTPHeader instance initialized with the given from, to, and subject header field values.
      *
-     * @param from    The value of the <code>From:</code> header field. This should be the sender's email address. Must not be null.
-     * @param to      The value of the <code>To:</code> header field. This should be the recipient's email address. May be null
-     * @param subject The value of the <code>Subject:</code> header field. This should be the subject of the message. May be null
+     * @param from    The value of the {@code From:} header field. This should be the sender's email address. Must not be null.
+     * @param to      The value of the {@code To:} header field. This should be the recipient's email address. May be null
+     * @param subject The value of the {@code Subject:} header field. This should be the subject of the message. May be null
      */
     public SimpleSMTPHeader(final String from, final String to, final String subject) {
         if (from == null) {
