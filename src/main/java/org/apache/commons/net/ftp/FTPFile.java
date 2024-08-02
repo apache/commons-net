@@ -307,10 +307,10 @@ public class FTPFile implements Serializable {
     /**
      * Sets the number of hard links to this file. This is not to be confused with symbolic links.
      *
-     * @param links The number of hard links to this file.
+     * @param hardLinkCount The number of hard links to this file.
      */
-    public void setHardLinkCount(final int links) {
-        this.hardLinkCount = links;
+    public void setHardLinkCount(final int hardLinkCount) {
+        this.hardLinkCount = hardLinkCount;
     }
 
     /**
@@ -366,10 +366,10 @@ public class FTPFile implements Serializable {
     /**
      * Sets the file timestamp. This usually the last modification time. The parameter is not cloned, so do not alter its value after calling this method.
      *
-     * @param date A Calendar instance representing the file timestamp.
+     * @param calendar A Calendar instance representing the file timestamp.
      */
-    public void setTimestamp(final Calendar date) {
-        this.calendar = date;
+    public void setTimestamp(final Calendar calendar) {
+        this.calendar = calendar;
     }
 
     /**
