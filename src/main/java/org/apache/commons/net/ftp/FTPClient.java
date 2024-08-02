@@ -528,7 +528,7 @@ public class FTPClient extends FTP implements Configurable {
     private InetAddress passiveLocalHost;
     private int fileType;
     @SuppressWarnings("unused") // fields are written, but currently not read
-    private int fileFormat;
+    private int formatOrByteSize;
     @SuppressWarnings("unused") // field is written, but currently not read
     private int fileStructure;
     private int fileTransferMode;
@@ -581,7 +581,7 @@ public class FTPClient extends FTP implements Configurable {
     private HostnameResolver passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
 
     /** Controls the automatic server encoding detection (only UTF-8 supported). */
-    private boolean autodetectEncoding;
+    private boolean autoDetectEncoding;
 
     /** Map of FEAT responses. If null, has not been initialized. */
     private HashMap<String, Set<String>> featuresMap;
@@ -631,7 +631,7 @@ public class FTPClient extends FTP implements Configurable {
         initDefaults();
         // must be after super._connectAction_(), because otherwise we get an
         // Exception claiming we're not connected
-        if (autodetectEncoding) {
+        if (autoDetectEncoding) {
             final ArrayList<String> oldReplyLines = new ArrayList<>(_replyLines);
             final int oldReplyCode = _replyCode;
             // UTF-8 appears to be the default
@@ -1463,7 +1463,7 @@ public class FTPClient extends FTP implements Configurable {
      * @return true, if automatic server encoding detection is enabled.
      */
     public boolean getAutodetectUTF8() {
-        return autodetectEncoding;
+        return autoDetectEncoding;
     }
 
     private InputStream getBufferedInputStream(final InputStream inputStream) {
@@ -1901,7 +1901,7 @@ public class FTPClient extends FTP implements Configurable {
         activeMaxPort = 0;
         fileType = ASCII_FILE_TYPE;
         fileStructure = FILE_STRUCTURE;
-        fileFormat = NON_PRINT_TEXT_FORMAT;
+        formatOrByteSize = NON_PRINT_TEXT_FORMAT;
         fileTransferMode = STREAM_TRANSFER_MODE;
         restartOffset = 0;
         systemName = null;
@@ -2861,13 +2861,13 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Sets the client side port range in active mode.
      *
-     * @param minPort The lowest available port (inclusive).
-     * @param maxPort The highest available port (inclusive).
+     * @param activeMinPort The lowest available port (inclusive).
+     * @param activeMaxPort The highest available port (inclusive).
      * @since 2.2
      */
-    public void setActivePortRange(final int minPort, final int maxPort) {
-        this.activeMinPort = minPort;
-        this.activeMaxPort = maxPort;
+    public void setActivePortRange(final int activeMinPort, final int activeMaxPort) {
+        this.activeMinPort = activeMinPort;
+        this.activeMaxPort = activeMaxPort;
     }
 
     /**
@@ -2876,19 +2876,19 @@ public class FTPClient extends FTP implements Configurable {
      * Does not affect existing connections; must be invoked before a connection is established.
      * </p>
      *
-     * @param autodetect If true, automatic server encoding detection will be enabled.
+     * @param autoDetectEncoding If true, automatic server encoding detection will be enabled.
      */
-    public void setAutodetectUTF8(final boolean autodetect) {
-        autodetectEncoding = autodetect;
+    public void setAutodetectUTF8(final boolean autoDetectEncoding) {
+        this.autoDetectEncoding = autoDetectEncoding;
     }
 
     /**
      * Sets the internal buffer size for buffered data streams.
      *
-     * @param bufSize The size of the buffer. Use a non-positive value to use the default.
+     * @param bufferSize The size of the buffer. Use a non-positive value to use the default.
      */
-    public void setBufferSize(final int bufSize) {
-        bufferSize = bufSize;
+    public void setBufferSize(final int bufferSize) {
+        this.bufferSize = bufferSize;
     }
 
     /**
@@ -2948,11 +2948,11 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Sets the listener to be used when performing store/retrieve operations. The default value (if not set) is {@code null}.
      *
-     * @param listener to be used, may be {@code null} to disable
+     * @param copyStreamListener to be used, may be {@code null} to disable
      * @since 3.0
      */
-    public void setCopyStreamListener(final CopyStreamListener listener) {
-        copyStreamListener = listener;
+    public void setCopyStreamListener(final CopyStreamListener copyStreamListener) {
+        this.copyStreamListener = copyStreamListener;
     }
 
     /**
@@ -2987,16 +2987,16 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Sets the file structure. The default structure is {@code FTP.FILE_STRUCTURE} if this method is never called or if a connect method is called.
      *
-     * @param structure The structure of the file (one of the FTP class {@code _STRUCTURE} constants).
+     * @param fileStructure The structure of the file (one of the FTP class {@code _STRUCTURE} constants).
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean setFileStructure(final int structure) throws IOException {
-        if (FTPReply.isPositiveCompletion(stru(structure))) {
-            fileStructure = structure;
+    public boolean setFileStructure(final int fileStructure) throws IOException {
+        if (FTPReply.isPositiveCompletion(stru(fileStructure))) {
+            this.fileStructure = fileStructure;
             return true;
         }
         return false;
@@ -3006,16 +3006,16 @@ public class FTPClient extends FTP implements Configurable {
      * Sets the transfer mode. The default transfer mode {@code FTP.STREAM_TRANSFER_MODE} if this method is never called or if a connect method is
      * called.
      *
-     * @param mode The new transfer mode to use (one of the FTP class {@code _TRANSFER_MODE} constants).
+     * @param fileTransferMode The new transfer mode to use (one of the FTP class {@code _TRANSFER_MODE} constants).
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean setFileTransferMode(final int mode) throws IOException {
-        if (FTPReply.isPositiveCompletion(mode(mode))) {
-            fileTransferMode = mode;
+    public boolean setFileTransferMode(final int fileTransferMode) throws IOException {
+        if (FTPReply.isPositiveCompletion(mode(fileTransferMode))) {
+            this.fileTransferMode = fileTransferMode;
             return true;
         }
         return false;
@@ -3040,7 +3040,7 @@ public class FTPClient extends FTP implements Configurable {
     public boolean setFileType(final int fileType) throws IOException {
         if (FTPReply.isPositiveCompletion(type(fileType))) {
             this.fileType = fileType;
-            this.fileFormat = NON_PRINT_TEXT_FORMAT;
+            this.formatOrByteSize = NON_PRINT_TEXT_FORMAT;
             return true;
         }
         return false;
@@ -3069,7 +3069,7 @@ public class FTPClient extends FTP implements Configurable {
     public boolean setFileType(final int fileType, final int formatOrByteSize) throws IOException {
         if (FTPReply.isPositiveCompletion(type(fileType, formatOrByteSize))) {
             this.fileType = fileType;
-            this.fileFormat = formatOrByteSize;
+            this.formatOrByteSize = formatOrByteSize;
             return true;
         }
         return false;
@@ -3080,14 +3080,14 @@ public class FTPClient extends FTP implements Configurable {
      * will be silently ignored, and replaced with the remote IP address of the control connection, unless this configuration option is given, which restores
      * the old behavior. To enable this by default, use the system property {@link FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE}.
      *
-     * @param usingIpAddressFromPasvResponse True, if the IP address from the server's response should be used (pre-3.9.0 compatible behavior), or false (ignore
+     * @param ipAddressFromPasvResponse True, if the IP address from the server's response should be used (pre-3.9.0 compatible behavior), or false (ignore
      *                                       that IP address).
      * @see FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE
      * @see #isIpAddressFromPasvResponse
      * @since 3.9.0
      */
-    public void setIpAddressFromPasvResponse(final boolean usingIpAddressFromPasvResponse) {
-        this.ipAddressFromPasvResponse = usingIpAddressFromPasvResponse;
+    public void setIpAddressFromPasvResponse(final boolean ipAddressFromPasvResponse) {
+        this.ipAddressFromPasvResponse = ipAddressFromPasvResponse;
     }
 
     /**
@@ -3135,10 +3135,10 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Sets the local IP address to use in passive mode. Useful when there are multiple network cards.
      *
-     * @param inetAddress The local IP address of this machine.
+     * @param passiveLocalHost The local IP address of this machine.
      */
-    public void setPassiveLocalIPAddress(final InetAddress inetAddress) {
-        this.passiveLocalHost = inetAddress;
+    public void setPassiveLocalIPAddress(final InetAddress passiveLocalHost) {
+        this.passiveLocalHost = passiveLocalHost;
     }
 
     /**
@@ -3171,31 +3171,32 @@ public class FTPClient extends FTP implements Configurable {
      *
      * The default implementation is {@code NatServerResolverImpl}, i.e. site-local replies are replaced.
      *
-     * @param resolver strategy to replace internal IP's in passive mode or null to disable the workaround (i.e. use PASV mode reply address.)
+     * @param passiveNatWorkaroundStrategy strategy to replace internal IP's in passive mode or null to disable the workaround (i.e. use PASV mode reply
+     *                                     address.)
      * @since 3.6
      */
-    public void setPassiveNatWorkaroundStrategy(final HostnameResolver resolver) {
-        this.passiveNatWorkaroundStrategy = resolver;
+    public void setPassiveNatWorkaroundStrategy(final HostnameResolver passiveNatWorkaroundStrategy) {
+        this.passiveNatWorkaroundStrategy = passiveNatWorkaroundStrategy;
     }
 
     /**
      * Sets the value to be used for the data socket SO_RCVBUF option. If the value is positive, the option will be set when the data socket has been created.
      *
-     * @param bufSize The size of the buffer, zero or negative means the value is ignored.
+     * @param receiveDataSocketBufferSize The size of the buffer, zero or negative means the value is ignored.
      * @since 3.3
      */
-    public void setReceieveDataSocketBufferSize(final int bufSize) {
-        receiveDataSocketBufferSize = bufSize;
+    public void setReceieveDataSocketBufferSize(final int receiveDataSocketBufferSize) {
+        this.receiveDataSocketBufferSize = receiveDataSocketBufferSize;
     }
 
     /**
      * Enable or disable verification that the remote host taking part of a data connection is the same as the host to which the control connection is attached.
      * The default is for verification to be enabled. You may set this value at any time, whether the FTPClient is currently connected or not.
      *
-     * @param enable True to enable verification, false to disable verification.
+     * @param remoteVerificationEnabled True to enable verification, false to disable verification.
      */
-    public void setRemoteVerificationEnabled(final boolean enable) {
-        remoteVerificationEnabled = enable;
+    public void setRemoteVerificationEnabled(final boolean remoteVerificationEnabled) {
+        this.remoteVerificationEnabled = remoteVerificationEnabled;
     }
 
     /**
@@ -3231,11 +3232,11 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Sets the value to be used for the data socket SO_SNDBUF option. If the value is positive, the option will be set when the data socket has been created.
      *
-     * @param bufSize The size of the buffer, zero or negative means the value is ignored.
+     * @param sendDataSocketBufferSize The size of the buffer, zero or negative means the value is ignored.
      * @since 3.3
      */
-    public void setSendDataSocketBufferSize(final int bufSize) {
-        sendDataSocketBufferSize = bufSize;
+    public void setSendDataSocketBufferSize(final int sendDataSocketBufferSize) {
+        this.sendDataSocketBufferSize = sendDataSocketBufferSize;
     }
 
     /**
@@ -3245,11 +3246,11 @@ public class FTPClient extends FTP implements Configurable {
      * client is coming from another internal network. In that case the data connection after PASV command would fail, while EPSV would make the client succeed
      * by taking just the port.
      *
-     * @param selected value to set.
+     * @param useEPSVwithIPv4 value to set.
      * @since 2.2
      */
-    public void setUseEPSVwithIPv4(final boolean selected) {
-        this.useEPSVwithIPv4 = selected;
+    public void setUseEPSVwithIPv4(final boolean useEPSVwithIPv4) {
+        this.useEPSVwithIPv4 = useEPSVwithIPv4;
     }
 
     private boolean storeFile(final FTPCmd command, final String remote, final InputStream local) throws IOException {

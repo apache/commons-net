@@ -602,11 +602,11 @@ public class FTPClientConfig {
      * <p>
      * In this case, the FTPFile will contain only the unparsed entry {@link FTPFile#getRawListing()} and {@link FTPFile#isValid()} will return {@code false}
      *
-     * @param saveUnparseable if true, then create FTPFile entries if parsing fails
+     * @param saveUnparseableEntries if true, then create FTPFile entries if parsing fails
      * @since 3.4
      */
-    public void setUnparseableEntries(final boolean saveUnparseable) {
-        this.saveUnparseableEntries = saveUnparseable;
+    public void setUnparseableEntries(final boolean saveUnparseableEntries) {
+        this.saveUnparseableEntries = saveUnparseableEntries;
     }
 
 }
