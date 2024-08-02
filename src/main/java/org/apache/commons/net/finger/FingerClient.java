@@ -17,12 +17,11 @@
 package org.apache.commons.net.finger;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.util.Charsets;
 
@@ -141,20 +140,7 @@ public class FingerClient extends SocketClient {
      * @throws IOException If an I/O error occurs while reading the socket.
      */
     public String query(final boolean longOutput, final String user) throws IOException {
-        int read;
-        final StringBuilder result = new StringBuilder(buffer.length);
-
-        try (BufferedReader input = new BufferedReader(new InputStreamReader(getInputStream(longOutput, user), getCharset()))) {
-            while (true) {
-                read = input.read(buffer, 0, buffer.length);
-                if (read <= 0) {
-                    break;
-                }
-                result.append(buffer, 0, read);
-            }
-        }
-
-        return result.toString();
+        return IOUtils.toString(() -> getInputStream(longOutput, user), getCharset());
     }
 
 }

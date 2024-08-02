@@ -129,7 +129,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.16.1</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

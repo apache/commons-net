@@ -17,10 +17,9 @@
 
 package org.apache.commons.net.daytime;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.SocketClient;
 
 /**
@@ -32,16 +31,13 @@ import org.apache.commons.net.SocketClient;
  */
 public final class DaytimeTCPClient extends SocketClient {
 
-    /** The default daytime port. It is set to 13 according to RFC 867. */
+    /**
+     * The default daytime port {@value} per RFC 867.
+     */
     public static final int DEFAULT_PORT = 13;
 
     /**
-     * Received dates will likely be less than 64 characters. This is a temporary buffer used while receiving data.
-     */
-    private final char[] buffer = new char[64];
-
-    /**
-     * The default DaytimeTCPClient constructor. It merely sets the default port to {@code DEFAULT_PORT}.
+     * The default DaytimeTCPClient constructor. It merely sets the default port to <code>DEFAULT_PORT</code>.
      */
     public DaytimeTCPClient() {
         setDefaultPort(DEFAULT_PORT);
@@ -56,18 +52,7 @@ public final class DaytimeTCPClient extends SocketClient {
      * @throws IOException If an error occurs while fetching the time string.
      */
     public String getTime() throws IOException {
-        final StringBuilder result = new StringBuilder(buffer.length);
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(_input_, getCharset()));
-
-        while (true) {
-            final int read = reader.read(buffer, 0, buffer.length);
-            if (read <= 0) {
-                break;
-            }
-            result.append(buffer, 0, read);
-        }
-
-        return result.toString();
+        return IOUtils.toString(_input_, getCharset());
     }
 
 }
