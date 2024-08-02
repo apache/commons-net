@@ -70,7 +70,7 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
     }
 
     private SSLServerSocketFactory getServerSocketFactory() {
-        return this.sslContext.getServerSocketFactory();
+        return sslContext.getServerSocketFactory();
     }
 
     /**

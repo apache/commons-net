@@ -160,9 +160,9 @@ public class FTPListParseEngine {
     public FTPFile[] getNext(final int quantityRequested) {
         final List<FTPFile> tmpResults = new LinkedList<>();
         int count = quantityRequested;
-        while (count > 0 && this.internalIterator.hasNext()) {
-            final String entry = this.internalIterator.next();
-            FTPFile temp = this.parser.parseFTPEntry(entry);
+        while (count > 0 && internalIterator.hasNext()) {
+            final String entry = internalIterator.next();
+            FTPFile temp = parser.parseFTPEntry(entry);
             if (temp == null && saveUnparseableEntries) {
                 temp = new FTPFile(entry);
             }
@@ -194,9 +194,9 @@ public class FTPListParseEngine {
     public FTPFile[] getPrevious(final int quantityRequested) {
         final List<FTPFile> tmpResults = new LinkedList<>();
         int count = quantityRequested;
-        while (count > 0 && this.internalIterator.hasPrevious()) {
-            final String entry = this.internalIterator.previous();
-            FTPFile temp = this.parser.parseFTPEntry(entry);
+        while (count > 0 && internalIterator.hasPrevious()) {
+            final String entry = internalIterator.previous();
+            FTPFile temp = parser.parseFTPEntry(entry);
             if (temp == null && saveUnparseableEntries) {
                 temp = new FTPFile(entry);
             }
@@ -237,11 +237,11 @@ public class FTPListParseEngine {
     private void read(final InputStream inputStream, final String charsetName) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charsets.toCharset(charsetName)))) {
 
-            String line = this.parser.readNextEntry(reader);
+            String line = parser.readNextEntry(reader);
 
             while (line != null) {
-                this.entries.add(line);
-                line = this.parser.readNextEntry(reader);
+                entries.add(line);
+                line = parser.readNextEntry(reader);
             }
         }
     }
@@ -268,9 +268,9 @@ public class FTPListParseEngine {
      * @throws IOException thrown on any failure to read from the sever.
      */
     public void readServerList(final InputStream inputStream, final String charsetName) throws IOException {
-        this.entries = new LinkedList<>();
+        entries = new LinkedList<>();
         read(inputStream, charsetName);
-        this.parser.preParse(this.entries);
+        parser.preParse(entries);
         resetIterator();
     }
 
@@ -278,7 +278,7 @@ public class FTPListParseEngine {
      * resets this object's internal iterator to the beginning of the list.
      */
     public void resetIterator() {
-        this.internalIterator = this.entries.listIterator();
+        internalIterator = entries.listIterator();
     }
 
 }

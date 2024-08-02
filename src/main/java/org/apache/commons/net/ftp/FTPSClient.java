@@ -565,7 +565,7 @@ public class FTPSClient extends FTPClient {
      * @return AUTH command use value.
      */
     public String getAuthValue() {
-        return this.auth;
+        return auth;
     }
 
     /**

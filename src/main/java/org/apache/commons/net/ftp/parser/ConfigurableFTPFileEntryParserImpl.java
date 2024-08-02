@@ -44,7 +44,7 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
      */
     public ConfigurableFTPFileEntryParserImpl(final String regex) {
         super(regex);
-        this.timestampParser = new FTPTimestampParserImpl();
+        timestampParser = new FTPTimestampParserImpl();
     }
 
     /**
@@ -56,7 +56,7 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
      */
     public ConfigurableFTPFileEntryParserImpl(final String regex, final int flags) {
         super(regex, flags);
-        this.timestampParser = new FTPTimestampParserImpl();
+        timestampParser = new FTPTimestampParserImpl();
     }
 
     /**
@@ -69,7 +69,7 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
      */
     @Override
     public void configure(final FTPClientConfig config) {
-        if (this.timestampParser instanceof Configurable) {
+        if (timestampParser instanceof Configurable) {
             final FTPClientConfig defaultCfg = getDefaultConfiguration();
             if (config != null) {
                 if (null == config.getDefaultDateFormatStr()) {
@@ -78,9 +78,9 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
                 if (null == config.getRecentDateFormatStr()) {
                     config.setRecentDateFormatStr(defaultCfg.getRecentDateFormatStr());
                 }
-                ((Configurable) this.timestampParser).configure(config);
+                ((Configurable) timestampParser).configure(config);
             } else {
-                ((Configurable) this.timestampParser).configure(defaultCfg);
+                ((Configurable) timestampParser).configure(defaultCfg);
             }
         }
     }
@@ -102,6 +102,6 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
      * @throws ParseException on parse error
      */
     public Calendar parseTimestamp(final String timestampStr) throws ParseException {
-        return this.timestampParser.parseTimestamp(timestampStr);
+        return timestampParser.parseTimestamp(timestampStr);
     }
 }

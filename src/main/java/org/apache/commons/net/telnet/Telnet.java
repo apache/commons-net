@@ -1014,6 +1014,6 @@ class Telnet extends SocketClient {
      * Unregisters the current notification handler.
      */
     public void unregisterNotifHandler() {
-        this.notifhand = null;
+        notifhand = null;
     }
 }

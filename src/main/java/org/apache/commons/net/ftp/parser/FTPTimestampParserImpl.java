@@ -173,7 +173,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
 
         setServerTimeZone(config.getServerTimeZoneId());
 
-        this.lenientFutureDates = config.isLenientFutureDates();
+        lenientFutureDates = config.isLenientFutureDates();
     }
 
     /**
@@ -208,7 +208,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
      * @return Returns the serverTimeZone used by this parser.
      */
     public TimeZone getServerTimeZone() {
-        return this.defaultDateFormat.getTimeZone();
+        return defaultDateFormat.getTimeZone();
     }
 
     /**
@@ -323,15 +323,15 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     private void setDefaultDateFormat(final String format, final DateFormatSymbols dfs) {
         if (format != null) {
             if (dfs != null) {
-                this.defaultDateFormat = new SimpleDateFormat(format, dfs);
+                defaultDateFormat = new SimpleDateFormat(format, dfs);
             } else {
-                this.defaultDateFormat = new SimpleDateFormat(format);
+                defaultDateFormat = new SimpleDateFormat(format);
             }
-            this.defaultDateFormat.setLenient(false);
+            defaultDateFormat.setLenient(false);
         } else {
-            this.defaultDateFormat = null;
+            defaultDateFormat = null;
         }
-        this.defaultDateSmallestUnitIndex = getEntry(this.defaultDateFormat);
+        defaultDateSmallestUnitIndex = getEntry(defaultDateFormat);
     }
 
     /**
@@ -348,15 +348,15 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     private void setRecentDateFormat(final String format, final DateFormatSymbols dfs) {
         if (format != null) {
             if (dfs != null) {
-                this.recentDateFormat = new SimpleDateFormat(format, dfs);
+                recentDateFormat = new SimpleDateFormat(format, dfs);
             } else {
-                this.recentDateFormat = new SimpleDateFormat(format);
+                recentDateFormat = new SimpleDateFormat(format);
             }
-            this.recentDateFormat.setLenient(false);
+            recentDateFormat.setLenient(false);
         } else {
-            this.recentDateFormat = null;
+            recentDateFormat = null;
         }
-        this.recentDateSmallestUnitIndex = getEntry(this.recentDateFormat);
+        recentDateSmallestUnitIndex = getEntry(recentDateFormat);
     }
 
     /**
@@ -369,9 +369,9 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
         if (serverTimeZoneId != null) {
             serverTimeZone = TimeZone.getTimeZone(serverTimeZoneId);
         }
-        this.defaultDateFormat.setTimeZone(serverTimeZone);
-        if (this.recentDateFormat != null) {
-            this.recentDateFormat.setTimeZone(serverTimeZone);
+        defaultDateFormat.setTimeZone(serverTimeZone);
+        if (recentDateFormat != null) {
+            recentDateFormat.setTimeZone(serverTimeZone);
         }
     }
 }

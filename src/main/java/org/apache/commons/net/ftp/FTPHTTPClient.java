@@ -132,7 +132,7 @@ public class FTPHTTPClient extends FTPClient {
         final boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
         if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
             _parseExtendedPassiveModeReply(_replyLines.get(0));
-            passiveHost = this.tunnelHost;
+            passiveHost = tunnelHost;
         } else {
             if (isInet6Address) {
                 return null; // Must use EPSV for IPV6

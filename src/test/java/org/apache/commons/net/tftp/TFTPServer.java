@@ -656,14 +656,14 @@ public class TFTPServer implements Runnable, AutoCloseable {
         log.println("Starting TFTP Server on port " + port + ".  Read directory: " + newServerReadDirectory + " Write directory: " + newServerWriteDirectory
                 + " Server Mode is " + mode);
 
-        this.serverReadDirectory = newServerReadDirectory.getCanonicalFile();
+        serverReadDirectory = newServerReadDirectory.getCanonicalFile();
         if (!serverReadDirectory.exists() || !newServerReadDirectory.isDirectory()) {
-            throw new IOException("The server read directory " + this.serverReadDirectory + " does not exist");
+            throw new IOException("The server read directory " + serverReadDirectory + " does not exist");
         }
 
-        this.serverWriteDirectory = newServerWriteDirectory.getCanonicalFile();
-        if (!this.serverWriteDirectory.exists() || !newServerWriteDirectory.isDirectory()) {
-            throw new IOException("The server write directory " + this.serverWriteDirectory + " does not exist");
+        serverWriteDirectory = newServerWriteDirectory.getCanonicalFile();
+        if (!serverWriteDirectory.exists() || !newServerWriteDirectory.isDirectory()) {
+            throw new IOException("The server write directory " + serverWriteDirectory + " does not exist");
         }
 
         serverTftp = new TFTP();

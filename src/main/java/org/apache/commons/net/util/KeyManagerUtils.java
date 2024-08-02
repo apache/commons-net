@@ -81,15 +81,15 @@ public final class KeyManagerUtils {
         }
 
         String getAlias() {
-            return this.keyAlias;
+            return keyAlias;
         }
 
         X509Certificate[] getCertificateChain() {
-            return this.certChain;
+            return certChain;
         }
 
         PrivateKey getPrivateKey() {
-            return this.key;
+            return key;
         }
     }
 

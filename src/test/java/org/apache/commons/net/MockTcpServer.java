@@ -116,7 +116,7 @@ public abstract class MockTcpServer implements Runnable, Closeable {
      *         if the socket is not bound yet
      */
     public int getPort() {
-        return this.port;
+        return port;
     }
 
     /**
@@ -148,8 +148,8 @@ public abstract class MockTcpServer implements Runnable, Closeable {
         System.out.println("Starting MockWebServer...");
         if (!running) {
             running = true;
-            this.serverThread.start();
-            System.out.println("Successfully started MockWebServer on address " + this.serverAddress.getHostAddress() + " and port " + this.port);
+            serverThread.start();
+            System.out.println("Successfully started MockWebServer on address " + serverAddress.getHostAddress() + " and port " + port);
         }
     }
 

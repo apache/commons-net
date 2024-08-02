@@ -468,7 +468,7 @@ public class FTPClientConfig {
      * @since 3.4
      */
     public boolean getUnparseableEntries() {
-        return this.saveUnparseableEntries;
+        return saveUnparseableEntries;
     }
 
     /**

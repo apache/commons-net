@@ -41,12 +41,12 @@ public class NoProtocolSslConfigurationProxy implements SslConfiguration {
 
     @Override
     public ClientAuth getClientAuth() {
-        return this.sslConfiguration.getClientAuth();
+        return sslConfiguration.getClientAuth();
     }
 
     @Override
     public String[] getEnabledCipherSuites() {
-        return this.sslConfiguration.getEnabledCipherSuites();
+        return sslConfiguration.getEnabledCipherSuites();
     }
 
     @Override
@@ -56,17 +56,17 @@ public class NoProtocolSslConfigurationProxy implements SslConfiguration {
 
     @Override
     public SSLSocketFactory getSocketFactory() throws GeneralSecurityException {
-        return this.sslConfiguration.getSocketFactory();
+        return sslConfiguration.getSocketFactory();
     }
 
     @Override
     public SSLContext getSSLContext() throws GeneralSecurityException {
-        return this.sslConfiguration.getSSLContext();
+        return sslConfiguration.getSSLContext();
     }
 
     @Override
     public SSLContext getSSLContext(final String protocol) throws GeneralSecurityException {
-        return this.sslConfiguration.getSSLContext(protocol);
+        return sslConfiguration.getSSLContext(protocol);
     }
 
 }

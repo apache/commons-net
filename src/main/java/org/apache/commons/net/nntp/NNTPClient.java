@@ -202,7 +202,7 @@ public class NNTPClient extends NNTP {
             replyCode = authinfoPass(password);
 
             if (replyCode == NNTPReply.AUTHENTICATION_ACCEPTED) {
-                this._isAllowedToPost = true;
+                _isAllowedToPost = true;
                 return true;
             }
         }

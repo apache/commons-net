@@ -260,7 +260,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      */
     @Override
     public int compareTo(final TimeStamp anotherTimeStamp) {
-        final long thisVal = this.ntpTime;
+        final long thisVal = ntpTime;
         final long anotherVal = anotherTimeStamp.ntpTime;
         return Long.compare(thisVal, anotherVal);
     }

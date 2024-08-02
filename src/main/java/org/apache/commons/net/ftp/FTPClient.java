@@ -351,7 +351,7 @@ public class FTPClient extends FTP implements Configurable {
             final InetAddress host = InetAddress.getByName(newHostname);
             // reply is a local address, but target is not - assume NAT box changed the PASV reply
             if (host.isSiteLocalAddress()) {
-                final InetAddress remote = this.client.getRemoteAddress();
+                final InetAddress remote = client.getRemoteAddress();
                 if (!remote.isSiteLocalAddress()) {
                     newHostname = remote.getHostAddress();
                 }
@@ -818,8 +818,8 @@ public class FTPClient extends FTP implements Configurable {
             throw new MalformedServerReplyException("Could not parse extended passive host information.\nServer Reply: " + reply);
         }
         // in EPSV mode, the passive host address is implicit
-        this.passiveHost = getRemoteAddress().getHostAddress();
-        this.passivePort = port;
+        passiveHost = getRemoteAddress().getHostAddress();
+        passivePort = port;
     }
 
     /**
@@ -848,7 +848,7 @@ public class FTPClient extends FTP implements Configurable {
                 try {
                     final String newPassiveHost = passiveNatWorkaroundStrategy.resolve(pasvHost);
                     if (!pasvHost.equals(newPassiveHost)) {
-                        fireReplyReceived(0, "[Replacing PASV mode reply address " + this.passiveHost + " with " + newPassiveHost + "]\n");
+                        fireReplyReceived(0, "[Replacing PASV mode reply address " + passiveHost + " with " + newPassiveHost + "]\n");
                         pasvHost = newPassiveHost;
                     }
                 } catch (final UnknownHostException e) { // Should not happen as we are passing in an IP address
@@ -860,8 +860,8 @@ public class FTPClient extends FTP implements Configurable {
         } else {
             pasvHost = _socket_.getInetAddress().getHostAddress();
         }
-        this.passiveHost = pasvHost;
-        this.passivePort = pasvPort;
+        passiveHost = pasvHost;
+        passivePort = pasvPort;
     }
 
     /**
@@ -1196,7 +1196,7 @@ public class FTPClient extends FTP implements Configurable {
      */
     @Override
     public void configure(final FTPClientConfig config) {
-        this.configuration = config;
+        configuration = config;
     }
 
     // package access for test purposes
@@ -1638,7 +1638,7 @@ public class FTPClient extends FTP implements Configurable {
      * @since 2.0
      */
     public boolean getListHiddenFiles() {
-        return this.listHiddenFiles;
+        return listHiddenFiles;
     }
 
     /**
@@ -1676,7 +1676,7 @@ public class FTPClient extends FTP implements Configurable {
      * @return The local IP address in passive mode.
      */
     public InetAddress getPassiveLocalIPAddress() {
-        return this.passiveLocalHost;
+        return passiveLocalHost;
     }
 
     /**
@@ -2855,7 +2855,7 @@ public class FTPClient extends FTP implements Configurable {
      * @since 2.2
      */
     public void setActiveExternalIPAddress(final String ipAddress) throws UnknownHostException {
-        this.activeExternalHost = InetAddress.getByName(ipAddress);
+        activeExternalHost = InetAddress.getByName(ipAddress);
     }
 
     /**

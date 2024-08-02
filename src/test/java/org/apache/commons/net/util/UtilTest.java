@@ -81,8 +81,8 @@ public class UtilTest {
         @Override
         public void bytesTransferred(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
             Assert.assertEquals("Wrong bytes", expectedBytes, bytesTransferred);
-            this.totalBytesTransferredTotal = totalBytesTransferred;
-            this.bytesTransferredTotal += bytesTransferred;
+            totalBytesTransferredTotal = totalBytesTransferred;
+            bytesTransferredTotal += bytesTransferred;
         }
 
         void checkExpected() {

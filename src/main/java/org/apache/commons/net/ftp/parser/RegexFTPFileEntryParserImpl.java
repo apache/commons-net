@@ -99,10 +99,10 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      */
 
     public int getGroupCnt() {
-        if (this.result == null) {
+        if (result == null) {
             return 0;
         }
-        return this.result.groupCount();
+        return result.groupCount();
     }
 
     /**
@@ -113,8 +113,8 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
 
     public String getGroupsAsString() {
         final StringBuilder b = new StringBuilder();
-        for (int i = 1; i <= this.result.groupCount(); i++) {
-            b.append(i).append(") ").append(this.result.group(i)).append(System.lineSeparator());
+        for (int i = 1; i <= result.groupCount(); i++) {
+            b.append(i).append(") ").append(result.group(i)).append(System.lineSeparator());
         }
         return b.toString();
     }
@@ -127,10 +127,10 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * @return the content of the {@code matchnum'th} group of the internal match or null if this method is called without a match having been made.
      */
     public String group(final int matchNum) {
-        if (this.result == null) {
+        if (result == null) {
             return null;
         }
-        return this.result.group(matchNum);
+        return result.group(matchNum);
     }
 
     /**
@@ -141,12 +141,12 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      */
 
     public boolean matches(final String s) {
-        this.result = null;
+        result = null;
         _matcher_ = pattern.matcher(s);
         if (_matcher_.matches()) {
-            this.result = _matcher_.toMatchResult();
+            result = _matcher_.toMatchResult();
         }
-        return null != this.result;
+        return null != result;
     }
 
     /**
