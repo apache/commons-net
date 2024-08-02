@@ -32,9 +32,7 @@ import org.apache.commons.net.util.Charsets;
  *
  * <pre>
  * FingerClient finger;
- *
  * finger = new FingerClient();
- *
  * try {
  *     finger.connect("foo.bar.com");
  *     System.out.println(finger.query("foobar", false));
@@ -45,16 +43,14 @@ import org.apache.commons.net.util.Charsets;
  * }
  * </pre>
  */
-
 public class FingerClient extends SocketClient {
+
     /**
-     * The default FINGER port. Set to 79 according to RFC 1288.
+     * The default FINGER port. Set to {@value} according to RFC 1288.
      */
     public static final int DEFAULT_PORT = 79;
 
     private static final String LONG_FLAG = "/W ";
-
-    private final transient char[] buffer = new char[1024];
 
     /**
      * The default FingerClient constructor. Initializes the default port to {@code DEFAULT_PORT}.
