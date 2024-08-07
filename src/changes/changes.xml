@@ -85,7 +85,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">org.apache.commons.net.nntp.Article#getNext().</action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 70 to 72 #261.</action> 
-      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.15.0 #268.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.16.0 #268, #273.</action>
     </release>
     <release version="3.11.1" date="2024-06-07" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
