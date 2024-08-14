@@ -1058,7 +1058,7 @@ KeyManagerUtils can be used to provide client certificates.
         Method was removed, along with the field.
       </action>
       <action issue="NET-367" dev="sebb" type="fix">
-        ntp.TimeStamp uses incorrect lazy initialisation of static fields simpleFormatter and utcFormatter.
+        ntp.TimeStamp uses incorrect lazy initialization of static fields simpleFormatter and utcFormatter.
       </action>
       <action issue="NET-381" dev="sebb" type="update">
         Parsing is inefficient, as it parses everything twice.
