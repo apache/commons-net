@@ -81,7 +81,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
 
     /**
      * Implement hook provided for those implementers (such as VMSVersioningFTPEntryParser, and possibly others) which return multiple files with the same name
-     * to remove the duplicates ..
+     * to remove the duplicates.
      *
      * @param original Original list
      *
