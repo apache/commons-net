@@ -138,7 +138,11 @@ public class IMAPReplyTest {
     @Test
     public void testGetUntaggedReplyCodeOkLine() throws IOException {
         assertEquals(IMAPReply.OK, IMAPReply.getUntaggedReplyCode("* OK Salvage successful, no data lost"));
-        assertEquals(IMAPReply.OK, IMAPReply.getUntaggedReplyCode("* OK The Microsoft Exchange IMAP4 service is ready. [xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]"));
+        assertEquals(IMAPReply.OK,
+                IMAPReply.getUntaggedReplyCode("* OK The Microsoft Exchange IMAP4 service is ready. [xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]"));
+        assertEquals(IMAPReply.OK, IMAPReply.getUntaggedReplyCode(
+                "* OK The Microsoft Exchange IMAP4 service is ready. [TQBXADIAUABSADIAMQAwADEAQwBBADAAMAAzADYALgBuAGEAbQBwAHIAZAAyADEALgBwAHIAbwBkAC4AbwB1AHQAbABvAG8AawAuAGMAbwBtAA==]"));
+
     }
 
     @Test

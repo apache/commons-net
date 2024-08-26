@@ -84,10 +84,10 @@ public final class IMAPReply {
      * <ol>
      * <li>the start of a line, then a star, then a space.</li>
      * <li>non-whitespace characters, up to 80, for example {@code OK}.</li>
-     * <li>up to 160 extra characters.</li>
+     * <li>up to 500 extra characters.</li>
      * </ol>
      */
-    private static final String UNTAGGED_RESPONSE = "^\\* (\\S{1,80}).{0,160}";
+    private static final String UNTAGGED_RESPONSE = "^\\* (\\S{1,80}).{0,500}";
 
     private static final Pattern UNTAGGED_PATTERN = Pattern.compile(UNTAGGED_RESPONSE);
     private static final Pattern LITERAL_PATTERN = Pattern.compile("\\{(\\d+)\\}$"); // {dd}
