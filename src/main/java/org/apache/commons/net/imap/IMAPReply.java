@@ -63,11 +63,14 @@ public final class IMAPReply {
     private static final String IMAP_CONTINUATION_PREFIX = "+";
 
     /**
-     * Guard against Polynomial regular expression used on uncontrolled data.
-     *
-     * Don't look for more than 80 letters.
-     * Don't look for more than 80 non-whitespace.
-     * Don't look for more than 500 character.
+     * Guards against Polynomial regular expression used on uncontrolled data.
+     * <ol>
+     * <li>the start of a line.</li>
+     * <li>letters, up to 80.</li>
+     * <li>a space.</li>
+     * <li>non-whitespace characters, up to 80, for example {@code OK}.</li>
+     * <li>up to 500 extra characters.</li>
+     * </ol>
      */
     private static final String TAGGED_RESPONSE = "^\\w{1,80} (\\S{1,80}).{0,500}";
 
@@ -77,10 +80,12 @@ public final class IMAPReply {
     private static final Pattern TAGGED_PATTERN = Pattern.compile(TAGGED_RESPONSE);
 
     /**
-     * Guard against Polynomial regular expression used on uncontrolled data.
-     *
-     * Don't look for more than 80 backslashes.
-     * Don't look for more than 80 character.
+     * Guards against Polynomial regular expression used on uncontrolled data.
+     * <ol>
+     * <li>the start of a line, then a star, then a space.</li>
+     * <li>non-whitespace characters, up to 80, for example {@code OK}.</li>
+     * <li>up to 160 extra characters.</li>
+     * </ol>
      */
     private static final String UNTAGGED_RESPONSE = "^\\* (\\S{1,80}).{0,160}";
 
