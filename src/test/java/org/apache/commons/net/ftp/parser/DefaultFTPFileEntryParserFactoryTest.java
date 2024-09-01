@@ -16,6 +16,7 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import junit.framework.TestCase;
@@ -35,26 +36,26 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
         final DefaultFTPFileEntryParserFactory factory = new DefaultFTPFileEntryParserFactory();
 
         FTPFileEntryParser parser = factory.createFileEntryParser("unix");
-        assertTrue(parser instanceof UnixFTPEntryParser);
+        assertInstanceOf(UnixFTPEntryParser.class, parser);
 
         parser = factory.createFileEntryParser("UNIX");
-        assertTrue(parser instanceof UnixFTPEntryParser);
+        assertInstanceOf(UnixFTPEntryParser.class, parser);
         assertFalse(((UnixFTPEntryParser) parser).trimLeadingSpaces);
 
         parser = factory.createFileEntryParser("UNIX_LTRIM");
-        assertTrue(parser instanceof UnixFTPEntryParser);
+        assertInstanceOf(UnixFTPEntryParser.class, parser);
         assertTrue(((UnixFTPEntryParser) parser).trimLeadingSpaces);
 
         parser = factory.createFileEntryParser("Unix");
-        assertTrue(parser instanceof UnixFTPEntryParser);
+        assertInstanceOf(UnixFTPEntryParser.class, parser);
 
         parser = factory.createFileEntryParser("EnterpriseUnix");
-        assertTrue(parser instanceof UnixFTPEntryParser);
+        assertInstanceOf(UnixFTPEntryParser.class, parser);
         assertFalse(parser instanceof EnterpriseUnixFTPEntryParser);
 
         // works because contains the expression "Unix"
         parser = factory.createFileEntryParser("UnixFTPEntryParser");
-        assertTrue(parser instanceof UnixFTPEntryParser);
+        assertInstanceOf(UnixFTPEntryParser.class, parser);
 
         try {
             parser = factory.createFileEntryParser("NT");
@@ -65,19 +66,19 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
         }
 
         parser = factory.createFileEntryParser("WindowsNT");
-        assertTrue(parser instanceof CompositeFileEntryParser);
+        assertInstanceOf(CompositeFileEntryParser.class, parser);
 
         parser = factory.createFileEntryParser("ThigaVMSaMaJig");
-        assertTrue(parser instanceof VMSFTPEntryParser);
+        assertInstanceOf(VMSFTPEntryParser.class, parser);
 
         parser = factory.createFileEntryParser("OS/2");
-        assertTrue(parser instanceof OS2FTPEntryParser);
+        assertInstanceOf(OS2FTPEntryParser.class, parser);
 
         parser = factory.createFileEntryParser("OS/400");
-        assertTrue(parser instanceof CompositeFileEntryParser);
+        assertInstanceOf(CompositeFileEntryParser.class, parser);
 
         parser = factory.createFileEntryParser("AS/400");
-        assertTrue(parser instanceof CompositeFileEntryParser);
+        assertInstanceOf(CompositeFileEntryParser.class, parser);
 
         // Added test to make sure it handles the UNIX systems that were
         // compiled with OS as "UNKNOWN". This test validates that the
@@ -92,7 +93,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
         }
 
         parser = factory.createFileEntryParser("org.apache.commons.net.ftp.parser.OS2FTPEntryParser");
-        assertTrue(parser instanceof OS2FTPEntryParser);
+        assertInstanceOf(OS2FTPEntryParser.class, parser);
 
         try {
             factory.createFileEntryParser("org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory");
