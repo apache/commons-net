@@ -225,43 +225,53 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl {
                 continue; // nothing to see here
             }
             final String valueLowerCase = factvalue.toLowerCase(Locale.ENGLISH);
-            if ("size".equals(factname) || "sizd".equals(factname)) {
+            switch (factname) {
+            case "size":
+            case "sizd":
                 file.setSize(Long.parseLong(factvalue));
-            } else if ("modify".equals(factname)) {
+                break;
+            case "modify": {
                 final Calendar parsed = parseGMTdateTime(factvalue);
                 if (parsed == null) {
                     return null;
                 }
                 file.setTimestamp(parsed);
-            } else if ("type".equals(factname)) {
+                break;
+            }
+            case "type": {
                 final Integer intType = TYPE_TO_INT.get(valueLowerCase);
                 if (intType == null) {
                     file.setType(FTPFile.UNKNOWN_TYPE);
                 } else {
                     file.setType(intType.intValue());
                 }
-            } else if (factname.startsWith("unix.")) {
-                final String unixfact = factname.substring("unix.".length()).toLowerCase(Locale.ENGLISH);
-                if ("group".equals(unixfact)) {
-                    file.setGroup(factvalue);
-                } else if ("owner".equals(unixfact)) {
-                    file.setUser(factvalue);
-                } else if ("mode".equals(unixfact)) { // e.g. 0[1]755
-                    final int off = factvalue.length() - 3; // only parse last 3 digits
-                    for (int i = 0; i < 3; i++) {
-                        final int ch = factvalue.charAt(off + i) - '0';
-                        if (ch >= 0 && ch <= 7) { // Check it's valid octal
-                            for (final int p : UNIX_PERMS[ch]) {
-                                file.setPermission(UNIX_GROUPS[i], p, true);
+                break;
+            }
+            default:
+                if (factname.startsWith("unix.")) {
+                    final String unixfact = factname.substring("unix.".length()).toLowerCase(Locale.ENGLISH);
+                    if ("group".equals(unixfact)) {
+                        file.setGroup(factvalue);
+                    } else if ("owner".equals(unixfact)) {
+                        file.setUser(factvalue);
+                    } else if ("mode".equals(unixfact)) { // e.g. 0[1]755
+                        final int off = factvalue.length() - 3; // only parse last 3 digits
+                        for (int i = 0; i < 3; i++) {
+                            final int ch = factvalue.charAt(off + i) - '0';
+                            if (ch >= 0 && ch <= 7) { // Check it's valid octal
+                                for (final int p : UNIX_PERMS[ch]) {
+                                    file.setPermission(UNIX_GROUPS[i], p, true);
+                                }
+                            } else {
+                                // TODO should this cause failure, or can it be reported somehow?
                             }
-                        } else {
-                            // TODO should this cause failure, or can it be reported somehow?
-                        }
-                    } // digits
-                } // mode
-            } // unix.
-            else if (!hasUnixMode && "perm".equals(factname)) { // skip if we have the UNIX.mode
-                doUnixPerms(file, valueLowerCase);
+                        } // digits
+                    } // mode
+                } // unix.
+                else if (!hasUnixMode && "perm".equals(factname)) { // skip if we have the UNIX.mode
+                    doUnixPerms(file, valueLowerCase);
+                }
+                break;
             } // process "perm"
         } // each fact
         return file;
