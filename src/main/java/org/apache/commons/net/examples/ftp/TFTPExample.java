@@ -79,22 +79,30 @@ public final class TFTPExample {
             if (!arg.startsWith("-")) {
                 break;
             }
-            if (arg.equals("-r")) {
+            switch (arg) {
+            case "-r":
                 receiveFile = true;
-            } else if (arg.equals("-s")) {
+                break;
+            case "-s":
                 receiveFile = false;
-            } else if (arg.equals("-a")) {
+                break;
+            case "-a":
                 transferMode = TFTP.ASCII_MODE;
-            } else if (arg.equals("-b")) {
+                break;
+            case "-b":
                 transferMode = TFTP.BINARY_MODE;
-            } else if (arg.equals("-t")) {
+                break;
+            case "-t":
                 timeout = 1000 * Integer.parseInt(args[++argc]);
-            } else if (arg.equals("-v")) {
+                break;
+            case "-v":
                 verbose = true;
-            } else {
+                break;
+            default:
                 System.err.println("Error: unrecognized option.");
                 System.err.print(USAGE);
                 System.exit(1);
+                break;
             }
         }
 
