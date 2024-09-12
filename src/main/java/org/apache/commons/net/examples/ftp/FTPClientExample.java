@@ -255,12 +255,20 @@ public final class FTPClientExample {
                 }
             }
             ftp = ftps;
-            if ("all".equals(trustmgr)) {
-                ftps.setTrustManager(TrustManagerUtils.getAcceptAllTrustManager());
-            } else if ("valid".equals(trustmgr)) {
-                ftps.setTrustManager(TrustManagerUtils.getValidateServerCertificateTrustManager());
-            } else if ("none".equals(trustmgr)) {
-                ftps.setTrustManager(null);
+            if (trustmgr != null) {
+                switch (trustmgr) {
+                case "all":
+                    ftps.setTrustManager(TrustManagerUtils.getAcceptAllTrustManager());
+                    break;
+                case "valid":
+                    ftps.setTrustManager(TrustManagerUtils.getValidateServerCertificateTrustManager());
+                    break;
+                case "none":
+                    ftps.setTrustManager(null);
+                    break;
+                default:
+                    break;
+                }
             }
         }
 
