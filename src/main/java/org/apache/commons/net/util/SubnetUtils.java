@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.util;
 
+import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -220,6 +222,42 @@ public class SubnetUtils {
                 .append("  Address Count: [").append(getAddressCountLong()).append("]\n");
             // @formatter:on
             return buf.toString();
+        }
+    }
+
+    public static class SubnetAddressIterable implements Iterable<String> {
+        private final SubnetInfo subnetInfo;
+
+        public SubnetAddressIterable(SubnetInfo subnetInfo) {
+            this.subnetInfo = subnetInfo;
+        }
+
+        @Override
+        public Iterator<String> iterator() {
+            return new SubnetAddressIterator(subnetInfo);
+        }
+    }
+
+    public static class SubnetAddressIterator implements Iterator<String> {
+        private final SubnetInfo subnetInfo;
+
+        private final AtomicInteger currentAddress;
+
+        public SubnetAddressIterator(SubnetInfo subnetInfo) {
+            this.subnetInfo = subnetInfo;
+            currentAddress = new AtomicInteger(subnetInfo.low());
+        }
+
+        @Override
+        public boolean hasNext() {
+            return subnetInfo.getAddressCount() > 0 && currentAddress.get() <= subnetInfo.high();
+        }
+
+        @Override
+        public String next() {
+            String address = subnetInfo.format(subnetInfo.toArray(currentAddress.get()));
+            currentAddress.incrementAndGet();
+            return address;
         }
     }
 
