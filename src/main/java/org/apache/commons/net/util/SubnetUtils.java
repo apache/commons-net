@@ -225,10 +225,17 @@ public class SubnetUtils {
         }
     }
 
+    /**
+     * Allows an object to be the target of the "for-each loop" statement for a SubnetInfo.
+     *
+     * @since 3.12.0
+     */
     public static class SubnetAddressIterable implements Iterable<String> {
+
         private final SubnetInfo subnetInfo;
 
-        public SubnetAddressIterable(SubnetInfo subnetInfo) {
+        public SubnetAddressIterable(final SubnetInfo subnetInfo) {
+    
             this.subnetInfo = subnetInfo;
         }
 
@@ -238,12 +245,18 @@ public class SubnetUtils {
         }
     }
 
+    /**
+     * Iterates over a SubnetInfo.
+     *
+     * @since 3.12.0
+     */
     public static class SubnetAddressIterator implements Iterator<String> {
+
         private final SubnetInfo subnetInfo;
 
         private final AtomicInteger currentAddress;
 
-        public SubnetAddressIterator(SubnetInfo subnetInfo) {
+        public SubnetAddressIterator(final SubnetInfo subnetInfo) {
             this.subnetInfo = subnetInfo;
             currentAddress = new AtomicInteger(subnetInfo.low());
         }
