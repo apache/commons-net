@@ -33,7 +33,7 @@ public class SubnetUtils {
      *
      * @since 3.18.0
      */
-    public static class SubnetAddressIterable implements Iterable<String> {
+    public static final class SubnetAddressIterable implements Iterable<String> {
 
         private final SubnetInfo subnetInfo;
 
@@ -57,7 +57,7 @@ public class SubnetUtils {
      *
      * @since 3.18.0
      */
-    public static class SubnetAddressIterator implements Iterator<String> {
+    public static final class SubnetAddressIterator implements Iterator<String> {
 
         private int currentAddress;
 
