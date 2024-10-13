@@ -29,6 +29,9 @@ import org.apache.commons.net.util.SubnetUtils;
 import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("deprecation") // deliberate use of deprecated methods
 public class SubnetUtilsTest {
 
@@ -405,6 +408,21 @@ public class SubnetUtilsTest {
             assertEquals(lowAd[i], info.getLowAddress(), "lo " + masks[i]);
             assertEquals(highA[i], info.getHighAddress(), "hi " + masks[i]);
         }
+    }
+
+    @Test
+    public void testSubnetAddressIterable() {
+        SubnetUtils utils = new SubnetUtils("192.168.1.0/24");
+        List<String> addressList = new ArrayList<>();
+        for (String address : new SubnetUtils.SubnetAddressIterable(utils.getInfo())) {
+            addressList.add(address);
+        }
+        assertEquals(254, addressList.size());
+        assertFalse(addressList.contains("192.168.1.0"));
+        assertTrue(addressList.contains("192.168.1.1"));
+        assertTrue(addressList.contains("192.168.1.127"));
+        assertTrue(addressList.contains("192.168.1.254"));
+        assertFalse(addressList.contains("192.168.1.255"));
     }
 
     @Test
