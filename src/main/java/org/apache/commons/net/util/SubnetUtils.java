@@ -54,10 +54,8 @@ public class SubnetUtils {
 
     /**
      * Iterates over a SubnetInfo.
-     *
-     * @since 3.18.0
      */
-    public static final class SubnetAddressIterator implements Iterator<String> {
+    private static final class SubnetAddressIterator implements Iterator<String> {
 
         private int currentAddress;
 
