@@ -250,11 +250,14 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl {
             default:
                 if (factname.startsWith("unix.")) {
                     final String unixfact = factname.substring("unix.".length()).toLowerCase(Locale.ENGLISH);
-                    if ("group".equals(unixfact)) {
+                    switch (unixfact) {
+                    case "group":
                         file.setGroup(factvalue);
-                    } else if ("owner".equals(unixfact)) {
+                        break;
+                    case "owner":
                         file.setUser(factvalue);
-                    } else if ("mode".equals(unixfact)) { // e.g. 0[1]755
+                        break;
+                    case "mode": {
                         final int off = factvalue.length() - 3; // only parse last 3 digits
                         for (int i = 0; i < 3; i++) {
                             final int ch = factvalue.charAt(off + i) - '0';
@@ -266,6 +269,10 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl {
                                 // TODO should this cause failure, or can it be reported somehow?
                             }
                         } // digits
+                        break;
+                    }
+                    default:
+                        break;
                     } // mode
                 } // unix.
                 else if (!hasUnixMode && "perm".equals(factname)) { // skip if we have the UNIX.mode
