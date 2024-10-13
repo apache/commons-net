@@ -235,7 +235,6 @@ public class SubnetUtils {
         private final SubnetInfo subnetInfo;
 
         public SubnetAddressIterable(final SubnetInfo subnetInfo) {
-    
             this.subnetInfo = subnetInfo;
         }
 
