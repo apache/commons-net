@@ -32,7 +32,7 @@ public class SubnetUtils {
     /**
      * Allows an object to be the target of the "for-each loop" statement for a SubnetInfo.
      *
-     * @since 3.12.0
+     * @since 3.18.0
      */
     public static class SubnetAddressIterable implements Iterable<String> {
 
@@ -56,7 +56,7 @@ public class SubnetUtils {
     /**
      * Iterates over a SubnetInfo.
      *
-     * @since 3.12.0
+     * @since 3.18.0
      */
     public static class SubnetAddressIterator implements Iterator<String> {
 
