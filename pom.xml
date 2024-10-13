@@ -136,6 +136,12 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
             <version>3.17.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+           <groupId>org.apache.commons</groupId>
+           <artifactId>commons-collections4</artifactId>
+           <version>4.5.0-M2</version>
+           <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <defaultGoal>clean apache-rat:check javadoc:javadoc checkstyle:check verify japicmp:cmp pmd:check</defaultGoal>

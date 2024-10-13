@@ -26,14 +26,54 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.LongStream;
 
+import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.net.util.SubnetUtils;
 import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.FieldSource;
 
 @SuppressWarnings("deprecation") // deliberate use of deprecated methods
 public class SubnetUtilsTest {
+
+    /**
+     * Fixture values includes counting the host.
+     */
+    // @formatter:off
+    private static final List<ImmutablePair<String, Long>> CIDR_SIZES = Arrays.asList(
+            //ImmutablePair.of("192.168.0.1/0", 4294967296L), // takes a while
+            //ImmutablePair.of("192.168.0.1/1", 2147483648L), // takes a while
+            ImmutablePair.of("192.168.0.1/8", 16777216L),
+            ImmutablePair.of("192.168.0.1/9", 8388608L),
+            ImmutablePair.of("192.168.0.1/10", 4194304L),
+            ImmutablePair.of("192.168.0.1/11", 2097152L),
+            ImmutablePair.of("192.168.0.1/12", 1048576L),
+            ImmutablePair.of("192.168.0.1/13", 524288L),
+            ImmutablePair.of("192.168.0.1/14", 262144L),
+            ImmutablePair.of("192.168.0.1/15", 131072L),
+            ImmutablePair.of("192.168.0.1/16", 65536L),
+            ImmutablePair.of("192.168.0.1/17", 32768L),
+            ImmutablePair.of("192.168.0.1/18", 16384L),
+            ImmutablePair.of("192.168.0.1/19", 8192L),
+            ImmutablePair.of("192.168.0.1/20", 4096L),
+            ImmutablePair.of("192.168.0.1/21", 2048L),
+            ImmutablePair.of("192.168.0.1/22", 1024L),
+            ImmutablePair.of("192.168.0.1/23", 512L),
+            ImmutablePair.of("192.168.0.1/24", 256L),
+            ImmutablePair.of("192.168.0.1/25", 128L),
+            ImmutablePair.of("192.168.0.1/26", 64L),
+            ImmutablePair.of("192.168.0.1/27", 32L),
+            ImmutablePair.of("192.168.0.1/28", 16L),
+            ImmutablePair.of("192.168.0.1/29", 8L),
+            ImmutablePair.of("192.168.0.1/30", 4L),
+            ImmutablePair.of("192.168.0.1/31", 2L),
+            ImmutablePair.of("192.168.0.1/32", 1L));
+    // @formatter:on
 
     @Test
     public void testAddresses() {
@@ -418,17 +458,28 @@ public class SubnetUtilsTest {
 
     @Test
     public void testSubnetAddressIterable() {
-        SubnetUtils utils = new SubnetUtils("192.168.1.0/24");
-        List<String> addressList = new ArrayList<>();
-        for (String address : new SubnetUtils.SubnetAddressIterable(utils.getInfo())) {
-            addressList.add(address);
-        }
-        assertEquals(254, addressList.size());
+        testSubnetAddressIterable("192.168.1.0/24", 254);
+    }
+
+    private void testSubnetAddressIterable(final String cidrNotation, final long max) {
+        final SubnetUtils utils = new SubnetUtils(cidrNotation);
+        final List<String> addressList = new ArrayList<>();
+        new SubnetUtils.SubnetAddressIterable(utils.getInfo()).forEach(addressList::add);
+        assertEquals(max, addressList.size());
+        LongStream.rangeClosed(1, max).forEach(i -> addressList.contains("192.168.1." + i));
         assertFalse(addressList.contains("192.168.1.0"));
-        assertTrue(addressList.contains("192.168.1.1"));
-        assertTrue(addressList.contains("192.168.1.127"));
-        assertTrue(addressList.contains("192.168.1.254"));
         assertFalse(addressList.contains("192.168.1.255"));
+    }
+
+    @ParameterizedTest
+    @FieldSource("CIDR_SIZES")
+    public void testSubnetAddressIterableCount(final ImmutablePair<String, Long> pair) {
+        final String cidrNotation = pair.getKey();
+        final long max = pair.getValue();
+        final SubnetUtils subnetUtils = new SubnetUtils(cidrNotation);
+        // Fixture values includes counting the host
+        subnetUtils.setInclusiveHostCount(true);
+        assertEquals(max, IterableUtils.size(new SubnetUtils.SubnetAddressIterable(subnetUtils.getInfo())));
     }
 
     @Test
