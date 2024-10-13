@@ -30,10 +30,8 @@ public class SubnetUtils {
 
     /**
      * Allows an object to be the target of the "for-each loop" statement for a SubnetInfo.
-     *
-     * @since 3.18.0
      */
-    public static final class SubnetAddressIterable implements Iterable<String> {
+    private static final class SubnetAddressStringIterable implements Iterable<String> {
 
         private final SubnetInfo subnetInfo;
 
@@ -42,20 +40,20 @@ public class SubnetUtils {
          *
          * @param subnetInfo the SubnetInfo to iterate.
          */
-        public SubnetAddressIterable(final SubnetInfo subnetInfo) {
+        private SubnetAddressStringIterable(final SubnetInfo subnetInfo) {
             this.subnetInfo = subnetInfo;
         }
 
         @Override
         public Iterator<String> iterator() {
-            return new SubnetAddressIterator(subnetInfo);
+            return new SubnetAddressStringIterator(subnetInfo);
         }
     }
 
     /**
      * Iterates over a SubnetInfo.
      */
-    private static final class SubnetAddressIterator implements Iterator<String> {
+    private static final class SubnetAddressStringIterator implements Iterator<String> {
 
         private int currentAddress;
 
@@ -66,7 +64,7 @@ public class SubnetUtils {
          *
          * @param subnetInfo the SubnetInfo to iterate.
          */
-        public SubnetAddressIterator(final SubnetInfo subnetInfo) {
+        private SubnetAddressStringIterator(final SubnetInfo subnetInfo) {
             this.subnetInfo = subnetInfo;
             currentAddress = subnetInfo.low();
         }
@@ -78,9 +76,7 @@ public class SubnetUtils {
 
         @Override
         public String next() {
-            final String address = subnetInfo.format(subnetInfo.toArray(currentAddress));
-            currentAddress++;
-            return address;
+            return format(toArray4(currentAddress++));
         }
     }
 
@@ -110,27 +106,12 @@ public class SubnetUtils {
         }
 
         /**
-         * Converts a 4-element array into dotted decimal format.
-         */
-        private String format(final int[] octets) {
-            final int last = octets.length - 1;
-            final StringBuilder builder = new StringBuilder();
-            for (int i = 0;; i++) {
-                builder.append(octets[i]);
-                if (i == last) {
-                    return builder.toString();
-                }
-                builder.append('.');
-            }
-        }
-
-        /**
          * Converts this instance's address into dotted decimal String.
          *
          * @return a dotted decimal String.
          */
         public String getAddress() {
-            return format(toArray(address));
+            return format(toArray4(address));
         }
 
         /**
@@ -175,7 +156,7 @@ public class SubnetUtils {
                 return addresses;
             }
             for (int add = low(), j = 0; add <= high(); ++add, ++j) {
-                addresses[j] = format(toArray(add));
+                addresses[j] = format(toArray4(add));
             }
             return addresses;
         }
@@ -186,7 +167,7 @@ public class SubnetUtils {
          * @return the broadcast address for this subnet.
          */
         public String getBroadcastAddress() {
-            return format(toArray(broadcast));
+            return format(toArray4(broadcast));
         }
 
         /**
@@ -195,7 +176,7 @@ public class SubnetUtils {
          * @return the CIDR signature for this subnet.
          */
         public String getCidrSignature() {
-            return format(toArray(address)) + "/" + Integer.bitCount(netmask);
+            return format(toArray4(address)) + "/" + Integer.bitCount(netmask);
         }
 
         /**
@@ -204,7 +185,7 @@ public class SubnetUtils {
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
          */
         public String getHighAddress() {
-            return format(toArray(high()));
+            return format(toArray4(high()));
         }
 
         /**
@@ -213,7 +194,7 @@ public class SubnetUtils {
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
          */
         public String getLowAddress() {
-            return format(toArray(low()));
+            return format(toArray4(low()));
         }
 
         /**
@@ -222,7 +203,7 @@ public class SubnetUtils {
          * @return the network mask for this subnet.
          */
         public String getNetmask() {
-            return format(toArray(netmask));
+            return format(toArray4(netmask));
         }
 
         /**
@@ -231,7 +212,7 @@ public class SubnetUtils {
          * @return the network address for this subnet.
          */
         public String getNetworkAddress() {
-            return format(toArray(network));
+            return format(toArray4(network));
         }
 
         /**
@@ -240,7 +221,7 @@ public class SubnetUtils {
          * @return the next address for this subnet.
          */
         public String getNextAddress() {
-            return format(toArray(address + 1));
+            return format(toArray4(address + 1));
         }
 
         /**
@@ -249,7 +230,7 @@ public class SubnetUtils {
          * @return the previous address for this subnet.
          */
         public String getPreviousAddress() {
-            return format(toArray(address - 1));
+            return format(toArray4(address - 1));
         }
 
         private int high() {
@@ -285,6 +266,16 @@ public class SubnetUtils {
             return isInRange(toInteger(address));
         }
 
+        /**
+         * Creates a new Iterable of address Strings.
+         *
+         * @return a new Iterable of address Strings
+         * @since 3.12.0
+         */
+        public Iterable<String> iterableAddressStrings() {
+            return new SubnetAddressStringIterable(this);
+        }
+
         private int low() {
             return isInclusiveHostCount() ? network : broadcastLong() - networkLong() > 1 ? network + 1 : 0;
         }
@@ -292,17 +283,6 @@ public class SubnetUtils {
         /** Long versions of the values (as unsigned int) which are more suitable for range checking. */
         private long networkLong() {
             return network & UNSIGNED_INT_MASK;
-        }
-
-        /**
-         * Converts a packed integer address into a 4-element array
-         */
-        private int[] toArray(final int val) {
-            final int[] ret = new int[4];
-            for (int j = 3; j >= 0; --j) {
-                ret[j] |= val >>> 8 * (3 - j) & 0xff;
-            }
-            return ret;
         }
 
         /**
@@ -327,12 +307,28 @@ public class SubnetUtils {
     }
 
     private static final String IP_ADDRESS = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})";
+
     private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,2})"; // 0 -> 32
+
     private static final Pattern ADDRESS_PATTERN = Pattern.compile(IP_ADDRESS);
     private static final Pattern CIDR_PATTERN = Pattern.compile(SLASH_FORMAT);
     private static final int NBITS = 32;
     private static final String PARSE_FAIL = "Could not parse [%s]";
 
+    /**
+     * Converts a 4-element array into dotted decimal format.
+     */
+    private static String format(final int[] octets) {
+        final int last = octets.length - 1;
+        final StringBuilder builder = new StringBuilder();
+        for (int i = 0;; i++) {
+            builder.append(octets[i]);
+            if (i == last) {
+                return builder.toString();
+            }
+            builder.append('.');
+        }
+    }
     /**
      * Extracts the components of a dotted decimal address and pack into an integer using a regex match
      */
@@ -353,6 +349,17 @@ public class SubnetUtils {
             return value;
         }
         throw new IllegalArgumentException("Value [" + value + "] not in range [" + begin + "," + end + "]");
+    }
+
+    /**
+     * Converts a packed integer address into a 4-element array
+     */
+    private static int[] toArray4(final int val) {
+        final int[] ret = new int[4];
+        for (int j = 3; j >= 0; --j) {
+            ret[j] |= val >>> 8 * (3 - j) & 0xff;
+        }
+        return ret;
     }
 
     /**

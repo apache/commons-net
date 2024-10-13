@@ -37,6 +37,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.FieldSource;
 
+/**
+ * Tests {@link SubnetUtils}.
+ */
 @SuppressWarnings("deprecation") // deliberate use of deprecated methods
 public class SubnetUtilsTest {
 
@@ -461,9 +464,9 @@ public class SubnetUtilsTest {
     }
 
     private void testSubnetAddressIterable(final String cidrNotation, final long max) {
-        final SubnetUtils utils = new SubnetUtils(cidrNotation);
+        final SubnetUtils subnetUtils = new SubnetUtils(cidrNotation);
         final List<String> addressList = new ArrayList<>();
-        new SubnetUtils.SubnetAddressIterable(utils.getInfo()).forEach(addressList::add);
+        subnetUtils.getInfo().iterableAddressStrings().forEach(addressList::add);
         assertEquals(max, addressList.size());
         LongStream.rangeClosed(1, max).forEach(i -> addressList.contains("192.168.1." + i));
         assertFalse(addressList.contains("192.168.1.0"));
@@ -478,7 +481,7 @@ public class SubnetUtilsTest {
         final SubnetUtils subnetUtils = new SubnetUtils(cidrNotation);
         // Fixture values includes counting the host
         subnetUtils.setInclusiveHostCount(true);
-        assertEquals(max, IterableUtils.size(new SubnetUtils.SubnetAddressIterable(subnetUtils.getInfo())));
+        assertEquals(max, IterableUtils.size(subnetUtils.getInfo().iterableAddressStrings()));
     }
 
     @Test
