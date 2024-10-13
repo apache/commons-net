@@ -30,6 +30,54 @@ import java.util.regex.Pattern;
 public class SubnetUtils {
 
     /**
+     * Allows an object to be the target of the "for-each loop" statement for a SubnetInfo.
+     *
+     * @since 3.12.0
+     */
+    public static class SubnetAddressIterable implements Iterable<String> {
+
+        private final SubnetInfo subnetInfo;
+
+        public SubnetAddressIterable(final SubnetInfo subnetInfo) {
+            this.subnetInfo = subnetInfo;
+        }
+
+        @Override
+        public Iterator<String> iterator() {
+            return new SubnetAddressIterator(subnetInfo);
+        }
+    }
+
+    /**
+     * Iterates over a SubnetInfo.
+     *
+     * @since 3.12.0
+     */
+    public static class SubnetAddressIterator implements Iterator<String> {
+
+        private final AtomicInteger currentAddress;
+
+        private final SubnetInfo subnetInfo;
+
+        public SubnetAddressIterator(final SubnetInfo subnetInfo) {
+            this.subnetInfo = subnetInfo;
+            currentAddress = new AtomicInteger(subnetInfo.low());
+        }
+
+        @Override
+        public boolean hasNext() {
+            return subnetInfo.getAddressCount() > 0 && currentAddress.get() <= subnetInfo.high();
+        }
+
+        @Override
+        public String next() {
+            String address = subnetInfo.format(subnetInfo.toArray(currentAddress.get()));
+            currentAddress.incrementAndGet();
+            return address;
+        }
+    }
+
+    /**
      * Convenience container for subnet summary information.
      */
     public final class SubnetInfo {
@@ -225,61 +273,11 @@ public class SubnetUtils {
         }
     }
 
-    /**
-     * Allows an object to be the target of the "for-each loop" statement for a SubnetInfo.
-     *
-     * @since 3.12.0
-     */
-    public static class SubnetAddressIterable implements Iterable<String> {
-
-        private final SubnetInfo subnetInfo;
-
-        public SubnetAddressIterable(final SubnetInfo subnetInfo) {
-            this.subnetInfo = subnetInfo;
-        }
-
-        @Override
-        public Iterator<String> iterator() {
-            return new SubnetAddressIterator(subnetInfo);
-        }
-    }
-
-    /**
-     * Iterates over a SubnetInfo.
-     *
-     * @since 3.12.0
-     */
-    public static class SubnetAddressIterator implements Iterator<String> {
-
-        private final SubnetInfo subnetInfo;
-
-        private final AtomicInteger currentAddress;
-
-        public SubnetAddressIterator(final SubnetInfo subnetInfo) {
-            this.subnetInfo = subnetInfo;
-            currentAddress = new AtomicInteger(subnetInfo.low());
-        }
-
-        @Override
-        public boolean hasNext() {
-            return subnetInfo.getAddressCount() > 0 && currentAddress.get() <= subnetInfo.high();
-        }
-
-        @Override
-        public String next() {
-            String address = subnetInfo.format(subnetInfo.toArray(currentAddress.get()));
-            currentAddress.incrementAndGet();
-            return address;
-        }
-    }
-
     private static final String IP_ADDRESS = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})";
     private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,2})"; // 0 -> 32
     private static final Pattern ADDRESS_PATTERN = Pattern.compile(IP_ADDRESS);
     private static final Pattern CIDR_PATTERN = Pattern.compile(SLASH_FORMAT);
-
     private static final int NBITS = 32;
-
     private static final String PARSE_FAIL = "Could not parse [%s]";
 
     /*
@@ -315,16 +313,16 @@ public class SubnetUtils {
         throw new IllegalArgumentException(String.format(PARSE_FAIL, address));
     }
 
-    private final int netmask;
-
     private final int address;
-
-    private final int network;
 
     private final int broadcast;
 
     /** Whether the broadcast/network address are included in host count */
     private boolean inclusiveHostCount;
+
+    private final int netmask;
+
+    private final int network;
 
     /**
      * Constructs an instance from a CIDR-notation string, e.g. "192.168.0.1/16"

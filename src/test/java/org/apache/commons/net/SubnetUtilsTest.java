@@ -411,6 +411,12 @@ public class SubnetUtilsTest {
     }
 
     @Test
+    public void testPrevious() {
+        final SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
+        assertEquals("192.168.0.0", utils.getPrevious().getInfo().getAddress());
+    }
+
+    @Test
     public void testSubnetAddressIterable() {
         SubnetUtils utils = new SubnetUtils("192.168.1.0/24");
         List<String> addressList = new ArrayList<>();
@@ -423,12 +429,6 @@ public class SubnetUtilsTest {
         assertTrue(addressList.contains("192.168.1.127"));
         assertTrue(addressList.contains("192.168.1.254"));
         assertFalse(addressList.contains("192.168.1.255"));
-    }
-
-    @Test
-    public void testPrevious() {
-        final SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
-        assertEquals("192.168.0.0", utils.getPrevious().getInfo().getAddress());
     }
 
     @Test
