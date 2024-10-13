@@ -19,8 +19,8 @@ package org.apache.commons.net.util;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.io.function.IOStream;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Performs subnet calculations given a network address and a subnet mask.
@@ -303,8 +303,8 @@ public class SubnetUtils {
          * @see #iterableAddressStrings()
          * @since 3.12.0
          */
-        public IOStream<String> streamAddressStrings() {
-            return IOStream.of(iterableAddressStrings());
+        public Stream<String> streamAddressStrings() {
+            return StreamSupport.stream(iterableAddressStrings().spliterator(), false);
         }
 
         /**
