@@ -32,14 +32,27 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
 
     private final CopyOnWriteArrayList<EventListener> listeners;
 
+    /**
+     * Constructs a new instance.
+     */
     public ListenerList() {
         listeners = new CopyOnWriteArrayList<>();
     }
 
+    /**
+     * Adds the given listener to the end of this list.
+     *
+     * @param listener A listener.
+     */
     public void addListener(final EventListener listener) {
         listeners.add(listener);
     }
 
+    /**
+     * Gets the number of elements in this list.
+     *
+     * @return the number of elements in this list
+     */
     public int getListenerCount() {
         return listeners.size();
     }
@@ -60,7 +73,9 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
     }
 
     /**
-     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     * Removes the first occurrence of the specified listener from this list, if it is present.
+     *
+     * @param listener listener to be removed from this list, if present.
      */
     public void removeListener(final EventListener listener) {
         listeners.remove(listener);
