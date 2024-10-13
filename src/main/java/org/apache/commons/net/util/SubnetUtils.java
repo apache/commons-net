@@ -296,9 +296,9 @@ public class SubnetUtils {
         }
 
         /**
-         * Creates a new IOStream of address Strings.
+         * Creates a new Stream of address Strings.
          *
-         * @return a new IOStream of address Strings
+         * @return a new Stream of address Strings.
          * @see #getAllAddresses()
          * @see #iterableAddressStrings()
          * @since 3.12.0
