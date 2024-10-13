@@ -19,7 +19,6 @@ package org.apache.commons.net.util;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.net.util.SubnetUtils;
 import org.junit.jupiter.api.Test;
 
 /**
