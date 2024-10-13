@@ -20,6 +20,8 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.function.IOStream;
+
 /**
  * Performs subnet calculations given a network address and a subnet mask.
  *
@@ -81,7 +83,7 @@ public class SubnetUtils {
     }
 
     /**
-     * Convenience container for subnet summary information.
+     * Contains subnet summary information.
      */
     public final class SubnetInfo {
 
@@ -146,8 +148,13 @@ public class SubnetUtils {
 
         /**
          * Gets all addresses in this subnet, the return array could be huge.
+         * <p>
+         * For large ranges, you can iterate or stream over the addresses instead using {@link #iterableAddressStrings()} or {@link #streamAddressStrings()}.
+         * </p>
          *
          * @return all addresses in this subnet.
+         * @see #iterableAddressStrings()
+         * @see #streamAddressStrings()
          */
         public String[] getAllAddresses() {
             final int ct = getAddressCount();
@@ -271,6 +278,8 @@ public class SubnetUtils {
          * Creates a new Iterable of address Strings.
          *
          * @return a new Iterable of address Strings
+         * @see #getAllAddresses()
+         * @see #streamAddressStrings()
          * @since 3.12.0
          */
         public Iterable<String> iterableAddressStrings() {
@@ -284,6 +293,18 @@ public class SubnetUtils {
         /** Long versions of the values (as unsigned int) which are more suitable for range checking. */
         private long networkLong() {
             return network & UNSIGNED_INT_MASK;
+        }
+
+        /**
+         * Creates a new IOStream of address Strings.
+         *
+         * @return a new IOStream of address Strings
+         * @see #getAllAddresses()
+         * @see #iterableAddressStrings()
+         * @since 3.12.0
+         */
+        public IOStream<String> streamAddressStrings() {
+            return IOStream.of(iterableAddressStrings());
         }
 
         /**

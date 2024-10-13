@@ -28,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 import org.apache.commons.collections4.IterableUtils;
@@ -482,6 +483,32 @@ public class SubnetUtilsTest {
         // Fixture values includes counting the host
         subnetUtils.setInclusiveHostCount(true);
         assertEquals(max, IterableUtils.size(subnetUtils.getInfo().iterableAddressStrings()));
+    }
+
+    @Test
+    public void testSubnetAddressStream() {
+        testSubnetAddressStream("192.168.1.0/24", 254);
+    }
+
+    private void testSubnetAddressStream(final String cidrNotation, final long max) {
+        final SubnetUtils subnetUtils = new SubnetUtils(cidrNotation);
+        @SuppressWarnings("resource")
+        final List<String> addressList = subnetUtils.getInfo().streamAddressStrings().collect(Collectors.toList());
+        assertEquals(max, addressList.size());
+        LongStream.rangeClosed(1, max).forEach(i -> addressList.contains("192.168.1." + i));
+        assertFalse(addressList.contains("192.168.1.0"));
+        assertFalse(addressList.contains("192.168.1.255"));
+    }
+
+    @ParameterizedTest
+    @FieldSource("CIDR_SIZES")
+    public void testSubnetAddressStreamCount(final ImmutablePair<String, Long> pair) {
+        final String cidrNotation = pair.getKey();
+        final long max = pair.getValue();
+        final SubnetUtils subnetUtils = new SubnetUtils(cidrNotation);
+        // Fixture values includes counting the host
+        subnetUtils.setInclusiveHostCount(true);
+        assertEquals(max, subnetUtils.getInfo().streamAddressStrings().count());
     }
 
     @Test

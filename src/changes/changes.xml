@@ -83,8 +83,9 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">org.apache.commons.net.nntp.Article#getChild().</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">org.apache.commons.net.nntp.Article#getNext().</action>
-      <action type="add" dev="ggregory" due-to="Lixiongyou, Gary Gregory">Add SubnetAddressStringIterable and SubnetAddressStringIterator #298.</action> 
+      <action type="add" dev="ggregory" due-to="Lixiongyou, Gary Gregory">Add private SubnetAddressStringIterable and private SubnetAddressStringIterator to implement SubnetInfo.iterableAddressStrings() and SubnetInfo.streamAddressStrings() #298.</action> 
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add SubnetInfo.iterableAddressStrings().</action> 
+      <action type="add" dev="ggregory" due-to="Gary Gregory">Add SubnetInfo.streamAddressStrings().</action> 
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 70 to 77 #261, #278, #280, #285, #298, #293.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #268, #273, #281.</action>
