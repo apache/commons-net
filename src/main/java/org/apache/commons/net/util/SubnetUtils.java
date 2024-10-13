@@ -38,6 +38,11 @@ public class SubnetUtils {
 
         private final SubnetInfo subnetInfo;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param subnetInfo the SubnetInfo to iterate.
+         */
         public SubnetAddressIterable(final SubnetInfo subnetInfo) {
             this.subnetInfo = subnetInfo;
         }
@@ -59,6 +64,11 @@ public class SubnetUtils {
 
         private final SubnetInfo subnetInfo;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param subnetInfo the SubnetInfo to iterate.
+         */
         public SubnetAddressIterator(final SubnetInfo subnetInfo) {
             this.subnetInfo = subnetInfo;
             currentAddress = new AtomicInteger(subnetInfo.low());
@@ -71,7 +81,7 @@ public class SubnetUtils {
 
         @Override
         public String next() {
-            String address = subnetInfo.format(subnetInfo.toArray(currentAddress.get()));
+            final String address = subnetInfo.format(subnetInfo.toArray(currentAddress.get()));
             currentAddress.incrementAndGet();
             return address;
         }
@@ -88,6 +98,12 @@ public class SubnetUtils {
         private SubnetInfo() {
         }
 
+        /**
+         * Converts a dotted decimal format address to a packed integer format.
+         *
+         * @param address a dotted decimal format address.
+         * @return packed integer formatted int.
+         */
         public int asInteger(final String address) {
             return toInteger(address);
         }
@@ -111,6 +127,11 @@ public class SubnetUtils {
             }
         }
 
+        /**
+         * Converts this instance's address into dotted decimal String.
+         *
+         * @return a dotted decimal String.
+         */
         public String getAddress() {
             return format(toArray(address));
         }
@@ -145,6 +166,11 @@ public class SubnetUtils {
             return count < 0 ? 0 : count;
         }
 
+        /**
+         * Gets all addresses in this subnet, the return array could be huge.
+         *
+         * @return all addresses in this subnet.
+         */
         public String[] getAllAddresses() {
             final int ct = getAddressCount();
             final String[] addresses = new String[ct];
@@ -157,10 +183,20 @@ public class SubnetUtils {
             return addresses;
         }
 
+        /**
+         * Gets the broadcast address for this subnet.
+         *
+         * @return the broadcast address for this subnet.
+         */
         public String getBroadcastAddress() {
             return format(toArray(broadcast));
         }
 
+        /**
+         * Gets the CIDR signature for this subnet.
+         *
+         * @return the CIDR signature for this subnet.
+         */
         public String getCidrSignature() {
             return format(toArray(address)) + "/" + Integer.bitCount(netmask);
         }
@@ -183,18 +219,38 @@ public class SubnetUtils {
             return format(toArray(low()));
         }
 
+        /**
+         * Gets the network mask for this subnet.
+         *
+         * @return the network mask for this subnet.
+         */
         public String getNetmask() {
             return format(toArray(netmask));
         }
 
+        /**
+         * Gets the network address for this subnet.
+         *
+         * @return the network address for this subnet.
+         */
         public String getNetworkAddress() {
             return format(toArray(network));
         }
 
+        /**
+         * Gets the next address for this subnet.
+         *
+         * @return the next address for this subnet.
+         */
         public String getNextAddress() {
             return format(toArray(address + 1));
         }
 
+        /**
+         * Gets the previous address for this subnet.
+         *
+         * @return the previous address for this subnet.
+         */
         public String getPreviousAddress() {
             return format(toArray(address - 1));
         }
@@ -280,7 +336,7 @@ public class SubnetUtils {
     private static final int NBITS = 32;
     private static final String PARSE_FAIL = "Could not parse [%s]";
 
-    /*
+    /**
      * Extracts the components of a dotted decimal address and pack into an integer using a regex match
      */
     private static int matchAddress(final Matcher matcher) {
@@ -292,7 +348,7 @@ public class SubnetUtils {
         return addr;
     }
 
-    /*
+    /**
      * Checks integer boundaries. Checks if a value x is in the range [begin,end]. Returns x if it is in range, throws an exception otherwise.
      */
     private static int rangeCheck(final int value, final int begin, final int end) {
@@ -302,8 +358,8 @@ public class SubnetUtils {
         throw new IllegalArgumentException("Value [" + value + "] not in range [" + begin + "," + end + "]");
     }
 
-    /*
-     * Converts a dotted decimal format address to a packed integer format
+    /**
+     * Converts a dotted decimal format address to a packed integer format.
      */
     private static int toInteger(final String address) {
         final Matcher matcher = ADDRESS_PATTERN.matcher(address);
@@ -391,10 +447,20 @@ public class SubnetUtils {
         return new SubnetInfo();
     }
 
+    /**
+     * Gets the next subnet for this instance.
+     *
+     * @return the next subnet for this instance.
+     */
     public SubnetUtils getNext() {
         return new SubnetUtils(getInfo().getNextAddress(), getInfo().getNetmask());
     }
 
+    /**
+     * Gets the previous subnet for this instance.
+     *
+     * @return the next previous for this instance.
+     */
     public SubnetUtils getPrevious() {
         return new SubnetUtils(getInfo().getPreviousAddress(), getInfo().getNetmask());
     }
