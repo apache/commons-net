@@ -44,7 +44,7 @@ Apache Commons Net
 ===================
 
 [![Java CI](https://github.com/apache/commons-net/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-net/actions/workflows/maven.yml)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/?gav=true)
+[![Maven Central](https://img.shields.io/maven-central/v/commons-net/commons-net?label=Maven%20Central)](https://search.maven.org/artifact/commons-net/commons-net)
 [![Javadocs](https://javadoc.io/badge/commons-net/commons-net/3.11.1.svg)](https://javadoc.io/doc/commons-net/commons-net/3.11.1)
 [![CodeQL](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-net/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-net)
