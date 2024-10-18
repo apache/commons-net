@@ -47,7 +47,7 @@ public class InvalidTelnetOptionException extends Exception {
     }
 
     /**
-     * Gets the error message of ths exception.
+     * Gets the error message of the exception.
      *
      * @return the error message.
      */
