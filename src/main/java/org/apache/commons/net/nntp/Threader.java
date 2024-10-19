@@ -152,7 +152,7 @@ public class Threader {
     }
 
     /**
-     * If any two members of the root set have the same subject, merge them. This is to attempt to accomodate messages without References: headers.
+     * If any two members of the root set have the same subject, merge them. This is to attempt to accommodate messages without References: headers.
      *
      * @param root
      */
