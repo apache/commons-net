@@ -43,7 +43,7 @@ import org.apache.commons.net.MockTcpServer;
  * This implementation uses {@link MockDaytimeTCPServer#enqueue(Clock)} and {@link BlockingQueue<Clock>} to queue next {@link Clock} that will be used to obtain and
  * write daytime data into {@code clientSocket}.
  * </p>
- * <p>NOTE: this is for <b>debugging and testing purposes only</b> and not meant to be run as a reliable server.</p>
+ * <p>NOTE: this is for <strong>debugging and testing purposes only</strong> and not meant to be run as a reliable server.</p>
  * @see MockTcpServer
  * @see DaytimeTCPClientTest DaytimeTCPClientTest (for example usage in tests)
  */

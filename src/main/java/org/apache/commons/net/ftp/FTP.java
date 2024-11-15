@@ -1275,7 +1275,7 @@ public class FTP extends SocketClient {
      * If true, it requires the 3-digit code be followed by space and some text. <br>
      * If false, only the 3-digit code is required (as was the case for versions up to 3.5)
      * <p>
-     * <b>This should not be required by a well-behaved FTP server</b> <br>
+     * <strong>This should not be required by a well-behaved FTP server</strong> <br>
      *
      * @param strictReplyParsing the setting
      * @since 3.6

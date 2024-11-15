@@ -56,7 +56,7 @@ import org.apache.commons.net.util.SSLSocketUtils;
  * }
  * </pre>
  *
- * <b>Warning</b>: the hostname is not verified against the certificate by default, use {@link #setHostnameVerifier(HostnameVerifier)} or
+ * <strong>Warning</strong>: the hostname is not verified against the certificate by default, use {@link #setHostnameVerifier(HostnameVerifier)} or
  * {@link #setEndpointCheckingEnabled(boolean)} (on Java 1.7+) to enable verification.
  */
 public class IMAPSClient extends IMAPClient {

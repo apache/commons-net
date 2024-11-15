@@ -38,7 +38,7 @@ import org.apache.commons.net.ftp.FTPFile;
 public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl {
 
     /**
-     * months abbreviations looked for by this parser. Also used to determine <b>which</b> month has been matched by the parser.
+     * months abbreviations looked for by this parser. Also used to determine <strong>which</strong> month has been matched by the parser.
      */
     private static final String MONTHS = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
 

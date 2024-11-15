@@ -517,7 +517,8 @@ public class FTPSClient extends FTPClient {
      * <li>E - Confidential(SSL protocol only)</li>
      * <li>P - Private</li>
      * </ul>
-     * <b>N.B.</b> the method calls {@link #setSocketFactory(javax.net.SocketFactory)} and {@link #setServerSocketFactory(javax.net.ServerSocketFactory)}
+     * <strong>N.B.</strong> the method calls {@link #setSocketFactory(javax.net.SocketFactory)} and
+     * {@link #setServerSocketFactory(javax.net.ServerSocketFactory)}
      *
      * @param prot Data Channel Protection Level, if {@code null}, use {@link #DEFAULT_PROT}.
      * @throws SSLException If the server reply code does not equal {@code 200}.

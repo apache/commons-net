@@ -138,7 +138,7 @@ public final class SMTPReply {
      * responses are used to indicate tentative success. No further commands can be issued to the SMTP server after a positive preliminary response until a
      * follow-up response is received from the server.
      * <p>
-     * <b>Note:</b> <em> No SMTP commands defined in RFC 822 provide this type of reply. </em>
+     * <strong>Note:</strong> <em> No SMTP commands defined in RFC 822 provide this type of reply. </em>
      * </p>
      *
      * @param reply The reply code to test.

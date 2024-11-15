@@ -18,6 +18,6 @@
 /**
  * Example classes.
  * <p>
- * <b>These do not form part of the public API and may change without notice.</b>
+ * <strong>These do not form part of the public API and may change without notice.</strong>
  */
 package org.apache.commons.net.examples;
