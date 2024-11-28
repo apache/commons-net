@@ -1275,7 +1275,6 @@ public class FTPClient extends FTP implements Configurable {
      * @param command The command to invoke
      * @param params  The parameters string, may be {@code null}
      * @return True if successfully completed, false if not, in which case call {@link #getReplyCode()} or {@link #getReplyString()} to get the reason.
-     *
      * @throws IOException If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @since 3.0
      */
@@ -1405,7 +1404,6 @@ public class FTPClient extends FTP implements Configurable {
      * Queries the server for a supported feature, and returns its value (if any). Caches the parsed response to avoid resending the command repeatedly.
      *
      * @param feature the feature to check
-     *
      * @return if the feature is present, returns the feature value or the empty string if the feature exists but has no value. Returns {@code null} if the
      *         feature is not found or the command failed. Check {@link #getReplyCode()} or {@link #getReplyString()} if so.
      * @throws IOException on error
@@ -1423,7 +1421,6 @@ public class FTPClient extends FTP implements Configurable {
      * Queries the server for a supported feature, and returns its values (if any). Caches the parsed response to avoid resending the command repeatedly.
      *
      * @param feature the feature to check
-     *
      * @return if the feature is present, returns the feature values (empty array if none) Returns {@code null} if the feature is not found or the command
      *         failed. Check {@link #getReplyCode()} or {@link #getReplyString()} if so.
      * @throws IOException on error
@@ -1737,7 +1734,6 @@ public class FTPClient extends FTP implements Configurable {
      * Issue the FTP SIZE command to the server for a given pathname. This should produce the size of the file.
      *
      * @param pathname the file name
-     *
      * @return The size information returned by the server; {@code null} if there was an error
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1772,7 +1768,6 @@ public class FTPClient extends FTP implements Configurable {
      * Issue the FTP STAT command to the server for a given pathname. This should produce a listing of the file or directory.
      *
      * @param pathname the file name
-     *
      * @return The status information returned by the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1873,7 +1868,6 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @param feature the name of the feature; it is converted to upper case.
      * @param value   the value to find.
-     *
      * @return {@code true} if the feature is present, {@code false} if the feature is not present or the {@link #feat()} command failed. Check
      *         {@link #getReplyCode()} or {@link #getReplyString()} if it is necessary to distinguish these cases.
      *
@@ -2023,7 +2017,6 @@ public class FTPClient extends FTP implements Configurable {
      * </pre>
      *
      * @param pathname the starting directory
-     *
      * @return A FTPListParseEngine object that holds the raw information and is capable of providing parsed FTPFile objects, one for each file containing
      *         information contained in the given path in the format determined by the {@code parser} parameter. Null will be returned if a data connection
      *         cannot be opened. If the current working directory contains no files, an empty array will be the return.
@@ -2059,7 +2052,6 @@ public class FTPClient extends FTP implements Configurable {
      *                  is not defined the SYST command is used to provide the value. To allow for arbitrary system types, the return from the SYST command is
      *                  used to look up an alias for the type in the {@link #SYSTEM_TYPE_PROPERTIES} properties file if it is available.
      * @param pathname  the starting directory
-     *
      * @return A FTPListParseEngine object that holds the raw information and is capable of providing parsed FTPFile objects, one for each file containing
      *         information contained in the given path in the format determined by the {@code parser} parameter. Null will be returned if a data connection
      *         cannot be opened. If the current working directory contains no files, an empty array will be the return.
@@ -2120,7 +2112,6 @@ public class FTPClient extends FTP implements Configurable {
      * restores the old behavior. To enable this by default, use the system property {@link FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE}.
      *
      * @return True, if the IP address from the server's response will be used (pre-3.9 compatible behavior), or false (ignore that IP address).
-     *
      * @see FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE
      * @see #setIpAddressFromPasvResponse(boolean)
      * @since 3.9.0
@@ -2641,7 +2632,6 @@ public class FTPClient extends FTP implements Configurable {
      * The other server must have had a {@code remoteRetrieve} issued to it by another FTPClient.
      *
      * @param fileName The name of the file to be appended to, or if the file does not exist, the name to call the file being stored.
-     *
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -3124,7 +3114,6 @@ public class FTPClient extends FTP implements Configurable {
      * set the factory used for parser creation to the supplied factory object.
      *
      * @param parserFactory factory object used to create FTPFileEntryParsers
-     *
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
      */

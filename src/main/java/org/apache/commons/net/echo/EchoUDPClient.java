@@ -56,7 +56,6 @@ public final class EchoUDPClient extends DiscardUDPClient {
      *
      * @param data   the buffer to receive the input
      * @param length of the buffer
-     *
      * @return Length of actual data received.
      * @throws IOException If an error occurs while receiving the data.
      */

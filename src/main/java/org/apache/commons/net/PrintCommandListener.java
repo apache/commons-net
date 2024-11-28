@@ -52,7 +52,6 @@ public class PrintCommandListener implements ProtocolCommandListener {
      *
      * @param printStream        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
-     *
      * @since 3.0
      */
     @SuppressWarnings("resource")
@@ -66,7 +65,6 @@ public class PrintCommandListener implements ProtocolCommandListener {
      * @param printStream        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
      * @param eolMarker     if non-zero, add a marker just before the EOL.
-     *
      * @since 3.0
      */
     @SuppressWarnings("resource")
@@ -81,7 +79,6 @@ public class PrintCommandListener implements ProtocolCommandListener {
      * @param suppressLogin if {@code true}, only print command name for login
      * @param eolMarker     if non-zero, add a marker just before the EOL.
      * @param showDirection if {@code true}, add {@code "> "} or {@code "< "} as appropriate to the output
-     *
      * @since 3.0
      */
     @SuppressWarnings("resource")
@@ -103,7 +100,6 @@ public class PrintCommandListener implements ProtocolCommandListener {
      *
      * @param writer        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
-     *
      * @since 3.0
      */
     public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin) {
@@ -116,7 +112,6 @@ public class PrintCommandListener implements ProtocolCommandListener {
      * @param writer        where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
      * @param eolMarker     if non-zero, add a marker just before the EOL.
-     *
      * @since 3.0
      */
     public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin, final char eolMarker) {
@@ -130,7 +125,6 @@ public class PrintCommandListener implements ProtocolCommandListener {
      * @param suppressLogin if {@code true}, only print command name for login
      * @param eolMarker     if non-zero, add a marker just before the EOL.
      * @param showDirection if {@code true}, add {@code ">} " or {@code "< "} as appropriate to the output
-     *
      * @since 3.0
      */
     public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin, final char eolMarker, final boolean showDirection) {

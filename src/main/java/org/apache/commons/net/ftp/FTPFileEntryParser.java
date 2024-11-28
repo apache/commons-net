@@ -82,7 +82,6 @@ public interface FTPFileEntryParser {
      * The default implementation can be a no-op.
      *
      * @param original Original list after it has been created from the server stream
-     *
      * @return Original list as processed by this method.
      */
     List<String> preParse(List<String> original);
@@ -92,7 +91,6 @@ public interface FTPFileEntryParser {
      * particular ftp system being parsed. In many but not all cases, this can be defined simply by calling BufferedReader.readLine().
      *
      * @param reader The BufferedReader object from which entries are to be read.
-     *
      * @return A string representing the next ftp entry or null if none found.
      * @throws IOException thrown on any IO Error reading from the reader.
      */

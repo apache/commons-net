@@ -102,7 +102,6 @@ public class SimpleNTPServer implements Runnable {
      *
      * @param request incoming DatagramPacket
      * @param rcvTime time packet received
-     *
      * @throws IOException if an I/O error occurs.
      */
     protected void handlePacket(final DatagramPacket request, final long rcvTime) throws IOException {

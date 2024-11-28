@@ -316,7 +316,6 @@ public class Base64 {
      * @param array          byte[] array which will later be encoded
      * @param lineSize      line-length of the output (<= 0 means no chunking) between each chunkSeparator (e.g. CRLF).
      * @param linkSeparator the sequence of bytes used to separate chunks of output (e.g. CRLF).
-     *
      * @return amount of space needed to encode the supplied array. Returns a long since a max-len array will require Integer.MAX_VALUE + 33%.
      */
     static long getEncodeLength(final byte[] array, int lineSize, final byte[] linkSeparator) {

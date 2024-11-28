@@ -487,7 +487,6 @@ public class FTP extends SocketClient {
      * </ul>
      *
      * @see "http://www.faqs.org/rfcs/rfc2428.html"
-     *
      * @param host The host owning the port.
      * @param port The new port.
      * @return The reply code received from the server.
@@ -683,7 +682,6 @@ public class FTP extends SocketClient {
      * Returns the nth line of text from the last FTP server response as a string. The end of line markers of each are stripped from the line.
      *
      * @param index The index of the line to return, 0-based.
-     *
      * @return The lines of text from the last FTP response as an array.
      */
     String getReplyString(final int index) {

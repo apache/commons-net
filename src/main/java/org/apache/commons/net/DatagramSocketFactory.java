@@ -33,7 +33,6 @@ public interface DatagramSocketFactory {
      * Creates a DatagramSocket on the local host at the first available port.
      *
      * @return the socket
-     *
      * @throws SocketException If the socket could not be created.
      */
     DatagramSocket createDatagramSocket() throws SocketException;

@@ -50,7 +50,6 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
      * </p>
      *
      * @param config A {@link FTPClientConfig FTPClientConfig} used to configure the parser created
-     *
      * @return the {@link FTPFileEntryParser} so created.
      * @throws ParserInitializationException Thrown on any exception in instantiation
      * @throws NullPointerException          if {@code config} is {@code null}

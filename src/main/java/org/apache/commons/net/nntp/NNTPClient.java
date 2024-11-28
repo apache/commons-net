@@ -417,7 +417,6 @@ public class NNTPClient extends NNTP {
      *                                       causing the server to send NNTP reply code 400. This exception may be caught either as an IOException or
      *                                       independently as itself.
      * @throws IOException                   If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
-     *
      * @see #iterateNewNews(NewGroupsOrNewsQuery)
      */
     public String[] listNewNews(final NewGroupsOrNewsQuery query) throws IOException {
@@ -542,7 +541,6 @@ public class NNTPClient extends NNTP {
      *
      * @param reply   the reply to parse "22n nnn <aaa>"
      * @param pointer the pointer to update
-     *
      * @throws MalformedServerReplyException if response could not be parsed
      */
     private void parseArticlePointer(final String reply, final ArticleInfo pointer) throws MalformedServerReplyException {

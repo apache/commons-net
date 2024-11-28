@@ -198,7 +198,6 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * implementation of simply calling BufferedReader.readLine(), because one entry may span multiple lines.
      *
      * @param reader The BufferedReader object from which entries are to be read.
-     *
      * @return A string representing the next ftp entry or null if none found.
      * @throws IOException thrown on any IO Error reading from the reader.
      */

@@ -50,7 +50,6 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * The constructor for a RegexFTPFileEntryParserImpl object. The expression is compiled with flags = 0.
      *
      * @param regex The regular expression with which this object is initialized.
-     *
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen in normal conditions. If it is seen, this is a sign
      *                                  that a subclass has been created with a bad regular expression. Since the parser must be created before use, this means
      *                                  that any bad parser subclasses created from this will bomb very quickly, leading to easy detection.
@@ -65,7 +64,6 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      *
      * @param regex The regular expression with which this object is initialized.
      * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
-     *
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen in normal conditions. If it is seen, this is a sign
      *                                  that a subclass has been created with a bad regular expression. Since the parser must be created before use, this means
      *                                  that any bad parser subclasses created from this will bomb very quickly, leading to easy detection.
@@ -123,7 +121,6 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * Convenience method delegates to the internal MatchResult's group() method.
      *
      * @param matchNum match group number to be retrieved
-     *
      * @return the content of the {@code matchnum'th} group of the internal match or null if this method is called without a match having been made.
      */
     public String group(final int matchNum) {

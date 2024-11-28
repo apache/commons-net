@@ -108,7 +108,6 @@ public class TelnetClient extends Telnet {
      * Registers a new TelnetOptionHandler for this Telnet client to use.
      *
      * @param opthand   option handler to be registered.
-     *
      * @throws InvalidTelnetOptionException on error
      * @throws IOException                  on error
      */
@@ -133,7 +132,6 @@ public class TelnetClient extends Telnet {
      * Unregisters a TelnetOptionHandler.
      *
      * @param optcode   Code of the option to be unregistered.
-     *
      * @throws InvalidTelnetOptionException on error
      * @throws IOException                  on error
      */
@@ -183,7 +181,6 @@ public class TelnetClient extends Telnet {
      * Returns the state of the option on the local side.
      *
      * @param option   Option to be checked.
-     *
      * @return The state of the option on the local side.
      */
     public boolean getLocalOptionState(final int option) {
@@ -217,7 +214,6 @@ public class TelnetClient extends Telnet {
      * Returns the state of the option on the remote side.
      *
      * @param option   Option to be checked.
-     *
      * @return The state of the option on the remote side.
      */
     public boolean getRemoteOptionState(final int option) {
@@ -275,7 +271,6 @@ public class TelnetClient extends Telnet {
      * Sends an {@code Are You There (AYT)} sequence and waits for the result.
      *
      * @param timeout   Time to wait for a response.
-     *
      * @return true if AYT received a response, false otherwise.
      *
      * @throws InterruptedException     on error
@@ -291,7 +286,6 @@ public class TelnetClient extends Telnet {
      * Sends an {@code Are You There (AYT)} sequence and waits for the result.
      *
      * @param timeout   Time to wait for a response (millis.)
-     *
      * @return true if AYT received a response, false otherwise
      *
      * @throws InterruptedException     on error

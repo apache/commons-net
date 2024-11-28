@@ -39,7 +39,6 @@ public abstract class FTPFileEntryParserImpl implements FTPFileEntryParser {
      * This default implementation does nothing.
      *
      * @param original Original list after it has been created from the server stream
-     *
      * @return {@code original} unmodified.
      */
     @Override
@@ -52,7 +51,6 @@ public abstract class FTPFileEntryParserImpl implements FTPFileEntryParser {
      * BufferedReader.readLine().
      *
      * @param reader The BufferedReader object from which entries are to be read.
-     *
      * @return A string representing the next ftp entry or null if none found.
      * @throws IOException thrown on any IO Error reading from the reader.
      */

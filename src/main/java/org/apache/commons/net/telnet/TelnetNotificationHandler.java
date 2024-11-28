@@ -56,7 +56,6 @@ public interface TelnetNotificationHandler {
      * Callback method called when TelnetClient receives a command or option negotiation command
      *
      * @param negotiation_code   type of (negotiation) command received (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
-     *
      * @param option_code        code of the option negotiated, or the command code itself (e.g. NOP).
      */
     void receivedNegotiation(int negotiation_code, int option_code);

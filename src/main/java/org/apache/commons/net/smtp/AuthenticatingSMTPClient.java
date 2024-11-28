@@ -152,7 +152,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
      * @param user the user name. If the method is XOAUTH/XOAUTH2, then this is used as the plain text oauth protocol parameter string which is
      *                 Base64-encoded for transmission.
      * @param password the password for the username. Ignored for XOAUTH/XOAUTH2.
-     *
      * @return True if successfully completed, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                       causing the server to send SMTP reply code 421. This exception may be caught either as an IOException or

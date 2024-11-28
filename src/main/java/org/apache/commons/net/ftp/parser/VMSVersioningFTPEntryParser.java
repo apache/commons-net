@@ -84,7 +84,6 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
      * to remove the duplicates.
      *
      * @param original Original list
-     *
      * @return Original list purged of duplicates
      */
     @Override

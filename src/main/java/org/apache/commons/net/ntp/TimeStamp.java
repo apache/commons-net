@@ -74,7 +74,6 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * Convert NTP timestamp hexstring (e.g. "c1a089bd.fc904f6d") to the NTP 64-bit unsigned fixed-point number.
      *
      * @param hexString the string to convert
-     *
      * @return NTP 64-bit timestamp value.
      * @throws NumberFormatException - if the string does not contain a parsable timestamp.
      */
@@ -196,7 +195,6 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * fractional seconds by a decimal point; e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
      *
      * @param ntpTime the 64 bit timestamp
-     *
      * @return NTP timestamp 64-bit long value as hexadecimal string with seconds separated by fractional seconds.
      */
     public static String toString(final long ntpTime) {
@@ -243,7 +241,6 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * Constructs a newly allocated NTP timestamp object that represents the value represented by the string in hexdecimal form (e.g. "c1a089bd.fc904f6d").
      *
      * @param hexStamp the hexadecimal timestamp
-     *
      * @throws NumberFormatException - if the string does not contain a parsable timestamp.
      */
     public TimeStamp(final String hexStamp) throws NumberFormatException {

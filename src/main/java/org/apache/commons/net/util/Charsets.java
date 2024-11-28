@@ -41,7 +41,6 @@ public class Charsets {
      *
      * @param charsetName        The name of the requested charset; may be a canonical name, an alias, or null. If null, return the default charset.
      * @param defaultCharsetName the charset name to use if the requested charset is null
-     *
      * @return A charset object for the named charset
      */
     public static Charset toCharset(final String charsetName, final String defaultCharsetName) {

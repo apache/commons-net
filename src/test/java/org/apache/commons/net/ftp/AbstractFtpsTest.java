@@ -66,7 +66,6 @@ public abstract class AbstractFtpsTest {
     /**
      * Returns the test directory as a String.
      * @param defaultHome A default value.
-     *
      * @return the test directory as a String
      */
     protected static String getTestHomeDirectory(final String defaultHome) {
