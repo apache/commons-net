@@ -272,7 +272,6 @@ public class TelnetClient extends Telnet {
      *
      * @param timeout   Time to wait for a response.
      * @return true if AYT received a response, false otherwise.
-     *
      * @throws InterruptedException     on error
      * @throws IllegalArgumentException on error
      * @throws IOException              on error
@@ -287,7 +286,6 @@ public class TelnetClient extends Telnet {
      *
      * @param timeout   Time to wait for a response (millis.)
      * @return true if AYT received a response, false otherwise
-     *
      * @throws InterruptedException     on error
      * @throws IllegalArgumentException on error
      * @throws IOException              on error
