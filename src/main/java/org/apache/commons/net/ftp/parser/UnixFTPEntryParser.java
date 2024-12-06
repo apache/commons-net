@@ -25,7 +25,7 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * Implementation FTPFileEntryParser and FTPFileListParser for standard UNIX Systems.
+ * Implementation FTPFileEntryParser and FTPFileListParser for standard Unix Systems.
  *
  * This class is based on the logic of Daniel Savarese's DefaultFTPListParser, but adapted to use regular expressions and to fit the new FTPFileEntryParser
  * interface.

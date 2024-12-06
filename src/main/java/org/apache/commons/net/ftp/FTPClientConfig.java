@@ -45,7 +45,7 @@ import java.util.TreeMap;
  * <li>is in different time zone and you need accurate timestamps for dependency checking as in Ant</li>
  * </ul>
  * <p>
- * Unpaged (whole list) access on a UNIX server that uses French month names but uses the "standard" {@code MMM d yyyy} date formatting
+ * Unpaged (whole list) access on a Unix server that uses French month names but uses the "standard" {@code MMM d yyyy} date formatting
  *
  * <pre>
  * FTPClient f = FTPClient();
@@ -57,7 +57,7 @@ import java.util.TreeMap;
  * FTPFile[] files = listFiles(directory);
  * </pre>
  * <p>
- * Paged access on a UNIX server that uses Danish month names and "European" date formatting in Denmark's time zone, when you are in some other time zone.
+ * Paged access on a Unix server that uses Danish month names and "European" date formatting in Denmark's time zone, when you are in some other time zone.
  *
  * <pre>
  * FTPClient f = FTPClient();
@@ -295,7 +295,7 @@ public class FTPClientConfig {
     private boolean saveUnparseableEntries;
 
     /**
-     * Convenience constructor mainly for use in testing. Constructs a UNIX configuration.
+     * Convenience constructor mainly for use in testing. Constructs a Unix configuration.
      */
     public FTPClientConfig() {
         this(SYST_UNIX);

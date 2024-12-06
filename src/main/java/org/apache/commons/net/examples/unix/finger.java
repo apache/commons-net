@@ -25,7 +25,7 @@ import org.apache.commons.net.finger.FingerClient;
 
 /**
  * This is an example of how you would implement the finger command in Java using NetComponents. The Java version is much shorter. But keep in mind that the
- * UNIX finger command reads all sorts of local files to output local finger information. This program only queries the finger daemon.
+ * Unix finger command reads all sorts of local files to output local finger information. This program only queries the finger daemon.
  * <p>
  * The -l flag is used to request long output from the server.
  */

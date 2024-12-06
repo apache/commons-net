@@ -29,7 +29,7 @@ import org.apache.commons.net.io.SocketInputStream;
 import org.apache.commons.net.util.NetConstants;
 
 /**
- * RExecClient implements the rexec() facility that first appeared in 4.2BSD Unix. This class will probably only be of use for connecting to UNIX systems and
+ * RExecClient implements the rexec() facility that first appeared in 4.2BSD Unix. This class will probably only be of use for connecting to Unix systems and
  * only when the rexecd daemon is configured to run, which is a rarity these days because of the security risks involved. However, rexec() can be very useful
  * for performing administrative tasks on a network behind a firewall.
  * <p>

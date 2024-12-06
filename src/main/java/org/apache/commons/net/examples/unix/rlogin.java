@@ -28,11 +28,11 @@ import org.apache.commons.net.examples.util.IOUtil;
  * writing the remote stdout and stderr to local stdout. If you don't have {@code .rhosts} or {@code hosts.equiv} files set up, the rlogin daemon will prompt
  * you for a password.
  * <p>
- * On UNIX systems you will not be able to use the rshell capability unless the process runs as root since only root can bind port addresses lower than 1024.
+ * On Unix systems you will not be able to use the rshell capability unless the process runs as root since only root can bind port addresses lower than 1024.
  * <p>
  * JVM's using green threads will likely have problems if the rlogin daemon requests a password. This program is merely a demonstration and is not suitable for
  * use as an application, especially given that it relies on line-buffered input from System.in. The best way to run this example is probably from a Windows
- * DOS box into a UNIX host.
+ * DOS box into a Unix host.
  * <p>
  * Example: java rlogin myhost localuser remoteuser vt100
  * <p>

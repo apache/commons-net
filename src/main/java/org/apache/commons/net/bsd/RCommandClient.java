@@ -35,8 +35,8 @@ import org.apache.commons.net.io.SocketInputStream;
  * without issuing a password. The trust relationship between two machines is established by the contents of a machine's /etc/hosts.equiv file and a user's
  * .rhosts file. These files specify from which hosts and accounts on those hosts rcmd() requests will be accepted. The only additional measure for establishing
  * trust is that all client connections must originate from a port between 512 and 1023. Consequently, there is an upper limit to the number of rcmd connections
- * that can be running simultaneously. The required ports are reserved ports on UNIX systems, and can only be bound by a process running with root permissions
- * (to accomplish this rsh, rlogin, and related commands usualy have the suid bit set). Therefore, on a UNIX system, you will only be able to successfully use
+ * that can be running simultaneously. The required ports are reserved ports on Unix systems, and can only be bound by a process running with root permissions
+ * (to accomplish this rsh, rlogin, and related commands usualy have the suid bit set). Therefore, on a Unix system, you will only be able to successfully use
  * the RCommandClient class if the process runs as root. However, there is no such restriction on Windows95 and some other systems. The security risks are
  * obvious. However, when carefully used, rcmd() can be very useful when used behind a firewall.
  * <p>

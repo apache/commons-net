@@ -45,7 +45,7 @@ import java.io.IOException;
 public class RLoginClient extends RCommandClient {
 
     /**
-     * The default rlogin port. Set to 513 in BSD UNIX and according to RFC 1282.
+     * The default rlogin port. Set to 513 in BSD Unix and according to RFC 1282.
      */
     public static final int DEFAULT_PORT = 513;
 

@@ -61,7 +61,7 @@ public final class FTPClientExample {
             + "\t-m - list file details using MDTM (remote is used as the pathname if provided)\n"
             + "\t-n - list file names using NLST (remote is used as the pathname if provided)\n"
             + "\t-p true|false|protocol[,true|false] - use FTPSClient with the specified protocol and/or isImplicit setting\n"
-            + "\t-s - store file on server (upload)\n" + "\t-S - systemType set server system type (e.g. UNIX VMS WINDOWS)\n"
+            + "\t-s - store file on server (upload)\n" + "\t-S - systemType set server system type (e.g. Unix VMS WINDOWS)\n"
             + "\t-t - list file details using MLST (remote is used as the pathname if provided)\n" + "\t-U - save unparseable responses\n"
             + "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n"
             + "\t-T  all|valid|none - use one of the built-in TrustManager implementations (none = JVM default)\n"
