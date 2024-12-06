@@ -2251,7 +2251,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @param pathname The file or directory to list. Since the server may or may not expand glob expressions, using them here is not recommended and may well
      *                 cause this method to fail. Also, some servers treat a leading '-' as being an option. To avoid this interpretation, use an absolute
-     *                 pathname or prefix the pathname with ./ (unix style servers). Some servers may support "--" as meaning end of options, in which case "--
+     *                 pathname or prefix the pathname with ./ (Unix style servers). Some servers may support "--" as meaning end of options, in which case "--
      *                 -xyz" should work.
      * @return The list of file information contained in the given path in the format determined by the autodetection mechanism
      * @throws FTPConnectionClosedException                                    If the FTP server prematurely closes the connection as a result of the client
@@ -2336,7 +2336,7 @@ public class FTPClient extends FTP implements Configurable {
      * in the directory is returned. If the pathname corresponds to a file, only that file will be listed. The server may or may not expand glob expressions.
      *
      * @param pathname The file or directory to list. Warning: the server may treat a leading '-' as an option introducer. If so, try using an absolute path, or
-     *                 prefix the path with ./ (unix style servers). Some servers may support "--" as meaning end of options, in which case "-- -xyz" should
+     *                 prefix the path with ./ (Unix style servers). Some servers may support "--" as meaning end of options, in which case "-- -xyz" should
      *                 work.
      * @return The list of file names contained in the given path. null if the list could not be obtained. If there are no file names in the directory, a
      *         zero-length array is returned.

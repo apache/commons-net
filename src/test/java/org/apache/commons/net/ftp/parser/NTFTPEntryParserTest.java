@@ -234,7 +234,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework {
         assertEquals("AUTOEXEC.BAK", f.getName());
         assertEquals(5000000000L, f.getSize());
 
-        // test an NT-unix style listing that does NOT have a leading zero
+        // test an NT-Unix style listing that does NOT have a leading zero
         // on the hour.
 
         f = getParser().parseFTPEntry("-rw-rw-r--   1 mqm        mqm          17707 Mar 12  3:33 killmq.sh.log");

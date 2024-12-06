@@ -159,7 +159,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * --------------------------------------------------------------------- Very brief and incomplete description of the zOS/MVS-file system. (Note: "zOS" is
      * the operating system on the mainframe, and is the new name for MVS)
      *
-     * The file system on the mainframe does not have hierarchical structure as for example the unix file system. For a more comprehensive description,
+     * The file system on the mainframe does not have hierarchical structure as for example the Unix file system. For a more comprehensive description,
      * please refer to the IBM manuals
      *
      * @LINK: https://publibfp.boulder.ibm.com/cgi-bin/bookmgr/BOOKS/dgt2d440/CONTENTS
@@ -178,7 +178,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * DSORG: PS: sequential, or flat file PO: partitioned dataset PO-E: extended partitioned dataset
      *
-     * The PS file is just a flat file, as you would find it on the unix file system.
+     * The PS file is just a flat file, as you would find it on the Unix file system.
      *
      * The PO and PO-E files, can be compared to a single level directory structure. A PO file consist of a number of dataset members, or files if you will. It
      * is possible to CD into the file, and to retrieve the individual members.
@@ -441,7 +441,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * <ul>
      *     <li>z/OS-MVS File lists,</li>
      *     <li>z/OS-MVS Member lists,</li>
-     *     <li>unix file lists.</li>
+     *     <li>Unix file lists.</li>
      * </ul>
      * @since 2.0
      */

@@ -158,7 +158,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parses a line of a unix (standard) FTP server file listing and converts it into a usable format in the form of an {@code FTPFile} instance. If the
+     * Parses a line of a Unix (standard) FTP server file listing and converts it into a usable format in the form of an {@code FTPFile} instance. If the
      * file listing line doesn't describe a file, {@code null} is returned, otherwise a {@code FTPFile} instance representing the files in the
      * directory is returned.
      *
