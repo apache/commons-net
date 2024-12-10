@@ -920,7 +920,7 @@ public class FTPClient extends FTP implements Configurable {
         }
         final InputStream input;
         if (fileType == ASCII_FILE_TYPE) {
-            // We buffer ascii transfers because the buffering has to
+            // We buffer ASCII transfers because the buffering has to
             // be interposed between FromNetASCIIOutputSream and the underlying
             // socket input stream. We don't buffer binary transfers
             // because we don't want to impose a buffering policy on the
@@ -989,7 +989,7 @@ public class FTPClient extends FTP implements Configurable {
         }
         final OutputStream output;
         if (fileType == ASCII_FILE_TYPE) {
-            // We buffer ascii transfers because the buffering has to
+            // We buffer ASCII transfers because the buffering has to
             // be interposed between ToNetASCIIOutputSream and the underlying
             // socket output stream. We don't buffer binary transfers
             // because we don't want to impose a buffering policy on the
