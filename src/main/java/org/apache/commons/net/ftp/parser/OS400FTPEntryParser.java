@@ -291,7 +291,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
         if (matches(entry)) {
             final String usr = group(1);
-            final String filesize = group(2);
+            final String fileSize = group(2);
             String datestr = "";
             if (!isNullOrEmpty(group(3)) || !isNullOrEmpty(group(4))) {
                 datestr = group(3) + " " + group(4);
@@ -309,12 +309,12 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
             if (typeStr.equalsIgnoreCase("*STMF")) {
                 type = FTPFile.FILE_TYPE;
-                if (isNullOrEmpty(filesize) || isNullOrEmpty(name)) {
+                if (isNullOrEmpty(fileSize) || isNullOrEmpty(name)) {
                     return null;
                 }
             } else if (typeStr.equalsIgnoreCase("*DIR")) {
                 type = FTPFile.DIRECTORY_TYPE;
-                if (isNullOrEmpty(filesize) || isNullOrEmpty(name)) {
+                if (isNullOrEmpty(fileSize) || isNullOrEmpty(name)) {
                     return null;
                 }
             } else if (typeStr.equalsIgnoreCase("*FILE")) {
@@ -337,7 +337,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 if (isNullOrEmpty(name)) {
                     return null;
                 }
-                if (!(isNullOrEmpty(filesize) && isNullOrEmpty(datestr))) {
+                if (!(isNullOrEmpty(fileSize) && isNullOrEmpty(datestr))) {
                     return null;
                 }
 
@@ -356,7 +356,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             file.setUser(usr);
 
             try {
-                file.setSize(Long.parseLong(filesize));
+                file.setSize(Long.parseLong(fileSize));
             } catch (final NumberFormatException e) {
                 // intentionally do nothing
             }

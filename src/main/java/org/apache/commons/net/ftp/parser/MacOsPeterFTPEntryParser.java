@@ -109,7 +109,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         if (matches(entry)) {
             final String typeStr = group(1);
             final String hardLinkCount = "0";
-            final String filesize = group(20);
+            final String fileSize = group(20);
             final String datestr = group(21) + " " + group(22);
             String name = group(23);
             final String endtoken = group(24);
@@ -171,7 +171,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             file.setGroup(null);
 
             try {
-                file.setSize(Long.parseLong(filesize));
+                file.setSize(Long.parseLong(fileSize));
             } catch (final NumberFormatException e) {
                 // intentionally do nothing
             }

@@ -50,7 +50,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl {
             + "(\\S+)\\s*" // 13
             + "(\\S*)\\s*" // 14 user
             + "(\\d*)\\s*" // 15 group
-            + "(\\d*)\\s*" // 16 filesize
+            + "(\\d*)\\s*" // 16 file size
             + MONTHS // 17 month
             + "\\s*" // TODO should the space be optional?
             // TODO \\d* should be \\d? surely ? Otherwise 01111 is allowed
@@ -85,7 +85,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl {
         if (matches(entry)) {
             final String usr = group(14);
             final String grp = group(15);
-            final String filesize = group(16);
+            final String fileSize = group(16);
             final String mo = group(17);
             final String da = group(18);
             final String yr = group(20);
@@ -97,7 +97,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl {
             file.setUser(usr);
             file.setGroup(grp);
             try {
-                file.setSize(Long.parseLong(filesize));
+                file.setSize(Long.parseLong(fileSize));
             } catch (final NumberFormatException e) {
                 // intentionally do nothing
             }

@@ -177,7 +177,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             final String hardLinkCount = group(15);
             final String usr = group(16);
             final String grp = group(17);
-            final String filesize = group(18);
+            final String fileSize = group(18);
             final String datestr = group(19) + " " + group(20);
             String name = group(21);
             if (trimLeadingSpaces) {
@@ -247,7 +247,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             file.setGroup(grp);
 
             try {
-                file.setSize(Long.parseLong(filesize));
+                file.setSize(Long.parseLong(fileSize));
             } catch (final NumberFormatException e) {
                 // intentionally do nothing
             }
