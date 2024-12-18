@@ -90,6 +90,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 70 to 78 #261, #278, #280, #285, #298, #293, #300.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #268, #273, #281.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump commons-io:commons-io from 2.16.1 to 2.18.0 #286, #308.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-collections4 from 4.5.0-M2 to 4.5.0-M3 #314.</action>
     </release>
     <release version="3.11.1" date="2024-06-07" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
