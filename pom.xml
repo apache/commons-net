@@ -139,7 +139,7 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <dependency>
            <groupId>org.apache.commons</groupId>
            <artifactId>commons-collections4</artifactId>
-           <version>4.5.0-M2</version>
+           <version>4.5.0-M3</version>
            <scope>test</scope>
         </dependency>
     </dependencies>
