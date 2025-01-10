@@ -38,9 +38,9 @@ and commit
 
 The <action> type attribute can be add,update,fix,remove.
 -->
-<document xmlns="http://maven.apache.org/changes/1.0.0"
+<document xmlns="http://maven.apache.org/changes/2.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+          xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 http://maven.apache.org/xsd/changes-2.0.0.xsd">
   <properties>
     <title>Apache Commons Net Release Notes</title>
     <author email="dev@commons.apache.org">Apache Commons developers</author>
@@ -1409,7 +1409,7 @@ This is primarily a maintenance release, but it also includes new features and e
         UnixFTPEntryParser fails to parse some entries
       </action>
     </release>
-    <release version="2.1" description="Not released" />
+    <release version="2.1" date="2013-12-26" />
     <release version="2.0" date="October 20, 2008" description="Java 5.0 release">
       <action dev="rwinston" type="fix" issue="NET-307">
         One of the "connect" method in class org.apache.commons.net.SocketClient doesn't handle connection timeout properly
