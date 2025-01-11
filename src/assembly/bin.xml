@@ -39,6 +39,7 @@ Licensed to the Apache Software Foundation (ASF) under one or more
             <includes>
                 <include>commons-net-${project.version}.jar</include>
             </includes>
+            <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
             <directory>target/site/apidocs</directory>
