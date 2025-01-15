@@ -60,7 +60,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
     private final String fileName;
 
     /** The option values */
-    private Map<String, String> options = new HashMap<>();
+    private final Map<String, String> options = new HashMap<>();
 
     /**
      * Creates a request packet of a given type to be sent to a host at a given port with a file name and transfer mode request.
