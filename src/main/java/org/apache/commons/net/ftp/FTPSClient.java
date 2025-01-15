@@ -279,7 +279,6 @@ public class FTPSClient extends FTPClient {
     @Override
     protected Socket _openDataConnection_(final String command, final String arg) throws IOException {
         final Socket socket = openDataSecureConnection(command, arg);
-        _prepareDataSocket_(socket);
         if (socket instanceof SSLSocket) {
             final SSLSocket sslSocket = (SSLSocket) socket;
 
@@ -313,7 +312,7 @@ public class FTPSClient extends FTPClient {
      */
     protected void _prepareDataSocket_(final Socket socket) throws IOException {
     }
-
+    
     /**
      * Check the value that can be set in PROT Command value.
      *
@@ -831,6 +830,8 @@ public class FTPSClient extends FTPClient {
                 }
                 socket = server.accept();
 
+                _prepareDataSocket_(socket);
+                
                 // Ensure the timeout is set before any commands are issued on the new socket
                 if (soTimeoutMillis >= 0) {
                     socket.setSoTimeout(soTimeoutMillis);
@@ -871,6 +872,8 @@ public class FTPSClient extends FTPClient {
                 socket = _socketFactory_.createSocket();
             }
 
+            _prepareDataSocket_(socket);
+            
             if (getReceiveDataSocketBufferSize() > 0) {
                 socket.setReceiveBufferSize(getReceiveDataSocketBufferSize());
             }
