@@ -21,10 +21,10 @@ Fixed Bugs
 ----------
 
 o           Allow longer data in pattern IMAPReply.UNTAGGED_RESPONSE. Thanks to Stuart Maclean, Gary Gregory.
-o           Fix Reproducible Builds issues #259. Thanks to Hervé Boutemy, Gary Gregory.
+o           Fix Reproducible Builds issues #259. Thanks to HervÃ© Boutemy, Gary Gregory.
 
 
-Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes.html
 
 Enjoy!
 -Apache Commons Net team
