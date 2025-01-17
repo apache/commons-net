@@ -132,6 +132,6 @@ Removed
 Historical list of changes: ${project.url}changes.html
 
 Enjoy!
--Apache Commons Net team
+-${developmentTeam}
 
 -----------------------------------------------------------------------------
