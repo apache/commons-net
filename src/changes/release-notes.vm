@@ -36,7 +36,7 @@ patches, or suggestions for improvement, see the ${project.name} website:
 
 ${project.url}
 
-Download page: ${project.url}download_net.cgi
+Download page: ${project.url}download_${project.properties.get("commons.componentid")}.cgi
 
 ## set up indent sizes. Only change indent1
 #set($props=${project.properties})
