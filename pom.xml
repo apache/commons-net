@@ -384,6 +384,42 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <enableRulesSummary>false</enableRulesSummary>
                 </configuration>
             </plugin>
+            <plugin>
+				      <groupId>io.fabric8</groupId>
+				      <artifactId>docker-maven-plugin</artifactId>
+				      <version>0.38.1</version>
+				      <configuration>
+				        <images>
+				          <image>
+				            <name>filezilla-server</name>
+				            <build>
+				              <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+				            </build>
+				            <run>
+				              <ports>
+				                <port>21:21</port>
+				              </ports>
+				            </run>
+				          </image>
+				        </images>
+				      </configuration>
+				      <executions>
+				        <execution>
+				          <id>start-docker-container</id>
+				          <phase>pre-integration-test</phase>
+				          <goals>
+				            <goal>start</goal>
+				          </goals>
+				        </execution>
+				        <execution>
+				          <id>stop-docker-container</id>
+				          <phase>post-integration-test</phase>
+				          <goals>
+				            <goal>stop</goal>
+				          </goals>
+				        </execution>
+				      </executions>
+				    </plugin>
         </plugins>
     </build>
     <reporting>

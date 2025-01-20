@@ -49,12 +49,14 @@ import org.junit.runners.Parameterized.Parameters;
 public class FTPSClientTest extends AbstractFtpsTest {
 
     private static final String USER_PROPS_RES = "org/apache/commons/net/ftpsserver/users.properties";
+    private static final String FILEZILLA_PROPS_RES = "org/apache/commons/net/filezillaserver/filezillaserver.properties";
 
     private static final String SERVER_JKS_RES = "org/apache/commons/net/ftpsserver/ftpserver.jks";
 
     @BeforeClass
     public static void setupServer() throws Exception {
         setupServer(IMPLICIT, USER_PROPS_RES, SERVER_JKS_RES, "target/test-classes/org/apache/commons/net/test-data");
+        initFZServer(FILEZILLA_PROPS_RES);
     }
 
     @Parameters(name = "endpointCheckingEnabled={0}")
@@ -195,4 +197,10 @@ public class FTPSClientTest extends AbstractFtpsTest {
         trace("<<testRetrieveFilePathNameRoot");
     }
 
+    @Test(timeout = TEST_TIMEOUT)
+    public void testFileZillaTlsResume() throws SocketException, IOException {
+        trace(">>testFileZillaTlsResume");
+        retrieveFileOnFZ("/file.txt");
+        trace("<<testFileZillaTlsResume");
+    }
 }
