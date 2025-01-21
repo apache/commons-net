@@ -114,8 +114,8 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler {
 
         response[0] = WINDOW_SIZE; // 1 //
 
-        for ( // 2 //
-                nIndex = 1, nShift = 24; nIndex < nResponseSize; nIndex++, nShift -= 8) {
+        // 2 //
+        for (nIndex = 1, nShift = 24; nIndex < nResponseSize; nIndex++, nShift -= 8) {
             nTurnedOnBits = 0xFF;
             nTurnedOnBits <<= nShift;
             response[nIndex] = (nCompoundWindowSize & nTurnedOnBits) >>> nShift;
