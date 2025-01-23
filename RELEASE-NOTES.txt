@@ -1,5 +1,4 @@
-Apache Commons Net 3.11.1
-Release Notes
+Apache Commons Net 3.11.1 Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.11.1.
 
@@ -30,8 +29,7 @@ Enjoy!
 -Apache Commons Net team
 
 -----------------------------------------------------------------------------
-Apache Commons Net 3.11.0
-Release Notes
+Apache Commons Net 3.11.0 Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.11.0.
 
@@ -84,8 +82,7 @@ Enjoy!
 -Apache Commons Net team
 
 -----------------------------------------------------------------------------
-Apache Commons Net 3.10.0
-Release Notes
+Apache Commons Net 3.10.0 Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.10.0.
 
@@ -158,8 +155,7 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-Apache Commons Net 3.9.0
-Release Notes
+Apache Commons Net 3.9.0 Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.9.0.
 
@@ -228,8 +224,7 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-Apache Commons Net 3.8.0
-Release Notes
+Apache Commons Net 3.8.0 Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.8.0.
 
@@ -277,8 +272,7 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-Apache Commons Net 3.7.2
-Release Notes
+Apache Commons Net 3.7.2 Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7.2.
 
@@ -317,8 +311,7 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-Apache Commons Net 3.7.1
-Release Notes
+Apache Commons Net 3.7.1 Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7.1
 
@@ -350,8 +343,7 @@ Enjoy!
 
 -----------------------------------------------------------------------------
 
-Apache Commons Net 3.7
-Release Notes
+Apache Commons Net 3.7 Release Notes
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7
 
