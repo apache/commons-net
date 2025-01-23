@@ -6,7 +6,9 @@
     in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
     ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under 
     the License. -->
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
     <properties>
         <title>Apache Commons Text Security Reports</title>
         <author email="dev@commons.apache.org">Commons Team</author>
@@ -62,20 +64,20 @@
                 <p>
                 Credit: Apache Commons would like to thank ZeddYu Lu for reporting this issue.
                </p>
-                <p>
+               <p>
                     References:
-                    <ul>
-                        <li>
-                            <a href="https://lists.apache.org/thread/o6yn9r9x6s94v97264hmgol1sf48mvx7">Announcement on dev@commons.apache.org</a>
-                        </li>
-                        <li>
-                            <a href="https://www.openwall.com/lists/oss-security/2022/12/03/1">Announcement on oss-security</a>
-                        </li>
-                        <li>
-                            <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37533">Advisory on cve.org</a>
-                        </li>
-                    </ul>
-                </p>
+               </p>
+               <ul>
+                 <li>
+                   <a href="https://lists.apache.org/thread/o6yn9r9x6s94v97264hmgol1sf48mvx7">Announcement on dev@commons.apache.org</a>
+                 </li>
+                 <li>
+                   <a href="https://www.openwall.com/lists/oss-security/2022/12/03/1">Announcement on oss-security</a>
+                 </li>
+                 <li>
+                   <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37533">Advisory on cve.org</a>
+                 </li>
+               </ul>
             </subsection>
         </section>
     </body>

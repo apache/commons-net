@@ -5,7 +5,9 @@
   in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See 
   the License for the specific language governing permissions and limitations under the License. -->
 
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
   <properties>
     <title>Apache Commons Net Migration How-to</title>
     <author email="brekke@apache.org">Jeffrey D. Brekke, Gary Gregory</author>
@@ -66,9 +68,11 @@
       </p>
       <p>
         Several obsolete/unused constants have been removed.
-        <br />
+      </p>
+      <p>
         (Such changes do not affect binary code, because compilers are required to localise constants).
-        <br />
+      </p>
+      <p>
         The
         <a href="clirr-report.html">clirr report</a>
         shows which constants have been removed.
@@ -76,14 +80,18 @@
       </p>
       <p>
         Also, some throws clauses have been removed from methods which did not actually throw them.
-        <br />
+      </p>
+      <p>
         Throws clauses are not part of method signatures, so do not affect binary compatibility.
-        <br />
+      </p>
+      <p>
         The following public methods no longer throw IOException:
-        <ul>
-          <li>TelnetClient#addOptionHandler(TelnetOptionHandler)</li>
-          <li>TelnetClient#deleteOptionHandler(int)</li>
-        </ul>
+      </p>
+      <ul>
+        <li>TelnetClient#addOptionHandler(TelnetOptionHandler)</li>
+        <li>TelnetClient#deleteOptionHandler(int)</li>
+      </ul>
+      <p>
         Source code using these methods will need to be updated.
       </p>
     </section>

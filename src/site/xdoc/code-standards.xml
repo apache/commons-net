@@ -16,8 +16,9 @@
    limitations under the License.
 -->
 
-<document>
-
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
  <properties>
   <title>Coding Standards</title>
   <author email="jon@latchkey.com">Jon S. Stevens</author>
@@ -54,7 +55,7 @@ Java Coding Conventions</a>.
 for one line statements. Examples:
 </p>
 
-<source test=""><![CDATA[
+<source><![CDATA[
 if ( foo )
 {
     // code here
@@ -84,7 +85,7 @@ while ( true )
 preference is to not include them. Both of the following are okay:
 </p>
 
-<source test=""><![CDATA[
+<source><![CDATA[
 if (foo)
 
 or
@@ -149,7 +150,7 @@ import org.apache.foo.*;
 import org.apache.bar.*;
 ]]></source>
 
-<hr noshade="true" size="1"/>
+<hr noshade="noshade" size="1"/>
 
 <p>
 X/Emacs users might appreciate this in their .emacs file.

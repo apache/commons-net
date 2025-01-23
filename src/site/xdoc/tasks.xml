@@ -15,40 +15,37 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<document>
-
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
   <properties>
     <title>Tasks</title>
     <author email="Jeff.Brekke@qg.com">Jeffrey D. Brekke</author>
     <author email="rwinston@eircom.net">Rory Winston</author>
   </properties>
-
   <body>
     <section name="Wishlist">
-      <p>
-        <ul>
-          <li>Add more unit tests, and implement mock servers for testing</li>
-          <li>
-            Convert code to specified coding standards.  Checkstyle report provided.
-          </li>
-          <li>
-            Clean out any classes that don't belong in this project.  Probably classes from
-            org.apache.commons.net.util and org.apache.commons.net.io could be moved to their corresponding commons projects.
-          </li>
-          <li>
-            Parse the client/server interactions without creating so many
-            strings. Many operations are slow because of this.
-          </li>
-          <li>
-            Add ESMTP and more extended NNTP commands.
-          </li>
-          <li>
-            Make NNTPClient.listNewsgroups() and NNTPClient.listNewNews()
-            more efficient. Don't preparse into lots of little objects.
-          </li>
-          <li>FTP proxy support</li>
-        </ul>
-      </p>
+      <ul>
+        <li>Add more unit tests, and implement mock servers for testing</li>
+        <li>
+          Convert code to specified coding standards. Checkstyle report provided.
+        </li>
+        <li>
+          Clean out any classes that don't belong in this project. Probably classes from
+          org.apache.commons.net.util and org.apache.commons.net.io could be moved to their corresponding commons projects.
+        </li>
+        <li>
+          Parse the client/server interactions without creating so many
+          strings. Many operations are slow because of this.
+        </li>
+        <li>
+          Add ESMTP and more extended NNTP commands.
+        </li>
+        <li>
+          Make NNTPClient.listNewsgroups() and NNTPClient.listNewNews()
+          more efficient. Don't preparse into lots of little objects.
+        </li>
+        <li>FTP proxy support</li>
+      </ul>
     </section>
   </body>
 </document>

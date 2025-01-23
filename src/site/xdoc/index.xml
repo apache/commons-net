@@ -15,8 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<document>
-
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
  <properties>
   <title>Overview</title>
   <author email="dev@commons.apache.org">Apache Commons Documentation Team</author>
@@ -40,8 +41,9 @@
    </p>
    </section>
    <section name="Features">
-   <p>
-     Supported protocols include:
+     <p>
+       Supported protocols include:
+     </p>
      <ul>
        <li>FTP/FTPS</li>
        <li>FTP over HTTP (experimental)</li>
@@ -59,7 +61,6 @@
        <li>Discard</li>
        <li>NTP/SNTP</li>
      </ul>
-   </p>
    </section>
    <section name="Background">
    <p>
@@ -80,14 +81,19 @@
            Commons NET includes several working sample applications that you can use.
            Source files are included in the source (and binary) archives, and a compiled jar is provided.
        </p>
+       <p>
            To use one of the sample applications, ensure that the example and main jars are both in the same directory.
            Then run the class as per the following example:
-           <pre>java -jar [path/]commons-net-examples-3.8.0.jar FTPClientExample [parameters]</pre>
+       </p>
+       <pre>java -jar [path/]commons-net-examples-3.8.0.jar FTPClientExample [parameters]</pre>
+       <p>
            This uses the helper application which supports shorthand class names.
-           <br/>
+       </p>
+       <p>
            Alternatively, ensure that the example and main jars are on the classpath.
            Then invoke the class directly, for example:
-           <pre>java -cp commons-net-examples-3.8.0.jar;commons-net-3.8.0.jar examples/ftp/FTPClientExample [parameters]</pre>
+       </p>
+       <pre>java -cp commons-net-examples-3.8.0.jar;commons-net-3.8.0.jar examples/ftp/FTPClientExample [parameters]</pre>
 
        <subsection name="FTP (package: examples/ftp)">
            <ul>
