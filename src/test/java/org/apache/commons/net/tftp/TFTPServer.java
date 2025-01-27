@@ -686,7 +686,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /*
-     * Allow test code to customise the TFTP instance
+     * Allow test code to customize the TFTP instance
      */
     TFTP newTFTP() {
         return new TFTP();
@@ -723,7 +723,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /*
-     * Also allow customisation of sending data/ack so can generate errors if needed
+     * Also allow customization of sending data/ack so can generate errors if needed
      */
     void sendData(final TFTP tftp, final TFTPPacket data) throws IOException {
         tftp.bufferedSend(data);
