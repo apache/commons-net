@@ -65,7 +65,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "\\S+\\s+" + // recfm - ignored
             "\\S+\\s+" + // logical record length -ignored
             "\\S+\\s+" + // block size - ignored
-            "(PS|PO|PO-E)\\s+" + // Dataset organisation. Many exist
+            "(PS|PO|PO-E)\\s+" + // Dataset organization. Many exist
             // but only support: PS, PO, PO-E
             "(\\S+)\\s*"; // Dataset Name (file name)
 
@@ -171,10 +171,10 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * max 44 characters including the dots.
      *
      *
-     * Dataset organisation ====================
+     * Dataset organization ====================
      *
-     * A dataset represents a piece of storage allocated on one or more disks. The structure of the storage is described with the field dataset organisation
-     * (DSORG). There are a number of dataset organisations, but only two are usable for FTP transfer.
+     * A dataset represents a piece of storage allocated on one or more disks. The structure of the storage is described with the field dataset organization
+     * (DSORG). There are a number of dataset organizations, but only two are usable for FTP transfer.
      *
      * DSORG: PS: sequential, or flat file PO: partitioned dataset PO-E: extended partitioned dataset
      *
@@ -246,7 +246,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * </pre>
      * <pre>
      * ----------------------------------- Group within Regex [1] Volume [2] Unit [3] Referred [4] Ext: number of extents [5] Used [6] Recfm: Record format [7]
-     * Lrecl: Logical record length [8] BlkSz: Block size [9] Dsorg: Dataset organisation. Many exists but only support: PS, PO, PO-E [10] Dsname: Dataset name
+     * Lrecl: Logical record length [8] BlkSz: Block size [9] Dsorg: Dataset organization. Many exists but only support: PS, PO, PO-E [10] Dsname: Dataset name
      * </pre>
      *
      * @param entry zosDirectoryEntry
