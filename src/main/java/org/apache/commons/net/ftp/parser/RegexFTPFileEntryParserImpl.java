@@ -147,7 +147,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     }
 
     /**
-     * Alter the current regular expression being utilised for entry parsing and create a new {@link Pattern} instance.
+     * Alter the current regular expression being utilized for entry parsing and create a new {@link Pattern} instance.
      *
      * @param regex The new regular expression
      * @return true
@@ -160,7 +160,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     }
 
     /**
-     * Alter the current regular expression being utilised for entry parsing and create a new {@link Pattern} instance.
+     * Alter the current regular expression being utilized for entry parsing and create a new {@link Pattern} instance.
      *
      * @param regex The new regular expression
      * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
