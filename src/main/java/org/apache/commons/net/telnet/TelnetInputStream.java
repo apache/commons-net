@@ -296,7 +296,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
             switch (receiveState) {
 
             case STATE_CR:
-                if (ch == '\0') {
+                if (ch == Telnet.NUL) {
                     // Strip null
                     continue;
                 }

@@ -117,6 +117,8 @@ class Telnet extends SocketClient {
      */
     private TelnetNotificationHandler notifhand;
 
+    static final char NUL = '\0';
+
     /**
      * Empty Constructor
      */

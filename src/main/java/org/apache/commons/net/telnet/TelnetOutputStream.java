@@ -104,7 +104,7 @@ final class TelnetOutputStream extends OutputStream {
                         }
                     } // __convertCRtoCRLF
                     else if (ch != '\n') {
-                        client.sendByte('\0'); // RFC854 requires CR NUL for bare CR
+                        client.sendByte(Telnet.NUL); // RFC854 requires CR NUL for bare CR
                     }
                 }
 
