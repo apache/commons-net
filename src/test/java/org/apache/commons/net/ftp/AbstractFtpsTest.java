@@ -19,19 +19,14 @@ package org.apache.commons.net.ftp;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.SocketException;
 import java.net.URL;
 import java.time.Duration;
-import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.NullOutputStream;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.ftpserver.FtpServer;
@@ -61,7 +56,6 @@ import org.junit.Assert;
 public abstract class AbstractFtpsTest {
 
     private static int SocketPort;
-    private static int FZSocketPort = -1;
     private static FtpServer EmbeddedFtpServer;
     protected static final boolean IMPLICIT = false;
     protected static final long TEST_TIMEOUT = 10000; // individual test timeout
@@ -78,15 +72,6 @@ public abstract class AbstractFtpsTest {
         return System.getProperty("test.basedir", defaultHome);
     }
 
-    protected static void initFZServer(String fzPropertiesResource) throws IOException {
-        final URL fzPropsResource = ClassLoader.getSystemClassLoader().getResource(fzPropertiesResource);
-        Properties prop = new Properties();
-        try (InputStream in = fzPropsResource.openStream()) {
-            prop.load(in);
-        }
-        FZSocketPort = Integer.parseInt(prop.getProperty("filezillaserver.port"));
-    }
-
     /**
      * Creates and starts an embedded Apache MINA FTP Server.
      *
@@ -96,8 +81,8 @@ public abstract class AbstractFtpsTest {
      * @param defaultHome default home folder
      * @throws FtpException Thrown when the FTP classes cannot fulfill a request.
      */
-    protected synchronized static void setupServer(final boolean implicit, final String userPropertiesResource, final String serverJksResourceResource,
-            final String defaultHome) throws FtpException {
+    protected synchronized static void setupServer(final boolean implicit, final String userPropertiesResource, final String serverJksResourceResource, final String defaultHome)
+            throws FtpException {
         if (EmbeddedFtpServer != null) {
             return;
         }
@@ -211,57 +196,6 @@ public abstract class AbstractFtpsTest {
         return client;
     }
 
-    protected FTPSClient loginClientToFZ() throws SocketException, IOException {
-        trace(">>loginClientToFZ");
-        assertNotEquals(FZSocketPort, -1, "initFZServer not called");
-        final FTPSClient client = new FTPSClient(IMPLICIT);
-        if (ADD_LISTENER) {
-            client.addProtocolCommandListener(new PrintCommandListener(System.err));
-        }
-        //
-        client.setControlKeepAliveReplyTimeout(null);
-        assertEquals(0, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
-        client.setControlKeepAliveReplyTimeout(Duration.ofSeconds(60));
-        assertEquals(60, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
-        //
-        client.setControlKeepAliveTimeout(null);
-        assertEquals(0, client.getControlKeepAliveTimeoutDuration().getSeconds());
-        client.setControlKeepAliveTimeout(Duration.ofSeconds(61));
-        assertEquals(61, client.getControlKeepAliveTimeoutDuration().getSeconds());
-        //
-        client.setDataTimeout(null);
-        assertEquals(0, client.getDataTimeout().getSeconds());
-        client.setDataTimeout(Duration.ofSeconds(62));
-        assertEquals(62, client.getDataTimeout().getSeconds());
-        //
-        client.setEndpointCheckingEnabled(endpointCheckingEnabled);
-        client.connect("localhost", FZSocketPort);
-        //
-        assertClientCode(client);
-        assertEquals(FZSocketPort, client.getRemotePort());
-        //
-        try {
-            // HACK: Without this sleep, the user command sometimes does not reach the ftpserver
-            // This only seems to affect GitHub builds, and only Java 11+
-            Thread.sleep(200); // 100 seems to be not always enough
-        } catch (final InterruptedException ignore) {
-            // ignore
-        }
-        assertTrue(client.login("test", "test"));
-        assertClientCode(client);
-        //
-        client.setFileType(FTP.BINARY_FILE_TYPE);
-        assertClientCode(client);
-        //
-        client.execPBSZ(0);
-        assertClientCode(client);
-        //
-        client.execPROT("P");
-        assertClientCode(client);
-        trace("<<loginClientToFZ");
-        return client;
-    }
-
     protected void retrieveFile(final String pathname) throws SocketException, IOException {
         final FTPSClient client = loginClient();
         try {
@@ -269,18 +203,6 @@ public abstract class AbstractFtpsTest {
             // Just testing that we are not getting an SSL error (the file MUST be present).
             assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.INSTANCE));
             assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.INSTANCE));
-        } finally {
-            client.disconnect();
-        }
-    }
-
-    protected void retrieveFileOnFZ(final String pathname) throws SocketException, IOException {
-        final FTPSClient client = loginClientToFZ();
-        try {
-            // Do it twice.
-            // Just testing that we are not getting an SSL error (the file MUST be present).
-            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.INSTANCE));
-            // assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.INSTANCE));
         } finally {
             client.disconnect();
         }
