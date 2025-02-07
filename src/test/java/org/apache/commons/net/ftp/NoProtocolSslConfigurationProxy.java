@@ -50,6 +50,11 @@ public class NoProtocolSslConfigurationProxy implements SslConfiguration {
     }
 
     @Override
+    public String getEnabledProtocol() {
+        return null;
+    }
+
+    @Override
     public String[] getEnabledProtocols() {
         return null;
     }
