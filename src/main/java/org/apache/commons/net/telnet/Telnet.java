@@ -76,19 +76,21 @@ class Telnet extends SocketClient {
      */
     static final byte[] COMMAND_AYT = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.AYT };
 
+    static final char NUL = '\0';
+
     private final int[] doResponse;
 
     private final int[] willResponse;
 
     private final int[] options;
 
+    /* open TelnetOptionHandler functionality (end) */
+
     /**
      * Terminal type
      */
     private String terminalType;
     /* TERMINAL-TYPE option (end) */
-
-    /* open TelnetOptionHandler functionality (end) */
 
     /* open TelnetOptionHandler functionality (start) */
     /**
@@ -116,8 +118,6 @@ class Telnet extends SocketClient {
      * The notification handler
      */
     private TelnetNotificationHandler notifhand;
-
-    static final char NUL = '\0';
 
     /**
      * Empty Constructor

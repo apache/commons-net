@@ -171,6 +171,13 @@ public class NNTPClient extends NNTP {
         return result;
     }
 
+    /**
+     * Constructs a new instance.
+     */
+    public NNTPClient() {
+        // empty
+    }
+
     @SuppressWarnings("deprecation")
     private void ai2ap(final ArticleInfo ai, final ArticlePointer ap) {
         if (ap != null) { // ai cannot be null

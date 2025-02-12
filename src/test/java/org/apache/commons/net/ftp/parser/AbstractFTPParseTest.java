@@ -21,10 +21,10 @@ import java.time.Instant;
 import java.util.Calendar;
 import java.util.Locale;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+
+import junit.framework.TestCase;
 
 /**
  */

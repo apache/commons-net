@@ -79,10 +79,23 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl {
             /* 5 */ { FTPFile.READ_PERMISSION, FTPFile.EXECUTE_PERMISSION }, /* 6 */ { FTPFile.READ_PERMISSION, FTPFile.WRITE_PERMISSION },
             /* 7 */ { FTPFile.READ_PERMISSION, FTPFile.WRITE_PERMISSION, FTPFile.EXECUTE_PERMISSION }, };
 
+    /**
+     * Gets the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     public static MLSxEntryParser getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Parses a line of an FTP server file listing and converts it into a usable format in the form of an {@code FTPFile} instance. If the file listing
+     * line doesn't describe a file, {@code null} should be returned, otherwise a {@code FTPFile} instance representing the files in the directory
+     * is returned.
+     *
+     * @param entry A line of text from the file listing
+     * @return An FTPFile instance corresponding to the supplied entry
+     */
     public static FTPFile parseEntry(final String entry) {
         return INSTANCE.parseFTPEntry(entry);
     }

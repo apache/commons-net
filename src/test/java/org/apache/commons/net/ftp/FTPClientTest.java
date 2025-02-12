@@ -22,9 +22,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.net.ftp.parser.UnixFTPEntryParser;
+
+import junit.framework.TestCase;
 
 public class FTPClientTest extends TestCase {
 

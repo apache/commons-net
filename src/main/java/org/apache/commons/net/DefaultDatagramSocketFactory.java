@@ -33,6 +33,13 @@ import java.net.SocketException;
 public class DefaultDatagramSocketFactory implements DatagramSocketFactory {
 
     /**
+     * Constructs a new instance.
+     */
+    public DefaultDatagramSocketFactory() {
+        // empty
+    }
+
+    /**
      * Creates a DatagramSocket on the local host at the first available port.
      *
      * @return a new DatagramSocket

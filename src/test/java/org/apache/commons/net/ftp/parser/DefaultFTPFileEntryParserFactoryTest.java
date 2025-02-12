@@ -19,10 +19,10 @@ package org.apache.commons.net.ftp.parser;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+
+import junit.framework.TestCase;
 
 public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
     private void checkParserClass(final FTPFileEntryParserFactory fact, final String key, final Class<?> expected) {

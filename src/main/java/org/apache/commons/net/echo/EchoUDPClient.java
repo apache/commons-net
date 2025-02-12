@@ -40,6 +40,13 @@ public final class EchoUDPClient extends DiscardUDPClient {
     private final DatagramPacket receivePacket = new DatagramPacket(NetConstants.EMPTY_BTYE_ARRAY, 0);
 
     /**
+     * Constructs a new instance.
+     */
+    public EchoUDPClient() {
+        // empty
+    }
+
+    /**
      * Same as {@code receive(data, data.length)}
      *
      * @param data the buffer to receive the input

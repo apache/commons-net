@@ -50,6 +50,13 @@ public final class NewsgroupInfo {
     private int postingPermission;
 
     /**
+     * Constructs a new instance.
+     */
+    public NewsgroupInfo() {
+        // empty
+    }
+
+    /**
      * Gets the estimated number of articles in the newsgroup. The accuracy of this value will depend on the server implementation.
      *
      * @return The estimated number of articles in the newsgroup.

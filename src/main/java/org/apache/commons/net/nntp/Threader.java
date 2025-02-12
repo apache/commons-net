@@ -32,6 +32,13 @@ import java.util.Map;
 public class Threader {
 
     /**
+     * Constructs a new instance.
+     */
+    public Threader() {
+        // empty
+    }
+
+    /**
      *
      * @param threadable
      * @param idTable

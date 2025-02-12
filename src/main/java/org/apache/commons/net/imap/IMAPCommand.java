@@ -56,6 +56,9 @@ public enum IMAPCommand {
      */
     LOGIN(2),
 
+    /**
+     * Authenticate an IMAP connection using OAuth.
+     */
     XOAUTH(1),
 
     // commands valid in authenticated state

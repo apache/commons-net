@@ -330,6 +330,14 @@ public class FTPClient extends FTP implements Configurable {
      * @since 3.6
      */
     public interface HostnameResolver {
+
+        /**
+         * Resolves a host name.
+         *
+         * @param hostname the hostname to resolve.
+         * @return The resolved hostname.
+         * @throws UnknownHostException if the host is unknown.
+         */
         String resolve(String hostname) throws UnknownHostException;
     }
 
@@ -341,6 +349,11 @@ public class FTPClient extends FTP implements Configurable {
     public static class NatServerResolverImpl implements HostnameResolver {
         private final FTPClient client;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param client the FTP client.
+         */
         public NatServerResolverImpl(final FTPClient client) {
             this.client = client;
         }
@@ -802,6 +815,12 @@ public class FTPClient extends FTP implements Configurable {
         return socket;
     }
 
+    /**
+     * Parses a reply.
+     *
+     * @param reply the reply to parse.
+     * @throws MalformedServerReplyException if the reply is malformed.
+     */
     protected void _parseExtendedPassiveModeReply(String reply) throws MalformedServerReplyException {
         reply = reply.substring(reply.indexOf('(') + 1, reply.indexOf(')')).trim();
         final char delim1 = reply.charAt(0);
@@ -823,6 +842,8 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Parses a reply.
+     *
      * @since 3.1
      * @param reply the reply to parse
      * @throws MalformedServerReplyException if the server reply does not match (n,n,n,n),(n),(n)

@@ -33,6 +33,14 @@ import org.apache.commons.net.util.NetConstants;
  */
 @Deprecated
 public class FTPSTrustManager implements X509TrustManager {
+
+    /**
+     * Constructs a new instance.
+     */
+    public FTPSTrustManager() {
+        // empty
+    }
+
     /**
      * No-op
      */

@@ -34,7 +34,6 @@ import org.apache.commons.net.DatagramSocketClient;
  *
  * @see TimeTCPClient
  */
-
 public final class TimeUDPClient extends DatagramSocketClient {
 
     /** The default time port. It is set to 37 according to RFC 868. */
@@ -52,6 +51,13 @@ public final class TimeUDPClient extends DatagramSocketClient {
         time |= (timeData[2] & 0xff) << 8 & 0xffffffffL;
         time |= timeData[3] & 0xff & 0xffffffffL;
         return time;
+    }
+
+    /**
+     * Constructs a new instance.
+     */
+    public TimeUDPClient() {
+        // empty
     }
 
     /**

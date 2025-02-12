@@ -26,6 +26,15 @@ import org.apache.commons.net.io.Util;
 public class PrintCommandListeners {
 
     /**
+     * Creates a new PrintCommandListener on system out.
+     *
+     * @return a new PrintCommandListener on system out.
+     */
+    public static PrintCommandListener sysOutPrintCommandListener() {
+        return new PrintCommandListener(Util.newPrintWriter(System.out), true);
+    }
+
+    /**
      * Constructs a new instance.
      *
      * @deprecated Will be private in the next major release.
@@ -33,15 +42,6 @@ public class PrintCommandListeners {
     @Deprecated
     public PrintCommandListeners() {
         // empty
-    }
-
-    /**
-     * Creates a new PrintCommandListener on system out.
-     *
-     * @return a new PrintCommandListener on system out.
-     */
-    public static PrintCommandListener sysOutPrintCommandListener() {
-        return new PrintCommandListener(Util.newPrintWriter(System.out), true);
     }
 
 }

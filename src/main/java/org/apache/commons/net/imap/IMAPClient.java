@@ -193,6 +193,13 @@ public class IMAPClient extends IMAP {
     // AUTHENTICATE skipped - see AuthenticatingIMAPClient.
 
     /**
+     * Constructs a new instance.
+     */
+    public IMAPClient() {
+        // empty
+    }
+
+    /**
      * Send an APPEND command to the server.
      *
      * @param mailboxName The mailbox name.

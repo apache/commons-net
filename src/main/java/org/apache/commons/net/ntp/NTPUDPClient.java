@@ -37,6 +37,13 @@ public final class NTPUDPClient extends DatagramSocketClient {
     private int version = NtpV3Packet.VERSION_3;
 
     /**
+     * Constructs a new instance.
+     */
+    public NTPUDPClient() {
+        // empty
+    }
+
+    /**
      * Retrieves the time information from the specified server on the default NTP port and returns it. The time is the number of milliseconds since 00:00
      * (midnight) 1 January 1900 UTC, as specified by RFC 1305. This method reads the raw NTP packet and constructs a <em>TimeInfo</em> object that allows
      * access to all the fields of the NTP message header.

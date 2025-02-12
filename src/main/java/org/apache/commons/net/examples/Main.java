@@ -100,4 +100,11 @@ public class Main {
             System.out.println(e);
         }
     }
+
+    /**
+     * Constructs a new instance.
+     */
+    public Main() {
+        // empty
+    }
 }

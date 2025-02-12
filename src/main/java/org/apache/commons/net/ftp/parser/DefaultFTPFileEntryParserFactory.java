@@ -40,6 +40,13 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
     private static final Pattern JAVA_QUALIFIED_NAME_PATTERN = Pattern.compile(JAVA_QUALIFIED_NAME);
 
     /**
+     * Constructs a new instance.
+     */
+    public DefaultFTPFileEntryParserFactory() {
+        // empty
+    }
+
+    /**
      * <p>
      * Implementation extracts a key from the supplied {@link FTPClientConfig FTPClientConfig} parameter and creates an object implementing the interface
      * FTPFileEntryParser and uses the supplied configuration to configure it.

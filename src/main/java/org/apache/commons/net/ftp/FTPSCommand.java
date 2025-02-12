@@ -90,4 +90,11 @@ public final class FTPSCommand {
     public static String getCommand(final int command) {
         return commands[command];
     }
+
+    /**
+     * Constructs a new instance.
+     */
+    public FTPSCommand() {
+        // empty
+    }
 }

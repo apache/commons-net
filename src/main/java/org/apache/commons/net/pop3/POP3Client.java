@@ -100,6 +100,13 @@ public class POP3Client extends POP3 {
     }
 
     /**
+     * Constructs a new instance.
+     */
+    public POP3Client() {
+        // empty
+    }
+
+    /**
      * Send a CAPA command to the POP3 server.
      *
      * @return True if the command was successful, false if not.

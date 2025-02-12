@@ -33,4 +33,12 @@ public final class ArticlePointer {
      * by all NNTP commands taking an article id as an argument.
      */
     public String articleId;
+
+    /**
+     * Constructs a new instance.
+     */
+    public ArticlePointer() {
+        // empty
+    }
+
 }

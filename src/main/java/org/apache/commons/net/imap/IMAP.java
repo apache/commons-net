@@ -49,6 +49,9 @@ public class IMAP extends SocketClient {
         boolean chunkReceived(IMAP imap);
     }
 
+    /**
+     * Enumerates IMAP states.
+     */
     public enum IMAPState {
         /** A constant representing the state where the client is not yet connected to a server. */
         DISCONNECTED_STATE,
@@ -114,8 +117,15 @@ public class IMAP extends SocketClient {
     }
 
     private IMAPState state;
+
+    /**
+     * Buffered writer.
+     */
     protected BufferedWriter __writer;
 
+    /**
+     * Buffered reader.
+     */
     protected BufferedReader _reader;
 
     private int replyCode;

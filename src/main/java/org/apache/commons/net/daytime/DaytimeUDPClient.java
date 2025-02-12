@@ -47,6 +47,13 @@ public final class DaytimeUDPClient extends DatagramSocketClient {
     private final byte[] timeData = new byte[256];
 
     /**
+     * Constructs a new instance.
+     */
+    public DaytimeUDPClient() {
+        // empty
+    }
+
+    /**
      * Shorthand for {@code getTime(host, DaytimeUDPClient.DEFAULT_PORT);}
      *
      * @param host the host

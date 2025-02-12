@@ -32,21 +32,25 @@ import org.apache.commons.net.util.Charsets;
  * This class handles the entire process of parsing a listing of file entries from the server.
  * <p>
  * This object defines a two-part parsing mechanism.
+ * </p>
  * <p>
  * The first part consists of reading the raw input into an internal list of strings. Every item in this list corresponds to an actual file. All extraneous
  * matter emitted by the server will have been removed by the end of this phase. This is accomplished in conjunction with the FTPFileEntryParser associated with
  * this engine, by calling its methods {@code readNextEntry()} - which handles the issue of what delimits one entry from another, usually but not always a line
  * feed and {@code preParse()} - which handles removal of extraneous matter such as the preliminary lines of a listing, removal of duplicates on versioning
  * systems, etc.
+ * </p>
  * <p>
  * The second part is composed of the actual parsing, again in conjunction with the particular parser used by this engine. This is controlled by an iterator
  * over the internal list of strings. This may be done either in block mode, by calling the {@code getNext()} and {@code getPrevious()} methods to provide
  * "paged" output of less than the whole list at one time, or by calling the {@code getFiles()} method to return the entire list.
+ * </p>
  * <p>
  * Examples:
+ * </p>
  * <p>
  * Paged access:
- *
+ * </p>
  * <pre>
  * FTPClient f = FTPClient();
  * f.connect(server);
@@ -61,6 +65,7 @@ import org.apache.commons.net.util.Charsets;
  * </pre>
  * <p>
  * For unpaged access, simply use FTPClient.listFiles(). That method uses this class transparently.
+ * </p>
  */
 public class FTPListParseEngine {
     /**
@@ -75,6 +80,11 @@ public class FTPListParseEngine {
     // Should invalid files (parse failures) be allowed?
     private final boolean saveUnparseableEntries;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param parser How to parse file entries.
+     */
     public FTPListParseEngine(final FTPFileEntryParser parser) {
         this(parser, null);
     }
