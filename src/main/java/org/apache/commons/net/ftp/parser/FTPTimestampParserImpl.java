@@ -177,35 +177,35 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
-     * @return Returns the defaultDateFormat.
+     * @return the defaultDateFormat.
      */
     public SimpleDateFormat getDefaultDateFormat() {
         return defaultDateFormat;
     }
 
     /**
-     * @return Returns the defaultDateFormat pattern string.
+     * @return the defaultDateFormat pattern string.
      */
     public String getDefaultDateFormatString() {
         return defaultDateFormat.toPattern();
     }
 
     /**
-     * @return Returns the recentDateFormat.
+     * @return the recentDateFormat.
      */
     public SimpleDateFormat getRecentDateFormat() {
         return recentDateFormat;
     }
 
     /**
-     * @return Returns the recentDateFormat.
+     * @return the recentDateFormat.
      */
     public String getRecentDateFormatString() {
         return recentDateFormat.toPattern();
     }
 
     /**
-     * @return Returns the serverTimeZone used by this parser.
+     * @return the serverTimeZone used by this parser.
      */
     public TimeZone getServerTimeZone() {
         return defaultDateFormat.getTimeZone();
@@ -221,7 +221,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
-     * @return Returns the lenientFutureDates.
+     * @return the lenientFutureDates.
      */
     boolean isLenientFutureDates() {
         return lenientFutureDates;

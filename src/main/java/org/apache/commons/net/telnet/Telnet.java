@@ -635,7 +635,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a {@code DO} has been requested.
+     * @return true if a {@code DO} has been requested.
      * @param option   option code to be looked up.
      */
     boolean requestedDo(final int option) {
@@ -645,7 +645,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a {@code DONT} has been requested
+     * @return true if a {@code DONT} has been requested
      * @param option   option code to be looked up.
      */
     boolean requestedDont(final int option) {
@@ -655,7 +655,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a {@code WILL} has been requested
+     * @return true if a {@code WILL} has been requested
      * @param option   option code to be looked up.
      */
     boolean requestedWill(final int option) {
@@ -665,7 +665,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a {@code WONT} has been requested
+     * @return true if a {@code WONT} has been requested
      * @param option   option code to be looked up.
      */
     boolean requestedWont(final int option) {
@@ -967,7 +967,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a {@code DO} has been acknowledged.
+     * @return true if a {@code DO} has been acknowledged.
      * @param option   option code to be looked up.
      */
     boolean stateIsDo(final int option) {
@@ -977,7 +977,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a {@code DONT} has been acknowledged
+     * @return true if a {@code DONT} has been acknowledged
      * @param option   option code to be looked up.
      */
     boolean stateIsDont(final int option) {
@@ -987,7 +987,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a {@code WILL} has been acknowledged
+     * @return true if a {@code WILL} has been acknowledged
      * @param option   option code to be looked up.
      */
     boolean stateIsWill(final int option) {
@@ -997,7 +997,7 @@ class Telnet extends SocketClient {
     /**
      * Looks for the state of the option.
      *
-     * @return returns true if a {@code WONT} has been acknowledged
+     * @return true if a {@code WONT} has been acknowledged
      * @param option   option code to be looked up.
      */
     boolean stateIsWont(final int option) {

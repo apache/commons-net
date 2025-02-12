@@ -1105,7 +1105,7 @@ public class NNTPClient extends NNTP {
      * See {@link NNTP#xover} for legal agument formats. Alternatively, read RFC 2980 :-)
      *
      * @param articleRange
-     * @return Returns a DotTerminatedMessageReader if successful, null otherwise
+     * @return a DotTerminatedMessageReader if successful, null otherwise
      * @throws IOException
      */
     private BufferedReader retrieveArticleInfo(final String articleRange) throws IOException {
@@ -1174,7 +1174,7 @@ public class NNTPClient extends NNTP {
      *
      * @param header
      * @param articleRange
-     * @return Returns a {@link DotTerminatedMessageReader} if successful, {@code null} otherwise
+     * @return a {@link DotTerminatedMessageReader} if successful, {@code null} otherwise
      * @throws IOException
      */
     private BufferedReader retrieveHeader(final String header, final String articleRange) throws IOException {
