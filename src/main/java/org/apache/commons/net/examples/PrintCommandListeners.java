@@ -26,6 +26,16 @@ import org.apache.commons.net.io.Util;
 public class PrintCommandListeners {
 
     /**
+     * Constructs a new instance.
+     *
+     * @deprecated Will be private in the next major release.
+     */
+    @Deprecated
+    public PrintCommandListeners() {
+        // empty
+    }
+
+    /**
      * Creates a new PrintCommandListener on system out.
      *
      * @return a new PrintCommandListener on system out.
