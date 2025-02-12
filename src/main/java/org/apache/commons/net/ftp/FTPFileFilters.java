@@ -41,4 +41,13 @@ public class FTPFileFilters {
      */
     public static final FTPFileFilter DIRECTORIES = file -> file != null && file.isDirectory();
 
+    /**
+     * Constructs a new instance.
+     *
+     * @deprecated Will be private in the next major release.
+     */
+    @Deprecated
+    public FTPFileFilters() {
+        // empty
+    }
 }
