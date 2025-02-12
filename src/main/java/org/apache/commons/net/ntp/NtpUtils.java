@@ -102,4 +102,13 @@ public final class NtpUtils {
         return buf.toString();
     }
 
+    /**
+     * Constructs a new instance.
+     *
+     * @deprecated Will be private in the next major release.
+     */
+    @Deprecated
+    public NtpUtils() {
+        // empty
+    }
 }
