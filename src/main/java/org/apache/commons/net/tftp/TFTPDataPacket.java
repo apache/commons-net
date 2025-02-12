@@ -78,6 +78,16 @@ public final class TFTPDataPacket extends TFTPPacket {
         }
     }
 
+    /**
+     * Creates a data packet to be sent to a host at a given port with a given block number. The actual data to be sent is passed as an array, an offset, and a
+     * length. The offset is the offset into the byte array where the data starts. The length is the length of the data. If the length is greater than
+     * MAX_DATA_LENGTH, it is truncated.
+     *
+     * @param destination The host to which the packet is going to be sent.
+     * @param port        The port to which the packet is going to be sent.
+     * @param blockNumber The block number of the data.
+     * @param data        The byte array containing the data.
+     */
     public TFTPDataPacket(final InetAddress destination, final int port, final int blockNumber, final byte[] data) {
         this(destination, port, blockNumber, data, 0, data.length);
     }

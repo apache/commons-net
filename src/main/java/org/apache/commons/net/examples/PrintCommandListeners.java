@@ -25,7 +25,11 @@ import org.apache.commons.net.io.Util;
  */
 public class PrintCommandListeners {
 
-    @SuppressWarnings("resource") // No need to close writer on System.out.
+    /**
+     * Creates a new PrintCommandListener on system out.
+     *
+     * @return a new PrintCommandListener on system out.
+     */
     public static PrintCommandListener sysOutPrintCommandListener() {
         return new PrintCommandListener(Util.newPrintWriter(System.out), true);
     }

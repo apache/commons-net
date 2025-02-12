@@ -36,7 +36,14 @@ import org.apache.commons.net.util.ListenerList;
 public class ProtocolCommandSupport implements Serializable {
     private static final long serialVersionUID = -8017692739988399978L;
 
+    /**
+     * The source to use for all generated ProtocolCommandEvents.
+     */
     private final Object source;
+
+    /**
+     * The ProtocolCommandListener.
+     */
     private final ListenerList listeners;
 
     /**
@@ -102,6 +109,11 @@ public class ProtocolCommandSupport implements Serializable {
         return listeners.getListenerCount();
     }
 
+    /**
+     * Throws UnsupportedOperationException.
+     *
+     * @param ignored Ignored.
+     */
     private void readObject(final ObjectInputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }

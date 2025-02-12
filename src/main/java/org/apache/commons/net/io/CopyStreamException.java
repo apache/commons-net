@@ -28,6 +28,9 @@ import java.io.IOException;
 public class CopyStreamException extends IOException {
     private static final long serialVersionUID = -2602899129433221532L;
 
+    /**
+     * The total number of bytes confirmed to have been transferred by a failed copy operation.
+     */
     private final long totalBytesTransferred;
 
     /**

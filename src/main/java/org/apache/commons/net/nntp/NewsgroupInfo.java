@@ -49,6 +49,11 @@ public final class NewsgroupInfo {
     private long lastArticle;
     private int postingPermission;
 
+    /**
+     * Gets the estimated number of articles in the newsgroup. The accuracy of this value will depend on the server implementation.
+     *
+     * @return The estimated number of articles in the newsgroup.
+     */
     @Deprecated
     public int getArticleCount() {
         return (int) estimatedArticleCount;
@@ -63,6 +68,11 @@ public final class NewsgroupInfo {
         return estimatedArticleCount;
     }
 
+    /**
+     * Gets the number of the first article in the newsgroup.
+     *
+     * @return The number of the first article in the newsgroup.
+     */
     @Deprecated
     public int getFirstArticle() {
         return (int) firstArticle;
@@ -77,6 +87,11 @@ public final class NewsgroupInfo {
         return firstArticle;
     }
 
+    /**
+     * Gets the number of the last article in the newsgroup.
+     *
+     * @return The number of the last article in the newsgroup.
+     */
     @Deprecated
     public int getLastArticle() {
         return (int) lastArticle;

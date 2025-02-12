@@ -30,6 +30,9 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
 
     private static final long serialVersionUID = -1934227607974228213L;
 
+    /**
+     * The thread-safe list of listeners.
+     */
     private final CopyOnWriteArrayList<EventListener> listeners;
 
     /**
@@ -68,6 +71,11 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
         return listeners.iterator();
     }
 
+    /**
+     * Throws UnsupportedOperationException.
+     *
+     * @param ignored Ignore.
+     */
     private void readObject(final ObjectInputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }

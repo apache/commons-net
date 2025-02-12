@@ -239,11 +239,17 @@ public class NNTPClient extends NNTP {
         return NNTPReply.isPositiveCompletion(getReply());
     }
 
+    /**
+     * Creates a new writer or returns null if we don't have a a positive intermediate response.
+     *
+     * @param articleId Article ID.
+     * @return a new writer or null.
+     * @throws IOException If an I/O error occurs while either sending the command or receiving the server reply.
+     */
     public Writer forwardArticle(final String articleId) throws IOException {
         if (!NNTPReply.isPositiveIntermediate(ihave(articleId))) {
             return null;
         }
-
         return new DotTerminatedMessageWriter(_writer_);
     }
 

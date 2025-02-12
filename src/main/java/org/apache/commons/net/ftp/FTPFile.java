@@ -66,6 +66,7 @@ public class FTPFile implements Serializable {
     /** A constant indicating file execute permission or directory listing permission. */
     public static final int EXECUTE_PERMISSION = 2;
 
+    /** Type. */
     private int type = UNKNOWN_TYPE;
 
     /** 0 is invalid as a link count. */
@@ -73,13 +74,23 @@ public class FTPFile implements Serializable {
 
     /** 0 is valid, so use -1. */
     private long size = -1;
+
+    /** Line that could not be parsed. */
     private String rawListing;
+
+    /** User. */
     private String user = "";
+
+    /** Group. */
     private String group = "";
+
+    /** Name. */
     private String name;
+
+    /** Link. */
     private String link;
 
-    // TODO Consider changing internal representation to java.time.
+    /** TODO Consider changing internal representation to java.time. */
     private Calendar calendar;
 
     /** If this is null, then list entry parsing failed. */
@@ -91,7 +102,7 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Constructor for use by {@link FTPListParseEngine} only. Used to create FTPFile entries for failed parses
+     * Constructor for use by {@link FTPListParseEngine} only. Used to create FTPFile entries for failed parses.
      *
      * @param rawListing line that could not be parsed.
      * @since 3.4
@@ -291,6 +302,11 @@ public class FTPFile implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Throws UnsupportedOperationException.
+     *
+     * @param ignored Ignored.
+     */
     private void readObject(final ObjectInputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }

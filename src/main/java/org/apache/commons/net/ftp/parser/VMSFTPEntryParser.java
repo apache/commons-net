@@ -87,12 +87,17 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         return new FTPClientConfig(FTPClientConfig.SYST_VMS, DEFAULT_DATE_FORMAT, null);
     }
 
+    /**
+     * Returns {@code false}.
+     *
+     * @return {@code false}.
+     */
     protected boolean isVersioning() {
         return false;
     }
 
     /**
-     * DO NOT USE
+     * DO NOT USE.
      *
      * @param listStream the stream
      * @return the array of files

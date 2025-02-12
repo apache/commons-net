@@ -215,8 +215,14 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      */
     private final long ntpTime;
 
+    /**
+     * Formats dates.
+     */
     private DateFormat simpleFormatter;
 
+    /**
+     * Formats UTC strings.
+     */
     private DateFormat utcFormatter;
 
     /**
@@ -341,6 +347,11 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         return ntpTime;
     }
 
+    /**
+     * Throws UnsupportedOperationException.
+     *
+     * @param ignored Ignored.
+     */
     private void readObject(final ObjectInputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }

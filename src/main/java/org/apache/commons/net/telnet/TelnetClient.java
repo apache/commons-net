@@ -36,10 +36,25 @@ import java.time.Duration;
 public class TelnetClient extends Telnet {
     private static final int DEFAULT_MAX_SUBNEGOTIATION_LENGTH = 512;
 
+    /**
+     * the size of the subnegotiation buffer.
+     */
     final int maxSubnegotiationLength;
+
+    /** Input stream. */
     private InputStream input;
+
+    /** Output stream. */
     private OutputStream output;
+
+    /**
+     * Whether to enable the reader thread.
+     */
     protected boolean readerThread = true;
+
+    /**
+     * Telnet input listener.
+     */
     private TelnetInputListener inputListener;
 
     /**
@@ -50,9 +65,9 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Constructs an instance with the specified max subnegotiation length and the default terminal-type {@code VT100}
+     * Constructs an instance with the specified max subnegotiation length and the default terminal-type {@code VT100}.
      *
-     * @param maxSubnegotiationLength the size of the subnegotiation buffer
+     * @param maxSubnegotiationLength the size of the subnegotiation buffer.
      */
     public TelnetClient(final int maxSubnegotiationLength) {
         this("VT100", maxSubnegotiationLength);
@@ -70,12 +85,12 @@ public class TelnetClient extends Telnet {
     /**
      * Constructs an instance with the specified terminal type and max subnegotiation length
      *
-     * @param termtype                the terminal type to use, e.g. {@code VT100}
+     * @param termType                the terminal type to use, e.g. {@code VT100}
      * @param maxSubnegotiationLength the size of the subnegotiation buffer
      */
-    public TelnetClient(final String termtype, final int maxSubnegotiationLength) {
+    public TelnetClient(final String termType, final int maxSubnegotiationLength) {
         /* TERMINAL-TYPE option (start) */
-        super(termtype);
+        super(termType);
         /* TERMINAL-TYPE option (end) */
         this.input = null;
         this.output = null;
@@ -250,7 +265,7 @@ public class TelnetClient extends Telnet {
      * Notifications are only supported when a {@link #setReaderThread reader thread} is enabled for the connection.
      * </p>
      *
-     * @param listener listener to be registered; replaces any previous
+     * @param listener listener to be registered, replaces any previous listener.
      * @since 3.0
      */
     public synchronized void registerInputListener(final TelnetInputListener listener) {
@@ -352,11 +367,11 @@ public class TelnetClient extends Telnet {
      * When this method is invoked, the reader thread status will apply to all subsequent connections; the current connection (if any) is not affected.
      * </p>
      *
-     * @param flag true to enable the reader thread, false to disable
+     * @param readerThread true to enable the reader thread, false to disable.
      * @see #registerInputListener
      */
-    public void setReaderThread(final boolean flag) {
-        readerThread = flag;
+    public void setReaderThread(final boolean readerThread) {
+        this.readerThread = readerThread;
     }
 
     /**

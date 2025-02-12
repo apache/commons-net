@@ -23,28 +23,36 @@ package org.apache.commons.net.pop3;
  * <p>
  * In response to a status command, {@code number} contains the number of messages in the mailbox, {@code size} contains the size of the mailbox
  * in bytes, and {@code identifier} is null.
+ * </p>
  * <p>
  * In response to a message listings, {@code number} contains the message number, {@code size} contains the size of the message in bytes, and
  * {@code identifier} is null.
+ * </p>
  * <p>
  * In response to unique identifier listings, {@code number} contains the message number, {@code size} is undefined, and {@code identifier}
  * contains the message's unique identifier.
+ * </p>
  */
-
 public final class POP3MessageInfo {
+
+    /** Number. */
     public int number;
+
+    /** Size. */
     public int size;
+
+    /** Identifier. */
     public String identifier;
 
     /**
-     * Creates a POP3MessageInfo instance with {@code number} and {@code size} set to 0, and {@code identifier} set to null.
+     * Constructs a new instance with {@code number} and {@code size} set to 0, and {@code identifier} set to null.
      */
     public POP3MessageInfo() {
         this(0, null, 0);
     }
 
     /**
-     * Creates a POP3MessageInfo instance with {@code number} set to {@code num}, {@code size} set to {@code octets}, and
+     * Constructs a new instance with {@code number} set to {@code num}, {@code size} set to {@code octets}, and
      * {@code identifier} set to null.
      *
      * @param num    the number
@@ -55,7 +63,7 @@ public final class POP3MessageInfo {
     }
 
     /**
-     * Creates a POP3MessageInfo instance with {@code number} set to {@code num}, {@code size} undefined, and {@code identifier} set to
+     * Constructs a new instance with {@code number} set to {@code num}, {@code size} undefined, and {@code identifier} set to
      * {@code uid}.
      *
      * @param num the number
@@ -65,6 +73,13 @@ public final class POP3MessageInfo {
         this(num, uid, -1);
     }
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param num    the number.
+     * @param uid    the UID.
+     * @param octets the size.
+     */
     private POP3MessageInfo(final int num, final String uid, final int size) {
         this.number = num;
         this.size = size;
