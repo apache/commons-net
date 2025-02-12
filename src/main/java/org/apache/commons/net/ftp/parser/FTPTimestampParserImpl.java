@@ -177,6 +177,8 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
+     * Gets the defaultDateFormat.
+     *
      * @return the defaultDateFormat.
      */
     public SimpleDateFormat getDefaultDateFormat() {
@@ -184,6 +186,8 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
+     * Gets the defaultDateFormat pattern string.
+     *
      * @return the defaultDateFormat pattern string.
      */
     public String getDefaultDateFormatString() {
@@ -191,6 +195,8 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
+     * Gets the recentDateFormat.
+     *
      * @return the recentDateFormat.
      */
     public SimpleDateFormat getRecentDateFormat() {
@@ -198,6 +204,8 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
+     * Gets the recentDateFormat.
+     *
      * @return the recentDateFormat.
      */
     public String getRecentDateFormatString() {
@@ -205,6 +213,8 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
+     * Gets the serverTimeZone used by this parser.
+     *
      * @return the serverTimeZone used by this parser.
      */
     public TimeZone getServerTimeZone() {

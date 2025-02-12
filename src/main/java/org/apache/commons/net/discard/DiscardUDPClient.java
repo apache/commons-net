@@ -38,6 +38,9 @@ public class DiscardUDPClient extends DatagramSocketClient {
 
     private final DatagramPacket sendPacket;
 
+    /**
+     * Constructs a new instance.
+     */
     public DiscardUDPClient() {
         sendPacket = new DatagramPacket(NetConstants.EMPTY_BTYE_ARRAY, 0);
     }

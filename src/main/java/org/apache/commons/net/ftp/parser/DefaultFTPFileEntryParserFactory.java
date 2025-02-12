@@ -164,14 +164,29 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
         return parser;
     }
 
+    /**
+     * Creates a new MVSFTPEntryParser.
+     *
+     * @return  a new MVSFTPEntryParser.
+     */
     public FTPFileEntryParser createMVSEntryParser() {
         return new MVSFTPEntryParser();
     }
 
+    /**
+     * Creates a new NetwareFTPEntryParser.
+     *
+     * @return  a new NetwareFTPEntryParser.
+     */
     public FTPFileEntryParser createNetwareFTPEntryParser() {
         return new NetwareFTPEntryParser();
     }
 
+    /**
+     * Creates a new FTPFileEntryParser.
+     *
+     * @return  a new FTPFileEntryParser.
+     */
     public FTPFileEntryParser createNTFTPEntryParser() {
         return createNTFTPEntryParser(null);
     }
@@ -193,10 +208,20 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
                 new UnixFTPEntryParser(config2, config2 != null && FTPClientConfig.SYST_UNIX_TRIM_LEADING.equals(config2.getServerSystemKey())) });
     }
 
+    /**
+     * Creates a new OS2FTPEntryParser.
+     *
+     * @return  a new OS2FTPEntryParser.
+     */
     public FTPFileEntryParser createOS2FTPEntryParser() {
         return new OS2FTPEntryParser();
     }
 
+    /**
+     * Creates a new FTPFileEntryParser.
+     *
+     * @return  a new FTPFileEntryParser.
+     */
     public FTPFileEntryParser createOS400FTPEntryParser() {
         return createOS400FTPEntryParser(null);
     }
@@ -218,10 +243,20 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
                 new UnixFTPEntryParser(config2, config2 != null && FTPClientConfig.SYST_UNIX_TRIM_LEADING.equals(config2.getServerSystemKey())) });
     }
 
+    /**
+     * Creates a new UnixFTPEntryParser.
+     *
+     * @return  a new UnixFTPEntryParser.
+     */
     public FTPFileEntryParser createUnixFTPEntryParser() {
         return new UnixFTPEntryParser();
     }
 
+    /**
+     * Creates a new VMSVersioningFTPEntryParser.
+     *
+     * @return  a new VMSVersioningFTPEntryParser.
+     */
     public FTPFileEntryParser createVMSVersioningFTPEntryParser() {
         return new VMSVersioningFTPEntryParser();
     }

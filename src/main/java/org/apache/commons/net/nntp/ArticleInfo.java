@@ -22,10 +22,20 @@ package org.apache.commons.net.nntp;
  */
 public class ArticleInfo {
 
+    /**
+     * Article ID.
+     */
     public String articleId;
 
+    /**
+     * Article number.
+     */
     public long articleNumber;
 
+    /**
+     * Constructs a new instance.
+     */
     public ArticleInfo() {
+        // empty
     }
 }

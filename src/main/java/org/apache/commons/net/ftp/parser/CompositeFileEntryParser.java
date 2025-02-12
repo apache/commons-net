@@ -29,6 +29,11 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl {
     private final FTPFileEntryParser[] ftpFileEntryParsers;
     private FTPFileEntryParser cachedFtpFileEntryParser;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param ftpFileEntryParsers An array of FTPFileEntryParser.
+     */
     public CompositeFileEntryParser(final FTPFileEntryParser[] ftpFileEntryParsers) {
         this.cachedFtpFileEntryParser = null;
         this.ftpFileEntryParsers = ftpFileEntryParsers;

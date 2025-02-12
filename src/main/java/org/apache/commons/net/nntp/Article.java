@@ -108,10 +108,19 @@ public class Article implements Threadable<Article> {
     @Deprecated
     public Article next;
 
+    /**
+     * Constructs a new instance.
+     */
     public Article() {
         articleNumber = -1; // isDummy
     }
 
+    /**
+     * Does nothing.
+     *
+     * @param name Ignored.
+     * @param val  Ignored.
+     */
     @Deprecated
     public void addHeaderField(final String name, final String val) {
         // empty
@@ -244,6 +253,11 @@ public class Article implements Threadable<Article> {
         return getReferences();
     }
 
+    /**
+     * Sets the article ID.
+     *
+     * @param string the article ID.
+     */
     public void setArticleId(final String string) {
         articleId = string;
     }

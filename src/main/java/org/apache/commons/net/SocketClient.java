@@ -470,6 +470,8 @@ public abstract class SocketClient {
     }
 
     /**
+     * Gets the address to which the socket is connected.
+     *
      * @return The remote address to which the client is connected. Delegates to {@link Socket#getInetAddress()}
      * @throws NullPointerException if the socket is not currently open
      */

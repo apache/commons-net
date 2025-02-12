@@ -18,25 +18,62 @@
 package org.apache.commons.net.nntp;
 
 /**
- * A placeholder interface for threadable message objects Author: Rory Winston (rwinston@checkfree.com)
+ * A placeholder interface for threadable message objects.
  *
  * @param <T> The Threadable implementation.
  */
 public interface Threadable<T extends Threadable<T>> {
 
+    /**
+     * Tests whether this is a dummy instance.
+     *
+     * @return whether this is a dummy instance.
+     */
     boolean isDummy();
 
+    /**
+     * Creates a dummy instance.
+     *
+     * @return a dummy instance.
+     */
     T makeDummy();
 
+    /**
+     * Gets an ID.
+     * @return an ID.
+     */
     String messageThreadId();
 
+    /**
+     * Gets reference strings.
+     * @return  reference strings.
+     */
     String[] messageThreadReferences();
 
+    /**
+     * Sets the child instance.
+     *
+     * @param child  the child instance.
+     */
     void setChild(T child);
 
+    /**
+     * Sets the next instance.
+     * @param next  the next instance.
+     */
     void setNext(T next);
 
+    /**
+     * Gets the simplified subject.
+     *
+     * @return the simplified subject.
+     */
     String simplifiedSubject();
 
+    /**
+     * Tests whether this is a reply.
+     *
+     * @return whether this is a reply.
+     */
     boolean subjectIsReply();
 }

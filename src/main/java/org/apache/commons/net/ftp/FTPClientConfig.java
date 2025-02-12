@@ -400,7 +400,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * getter for the {@link #setDefaultDateFormatStr(String) defaultDateFormatStr} property.
+     * Gets the {@link #setDefaultDateFormatStr(String) defaultDateFormatStr} property.
      *
      * @return the defaultDateFormatStr property.
      */
@@ -409,7 +409,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * getter for the {@link #setRecentDateFormatStr(String) recentDateFormatStr} property.
+     * Gets the {@link #setRecentDateFormatStr(String) recentDateFormatStr} property.
      *
      * @return the recentDateFormatStr property.
      */
@@ -419,9 +419,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * <p>
-     * getter for the {@link #setServerLanguageCode(String) serverLanguageCode} property.
-     * </p>
+     * Gets the {@link #setServerLanguageCode(String) serverLanguageCode} property.
      *
      * @return the serverLanguageCode property.
      */
@@ -430,7 +428,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * Getter for the serverSystemKey property. This property specifies the general type of server to which the client connects. Should be either one of the
+     * Gets the serverSystemKey property. This property specifies the general type of server to which the client connects. Should be either one of the
      * {@code FTPClientConfig.SYST_*} codes or else the fully qualified class name of a parser implementing both the {@code FTPFileEntryParser} and
      * {@code Configurable} interfaces.
      *
@@ -441,7 +439,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * getter for the {@link #setServerTimeZoneId(String) serverTimeZoneId} property.
+     * Gets the {@link #setServerTimeZoneId(String) serverTimeZoneId} property.
      *
      * @return the serverTimeZoneId property.
      */
@@ -450,9 +448,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * <p>
-     * getter for the {@link #setShortMonthNames(String) shortMonthNames} property.
-     * </p>
+     * Gets the {@link #setShortMonthNames(String) shortMonthNames} property.
      *
      * @return the shortMonthNames.
      */
@@ -461,10 +457,13 @@ public class FTPClientConfig {
     }
 
     /**
+     * Gets whether parsing a list should return FTPFile entries even for unparseable response lines
+     * <p>
+     * If true, the FTPFile for any unparseable entries will contain only the unparsed entry {@link FTPFile#getRawListing()} and {@link FTPFile#isValid()} will
+     * return {@code false}
+     * </p>
+     * 
      * @return true if list parsing should return FTPFile entries even for unparseable response lines
-     *         <p>
-     *         If true, the FTPFile for any unparseable entries will contain only the unparsed entry {@link FTPFile#getRawListing()} and
-     *         {@link FTPFile#isValid()} will return {@code false}
      * @since 3.4
      */
     public boolean getUnparseableEntries() {

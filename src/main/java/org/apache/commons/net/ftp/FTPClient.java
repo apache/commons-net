@@ -886,6 +886,8 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Retrieves data to an output stream for the given command.
+     *
      * @param command the command to get
      * @param remote  the remote file name
      * @param local   The local OutputStream to which to write the file.
@@ -928,6 +930,8 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Retrieves data in an input stream for the given command.
+     *
      * @param command the command to send
      * @param remote  the remote file name
      * @return the stream from which to read the file
@@ -956,6 +960,8 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Stores the given stream.
+     *
      * @since 3.1
      * @param command the command to send
      * @param remote  the remote file name
@@ -997,9 +1003,11 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Gets the the output stream.
+     *
      * @param command the command to send
      * @param remote  the remote file name
-     * @return the output stream to write to
+     * @return the output stream.
      * @throws IOException on error
      * @since 3.1
      */
@@ -1633,26 +1641,30 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * @param pathname the initial pathname
-     * @return the adjusted string with "-a" added if necessary
+     * Gets the adjusted string with "-a" added if necessary.
+     *
+     * @param pathName the initial pathname
+     * @return the adjusted string with "-a" added if necessary.
      * @since 2.0
      */
-    protected String getListArguments(final String pathname) {
+    protected String getListArguments(final String pathName) {
         if (getListHiddenFiles()) {
-            if (pathname != null) {
-                final StringBuilder sb = new StringBuilder(pathname.length() + 3);
+            if (pathName != null) {
+                final StringBuilder sb = new StringBuilder(pathName.length() + 3);
                 sb.append("-a ");
-                sb.append(pathname);
+                sb.append(pathName);
                 return sb.toString();
             }
             return "-a";
         }
-        return pathname;
+        return pathName;
     }
 
     /**
+     * Gets whether to list hidden files.
+     *
      * @see #setListHiddenFiles(boolean)
-     * @return the current state
+     * @return whether to list hidden files.
      * @since 2.0
      */
     public boolean getListHiddenFiles() {

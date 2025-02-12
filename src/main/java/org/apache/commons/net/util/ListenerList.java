@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * A list of event listeners.
  */
 public class ListenerList implements Serializable, Iterable<EventListener> {
 

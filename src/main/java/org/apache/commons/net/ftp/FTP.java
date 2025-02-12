@@ -183,10 +183,30 @@ public class FTP extends SocketClient {
     public static final int REPLY_CODE_LEN = 3;
 
     private static final String MODES = "AEILNTCFRPSBCZ";
+
+    /**
+     * The last FTP reply code.
+     */
     protected int _replyCode;
+
+    /**
+     * The lines of text from the last FTP server response.
+     */
     protected ArrayList<String> _replyLines;
+
+    /**
+     * Whether we've processed the last reply lines.
+     */
     protected boolean _newReplyString;
+
+    /**
+     * The text from the last FTP server response.
+     */
     protected String _replyString;
+
+    /**
+     * The character encoding to be used by the FTP control connection.
+     */
     protected String _controlEncoding;
 
     /**
@@ -479,8 +499,9 @@ public class FTP extends SocketClient {
 
     /**
      * A convenience method to send the FTP EPRT command to the server, receive the reply, and return the reply code.
-     *
+     * <p>
      * Examples:
+     * </p>
      * <ul>
      * <li>EPRT |1|132.235.1.2|6275|</li>
      * <li>EPRT |2|1080::8:800:200C:417A|5282|</li>
@@ -551,7 +572,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Provide command support to super-class
+     * Gets protocol command support.
      */
     @Override
     protected ProtocolCommandSupport getCommandSupport() {
@@ -559,6 +580,8 @@ public class FTP extends SocketClient {
     }
 
     /**
+     * Gets the character encoding used to communicate over the control connection.
+     *
      * @return The character encoding used to communicate over the control connection.
      */
     public String getControlEncoding() {
@@ -566,7 +589,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Fetches a reply from the FTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from either
+     * Gets a reply from the FTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from either
      * calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }. Only use this method if you are implementing your own FTP
      * client or if you need to fetch a secondary response from the FTP server.
      *
@@ -651,7 +674,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Returns the integer value of the reply code of the last FTP reply. You will usually only use this method after you connect to the FTP server to check
+     * Gets the integer value of the reply code of the last FTP reply. You will usually only use this method after you connect to the FTP server to check
      * that the connection was successful since {@code connect} is of type void.
      *
      * @return The integer value of the reply code of the last FTP reply.
@@ -661,7 +684,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Returns the entire text of the last FTP server response exactly as it was received, including all end of line markers in NETASCII format.
+     * Gets the entire text of the last FTP server response exactly as it was received, including all end of line markers in NETASCII format.
      *
      * @return The entire text from the last FTP response as a String.
      */
@@ -679,7 +702,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Returns the nth line of text from the last FTP server response as a string. The end of line markers of each are stripped from the line.
+     * Gets the nth line of text from the last FTP server response as a string. The end of line markers of each are stripped from the line.
      *
      * @param index The index of the line to return, 0-based.
      * @return The lines of text from the last FTP response as an array.
@@ -689,7 +712,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Returns the lines of text from the last FTP server response as an array of strings, one entry per line. The end of line markers of each are stripped from
+     * Gets the lines of text from the last FTP server response as an array of strings, one entry per line. The end of line markers of each are stripped from
      * each line.
      *
      * @return The lines of text from the last FTP response as an array.
@@ -738,8 +761,9 @@ public class FTP extends SocketClient {
     /**
      * Return whether strict non-multiline parsing is enabled, as per RFC 959, section 4.2.
      * <p>
-     * The default is true, which requires the 3-digit code be followed by space and some text. <br>
-     * If false, only the 3-digit code is required (as was the case for versions up to 3.5) <br>
+     * The default is true, which requires the 3-digit code be followed by space and some text.
+     * If false, only the 3-digit code is required (as was the case for versions up to 3.5).
+     * </p>
      *
      * @return True if strict (default), false if additional checks are not made
      * @since 3.6
@@ -1250,7 +1274,7 @@ public class FTP extends SocketClient {
      * UTF-8 so that file names with multi-byte character representations (e.g, Big 8) can be specified.
      * <p>
      * Please note that this has to be set before the connection is established.
-     *
+     * </p>
      * @param encoding The new character encoding for the control connection.
      */
     public void setControlEncoding(final String encoding) {
@@ -1270,10 +1294,12 @@ public class FTP extends SocketClient {
     /**
      * Sets strict non-multiline parsing.
      * <p>
-     * If true, it requires the 3-digit code be followed by space and some text. <br>
-     * If false, only the 3-digit code is required (as was the case for versions up to 3.5)
+     * If true, it requires the 3-digit code be followed by space and some text.
+     * If false, only the 3-digit code is required (as was the case for versions up to 3.5).
+     * </p>
      * <p>
      * <strong>This should not be required by a well-behaved FTP server</strong> <br>
+     * </p>
      *
      * @param strictReplyParsing the setting
      * @since 3.6
