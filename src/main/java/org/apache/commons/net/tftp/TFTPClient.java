@@ -70,7 +70,7 @@ public class TFTPClient extends TFTP {
     }
 
     /**
-     * Returns the maximum number of times a {@code receive} attempt is allowed to timeout before ending attempts to retry the {@code receive} and failing.
+     * Gets the maximum number of times a {@code receive} attempt is allowed to timeout before ending attempts to retry the {@code receive} and failing.
      *
      * @return The maximum number of timeouts allowed.
      */
@@ -79,14 +79,18 @@ public class TFTPClient extends TFTP {
     }
 
     /**
-     * @return The number of bytes received in the ongoing download
+     * Gets the number of bytes received in the ongoing download.
+     *
+     * @return The number of bytes received in the ongoing download.
      */
     public long getTotalBytesReceived() {
         return totalBytesReceived;
     }
 
     /**
-     * @return The number of bytes sent in the ongoing download
+     * Gets the number of bytes sent in the ongoing download.
+     *
+     * @return The number of bytes sent in the ongoing download.
      */
     public long getTotalBytesSent() {
         return totalBytesSent;

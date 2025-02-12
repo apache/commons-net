@@ -127,104 +127,142 @@ public interface NtpV3Packet {
     String TYPE_DAYTIME = "DAYTIME"; // RFC-867
 
     /**
-     * @return a datagram packet with the NTP parts already filled in
+     * Gets a datagram packet with the NTP parts already filled in.
+     *
+     * @return a datagram packet with the NTP parts already filled in.
      */
     DatagramPacket getDatagramPacket();
 
     /**
-     * @return leap indicator as defined in RFC-1305
+     * gets the leap indicator as defined in RFC-1305.
+     *
+     * @return the leap indicator as defined in RFC-1305.
      */
     int getLeapIndicator();
 
     /**
-     * @return mode as defined in RFC-1305
+     * Gets the mode as defined in RFC-1305.
+     *
+     * @return the mode as defined in RFC-1305.
      */
     int getMode();
 
     /**
-     * @return mode as human readable string; e.g. 3=Client
+     * Gets the  mode as human readable string; for example, 3=Client.
+     *
+     * @return the mode as human readable string; for example, 3=Client.
      */
     String getModeName();
 
     /**
-     * @return the {@code originate} time as defined in RFC-1305
+     * Gets the {@code originate} time as defined in RFC-1305.
+     *
+     * @return the {@code originate} time as defined in RFC-1305.
      */
     TimeStamp getOriginateTimeStamp();
 
     /**
-     * @return poll interval as defined in RFC-1305. Field range between NTP_MINPOLL and NTP_MAXPOLL.
+     * Gets the poll interval as defined in RFC-1305. Field range between NTP_MINPOLL and NTP_MAXPOLL.
+     *
+     * @return the poll interval as defined in RFC-1305. Field range between NTP_MINPOLL and NTP_MAXPOLL.
      */
     int getPoll();
 
     /**
-     * @return precision as defined in RFC-1305
+     * Gets the precision as defined in RFC-1305.
+     *
+     * @return the precision as defined in RFC-1305.
      */
     int getPrecision();
 
     /**
-     * @return the {@code receive} time as defined in RFC-1305
+     * Gets the {@code receive} time as defined in RFC-1305.
+     *
+     * @return the {@code receive} time as defined in RFC-1305.
      */
     TimeStamp getReceiveTimeStamp();
 
     /**
-     * @return the reference id (32-bit code) as defined in RFC-1305
+     * Gets the reference id (32-bit code) as defined in RFC-1305.
+     *
+     * @return the reference id (32-bit code) as defined in RFC-1305.
      */
     int getReferenceId();
 
     /**
-     * @return the reference id string
+     * Gets the reference ID string.
+     *
+     * @return the reference ID string.
      */
     String getReferenceIdString();
 
     /**
-     * @return the reference time as defined in RFC-1305
+     * Gets the reference time as defined in RFC-1305.
+     *
+     * @return the reference time as defined in RFC-1305.
      */
     TimeStamp getReferenceTimeStamp();
 
     /**
-     * @return root delay as defined in RFC-1305
+     * Gets the root delay as defined in RFC-1305.
+     *
+     * @return the root delay as defined in RFC-1305.
      */
     int getRootDelay();
 
     /**
-     * @return root delay in milliseconds
+     * Gets root delay in milliseconds.
+     *
+     * @return root delay in milliseconds.
      */
     double getRootDelayInMillisDouble();
 
     /**
-     * @return root dispersion as defined in RFC-1305
+     * Gets the root dispersion as defined in RFC-1305.
+     *
+     * @return the root dispersion as defined in RFC-1305.
      */
     int getRootDispersion();
 
     /**
-     * @return root dispersion in milliseconds
+     * Gets the the root dispersion in milliseconds.
+     *
+     * @return the root dispersion in milliseconds.
      */
     long getRootDispersionInMillis();
 
     /**
-     * @return root dispersion in milliseconds
+     * Gets the root dispersion in milliseconds.
+     *
+     * @return the root dispersion in milliseconds.
      */
     double getRootDispersionInMillisDouble();
 
     /**
-     * @return stratum as defined in RFC-1305
+     * Gets the stratum as defined in RFC-1305.
+     *
+     * @return the stratum as defined in RFC-1305.
      */
     int getStratum();
 
     /**
-     * @return the {@code transmit} timestamp as defined in RFC-1305
+     * Gets the {@code transmit} timestamp as defined in RFC-1305.
+     *
+     * @return the {@code transmit} timestamp as defined in RFC-1305.
      */
     TimeStamp getTransmitTimeStamp();
 
     /**
-     * Return type of time packet. The values (e.g. NTP, TIME, ICMP, ...) correspond to the protocol used to obtain the timing information.
+     * Gets the type of time packet. The values (e.g. NTP, TIME, ICMP, ...) correspond to the protocol used to obtain the timing information.
      *
      * @return packet type string identifier
      */
     String getType();
 
     /**
-     * @return version as defined in RFC-1305
+     * Gets version as defined in RFC-1305.
+     *
+     * @return version as defined in RFC-1305.
      */
     int getVersion();
 
@@ -301,8 +339,9 @@ public interface NtpV3Packet {
     void setRootDelay(int delay);
 
     /**
+     * Sets the dispersion value.
      *
-     * @param dispersion the value to set
+     * @param dispersion the value.
      * @since 3.4
      */
     void setRootDispersion(int dispersion);

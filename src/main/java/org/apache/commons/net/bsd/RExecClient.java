@@ -51,6 +51,8 @@ import org.apache.commons.net.util.NetConstants;
 public class RExecClient extends SocketClient {
 
     /**
+     * The {@code NUL} character.
+     *
      * @since 3.3
      */
     protected static final char NULL_CHAR = '\0';

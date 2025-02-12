@@ -212,7 +212,9 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
-     * @return returns an array of 12 strings representing the short month names used by this parse.
+     * Gets an array of 12 strings representing the short month names used by this parse.
+     *
+     * @return an array of 12 strings representing the short month names used by this parse.
      */
     public String[] getShortMonths() {
         return defaultDateFormat.getDateFormatSymbols().getShortMonths();
