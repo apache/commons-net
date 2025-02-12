@@ -462,7 +462,7 @@ public class FTPClientConfig {
      * If true, the FTPFile for any unparseable entries will contain only the unparsed entry {@link FTPFile#getRawListing()} and {@link FTPFile#isValid()} will
      * return {@code false}
      * </p>
-     * 
+     *
      * @return true if list parsing should return FTPFile entries even for unparseable response lines
      * @since 3.4
      */

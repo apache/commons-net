@@ -120,9 +120,9 @@ public enum FTPCmd {
     /** FTP command SITE. */
     SITE,
 
-    /** 
+    /**
      * FTP command SIZE.
-     * 
+     *
      * @since 3.7
      */
     SIZE,
