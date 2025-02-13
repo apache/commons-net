@@ -36,6 +36,7 @@ import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.listener.ListenerFactory;
 import org.apache.ftpserver.ssl.SslConfiguration;
 import org.apache.ftpserver.ssl.SslConfigurationFactory;
+import org.apache.ftpserver.usermanager.Md5PasswordEncryptor;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
 import org.junit.Assert;
@@ -90,6 +91,8 @@ public abstract class AbstractFtpsTest {
         SocketPort = 0;
         final FtpServerFactory serverFactory = new FtpServerFactory();
         final PropertiesUserManagerFactory propertiesUserManagerFactory = new PropertiesUserManagerFactory();
+        // TODO Update to SHA512
+        propertiesUserManagerFactory.setPasswordEncryptor(new Md5PasswordEncryptor());
         final URL userPropsResource = ClassLoader.getSystemClassLoader().getResource(userPropertiesResource);
         Assert.assertNotNull(userPropertiesResource, userPropsResource);
         propertiesUserManagerFactory.setUrl(userPropsResource);

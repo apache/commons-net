@@ -40,6 +40,7 @@ import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.listener.Listener;
 import org.apache.ftpserver.listener.ListenerFactory;
+import org.apache.ftpserver.usermanager.Md5PasswordEncryptor;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
 import org.apache.ftpserver.usermanager.impl.WritePermission;
@@ -71,6 +72,8 @@ public class FTPClientTransferModeTest {
     private static UserManager initUserManager(final String username, final String password) throws FtpException {
 
         final PropertiesUserManagerFactory propertiesUserManagerFactory = new PropertiesUserManagerFactory();
+        // TODO Update to SHA512
+        propertiesUserManagerFactory.setPasswordEncryptor(new Md5PasswordEncryptor());
         final UserManager userManager = propertiesUserManagerFactory.createUserManager();
         final BaseUser user = new BaseUser();
         user.setName(username);
