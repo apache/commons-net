@@ -71,7 +71,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * <p>
  * You should keep in mind that the SMTP server may choose to prematurely close a connection for various reasons. The SMTPClient class will detect a premature
  * SMTP server connection closing when it receives a {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE }
- * response to a command. When that occurs, the method encountering that reply will throw an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} .
+ * response to a command. When that occurs, the method encountering that reply will throw an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException}.
  * {@code SMTPConnectionClosedException} is a subclass of {@code IOException} and therefore need not be caught separately, but if you are going to
  * catch it separately, its catch block must appear before the more general {@code IOException} catch block. When you encounter an
  * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect() } to properly

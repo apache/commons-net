@@ -52,7 +52,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * standard error stream over a separate connection, readable from the input stream returned by {@link org.apache.commons.net.bsd.RExecClient#getErrorStream
  * getErrorStream() } . You can specify that a separate connection should be created for standard error by setting the boolean
  * {@code separateErrorStream} parameter of {@link #rcommand rcommand() } to {@code true}. The standard input of the remote process can be written
- * to through the output stream returned by {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputStream() } .
+ * to through the output stream returned by {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputStream()}.
  * </p>
  *
  * @see org.apache.commons.net.SocketClient
@@ -270,7 +270,7 @@ public class RCommandClient extends RExecClient {
      * be so. RCommandClient will also do a simple security check when it accepts a connection for this error stream. If the connection does not originate from
      * the remote server, an IOException will be thrown. This serves as a simple protection against possible hijacking of the error stream by an attacker
      * monitoring the rexec() negotiation. You may disable this behavior with {@link org.apache.commons.net.bsd.RExecClient#setRemoteVerificationEnabled
-     * setRemoteVerificationEnabled()} .
+     * setRemoteVerificationEnabled()}.
      * </p>
      *
      * @param localUser       The user account on the local machine that is requesting the command execution.

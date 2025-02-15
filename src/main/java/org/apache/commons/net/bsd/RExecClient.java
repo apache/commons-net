@@ -175,7 +175,7 @@ public class RExecClient extends SocketClient {
      * which standard error will be transmitted. RExecClient will do a simple security check when it accepts a connection for this error stream. If the
      * connection does not originate from the remote server, an IOException will be thrown. This serves as a simple protection against possible hijacking of the
      * error stream by an attacker monitoring the rexec() negotiation. You may disable this behavior with {@link #setRemoteVerificationEnabled
-     * setRemoteVerificationEnabled()} .
+     * setRemoteVerificationEnabled()}.
      *
      * @param user            The account name on the server through which to execute the command.
      * @param password            The plain text password of the user account.

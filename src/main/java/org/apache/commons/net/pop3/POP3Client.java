@@ -159,7 +159,7 @@ public class POP3Client extends POP3 {
     }
 
     /**
-     * List all messages. A list attempt can only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE} .
+     * List all messages. A list attempt can only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE}.
      * Returns an array of POP3MessageInfo instances, each containing the number of a message and its size in bytes. If there are no messages, this method
      * returns a zero length array. If the list attempt fails, it returns null.
      *
@@ -340,7 +340,7 @@ public class POP3Client extends POP3 {
 
     /**
      * Send a NOOP command to the POP3 server. This is useful for keeping a connection alive since most POP3 servers will time out after 10 minutes of
-     * inactivity. A noop attempt will only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } .
+     * inactivity. A noop attempt will only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }.
      *
      * @return True if the noop attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of sending the NOOP command.
@@ -354,7 +354,7 @@ public class POP3Client extends POP3 {
 
     /**
      * Reset the POP3 session. This is useful for undoing any message deletions that may have been performed. A reset attempt can only succeed if the client is
-     * in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } .
+     * in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }.
      *
      * @return True if the reset attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of sending the reset command.
