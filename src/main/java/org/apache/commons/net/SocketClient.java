@@ -17,7 +17,6 @@
 
 package org.apache.commons.net;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,6 +30,8 @@ import java.util.Objects;
 
 import javax.net.ServerSocketFactory;
 import javax.net.SocketFactory;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * The SocketClient provides the basic operations that are required of client objects accessing sockets. It is meant to be subclassed to avoid having to rewrite
@@ -195,26 +196,6 @@ public abstract class SocketClient {
         return Objects.requireNonNull(_output_, "OutputStream");
     }
 
-    private void closeQuietly(final Closeable close) {
-        if (close != null) {
-            try {
-                close.close();
-            } catch (final IOException e) {
-                // Ignored
-            }
-        }
-    }
-
-    private void closeQuietly(final Socket socket) {
-        if (socket != null) {
-            try {
-                socket.close();
-            } catch (final IOException e) {
-                // Ignored
-            }
-        }
-    }
-
     /**
      * Opens a Socket connected to a remote host at the current default port and originating from the current host at a system assigned port. Before returning,
      * {@link #_connectAction_ _connectAction_() } is called to perform connection initialization actions.
@@ -323,9 +304,9 @@ public abstract class SocketClient {
      */
     @SuppressWarnings("unused") // subclasses may throw IOException
     public void disconnect() throws IOException {
-        closeQuietly(_socket_);
-        closeQuietly(_input_);
-        closeQuietly(_output_);
+        IOUtils.closeQuietly(_socket_);
+        IOUtils.closeQuietly(_input_);
+        IOUtils.closeQuietly(_output_);
         _socket_ = null;
         _hostname_ = null;
         _input_ = null;
