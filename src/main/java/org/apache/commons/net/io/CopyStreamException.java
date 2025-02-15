@@ -41,8 +41,7 @@ public class CopyStreamException extends IOException {
      * @param exception        The IOException thrown during a copy operation.
      */
     public CopyStreamException(final String message, final long bytesTransferred, final IOException exception) {
-        super(message);
-        initCause(exception); // merge this into super() call once we need 1.6+
+        super(message, exception);
         totalBytesTransferred = bytesTransferred;
     }
 
