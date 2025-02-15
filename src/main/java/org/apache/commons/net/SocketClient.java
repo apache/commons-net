@@ -767,13 +767,7 @@ public abstract class SocketClient {
      * @return True if the remote hosts are the same, false if not.
      */
     public boolean verifyRemote(final Socket socket) {
-        final InetAddress host1;
-        final InetAddress host2;
-
-        host1 = socket.getInetAddress();
-        host2 = getRemoteAddress();
-
-        return host1.equals(host2);
+        return socket != null && Objects.equals(socket.getInetAddress(), getRemoteAddress());
     }
 
     /*
