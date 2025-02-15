@@ -51,7 +51,7 @@ public enum FTPCmd {
     /** FTP command EPSV. */
     EPSV,
 
-    /** FTP command FEAT. */
+    /** FTP command <a href="https://datatracker.ietf.org/doc/html/rfc2389#section-3">FEAT</a>. */
     FEAT,
 
     /** FTP command HELP. */
