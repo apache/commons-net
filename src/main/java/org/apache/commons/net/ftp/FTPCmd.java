@@ -84,6 +84,13 @@ public enum FTPCmd {
     /** FTP command NOOP. */
     NOOP,
 
+    /**
+     * FTP command <a href="https://datatracker.ietf.org/doc/html/rfc2389#section-4">OPTS</a>.
+     *
+     * @since 3.12.0
+     */
+    OPTS,
+
     /** FTP command PASS. */
     PASS,
 
