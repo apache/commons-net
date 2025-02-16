@@ -38,6 +38,7 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.util.SSLContextUtils;
 import org.apache.commons.net.util.SSLSocketUtils;
 import org.apache.commons.net.util.TrustManagerUtils;
@@ -330,19 +331,14 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Close open sockets.
+     * Closes sockets.
      *
-     * @param socket    main socket for proxy if enabled
-     * @param sslSocket ssl socket
-     * @throws IOException closing sockets is not successful
+     * @param socket    main socket for proxy if enabled.
+     * @param sslSocket SSL socket.
+     * @throws IOException closing sockets is not successful.
      */
     private void closeSockets(final Socket socket, final Socket sslSocket) throws IOException {
-        if (socket != null) {
-            socket.close();
-        }
-        if (sslSocket != null) {
-            sslSocket.close();
-        }
+        IOUtils.close(socket, sslSocket);
     }
 
     /**
@@ -372,9 +368,7 @@ public class FTPSClient extends FTPClient {
     @Override
     public void disconnect() throws IOException {
         super.disconnect();
-        if (plainSocket != null) {
-            plainSocket.close();
-        }
+        IOUtils.close(plainSocket);
         setSocketFactory(null);
         setServerSocketFactory(null);
     }

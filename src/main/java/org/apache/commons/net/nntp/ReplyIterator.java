@@ -22,8 +22,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.io.DotTerminatedMessageReader;
-import org.apache.commons.net.io.Util;
 
 /**
  * Wraps a {@link BufferedReader} and returns an {@code Iterable<String>} which returns the individual lines from the reader.
@@ -52,7 +52,7 @@ final class ReplyIterator implements Iterator<String>, Iterable<String> {
         reader = addDotReader ? new DotTerminatedMessageReader(_reader) : _reader;
         line = reader.readLine(); // prime the iterator
         if (line == null) {
-            Util.closeQuietly(reader);
+            IOUtils.closeQuietly(reader);
         }
     }
 
@@ -81,11 +81,11 @@ final class ReplyIterator implements Iterator<String>, Iterable<String> {
         try {
             line = reader.readLine(); // save next line
             if (line == null) {
-                Util.closeQuietly(reader);
+                IOUtils.closeQuietly(reader);
             }
         } catch (final IOException ex) {
             savedException = ex; // if it fails, save the exception, as it does not apply to this call
-            Util.closeQuietly(reader);
+            IOUtils.closeQuietly(reader);
         }
         return prev;
     }

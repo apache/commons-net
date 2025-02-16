@@ -34,7 +34,7 @@ import java.util.Enumeration;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.X509ExtendedKeyManager;
 
-import org.apache.commons.net.io.Util;
+import org.apache.commons.io.IOUtils;
 
 /**
  * General KeyManager utilities
@@ -219,7 +219,7 @@ public final class KeyManagerUtils {
             stream = new FileInputStream(storePath);
             ks.load(stream, storePass.toCharArray());
         } finally {
-            Util.closeQuietly(stream);
+            IOUtils.closeQuietly(stream);
         }
         return ks;
     }

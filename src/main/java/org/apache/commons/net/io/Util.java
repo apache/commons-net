@@ -29,6 +29,7 @@ import java.io.Writer;
 import java.net.Socket;
 import java.nio.charset.Charset;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.util.NetConstants;
 
 /**
@@ -53,15 +54,11 @@ public final class Util {
      *
      * @param closeable the object to close, may be {@code null}
      * @since 3.0
+     * @deprecated Use {@link IOUtils#closeQuietly(Closeable)}.
      */
+    @Deprecated
     public static void closeQuietly(final Closeable closeable) {
-        if (closeable != null) {
-            try {
-                closeable.close();
-            } catch (final IOException e) {
-                // Ignored
-            }
-        }
+        IOUtils.closeQuietly(closeable);
     }
 
     /**
@@ -69,15 +66,11 @@ public final class Util {
      *
      * @param socket the socket to close, may be {@code null}
      * @since 3.0
+     * @deprecated Use {@link IOUtils#closeQuietly(Socket)}.
      */
+    @Deprecated
     public static void closeQuietly(final Socket socket) {
-        if (socket != null) {
-            try {
-                socket.close();
-            } catch (final IOException e) {
-                // Ignored
-            }
-        }
+        IOUtils.closeQuietly(socket);
     }
 
     /**

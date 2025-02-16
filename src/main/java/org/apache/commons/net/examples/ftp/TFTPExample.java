@@ -26,6 +26,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.time.Duration;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
 import org.apache.commons.net.tftp.TFTPPacket;
@@ -50,9 +51,7 @@ public final class TFTPExample {
         boolean closed;
         tftp.close();
         try {
-            if (output != null) {
-                output.close();
-            }
+            IOUtils.close(output);
             closed = true;
         } catch (final IOException e) {
             closed = false;
@@ -62,6 +61,12 @@ public final class TFTPExample {
         return closed;
     }
 
+    /**
+     * Runs this application.
+     *
+     * @param args command line arguments.
+     * @throws IOException if a network or I/O error occurs.
+     */
     public static void main(final String[] args) throws IOException {
         boolean receiveFile = true, closed;
         int transferMode = TFTP.BINARY_MODE, argc;

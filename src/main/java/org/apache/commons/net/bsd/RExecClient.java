@@ -24,6 +24,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.SocketInputStream;
 import org.apache.commons.net.util.NetConstants;
@@ -82,19 +83,17 @@ public class RExecClient extends SocketClient {
     // limitations of rcmd and rlogin
     InputStream createErrorStream() throws IOException {
         final Socket socket;
-
         try (ServerSocket server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress())) {
             _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8)); // $NON-NLS-1$
             _output_.write(NULL_CHAR);
             _output_.flush();
             socket = server.accept();
         }
-
         if (remoteVerificationEnabled && !verifyRemote(socket)) {
-            socket.close();
-            throw new IOException("Security violation: unexpected connection attempt by " + socket.getInetAddress().getHostAddress());
+            final String hostAddress = getHostAddress(socket);
+            IOUtils.closeQuietly(socket);
+            throw new IOException("Security violation: unexpected connection attempt by " + hostAddress);
         }
-
         return new SocketInputStream(socket, socket.getInputStream());
     }
 

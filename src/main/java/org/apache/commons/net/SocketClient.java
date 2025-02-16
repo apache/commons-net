@@ -61,6 +61,28 @@ public abstract class SocketClient {
     private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
 
     /**
+     * Gets the IP address string of the given Socket in textual presentation.
+     *
+     * @param socket the socket to query.
+     * @return  the raw IP address in a string format.
+     * @since 3.12.0
+     */
+    protected static String getHostAddress(final Socket socket) {
+        return getHostAddress(socket.getInetAddress());
+    }
+
+    /**
+     * Gets the IP address string of the given InetAddress in textual presentation.
+     *
+     * @param inetAddress Internet Protocol (IP) address to query.
+     * @return  the raw IP address in a string format.
+     * @since 3.12.0
+     */
+    protected static String getHostAddress(final InetAddress inetAddress) {
+        return inetAddress != null ? inetAddress.getHostAddress() : null;
+    }
+
+    /**
      * A ProtocolCommandSupport object used to manage the registering of ProtocolCommandListeners and the firing of ProtocolCommandEvents.
      */
     private ProtocolCommandSupport commandSupport;

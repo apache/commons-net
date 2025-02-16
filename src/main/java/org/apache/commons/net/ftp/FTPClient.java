@@ -47,6 +47,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
@@ -682,12 +683,12 @@ public class FTPClient extends FTP implements Configurable {
      * {@link #setRestartOffset(long)}, a REST command is issued to the server with the offset as an argument before establishing the data connection. Active
      * mode connections also cause a local PORT command to be issued.
      *
-     * @deprecated (3.3) Use {@link #_openDataConnection_(FTPCmd, String)} instead
      * @param command The int representation of the FTP command to send.
      * @param arg     The arguments to the FTP command. If this parameter is set to null, then the command is sent with no argument.
      * @return A Socket corresponding to the established data connection. Null is returned if an FTP protocol error is reported at any point during the
      *         establishment and initialization of the connection.
      * @throws IOException If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
+     * @deprecated (3.3) Use {@link #_openDataConnection_(FTPCmd, String)} instead
      */
     @Deprecated
     protected Socket _openDataConnection_(final int command, final String arg) throws IOException {
@@ -807,10 +808,10 @@ public class FTPClient extends FTP implements Configurable {
         }
         if (remoteVerificationEnabled && !verifyRemote(socket)) {
             // Grab the host before we close the socket to avoid NET-663
-            final InetAddress socketHost = socket.getInetAddress();
-            socket.close();
-            throw new IOException(
-                    "Host attempting data connection " + socketHost.getHostAddress() + " is not same as server " + getRemoteAddress().getHostAddress());
+            final String socketHostAddress = getHostAddress(socket);
+            final String remoteHostAddress = getHostAddress(_socket_);
+            IOUtils.closeQuietly(socket);
+            throw new IOException("Host attempting data connection " + socketHostAddress + " is not same as server " + remoteHostAddress);
         }
         return socket;
     }
@@ -917,12 +918,12 @@ public class FTPClient extends FTP implements Configurable {
                 // Treat everything else as binary for now
                 Util.copyStream(input, local, getBufferSize(), CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl), false);
             } finally {
-                Util.closeQuietly(input);
+                IOUtils.closeQuietly(input);
             }
             // Get the transfer response
             return completePendingCommand();
         } finally {
-            Util.closeQuietly(socket);
+            IOUtils.closeQuietly(socket);
             if (csl != null) {
                 cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
             }
@@ -992,8 +993,8 @@ public class FTPClient extends FTP implements Configurable {
             // Get the transfer response
             return completePendingCommand();
         } catch (final IOException e) {
-            Util.closeQuietly(output); // ignore close errors here
-            Util.closeQuietly(socket); // ignore close errors here
+            IOUtils.closeQuietly(output); // ignore close errors here
+            IOUtils.closeQuietly(socket); // ignore close errors here
             throw e;
         } finally {
             if (csl != null) {
@@ -2017,7 +2018,7 @@ public class FTPClient extends FTP implements Configurable {
         try {
             engine.readServerList(socket.getInputStream(), getControlEncoding());
         } finally {
-            Util.closeQuietly(socket);
+            IOUtils.closeQuietly(socket);
         }
         completePendingCommand();
         return engine;
@@ -2133,7 +2134,7 @@ public class FTPClient extends FTP implements Configurable {
         try {
             engine.readServerList(socket.getInputStream(), getControlEncoding());
         } finally {
-            Util.closeQuietly(socket);
+            IOUtils.closeQuietly(socket);
             completePendingCommand();
         }
         return engine;
