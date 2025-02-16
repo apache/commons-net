@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.net;
 
 import java.io.ObjectInputStream;
@@ -28,12 +27,11 @@ import org.apache.commons.net.util.ListenerList;
  * ProtocolCommandSupport is a convenience class for managing a list of ProtocolCommandListeners and firing ProtocolCommandEvents. You can simply delegate
  * ProtocolCommandEvent firing and listener registering/unregistering tasks to this class.
  *
- *
  * @see ProtocolCommandEvent
  * @see ProtocolCommandListener
  */
-
 public class ProtocolCommandSupport implements Serializable {
+
     private static final long serialVersionUID = -8017692739988399978L;
 
     /**
@@ -74,9 +72,7 @@ public class ProtocolCommandSupport implements Serializable {
      */
     public void fireCommandSent(final String command, final String message) {
         final ProtocolCommandEvent event;
-
         event = new ProtocolCommandEvent(source, command, message);
-
         for (final EventListener listener : listeners) {
             ((ProtocolCommandListener) listener).protocolCommandSent(event);
         }
@@ -94,7 +90,6 @@ public class ProtocolCommandSupport implements Serializable {
     public void fireReplyReceived(final int replyCode, final String message) {
         final ProtocolCommandEvent event;
         event = new ProtocolCommandEvent(source, replyCode, message);
-
         for (final EventListener listener : listeners) {
             ((ProtocolCommandListener) listener).protocolReplyReceived(event);
         }
@@ -117,7 +112,6 @@ public class ProtocolCommandSupport implements Serializable {
     private void readObject(final ObjectInputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
-
     /*
      * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
      */
@@ -140,5 +134,4 @@ public class ProtocolCommandSupport implements Serializable {
     private void writeObject(final ObjectOutputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
-
 }
