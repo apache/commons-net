@@ -117,11 +117,12 @@ public class ListingFunctionalTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         client = new FTPClient();
+        client.addProtocolCommandListener(new PrintCommandListener(System.out));
         client.connect(hostName);
         client.login("anonymous", "anonymous");
         client.enterLocalPassiveMode();
         client.setAutodetectUTF8(true);
-        client.addProtocolCommandListener(new PrintCommandListener(System.out));
+        client.opts("UTF-8", "NLST");
     }
 
     /*
