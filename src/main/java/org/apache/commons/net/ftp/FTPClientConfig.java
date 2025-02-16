@@ -27,7 +27,7 @@ import java.util.TreeMap;
 /**
  * <p>
  * This class implements an alternate means of configuring the {@link org.apache.commons.net.ftp.FTPClient FTPClient} object and also subordinate objects which
- * it uses. Any class implementing the {@link org.apache.commons.net.ftp.Configurable Configurable } interface can be configured by this object.
+ * it uses. Any class implementing the {@link org.apache.commons.net.ftp.Configurable Configurable} interface can be configured by this object.
  * </p>
  * <p>
  * In particular this class was designed primarily to support configuration of FTP servers which express file timestamps in formats and languages other than
@@ -46,7 +46,7 @@ import java.util.TreeMap;
  * </ul>
  * <p>
  * Unpaged (whole list) access on a Unix server that uses French month names but uses the "standard" {@code MMM d yyyy} date formatting
- *
+ * </p>
  * <pre>
  * FTPClient f = FTPClient();
  * FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
@@ -58,7 +58,7 @@ import java.util.TreeMap;
  * </pre>
  * <p>
  * Paged access on a Unix server that uses Danish month names and "European" date formatting in Denmark's time zone, when you are in some other time zone.
- *
+ * </p>
  * <pre>
  * FTPClient f = FTPClient();
  * FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
@@ -80,7 +80,7 @@ import java.util.TreeMap;
  * <p>
  * Unpaged (whole list) access on a VMS server that uses month names in a language not {@link #getSupportedLanguageCodes() supported} by the system. but uses
  * the "standard" {@code MMM d yyyy} date formatting
- *
+ * </p>
  * <pre>
  * FTPClient f = FTPClient();
  * FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_VMS);
@@ -93,7 +93,7 @@ import java.util.TreeMap;
  * <p>
  * Unpaged (whole list) access on a Windows-NT server in a different time zone. (Note, since the NT Format uses numeric date formatting, language issues are
  * irrelevant here).
- *
+ * </p>
  * <pre>
  * FTPClient f = FTPClient();
  * FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_NT);
@@ -103,9 +103,9 @@ import java.util.TreeMap;
  * f.login(user, password);
  * FTPFile[] files = listFiles(directory);
  * </pre>
- *
+ * <p>
  * Unpaged (whole list) access on a Windows-NT server in a different time zone but which has been configured to use a unix-style listing format.
- *
+ * </p>
  * <pre>
  * FTPClient f = FTPClient();
  * FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
