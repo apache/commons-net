@@ -72,6 +72,11 @@ import org.apache.commons.net.util.NetConstants;
 
 public class FTP extends SocketClient {
 
+    /**
+     * Space character.
+     */
+    private static final char SP = ' ';
+
     /** The default FTP data port (20). */
     public static final int DEFAULT_DATA_PORT = 20;
 
@@ -421,14 +426,13 @@ public class FTP extends SocketClient {
     }
 
     private String buildMessage(final String command, final String args) {
-        final StringBuilder __commandBuffer = new StringBuilder();
-        __commandBuffer.append(command);
+        final StringBuilder builder = new StringBuilder(command);
         if (args != null) {
-            __commandBuffer.append(' ');
-            __commandBuffer.append(args);
+            builder.append(SP);
+            builder.append(args);
         }
-        __commandBuffer.append(NETASCII_EOL);
-        return __commandBuffer.toString();
+        builder.append(NETASCII_EOL);
+        return builder.toString();
     }
 
     /**
@@ -516,26 +520,25 @@ public class FTP extends SocketClient {
      * @since 2.2
      */
     public int eprt(final InetAddress host, final int port) throws IOException {
-        final int num;
-        final StringBuilder info = new StringBuilder();
         // If IPv6, trim the zone index
         String h = host.getHostAddress();
-        num = h.indexOf('%');
+        final int num = h.indexOf('%');
         if (num > 0) {
             h = h.substring(0, num);
         }
-        info.append("|");
+        final StringBuilder builder = new StringBuilder();
+        builder.append("|");
         if (host instanceof Inet4Address) {
-            info.append("1");
+            builder.append("1");
         } else if (host instanceof Inet6Address) {
-            info.append("2");
+            builder.append("2");
         }
-        info.append("|");
-        info.append(h);
-        info.append("|");
-        info.append(port);
-        info.append("|");
-        return sendCommand(FTPCmd.EPRT, info.toString());
+        builder.append("|");
+        builder.append(h);
+        builder.append("|");
+        builder.append(port);
+        builder.append("|");
+        return sendCommand(FTPCmd.EPRT, builder.toString());
     }
 
     /**
@@ -637,7 +640,7 @@ public class FTP extends SocketClient {
                 if (length == REPLY_CODE_LEN + 1) { // expecting some text
                     throw new MalformedServerReplyException("Truncated server reply: '" + line + "'");
                 }
-                if (sep != ' ') {
+                if (sep != SP) {
                     throw new MalformedServerReplyException("Invalid server reply: '" + line + "'");
                 }
             }
@@ -813,7 +816,7 @@ public class FTP extends SocketClient {
      * @see <a href="https://tools.ietf.org/html/draft-somers-ftp-mfxx-04">https://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      **/
     public int mfmt(final String path, final String timeval) throws IOException {
-        return sendCommand(FTPCmd.MFMT, timeval + " " + path);
+        return sendCommand(FTPCmd.MFMT, timeval + SP + path);
     }
 
     /**
@@ -965,6 +968,30 @@ public class FTP extends SocketClient {
     }
 
     /**
+     * A convenience method to send the FTP OPTS command to the server, receive the reply, and return the reply code.
+     * <p>
+     * FTP request Syntax:
+     * </p>
+     * <pre>{@code
+     * opts             = opts-cmd SP command-name
+     *                         [ SP command-options ] CRLF
+     * opts-cmd         = "opts"
+     * command-name     = <any FTP command which allows option setting>
+     * command-options  = <format specified by individual FTP command>
+     * }</pre>
+     * @param commandName The OPTS command name.
+     * @param commandOptions The OPTS command options.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
+     */
+    public int opts(final String commandName, String commandOptions) throws IOException {
+        return sendCommand(FTPCmd.OPTS, commandName + SP + commandOptions);
+    }
+
+    /**
      * A convenience method to send the FTP PASS command to the server, receive the reply, and return the reply code.
      *
      * @param password The plain text password of the user being logged into.
@@ -1111,6 +1138,7 @@ public class FTP extends SocketClient {
     public int rnfr(final String path) throws IOException {
         return sendCommand(FTPCmd.RNFR, path);
     }
+
 
     /**
      * A convenience method to send the FTP RNTO command to the server, receive the reply, and return the reply code.
@@ -1399,7 +1427,7 @@ public class FTP extends SocketClient {
 
     // The RFC-compliant multiline termination check
     private boolean strictCheck(final String line, final String code) {
-        return !(line.startsWith(code) && line.charAt(REPLY_CODE_LEN) == ' ');
+        return !(line.startsWith(code) && line.charAt(REPLY_CODE_LEN) == SP);
     }
 
     /**
@@ -1457,7 +1485,7 @@ public class FTP extends SocketClient {
     public int type(final int fileType, final int formatOrByteSize) throws IOException {
         final StringBuilder arg = new StringBuilder();
         arg.append(modeCharAt(fileType));
-        arg.append(' ');
+        arg.append(SP);
         if (fileType == LOCAL_FILE_TYPE) {
             arg.append(formatOrByteSize);
         } else {
