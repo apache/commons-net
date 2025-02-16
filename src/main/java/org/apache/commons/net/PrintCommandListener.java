@@ -33,7 +33,6 @@ public class PrintCommandListener implements ProtocolCommandListener {
     private final PrintWriter writer;
     private final boolean nologin;
     private final char eolMarker;
-
     private final boolean directionMarker;
 
     /**
