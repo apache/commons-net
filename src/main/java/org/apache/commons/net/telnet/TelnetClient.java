@@ -109,7 +109,7 @@ public class TelnetClient extends Telnet {
         if (readerThread) {
             tmp.start();
         }
-        // __input CANNOT refer to the TelnetInputStream. We run into
+        // input CANNOT refer to the TelnetInputStream. We run into
         // blocking problems when some classes use TelnetInputStream, so
         // we wrap it with a BufferedInputStream which we know is safe.
         // This blocking behavior requires further investigation, but right

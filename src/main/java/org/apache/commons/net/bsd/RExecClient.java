@@ -183,14 +183,11 @@ public class RExecClient extends SocketClient {
      * @throws IOException If the rexec() attempt fails. The exception will contain a message indicating the nature of the failure.
      */
     public void rexec(final String user, final String password, final String command, final boolean separateErrorStream) throws IOException {
-        int ch;
-
         if (separateErrorStream) {
             _errorStream_ = createErrorStream();
         } else {
             _output_.write(NULL_CHAR);
         }
-
         _output_.write(user.getBytes(getCharset()));
         _output_.write(NULL_CHAR);
         _output_.write(password.getBytes(getCharset()));
@@ -198,15 +195,12 @@ public class RExecClient extends SocketClient {
         _output_.write(command.getBytes(getCharset()));
         _output_.write(NULL_CHAR);
         _output_.flush();
-
-        ch = _input_.read();
+        int ch = _input_.read();
         if (ch > 0) {
             final StringBuilder buffer = new StringBuilder();
-
             while ((ch = _input_.read()) != NetConstants.EOS && ch != '\n') {
                 buffer.append((char) ch);
             }
-
             throw new IOException(buffer.toString());
         }
         if (ch < 0) {

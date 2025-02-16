@@ -283,7 +283,7 @@ public class FTPFile implements Serializable {
     }
 
     private String permissionToString(final int access) {
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder(3);
         if (hasPermission(access, READ_PERMISSION)) {
             sb.append('r');
         } else {

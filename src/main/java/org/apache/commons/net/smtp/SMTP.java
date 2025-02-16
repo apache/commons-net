@@ -516,24 +516,18 @@ public class SMTP extends SocketClient {
      * @throws IOException
      */
     private int sendCommand(final String command, final String args, final boolean includeSpace) throws IOException {
-        final StringBuilder __commandBuffer = new StringBuilder();
-        __commandBuffer.append(command);
-
+        final StringBuilder builder = new StringBuilder(command);
         if (args != null) {
             if (includeSpace) {
-                __commandBuffer.append(' ');
+                builder.append(' ');
             }
-            __commandBuffer.append(args);
+            builder.append(args);
         }
-
-        __commandBuffer.append(NETASCII_EOL);
-
-        final String message = __commandBuffer.toString();
+        builder.append(NETASCII_EOL);
+        final String message = builder.toString();
         writer.write(message);
         writer.flush();
-
         fireCommandSent(command, message);
-
         return getReply();
     }
 

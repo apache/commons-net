@@ -496,7 +496,7 @@ public class FTPClient extends FTP implements Configurable {
     static String parsePathname(final String reply) {
         final String param = reply.substring(REPLY_CODE_LEN + 1);
         if (param.startsWith("\"")) {
-            final StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder(param.length());
             boolean quoteSeen = false;
             // start after initial quote
             for (int i = 1; i < param.length(); i++) {
@@ -1627,7 +1627,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Gets the host address for active mode; allows the local address to be overridden.
      *
-     * @return __activeExternalHost if non-null, else getLocalAddress()
+     * @return activeExternalHost if non-null, else getLocalAddress()
      * @see #setActiveExternalIPAddress(String)
      */
     InetAddress getHostAddress() {
@@ -1733,7 +1733,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * Useful for FTP Client behind Firewall NAT.
      *
-     * @return __reportActiveExternalHost if non-null, else getHostAddress();
+     * @return reportActiveExternalHost if non-null, else getHostAddress();
      */
     InetAddress getReportHostAddress() {
         if (reportActiveExternalHost != null) {

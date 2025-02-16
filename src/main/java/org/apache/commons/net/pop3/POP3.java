@@ -275,21 +275,16 @@ public class POP3 extends SocketClient {
         if (writer == null) {
             throw new IllegalStateException("Socket is not connected");
         }
-        final StringBuilder __commandBuffer = new StringBuilder();
-        __commandBuffer.append(command);
-
+        final StringBuilder builder = new StringBuilder(command);
         if (args != null) {
-            __commandBuffer.append(' ');
-            __commandBuffer.append(args);
+            builder.append(' ');
+            builder.append(args);
         }
-        __commandBuffer.append(NETASCII_EOL);
-
-        final String message = __commandBuffer.toString();
+        builder.append(NETASCII_EOL);
+        final String message = builder.toString();
         writer.write(message);
         writer.flush();
-
         fireCommandSent(command, message);
-
         getReply();
         return replyCode;
     }

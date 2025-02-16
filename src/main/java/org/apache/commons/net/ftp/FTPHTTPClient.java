@@ -216,7 +216,7 @@ public class FTPHTTPClient extends FTPClient {
         code = resp.substring(9, 12);
 
         if (!"200".equals(code)) {
-            final StringBuilder msg = new StringBuilder();
+            final StringBuilder msg = new StringBuilder(256);
             msg.append("HTTPTunnelConnector: connection failed\r\n");
             msg.append("Response received from the proxy:\r\n");
             for (final String line : response) {

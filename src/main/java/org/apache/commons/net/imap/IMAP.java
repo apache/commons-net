@@ -389,25 +389,21 @@ public class IMAP extends SocketClient {
      * @return The server reply code (either {@link IMAPReply#OK}, {@link IMAPReply#NO} or {@link IMAPReply#BAD}).
      */
     private int sendCommandWithID(final String commandID, final String command, final String args) throws IOException {
-        final StringBuilder __commandBuffer = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         if (commandID != null) {
-            __commandBuffer.append(commandID);
-            __commandBuffer.append(' ');
+            builder.append(commandID);
+            builder.append(' ');
         }
-        __commandBuffer.append(command);
-
+        builder.append(command);
         if (args != null) {
-            __commandBuffer.append(' ');
-            __commandBuffer.append(args);
+            builder.append(' ');
+            builder.append(args);
         }
-        __commandBuffer.append(NETASCII_EOL);
-
-        final String message = __commandBuffer.toString();
+        builder.append(NETASCII_EOL);
+        final String message = builder.toString();
         __writer.write(message);
         __writer.flush();
-
         fireCommandSent(command, message);
-
         getReply();
         return replyCode;
     }

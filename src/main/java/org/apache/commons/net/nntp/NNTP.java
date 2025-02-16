@@ -640,21 +640,16 @@ public class NNTP extends SocketClient {
      * @throws IOException                   If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int sendCommand(final String command, final String args) throws IOException {
-        final StringBuilder __commandBuffer = new StringBuilder();
-        __commandBuffer.append(command);
-
+        final StringBuilder builder = new StringBuilder(command);
         if (args != null) {
-            __commandBuffer.append(' ');
-            __commandBuffer.append(args);
+            builder.append(' ');
+            builder.append(args);
         }
-        __commandBuffer.append(NETASCII_EOL);
-
+        builder.append(NETASCII_EOL);
         final String message;
-        _writer_.write(message = __commandBuffer.toString());
+        _writer_.write(message = builder.toString());
         _writer_.flush();
-
         fireCommandSent(command, message);
-
         return getReply();
     }
 

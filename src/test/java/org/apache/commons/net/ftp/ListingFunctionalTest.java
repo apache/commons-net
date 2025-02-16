@@ -120,6 +120,7 @@ public class ListingFunctionalTest extends TestCase {
         client.connect(hostName);
         client.login("anonymous", "anonymous");
         client.enterLocalPassiveMode();
+        client.setAutodetectUTF8(true);
         client.addProtocolCommandListener(new PrintCommandListener(System.out));
     }
 
