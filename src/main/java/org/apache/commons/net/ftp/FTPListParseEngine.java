@@ -241,9 +241,7 @@ public class FTPListParseEngine {
      */
     private void read(final InputStream inputStream, final String charsetName) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charsets.toCharset(charsetName)))) {
-
             String line = parser.readNextEntry(reader);
-
             while (line != null) {
                 entries.add(line);
                 line = parser.readNextEntry(reader);

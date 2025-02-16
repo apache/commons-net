@@ -518,17 +518,13 @@ public class FTP extends SocketClient {
     public int eprt(final InetAddress host, final int port) throws IOException {
         final int num;
         final StringBuilder info = new StringBuilder();
-        String h;
-
         // If IPv6, trim the zone index
-        h = host.getHostAddress();
+        String h = host.getHostAddress();
         num = h.indexOf('%');
         if (num > 0) {
             h = h.substring(0, num);
         }
-
         info.append("|");
-
         if (host instanceof Inet4Address) {
             info.append("1");
         } else if (host instanceof Inet6Address) {
@@ -539,7 +535,6 @@ public class FTP extends SocketClient {
         info.append("|");
         info.append(port);
         info.append("|");
-
         return sendCommand(FTPCmd.EPRT, info.toString());
     }
 
@@ -603,23 +598,18 @@ public class FTP extends SocketClient {
 
     private int getReply(final boolean reportReply) throws IOException {
         final int length;
-
         _newReplyString = true;
         _replyLines.clear();
-
         String line = _controlInput_.readLine();
-
         if (line == null) {
             throw new FTPConnectionClosedException("Connection closed without indication.");
         }
-
         // In case we run into an anomaly we don't want fatal index exceptions
         // to be thrown.
         length = line.length();
         if (length < REPLY_CODE_LEN) {
             throw new MalformedServerReplyException("Truncated server reply: " + line);
         }
-
         String code;
         try {
             code = line.substring(0, REPLY_CODE_LEN);
@@ -627,9 +617,7 @@ public class FTP extends SocketClient {
         } catch (final NumberFormatException e) {
             throw new MalformedServerReplyException("Could not parse response code.\nServer Reply: " + line);
         }
-
         _replyLines.add(line);
-
         // Check the server reply type
         if (length > REPLY_CODE_LEN) {
             final char sep = line.charAt(REPLY_CODE_LEN);
@@ -637,18 +625,14 @@ public class FTP extends SocketClient {
             if (sep == '-') {
                 do {
                     line = _controlInput_.readLine();
-
                     if (line == null) {
                         throw new FTPConnectionClosedException("Connection closed without indication.");
                     }
-
                     _replyLines.add(line);
-
                     // The length() check handles problems that could arise from readLine()
                     // returning too soon after encountering a naked CR or some other
                     // anomaly.
                 } while (isStrictMultilineParsing() ? strictCheck(line, code) : lenientCheck(line));
-
             } else if (isStrictReplyParsing()) {
                 if (length == REPLY_CODE_LEN + 1) { // expecting some text
                     throw new MalformedServerReplyException("Truncated server reply: '" + line + "'");
@@ -660,11 +644,9 @@ public class FTP extends SocketClient {
         } else if (isStrictReplyParsing()) {
             throw new MalformedServerReplyException("Truncated server reply: '" + line + "'");
         }
-
         if (reportReply) {
             fireReplyReceived(_replyCode, getReplyString());
         }
-
         if (_replyCode == FTPReply.SERVICE_NOT_AVAILABLE) {
             throw new FTPConnectionClosedException("FTP response 421 received.  Server closed connection.");
         }
@@ -690,13 +672,8 @@ public class FTP extends SocketClient {
         if (!_newReplyString) {
             return _replyString;
         }
-        final StringBuilder buffer = new StringBuilder(256);
-        for (final String line : _replyLines) {
-            buffer.append(line);
-            buffer.append(NETASCII_EOL);
-        }
         _newReplyString = false;
-        return _replyString = buffer.toString();
+        return _replyString = String.join(NETASCII_EOL, _replyLines);
     }
 
     /**
@@ -1027,17 +1004,14 @@ public class FTP extends SocketClient {
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int port(final InetAddress host, final int port) throws IOException {
-        int num;
         final StringBuilder info = new StringBuilder(24);
-
         info.append(host.getHostAddress().replace('.', ','));
-        num = port >>> 8;
+        int num = port >>> 8;
         info.append(',');
         info.append(num);
         info.append(',');
         num = port & 0xff;
         info.append(num);
-
         return sendCommand(FTPCmd.PORT, info.toString());
     }
 
@@ -1489,7 +1463,6 @@ public class FTP extends SocketClient {
         } else {
             arg.append(modeCharAt(formatOrByteSize));
         }
-
         return sendCommand(FTPCmd.TYPE, arg.toString());
     }
 
