@@ -37,7 +37,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * </p>
  *
  * <pre>
- * entry            = [ facts ] SP pathname
+ * entry            = [ facts ] SP path
  * facts            = 1*( fact ";" )
  * fact             = factname "=" value
  * factname         = "Size" / "Modify" / "Create" /
@@ -208,7 +208,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl {
                 file.setName(entry.substring(1));
                 return file;
             }
-            return null; // Invalid - no pathname
+            return null; // Invalid - no path
 
         }
         final String[] parts = entry.split(" ", 2); // Path may contain space

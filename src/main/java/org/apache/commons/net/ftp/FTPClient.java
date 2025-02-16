@@ -478,7 +478,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Parse the pathname from a CWD reply.
+     * Parse the path from a CWD reply.
      * <p>
      * According to <a href="http://www.ietf.org/rfc/rfc959.txt">RFC959</a>, it should be the same as for MKD i.e.
      * {@code 257<space>"<directory-name>"[<space>commentary]} where any double-quotes in {@code <directory-name>} are doubled. Unlike MKD, the commentary is
@@ -489,7 +489,7 @@ public class FTPClient extends FTP implements Configurable {
      * </p>
      *
      * @param reply
-     * @return the pathname, without enclosing quotes, or the full string after the reply code and space if the syntax is invalid (i.e. enclosing quotes are
+     * @return the path, without enclosing quotes, or the full string after the reply code and space if the syntax is invalid (i.e. enclosing quotes are
      *         missing or embedded quotes are not doubled)
      */
     // package protected for access by test cases
@@ -1160,15 +1160,15 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Change the current working directory of the FTP session.
      *
-     * @param pathname The new current working directory.
+     * @param path The new current working directory.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean changeWorkingDirectory(final String pathname) throws IOException {
-        return FTPReply.isPositiveCompletion(cwd(pathname));
+    public boolean changeWorkingDirectory(final String path) throws IOException {
+        return FTPReply.isPositiveCompletion(cwd(path));
     }
 
     /**
@@ -1272,15 +1272,15 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Deletes a file on the FTP server.
      *
-     * @param pathname The pathname of the file to be deleted.
+     * @param path The path of the file to be deleted.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean deleteFile(final String pathname) throws IOException {
-        return FTPReply.isPositiveCompletion(dele(pathname));
+    public boolean deleteFile(final String path) throws IOException {
+        return FTPReply.isPositiveCompletion(dele(path));
     }
 
     /**
@@ -1641,7 +1641,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Gets the adjusted string with "-a" added if necessary.
      *
-     * @param pathName the initial pathname
+     * @param pathName the initial path
      * @return the adjusted string with "-a" added if necessary.
      * @since 2.0
      */
@@ -1673,13 +1673,13 @@ public class FTPClient extends FTP implements Configurable {
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last modification time of a file. The modification string should be in the ISO
      * 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in GMT, but not all FTP servers honor this.
      *
-     * @param pathname The file path to query.
+     * @param path The file path to query.
      * @return A string representing the last file modification time in {@code yyyyMMDDhhmmss} format.
      * @throws IOException if an I/O error occurs.
      * @since 2.0
      */
-    public String getModificationTime(final String pathname) throws IOException {
-        if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
+    public String getModificationTime(final String path) throws IOException {
+        if (FTPReply.isPositiveCompletion(mdtm(path))) {
             // skip the return code (e.g. 213) and the space
             return getReplyString(0).substring(4);
         }
@@ -1762,9 +1762,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Issue the FTP SIZE command to the server for a given pathname. This should produce the size of the file.
+     * Issue the FTP SIZE command to the server for a given path. This should produce the size of the file.
      *
-     * @param pathname the file name
+     * @param path the file name
      * @return The size information returned by the server; {@code null} if there was an error
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1772,8 +1772,8 @@ public class FTPClient extends FTP implements Configurable {
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @since 3.7
      */
-    public String getSize(final String pathname) throws IOException {
-        if (FTPReply.isPositiveCompletion(size(pathname))) {
+    public String getSize(final String path) throws IOException {
+        if (FTPReply.isPositiveCompletion(size(path))) {
             return getReplyString(0).substring(4); // skip the return code (e.g. 213) and the space
         }
         return null;
@@ -1796,17 +1796,17 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Issue the FTP STAT command to the server for a given pathname. This should produce a listing of the file or directory.
+     * Issue the FTP STAT command to the server for a given path. This should produce a listing of the file or directory.
      *
-     * @param pathname the file name
+     * @param path the file name
      * @return The status information returned by the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public String getStatus(final String pathname) throws IOException {
-        if (FTPReply.isPositiveCompletion(stat(pathname))) {
+    public String getStatus(final String path) throws IOException {
+        if (FTPReply.isPositiveCompletion(stat(path))) {
             return getReplyString();
         }
         return null;
@@ -2006,8 +2006,8 @@ public class FTPClient extends FTP implements Configurable {
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @see FTPListParseEngine
      */
-    private FTPListParseEngine initiateListParsing(final FTPFileEntryParser parser, final String pathname) throws IOException {
-        final Socket socket = _openDataConnection_(FTPCmd.LIST, getListArguments(pathname));
+    private FTPListParseEngine initiateListParsing(final FTPFileEntryParser parser, final String path) throws IOException {
+        final Socket socket = _openDataConnection_(FTPCmd.LIST, getListArguments(path));
         final FTPListParseEngine engine = new FTPListParseEngine(parser, configuration);
         if (socket == null) {
             return engine;
@@ -2047,7 +2047,7 @@ public class FTPClient extends FTP implements Configurable {
      * }
      * </pre>
      *
-     * @param pathname the starting directory
+     * @param path the starting directory
      * @return A FTPListParseEngine object that holds the raw information and is capable of providing parsed FTPFile objects, one for each file containing
      *         information contained in the given path in the format determined by the {@code parser} parameter. Null will be returned if a data connection
      *         cannot be opened. If the current working directory contains no files, an empty array will be the return.
@@ -2061,8 +2061,8 @@ public class FTPClient extends FTP implements Configurable {
      *                                                                         connected with.
      * @see FTPListParseEngine
      */
-    public FTPListParseEngine initiateListParsing(final String pathname) throws IOException {
-        return initiateListParsing((String) null, pathname);
+    public FTPListParseEngine initiateListParsing(final String path) throws IOException {
+        return initiateListParsing((String) null, path);
     }
 
     /**
@@ -2082,7 +2082,7 @@ public class FTPClient extends FTP implements Configurable {
      *                  server file listing. May be {@code null}, in which case the code checks first the system property {@link #FTP_SYSTEM_TYPE}, and if that
      *                  is not defined the SYST command is used to provide the value. To allow for arbitrary system types, the return from the SYST command is
      *                  used to look up an alias for the type in the {@link #SYSTEM_TYPE_PROPERTIES} properties file if it is available.
-     * @param pathname  the starting directory
+     * @param path  the starting directory
      * @return A FTPListParseEngine object that holds the raw information and is capable of providing parsed FTPFile objects, one for each file containing
      *         information contained in the given path in the format determined by the {@code parser} parameter. Null will be returned if a data connection
      *         cannot be opened. If the current working directory contains no files, an empty array will be the return.
@@ -2100,9 +2100,9 @@ public class FTPClient extends FTP implements Configurable {
      *                                                                         prevent its being loaded.
      * @see FTPListParseEngine
      */
-    public FTPListParseEngine initiateListParsing(final String parserKey, final String pathname) throws IOException {
+    public FTPListParseEngine initiateListParsing(final String parserKey, final String path) throws IOException {
         createParser(parserKey); // create and cache parser
-        return initiateListParsing(entryParser, pathname);
+        return initiateListParsing(entryParser, path);
     }
 
     /**
@@ -2118,12 +2118,12 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Initiate list parsing for MLSD listings.
      *
-     * @param pathname the path from where to MLSD.
+     * @param path the path from where to MLSD.
      * @return the engine.
      * @throws IOException on error
      */
-    public FTPListParseEngine initiateMListParsing(final String pathname) throws IOException {
-        final Socket socket = _openDataConnection_(FTPCmd.MLSD, pathname);
+    public FTPListParseEngine initiateMListParsing(final String path) throws IOException {
+        final Socket socket = _openDataConnection_(FTPCmd.MLSD, path);
         final FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance(), configuration);
         if (socket == null) {
             return engine;
@@ -2280,9 +2280,9 @@ public class FTPClient extends FTP implements Configurable {
      * include milliseconds. See {@link #mlistDir()}
      * </p>
      *
-     * @param pathname The file or directory to list. Since the server may or may not expand glob expressions, using them here is not recommended and may well
+     * @param path The file or directory to list. Since the server may or may not expand glob expressions, using them here is not recommended and may well
      *                 cause this method to fail. Also, some servers treat a leading '-' as being an option. To avoid this interpretation, use an absolute
-     *                 pathname or prefix the pathname with ./ (Unix style servers). Some servers may support "--" as meaning end of options, in which case "--
+     *                 path or prefix the path with ./ (Unix style servers). Some servers may support "--" as meaning end of options, in which case "--
      *                 -xyz" should work.
      * @return The list of file information contained in the given path in the format determined by the autodetection mechanism
      * @throws FTPConnectionClosedException                                    If the FTP server prematurely closes the connection as a result of the client
@@ -2300,21 +2300,21 @@ public class FTPClient extends FTP implements Configurable {
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
      */
-    public FTPFile[] listFiles(final String pathname) throws IOException {
-        return initiateListParsing((String) null, pathname).getFiles();
+    public FTPFile[] listFiles(final String path) throws IOException {
+        return initiateListParsing((String) null, path).getFiles();
     }
 
     /**
      * Version of {@link #listFiles(String)} which allows a filter to be provided. For example: {@code listFiles("site", FTPFileFilters.DIRECTORY);}
      *
-     * @param pathname the initial path, may be null
+     * @param path the initial path, may be null
      * @param filter   the filter, non-null
      * @return the array of FTPFile entries.
      * @throws IOException on error
      * @since 2.2
      */
-    public FTPFile[] listFiles(final String pathname, final FTPFileFilter filter) throws IOException {
-        return initiateListParsing((String) null, pathname).getFiles(filter);
+    public FTPFile[] listFiles(final String path, final FTPFileFilter filter) throws IOException {
+        return initiateListParsing((String) null, path).getFiles(filter);
     }
 
     /**
@@ -2362,11 +2362,11 @@ public class FTPClient extends FTP implements Configurable {
 
     /**
      * Obtain a list of file names in a directory (or just the name of a given file, which is not particularly useful). This information is obtained through the
-     * NLST command. If the given pathname is a directory and contains no files, a zero length array is returned only if the FTP server returned a positive
+     * NLST command. If the given path is a directory and contains no files, a zero length array is returned only if the FTP server returned a positive
      * completion code, otherwise null is returned (the FTP server returned a 550 error No files found.). If the directory is not empty, an array of file names
-     * in the directory is returned. If the pathname corresponds to a file, only that file will be listed. The server may or may not expand glob expressions.
+     * in the directory is returned. If the path corresponds to a file, only that file will be listed. The server may or may not expand glob expressions.
      *
-     * @param pathname The file or directory to list. Warning: the server may treat a leading '-' as an option introducer. If so, try using an absolute path, or
+     * @param path The file or directory to list. Warning: the server may treat a leading '-' as an option introducer. If so, try using an absolute path, or
      *                 prefix the path with ./ (Unix style servers). Some servers may support "--" as meaning end of options, in which case "-- -xyz" should
      *                 work.
      * @return The list of file names contained in the given path. null if the list could not be obtained. If there are no file names in the directory, a
@@ -2376,9 +2376,9 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public String[] listNames(final String pathname) throws IOException {
+    public String[] listNames(final String path) throws IOException {
         final ArrayList<String> results = new ArrayList<>();
-        try (Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(pathname))) {
+        try (Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(path))) {
             if (socket == null) {
                 return null;
             }
@@ -2466,31 +2466,31 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Creates a new subdirectory on the FTP server in the current directory (if a relative pathname is given) or where specified (if an absolute pathname is
+     * Creates a new subdirectory on the FTP server in the current directory (if a relative path is given) or where specified (if an absolute path is
      * given).
      *
-     * @param pathname The pathname of the directory to create.
+     * @param path The path of the directory to create.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean makeDirectory(final String pathname) throws IOException {
-        return FTPReply.isPositiveCompletion(mkd(pathname));
+    public boolean makeDirectory(final String path) throws IOException {
+        return FTPReply.isPositiveCompletion(mkd(path));
     }
 
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last modification time of a file. The modification string should be in the ISO
      * 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in GMT, but not all FTP servers honor this.
      *
-     * @param pathname The file path to query.
+     * @param path The file path to query.
      * @return A Calendar representing the last file modification time, may be {@code null}. The Calendar timestamp will be null if a parse error occurs.
      * @throws IOException if an I/O error occurs.
      * @since 3.8.0
      */
-    public Calendar mdtmCalendar(final String pathname) throws IOException {
-        final String modificationTime = getModificationTime(pathname);
+    public Calendar mdtmCalendar(final String path) throws IOException {
+        final String modificationTime = getModificationTime(path);
         if (modificationTime != null) {
             return MLSxEntryParser.parseGMTdateTime(modificationTime);
         }
@@ -2501,16 +2501,16 @@ public class FTPClient extends FTP implements Configurable {
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last modification time of a file. The modification string should be in the ISO
      * 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in GMT, but not all FTP servers honor this.
      *
-     * @param pathname The file path to query.
+     * @param path The file path to query.
      * @return A FTPFile representing the last file modification time, may be {@code null}. The FTPFile timestamp will be null if a parse error occurs.
      * @throws IOException if an I/O error occurs.
      * @since 3.4
      */
-    public FTPFile mdtmFile(final String pathname) throws IOException {
-        final String modificationTime = getModificationTime(pathname);
+    public FTPFile mdtmFile(final String path) throws IOException {
+        final String modificationTime = getModificationTime(path);
         if (modificationTime != null) {
             final FTPFile file = new FTPFile();
-            file.setName(pathname);
+            file.setName(path);
             file.setRawListing(modificationTime);
             file.setTimestamp(MLSxEntryParser.parseGMTdateTime(modificationTime));
             return file;
@@ -2522,13 +2522,13 @@ public class FTPClient extends FTP implements Configurable {
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last modification time of a file. The modification string should be in the ISO
      * 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in GMT, but not all FTP servers honor this.
      *
-     * @param pathname The file path to query.
+     * @param path The file path to query.
      * @return An Instant representing the last file modification time, may be {@code null}. The Instant timestamp will be null if a parse error occurs.
      * @throws IOException if an I/O error occurs.
      * @since 3.9.0
      */
-    public Instant mdtmInstant(final String pathname) throws IOException {
-        final String modificationTime = getModificationTime(pathname);
+    public Instant mdtmInstant(final String path) throws IOException {
+        final String modificationTime = getModificationTime(path);
         if (modificationTime != null) {
             return MLSxEntryParser.parseGmtInstant(modificationTime);
         }
@@ -2570,38 +2570,38 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Generate a directory listing using the MLSD command.
      *
-     * @param pathname the directory name, may be {@code null}
+     * @param path the directory name, may be {@code null}
      * @return the array of file entries
      * @throws IOException on error
      * @since 3.0
      */
-    public FTPFile[] mlistDir(final String pathname) throws IOException {
-        return initiateMListParsing(pathname).getFiles();
+    public FTPFile[] mlistDir(final String path) throws IOException {
+        return initiateMListParsing(path).getFiles();
     }
 
     /**
      * Generate a directory listing using the MLSD command.
      *
-     * @param pathname the directory name, may be {@code null}
+     * @param path the directory name, may be {@code null}
      * @param filter   the filter to apply to the responses
      * @return the array of file entries
      * @throws IOException on error
      * @since 3.0
      */
-    public FTPFile[] mlistDir(final String pathname, final FTPFileFilter filter) throws IOException {
-        return initiateMListParsing(pathname).getFiles(filter);
+    public FTPFile[] mlistDir(final String path, final FTPFileFilter filter) throws IOException {
+        return initiateMListParsing(path).getFiles(filter);
     }
 
     /**
      * Gets file details using the MLST command
      *
-     * @param pathname the file or directory to list, may be {@code null}
+     * @param path the file or directory to list, may be {@code null}
      * @return the file details, may be {@code null}
      * @throws IOException on error
      * @since 3.0
      */
-    public FTPFile mlistFile(final String pathname) throws IOException {
-        final boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCmd.MLST, pathname));
+    public FTPFile mlistFile(final String path) throws IOException {
+        final boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCmd.MLST, path));
         if (success) {
             String reply = getReplyString(1);
             // some FTP server reply not contains space before fact(s)
@@ -2623,9 +2623,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Returns the pathname of the current working directory.
+     * Returns the path of the current working directory.
      *
-     * @return The pathname of the current working directory. If it cannot be obtained, returns null.
+     * @return The path of the current working directory. If it cannot be obtained, returns null.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
@@ -2750,15 +2750,15 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Removes a directory on the FTP server (if empty).
      *
-     * @param pathname The pathname of the directory to remove.
+     * @param path The path of the directory to remove.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean removeDirectory(final String pathname) throws IOException {
-        return FTPReply.isPositiveCompletion(rmd(pathname));
+    public boolean removeDirectory(final String path) throws IOException {
+        return FTPReply.isPositiveCompletion(rmd(path));
     }
 
     /**
@@ -3130,15 +3130,15 @@ public class FTPClient extends FTP implements Configurable {
      * An FTP server would indicate its support of this feature by including "MFMT" in its response to the FEAT command, which may be retrieved by
      * FTPClient.features()
      *
-     * @param pathname The file path for which last modified time is to be changed.
+     * @param path The file path for which last modified time is to be changed.
      * @param timeval  The timestamp to set to, in {@code yyyyMMDDhhmmss} format.
      * @return true if successfully set, false if not
      * @throws IOException if an I/O error occurs.
      * @since 2.2
      * @see <a href="https://tools.ietf.org/html/draft-somers-ftp-mfxx-04">https://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      */
-    public boolean setModificationTime(final String pathname, final String timeval) throws IOException {
-        return FTPReply.isPositiveCompletion(mfmt(pathname, timeval));
+    public boolean setModificationTime(final String path, final String timeval) throws IOException {
+        return FTPReply.isPositiveCompletion(mfmt(path, timeval));
     }
 
     /**
@@ -3410,15 +3410,15 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP SMNT command.
      *
-     * @param pathname The pathname to mount.
+     * @param path The path to mount.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean structureMount(final String pathname) throws IOException {
-        return FTPReply.isPositiveCompletion(smnt(pathname));
+    public boolean structureMount(final String path) throws IOException {
+        return FTPReply.isPositiveCompletion(smnt(path));
     }
 
     private Socket wrapOnDeflate(final Socket plainSocket) {
