@@ -101,6 +101,30 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
     </distributionManagement>
     <dependencies>
         <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.13</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>1.7.32</version>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.burningwave</groupId>
+            <artifactId>tools</artifactId>
+            <version>0.26.2</version>
+            <scope>test</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bctls-debug-jdk18on</artifactId>
+            <version>1.79</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
@@ -205,15 +229,46 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <skipTests>${skipUnitTests}</skipTests>
                     <excludes>
                         <exclude>**/*FunctionalTest.java</exclude>
                         <exclude>**/POP3*Test.java</exclude>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                        <exclude>**/*IT.java</exclude>
                     </excludes>
                     <environmentVariables>
                         <TRACE_CALLS>${commons.net.trace_calls}</TRACE_CALLS>
                         <ADD_LISTENER>${commons.net.add_listener}</ADD_LISTENER>
                     </environmentVariables>
                 </configuration>
+            </plugin>
+            <!-- Plugin Failsafe for integration-tests -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <executions>
+                <!-- Lancer avant la phase verify -->
+                <execution>
+                  <id>integration-tests</id>
+                  <phase>integration-test</phase>
+                  <goals>
+                    <goal>integration-test</goal>
+                  </goals>
+                </execution>
+                <execution>
+                  <id>verify-tests</id>
+                  <phase>verify</phase>
+                  <goals>
+                    <goal>verify</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <!-- Exécute uniquement les classes commençant ou terminant par IT -->
+                <includes>
+                  <include>**/*IntegrationTest.java</include>
+                </includes>
+              </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -384,6 +439,55 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <suppressionsLocation>${checkstyle.configdir}/checkstyle-suppressions.xml</suppressionsLocation>
                     <enableRulesSummary>false</enableRulesSummary>
                 </configuration>
+            </plugin>
+            <plugin>
+              <groupId>io.fabric8</groupId>
+              <artifactId>docker-maven-plugin</artifactId>
+              <version>0.45.1</version>
+              <configuration>
+                <images>
+                  <image>
+                    <name>mguichar/filezilla-server</name>
+                    <run>
+                      <ports>
+                        <port>21:21</port>
+                        <port>14148:14148</port>
+                        <port>49152:49152</port>
+                        <port>49153:49153</port>
+                        <port>49154:49154</port>
+                        <port>49155:49155</port>
+                        <port>49156:49156</port>
+                        <port>49157:49157</port>
+                        <port>49158:49158</port>
+                        <port>49159:49159</port>
+                        <port>49160:49160</port>
+                      </ports>
+                      <volumes>
+                        <bind>
+                          <volume>target/test-classes/org/apache/commons/net/test-data:/usr/test</volume>
+                          <volume>target/test-classes/org/apache/commons/net/filezillaserver/conf:/opt/filezilla-server/etc</volume>
+                        </bind>
+                      </volumes>
+                    </run>
+                  </image>
+                </images>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>start-docker-container</id>
+                  <phase>pre-integration-test</phase>
+                  <goals>
+                    <goal>start</goal>
+                  </goals>
+                </execution>
+                <execution>
+                  <id>stop-docker-container</id>
+                  <phase>post-integration-test</phase>
+                  <goals>
+                    <goal>stop</goal>
+                  </goals>
+                </execution>
+              </executions>
             </plugin>
         </plugins>
     </build>
