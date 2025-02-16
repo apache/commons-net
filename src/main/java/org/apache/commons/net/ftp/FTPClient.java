@@ -267,7 +267,6 @@ import org.apache.commons.net.util.NetConstants;
  */
 public class FTPClient extends FTP implements Configurable {
 
-    // @since 3.0
     private static final class CSL implements CopyStreamListener {
 
         private final FTPClient parent;
@@ -910,11 +909,9 @@ public class FTPClient extends FTP implements Configurable {
                 } else {
                     input = getBufferedInputStream(socket.getInputStream());
                 }
-
                 if (DurationUtils.isPositive(controlKeepAliveTimeout)) {
                     csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
                 }
-
                 // Treat everything else as binary for now
                 Util.copyStream(input, local, getBufferSize(), CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl), false);
             } finally {

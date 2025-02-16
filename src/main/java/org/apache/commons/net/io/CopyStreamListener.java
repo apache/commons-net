@@ -14,17 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.net.io;
 
 import java.util.EventListener;
 
 /**
- * The CopyStreamListener class can accept CopyStreamEvents to keep track of the progress of a stream copying operation. However, it is currently not used that
- * way within NetComponents for performance reasons. Rather the bytesTransferred(long, int) method is called directly rather than passing an event to
- * bytesTransferred(CopyStreamEvent), saving the creation of a CopyStreamEvent instance. Also, the only place where CopyStreamListener is currently used within
- * NetComponents is in the static methods of the uninstantiable org.apache.commons.io.Util class, which would preclude the use of addCopyStreamListener and
- * removeCopyStreamListener methods. However, future additions may use the JavaBean event model, which is why the hooks have been included from the beginning.
+ * Accepts {@link CopyStreamEvent}s to track the progress of a stream copying operation. However, it is currently not used that way within Net for performance
+ * reasons. Rather, the bytesTransferred(long, int) method is called directly rather than passing an event to bytesTransferred(CopyStreamEvent), saving the
+ * creation of a CopyStreamEvent instance. Also, the only place where CopyStreamListener is currently used within Net is in the static methods of the
+ * uninstantiable org.apache.commons.io.Util class, which would preclude the use of addCopyStreamListener and removeCopyStreamListener methods. However, future
+ * additions may use the JavaBean event model, which is why the hooks have been included from the beginning.
  *
  *
  * @see CopyStreamEvent
@@ -33,8 +32,8 @@ import java.util.EventListener;
  */
 public interface CopyStreamListener extends EventListener {
     /**
-     * This method is invoked by a CopyStreamEvent source after copying a block of bytes from a stream. The CopyStreamEvent will contain the total number of
-     * bytes transferred so far and the number of bytes transferred in the last write.
+     * Accepts a source event after copying a block of bytes from a stream. The CopyStreamEvent will contain the total number of bytes transferred so far and
+     * the number of bytes transferred in the last write.
      *
      * @param event The CopyStreamEvent fired by the copying of a block of bytes.
      */
