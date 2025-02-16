@@ -599,6 +599,21 @@ public class FTP extends SocketClient {
         return getReply(true);
     }
 
+    /**
+     * Reads the reply line.
+     * <p>
+     * Syntax:
+     * </p>
+     *
+     * <pre>{@code
+     * error-response = error-code SP *TCHAR CRLF
+     * error-code     = ("4" / "5") 2DIGIT
+     * }</pre>
+     *
+     * @param reportReply whether to fire a reply received event.
+     * @return the reply code.
+     * @throws IOException If an I/O error occurs.
+     */
     private int getReply(final boolean reportReply) throws IOException {
         final int length;
         _newReplyString = true;
@@ -636,13 +651,8 @@ public class FTP extends SocketClient {
                     // returning too soon after encountering a naked CR or some other
                     // anomaly.
                 } while (isStrictMultilineParsing() ? strictCheck(line, code) : lenientCheck(line));
-            } else if (isStrictReplyParsing()) {
-                if (length == REPLY_CODE_LEN + 1) { // expecting some text
-                    throw new MalformedServerReplyException("Truncated server reply: '" + line + "'");
-                }
-                if (sep != SP) {
-                    throw new MalformedServerReplyException("Invalid server reply: '" + line + "'");
-                }
+            } else if (isStrictReplyParsing() && sep != SP) {
+                throw new MalformedServerReplyException("Invalid server reply: '" + line + "'");
             }
         } else if (isStrictReplyParsing()) {
             throw new MalformedServerReplyException("Truncated server reply: '" + line + "'");
@@ -987,7 +997,7 @@ public class FTP extends SocketClient {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
-    public int opts(final String commandName, String commandOptions) throws IOException {
+    public int opts(final String commandName, final String commandOptions) throws IOException {
         return sendCommand(FTPCmd.OPTS, commandName + SP + commandOptions);
     }
 
