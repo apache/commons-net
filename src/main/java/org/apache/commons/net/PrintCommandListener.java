@@ -180,7 +180,12 @@ public class PrintCommandListener implements ProtocolCommandListener {
         if (directionMarker) {
             writer.print("< ");
         }
-        writer.print(event.getMessage());
+        final String message = event.getMessage();
+        final char last = message.charAt(message.length() - 1);
+        writer.print(message);
+        if (last != '\r' && last != '\n') {
+            writer.println();
+        }
         writer.flush();
     }
 }
