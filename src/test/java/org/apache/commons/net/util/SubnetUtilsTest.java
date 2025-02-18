@@ -36,6 +36,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.FieldSource;
 
 /**
@@ -345,12 +346,15 @@ public class SubnetUtilsTest {
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("0.0.0.0", "0.0.0.1"));
     }
 
-    @Test
-    public void testNET641() {
-        assertFalse(new SubnetUtils("192.168.1.0/00").getInfo().isInRange("0.0.0.0"));
-        assertFalse(new SubnetUtils("192.168.1.0/30").getInfo().isInRange("0.0.0.0"));
-        assertFalse(new SubnetUtils("192.168.1.0/31").getInfo().isInRange("0.0.0.0"));
-        assertFalse(new SubnetUtils("192.168.1.0/32").getInfo().isInRange("0.0.0.0"));
+    @ParameterizedTest
+    @CsvSource(value = {
+            "192.168.1.0/00, 0.0.0.0",
+            "192.168.1.0/30, 0.0.0.0",
+            "192.168.1.0/31, 0.0.0.0",
+            "192.168.1.0/32, 0.0.0.0"
+    })
+    public void testNET641(String cidrNotation, String address) {
+        assertFalse(new SubnetUtils(cidrNotation).getInfo().isInRange(address));
     }
 
     @Test
