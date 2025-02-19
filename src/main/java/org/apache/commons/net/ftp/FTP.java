@@ -985,8 +985,30 @@ public class FTP extends SocketClient {
      * FTP request Syntax:
      * </p>
      * <pre>{@code
-     * opts             = opts-cmd SP command-name
-     *                         [ SP command-options ] CRLF
+     * opts             = opts-cmd SP command-name [ SP command-options ] CRLF
+     * opts-cmd         = "opts"
+     * command-name     = <any FTP command which allows option setting>
+     * command-options  = <format specified by individual FTP command>
+     * }</pre>
+     * @param commandNameOptions The OPTS command name and options.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
+     * @since 3.12.0
+     */
+    public int opts(final String... commandNameOptions) throws IOException {
+        return sendCommand(FTPCmd.OPTS, String.join(" ", commandNameOptions));
+    }
+
+    /**
+     * A convenience method to send the FTP OPTS command to the server, receive the reply, and return the reply code.
+     * <p>
+     * FTP request Syntax:
+     * </p>
+     * <pre>{@code
+     * opts             = opts-cmd SP command-name [ SP command-options ] CRLF
      * opts-cmd         = "opts"
      * command-name     = <any FTP command which allows option setting>
      * command-options  = <format specified by individual FTP command>
@@ -998,9 +1020,10 @@ public class FTP extends SocketClient {
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
+     * @since 3.12.0
      */
     public int opts(final String commandName, final String commandOptions) throws IOException {
-        return sendCommand(FTPCmd.OPTS, commandName + SP + commandOptions);
+        return opts(commandName + SP + commandOptions);
     }
 
     /**

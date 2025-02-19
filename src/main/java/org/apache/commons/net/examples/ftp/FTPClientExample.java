@@ -71,6 +71,7 @@ public final class FTPClientExample {
             + "\t-L - use lenient future dates (server dates may be up to 1 day into future)\n"
             + "\t-m - list file details using MDTM (remote is used as the path if provided)\n"
             + "\t-n - list file names using NLST (remote is used as the path if provided)\n"
+            + "\t--OPTS \"opts-cmd command-name command-options\" - Sends the OPTS\n"
             + "\t-p true|false|protocol[,true|false] - use FTPSClient with the specified protocol and/or isImplicit setting\n"
             + "\t-s - store file on server (upload)\n"
             + "\t-S - systemType set server system type (e.g. Unix VMS WINDOWS)\n"
@@ -131,6 +132,7 @@ public final class FTPClientExample {
         String serverType = null;
         String defaultDateFormat = null;
         String recentDateFormat = null;
+        String opts = null;
 
         int base = 0;
         for (base = 0; base < args.length; base++) {
@@ -171,6 +173,8 @@ public final class FTPClientExample {
                 minParams = 3;
             } else if (args[base].equals("-L")) {
                 lenient = true;
+            } else if (args[base].equals("--OPTS")) {
+                opts = args[++base];
             } else if (args[base].equals("-n")) {
                 listNames = true;
                 minParams = 3;
@@ -359,6 +363,9 @@ public final class FTPClientExample {
             }
 
             System.out.println("Remote system is " + ftp.getSystemType());
+            if (opts != null) {
+                ftp.opts(opts);
+            }
 
             if (binaryTransfer) {
                 ftp.setFileType(FTP.BINARY_FILE_TYPE);
