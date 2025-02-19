@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.Arrays;
 
@@ -124,7 +125,7 @@ public final class FTPClientExample {
         String proxyPassword = null;
         String user = null;
         String password = null;
-        String encoding = null;
+        Charset encoding = null;
         String serverTimeZoneId = null;
         String displayTimeZoneId = null;
         String serverType = null;
@@ -151,7 +152,7 @@ public final class FTPClientExample {
             } else if (args[base].equals("-e")) {
                 useEpsvWithIPv4 = true;
             } else if (args[base].equals("-E")) {
-                encoding = args[++base];
+                encoding = Charset.forName(args[++base]);
             } else if (args[base].equals("-f")) {
                 feat = true;
                 minParams = 3;
