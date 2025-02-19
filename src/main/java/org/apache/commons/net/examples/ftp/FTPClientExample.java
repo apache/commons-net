@@ -47,29 +47,44 @@ import org.apache.commons.net.util.TrustManagerUtils;
  */
 public final class FTPClientExample {
 
+    /**
+     * Command line usage.
+     */
+    // @formatter:off
     public static final String USAGE = "Expected Parameters: [options] <hostname> <user> <password> [<remote file> [<local file>]]\n"
-            + "\nDefault behavior is to download a file and use ASCII transfer mode.\n" + "\t-a - use local active mode (default is local passive)\n"
-            + "\t-A - anonymous login (omit user and password parameters)\n" + "\t-b - use binary transfer mode\n"
+            + "\nDefault behavior is to download a file and use ASCII transfer mode.\n"
+            + "\t-a - use local active mode (default is local passive)\n"
+            + "\t-A - anonymous login (omit user and password parameters)\n"
+            + "\t-b - use binary transfer mode\n"
             + "\t-c cmd - issue arbitrary command (remote is used as a parameter if provided) \n"
-            + "\t-d - list directory details using MLSD (remote is used as the path if provided)\n" + "\t-e - use EPSV with IPv4 (default false)\n"
-            + "\t-E - encoding to use for control channel\n" + "\t-f - issue FEAT command (remote and local files are ignored)\n"
-            + "\t-h - list hidden files (applies to -l and -n only)\n" + "\t-i - issue SIZE command for a file\n"
-            + "\t-k secs - use keep-alive timer (setControlKeepAliveTimeout)\n" + "\t-l - list files using LIST (remote is used as the path if provided)\n"
+            + "\t-d - list directory details using MLSD (remote is used as the path if provided)\n"
+            + "\t-e - use EPSV with IPv4 (default false)\n"
+            + "\t-E - encoding to use for control channel\n"
+            + "\t-f - issue FEAT command (remote and local files are ignored)\n"
+            + "\t-h - list hidden files (applies to -l and -n only)\n"
+            + "\t-i - issue SIZE command for a file\n"
+            + "\t-k secs - use keep-alive timer (setControlKeepAliveTimeout)\n"
+            + "\t-l - list files using LIST (remote is used as the path if provided)\n"
             + "\t     Files are listed twice: first in raw mode, then as the formatted parsed data.\n"
             + "\t     N.B. if the wrong server-type is used, output may be lost. Use -U or -S as necessary.\n"
             + "\t-L - use lenient future dates (server dates may be up to 1 day into future)\n"
             + "\t-m - list file details using MDTM (remote is used as the path if provided)\n"
             + "\t-n - list file names using NLST (remote is used as the path if provided)\n"
             + "\t-p true|false|protocol[,true|false] - use FTPSClient with the specified protocol and/or isImplicit setting\n"
-            + "\t-s - store file on server (upload)\n" + "\t-S - systemType set server system type (e.g. Unix VMS WINDOWS)\n"
-            + "\t-t - list file details using MLST (remote is used as the path if provided)\n" + "\t-U - save unparseable responses\n"
+            + "\t-s - store file on server (upload)\n"
+            + "\t-S - systemType set server system type (e.g. Unix VMS WINDOWS)\n"
+            + "\t-t - list file details using MLST (remote is used as the path if provided)\n"
+            + "\t-U - save unparseable responses\n"
             + "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n"
             + "\t-T  all|valid|none - use one of the built-in TrustManager implementations (none = JVM default)\n"
             + "\t-y format - set default date format string\n" + "\t-Y format - set recent date format string\n"
             + "\t-Z timezone - set the server time zone for parsing LIST responses\n"
             + "\t-z timezone - set the time zone for displaying MDTM, LIST, MLSD, MLST responses\n"
-            + "\t-PrH server[:port] - HTTP Proxy host and optional port[80] \n" + "\t-PrU user - HTTP Proxy server user\n"
-            + "\t-PrP password - HTTP Proxy server password\n" + "\t-# - add hash display during transfers\n";
+            + "\t-PrH server[:port] - HTTP Proxy host and optional port[80] \n"
+            + "\t-PrU user - HTTP Proxy server user\n"
+            + "\t-PrP password - HTTP Proxy server password\n"
+            + "\t-# - add hash display during transfers\n";
+    // @formatter:on
 
     private static CopyStreamListener createListener() {
         return new CopyStreamListener() {
