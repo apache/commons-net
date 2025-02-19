@@ -28,9 +28,11 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+import org.apache.commons.io.Charsets;
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
@@ -1277,6 +1279,19 @@ public class FTP extends SocketClient {
         send(message);
         fireCommandSent(command, message);
         return getReply();
+    }
+
+    /**
+     * Sets the character encoding to be used by the FTP control connection. Some FTP servers require that commands be issued in a non-ASCII encoding like
+     * UTF-8 so that file names with multi-byte character representations (e.g, Big 8) can be specified.
+     * <p>
+     * Please note that this has to be set before the connection is established.
+     * </p>
+     * @param charset The new character encoding for the control connection.
+     * @since 3.12.0
+     */
+    public void setControlEncoding(final Charset charset) {
+        _controlEncoding = Charsets.toCharset(charset).name();
     }
 
     /**
