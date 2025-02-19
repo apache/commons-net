@@ -36,7 +36,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.FieldSource;
 
 /**
@@ -78,6 +77,12 @@ public class SubnetUtilsTest {
             ImmutablePair.of("192.168.0.1/31", 2L),
             ImmutablePair.of("192.168.0.1/32", 1L));
     // @formatter:on
+
+    private static final List<ImmutablePair<String, String>> VALUE_SETS_NET641 = Arrays.asList(
+            ImmutablePair.of("192.168.1.0/00", "0.0.0.0"),
+            ImmutablePair.of("192.168.1.0/30", "0.0.0.0"),
+            ImmutablePair.of("192.168.1.0/31", "0.0.0.0"),
+            ImmutablePair.of("192.168.1.0/32", "0.0.0.0"));
 
     @Test
     public void testAddresses() {
@@ -347,13 +352,10 @@ public class SubnetUtilsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {
-            "192.168.1.0/00, 0.0.0.0",
-            "192.168.1.0/30, 0.0.0.0",
-            "192.168.1.0/31, 0.0.0.0",
-            "192.168.1.0/32, 0.0.0.0"
-    })
-    public void testNET641(String cidrNotation, String address) {
+    @FieldSource("VALUE_SETS_NET641")
+    public void testNET641(final ImmutablePair<String, String> pair) {
+        final String cidrNotation = pair.getKey();
+        final String address = pair.getValue();
         assertFalse(new SubnetUtils(cidrNotation).getInfo().isInRange(address));
     }
 
