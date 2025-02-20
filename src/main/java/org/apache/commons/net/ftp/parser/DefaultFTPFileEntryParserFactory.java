@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.ftp.parser;
 
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.apache.commons.net.ftp.Configurable;
@@ -127,7 +128,7 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
         }
 
         if (parser == null) { // Now try for aliases
-            final String ukey = key.toUpperCase(java.util.Locale.ENGLISH);
+            final String ukey = key.toUpperCase(Locale.ENGLISH);
             if (ukey.contains(FTPClientConfig.SYST_UNIX_TRIM_LEADING)) {
                 parser = new UnixFTPEntryParser(config, true);
             }
