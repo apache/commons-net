@@ -535,7 +535,7 @@ public class FTPClient extends FTP implements Configurable {
     private int activeMaxPort;
     private InetAddress activeExternalHost;
 
-    /** Overrides __activeExternalHost in EPRT/PORT commands. */
+    /** Overrides activeExternalHost in EPRT/PORT commands. */
     private InetAddress reportActiveExternalHost;
 
     /** The address to bind to on passive connections, if necessary. */
@@ -553,7 +553,10 @@ public class FTPClient extends FTP implements Configurable {
 
     private FTPFileEntryParserFactory parserFactory;
 
-    private int bufferSize; // for buffered data streams
+    /**
+     * For buffered data streams.
+     */
+    private int bufferSize;
 
     private int sendDataSocketBufferSize;
 
@@ -561,32 +564,46 @@ public class FTPClient extends FTP implements Configurable {
 
     private boolean listHiddenFiles;
 
-    private boolean useEPSVwithIPv4; // whether to attempt EPSV with an IPv4 connection
+    /**
+     * Whether to attempt EPSV with an IPv4 connection.
+     */
+    private boolean useEPSVwithIPv4;
 
-    // __systemName is a cached value that should not be referenced directly
-    // except when assigned in getSystemName and __initDefaults.
+    /**
+     * A cached value that should not be referenced directly except when assigned in getSystemName and initDefaults.
+     */
     private String systemName;
 
-    // __entryParser is a cached value that should not be referenced directly
-    // except when assigned in listFiles(String, String) and __initDefaults.
+    /**
+     * A cached value that should not be referenced directly except when assigned in listFiles(String, String) and initDefaults.
+     */
     private FTPFileEntryParser entryParser;
 
-    // Key used to create the parser; necessary to ensure that the parser type is not ignored
+    /**
+     * Key used to create the parser; necessary to ensure that the parser type is not ignored.
+     */
     private String entryParserKey;
 
     private FTPClientConfig configuration;
 
-    // Listener used by store/retrieve methods to handle keepalive
+    /**
+     * Listener used by store/retrieve methods to handle keepalive.
+     */
     private CopyStreamListener copyStreamListener;
 
-    // How long to wait before sending another control keep-alive message
+    /**
+     * How long to wait before sending another control keep-alive message.
+     */
     private Duration controlKeepAliveTimeout = Duration.ZERO;
 
-    // How long to wait for keepalive message replies before continuing
-    // Most FTP servers don't seem to support concurrent control and data connection usage
+    /**
+     * How long to wait for keepalive message replies before continuing. Most FTP servers don't seem to support concurrent control and data connection usage.
+     */
     private Duration controlKeepAliveReplyTimeout = Duration.ofSeconds(1);
 
-    // Debug counts for NOOP acks
+    /**
+     * Debug counts for NOOP acks.
+     */
     private int[] cslDebug;
 
     /**
