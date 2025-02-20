@@ -515,14 +515,8 @@ public class NNTPClient extends NNTP {
         if (!NNTPReply.isPositiveCompletion(sendCommand("LIST", "OVERVIEW.FMT"))) {
             return null;
         }
-
         try (BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
-            String line;
-            final ArrayList<String> list = new ArrayList<>();
-            while ((line = reader.readLine()) != null) {
-                list.add(line);
-            }
-            return list.toArray(NetConstants.EMPTY_STRING_ARRAY);
+            return IOUtils.readLines(reader).toArray(NetConstants.EMPTY_STRING_ARRAY);
         }
     }
 
