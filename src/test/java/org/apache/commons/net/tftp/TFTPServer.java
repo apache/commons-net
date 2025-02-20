@@ -34,6 +34,7 @@ import java.time.Duration;
 import java.util.Enumeration;
 import java.util.HashSet;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.io.FromNetASCIIOutputStream;
 import org.apache.commons.net.io.ToNetASCIIInputStream;
 
@@ -239,13 +240,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
                     }
                 }
             } finally {
-                try {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                } catch (final IOException e) {
-                    // noop
-                }
+                IOUtils.closeQuietly(inputStream);
             }
         }
 
@@ -371,9 +366,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
                     }
                 }
             } finally {
-                if (bos != null) {
-                    bos.close();
-                }
+                IOUtils.close(bos);
             }
         }
 

@@ -388,11 +388,7 @@ public class FTPClient extends FTP implements Configurable {
                 } catch (final IOException e) {
                     // Ignored
                 } finally {
-                    try {
-                        resourceAsStream.close();
-                    } catch (final IOException e) {
-                        // Ignored
-                    }
+                    IOUtils.closeQuietly(resourceAsStream);
                 }
             }
             PROPERTIES = p;

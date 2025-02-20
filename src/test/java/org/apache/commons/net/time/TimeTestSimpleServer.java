@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.apache.commons.io.IOUtils;
+
 /**
  * The TimetSimpleServer class is a simple TCP implementation of a server for the Time Protocol described in RFC 868.
  * <p>
@@ -90,13 +92,7 @@ public class TimeTestSimpleServer implements Runnable {
             } catch (final IOException e) {
                 // ignored
             } finally {
-                if (socket != null) {
-                    try {
-                        socket.close(); // force closing of the socket
-                    } catch (final IOException e) {
-                        System.err.println("close socket error: " + e);
-                    }
-                }
+                IOUtils.closeQuietly(socket, e -> System.err.println("close socket error: " + e));
             }
         }
     }
