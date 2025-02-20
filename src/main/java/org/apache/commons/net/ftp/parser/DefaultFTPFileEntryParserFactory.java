@@ -128,28 +128,28 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
         }
 
         if (parser == null) { // Now try for aliases
-            final String ukey = key.toUpperCase(Locale.ENGLISH);
-            if (ukey.contains(FTPClientConfig.SYST_UNIX_TRIM_LEADING)) {
+            final String upperKey = key.toUpperCase(Locale.ENGLISH);
+            if (upperKey.contains(FTPClientConfig.SYST_UNIX_TRIM_LEADING)) {
                 parser = new UnixFTPEntryParser(config, true);
             }
             // must check this after SYST_UNIX_TRIM_LEADING as it is a substring of it
-            else if (ukey.contains(FTPClientConfig.SYST_UNIX)) {
+            else if (upperKey.contains(FTPClientConfig.SYST_UNIX)) {
                 parser = new UnixFTPEntryParser(config, false);
-            } else if (ukey.contains(FTPClientConfig.SYST_VMS)) {
+            } else if (upperKey.contains(FTPClientConfig.SYST_VMS)) {
                 parser = new VMSVersioningFTPEntryParser(config);
-            } else if (ukey.contains(FTPClientConfig.SYST_NT)) {
+            } else if (upperKey.contains(FTPClientConfig.SYST_NT)) {
                 parser = createNTFTPEntryParser(config);
-            } else if (ukey.contains(FTPClientConfig.SYST_OS2)) {
+            } else if (upperKey.contains(FTPClientConfig.SYST_OS2)) {
                 parser = new OS2FTPEntryParser(config);
-            } else if (ukey.contains(FTPClientConfig.SYST_OS400) || ukey.contains(FTPClientConfig.SYST_AS400)) {
+            } else if (upperKey.contains(FTPClientConfig.SYST_OS400) || upperKey.contains(FTPClientConfig.SYST_AS400)) {
                 parser = createOS400FTPEntryParser(config);
-            } else if (ukey.contains(FTPClientConfig.SYST_MVS)) {
+            } else if (upperKey.contains(FTPClientConfig.SYST_MVS)) {
                 parser = new MVSFTPEntryParser(); // Does not currently support config parameter
-            } else if (ukey.contains(FTPClientConfig.SYST_NETWARE)) {
+            } else if (upperKey.contains(FTPClientConfig.SYST_NETWARE)) {
                 parser = new NetwareFTPEntryParser(config);
-            } else if (ukey.contains(FTPClientConfig.SYST_MACOS_PETER)) {
+            } else if (upperKey.contains(FTPClientConfig.SYST_MACOS_PETER)) {
                 parser = new MacOsPeterFTPEntryParser(config);
-            } else if (ukey.contains(FTPClientConfig.SYST_L8)) {
+            } else if (upperKey.contains(FTPClientConfig.SYST_L8)) {
                 // L8 normally means Unix, but move it to the end for some L8 systems that aren't.
                 // This check should be last!
                 parser = new UnixFTPEntryParser(config);
