@@ -131,7 +131,7 @@ public final class FTPClientExample {
         int minParams = 5; // listings require 3 params
         String protocol = null; // SSL protocol
         String doCommand = null;
-        String trustmgr = null;
+        String trustManager = null;
         String proxyHost = null;
         int proxyPort = 80;
         String proxyUser = null;
@@ -202,7 +202,7 @@ public final class FTPClientExample {
             } else if (args[base].equals("-w")) {
                 controlKeepAliveReplyTimeoutMillis = Integer.parseInt(args[++base]);
             } else if (args[base].equals("-T")) {
-                trustmgr = args[++base];
+                trustManager = args[++base];
             } else if (args[base].equals("-y")) {
                 defaultDateFormat = args[++base];
             } else if (args[base].equals("-Y")) {
@@ -287,8 +287,8 @@ public final class FTPClientExample {
                 }
             }
             ftp = ftps;
-            if (trustmgr != null) {
-                switch (trustmgr) {
+            if (trustManager != null) {
+                switch (trustManager) {
                 case "all":
                     ftps.setTrustManager(TrustManagerUtils.getAcceptAllTrustManager());
                     break;
