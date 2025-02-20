@@ -18,7 +18,6 @@ package org.apache.commons.net.ftp;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Random;
@@ -2396,16 +2396,13 @@ public class FTPClient extends FTP implements Configurable {
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
     public String[] listNames(final String path) throws IOException {
-        final ArrayList<String> results = new ArrayList<>();
+        final List<String> results;
         try (Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(path))) {
             if (socket == null) {
                 return null;
             }
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    results.add(line);
-                }
+            try (InputStream in = socket.getInputStream()) {
+                results = IOUtils.readLines(in, getControlEncoding());
             }
         }
         if (completePendingCommand()) {
