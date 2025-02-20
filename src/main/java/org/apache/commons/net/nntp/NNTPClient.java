@@ -23,8 +23,10 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.io.DotTerminatedMessageReader;
 import org.apache.commons.net.io.DotTerminatedMessageWriter;
@@ -436,25 +438,11 @@ public class NNTPClient extends NNTP {
         if (!NNTPReply.isPositiveCompletion(newnews(query.getNewsgroups(), query.getDate(), query.getTime(), query.isGMT(), query.getDistributions()))) {
             return null;
         }
-
-        final Vector<String> list = new Vector<>();
+        List<String> list = new ArrayList<>();
         try (BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                list.addElement(line);
-            }
+            list = IOUtils.readLines(reader);
         }
-
-        final int size = list.size();
-        if (size < 1) {
-            return NetConstants.EMPTY_STRING_ARRAY;
-        }
-
-        final String[] result = new String[size];
-        list.copyInto(result);
-
-        return result;
+        return list.toArray(NetConstants.EMPTY_STRING_ARRAY);
     }
 
     /**
