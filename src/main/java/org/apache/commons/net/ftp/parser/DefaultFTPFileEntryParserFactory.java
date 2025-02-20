@@ -64,8 +64,7 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
      */
     @Override
     public FTPFileEntryParser createFileEntryParser(final FTPClientConfig config) throws ParserInitializationException {
-        final String key = config.getServerSystemKey();
-        return createFileEntryParser(key, config);
+        return createFileEntryParser(config.getServerSystemKey(), config);
     }
 
     /**
