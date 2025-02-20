@@ -88,6 +88,18 @@ public final class FTPClientExample {
             + "\t-# - add hash display during transfers\n";
     // @formatter:on
 
+    private static void configure(final FTPClient ftp, final FTPClientConfig config, final String defaultDateFormat, final String recentDateFormat,
+            final boolean saveUnparseable) {
+        config.setUnparseableEntries(saveUnparseable);
+        if (defaultDateFormat != null) {
+            config.setDefaultDateFormatStr(defaultDateFormat);
+        }
+        if (recentDateFormat != null) {
+            config.setRecentDateFormatStr(recentDateFormat);
+        }
+        ftp.configure(config);
+    }
+
     private static CopyStreamListener createListener() {
         return new CopyStreamListener() {
             private long megsTotal;
@@ -315,14 +327,7 @@ public final class FTPClientExample {
         } else {
             config = new FTPClientConfig();
         }
-        config.setUnparseableEntries(saveUnparseable);
-        if (defaultDateFormat != null) {
-            config.setDefaultDateFormatStr(defaultDateFormat);
-        }
-        if (recentDateFormat != null) {
-            config.setRecentDateFormatStr(recentDateFormat);
-        }
-        ftp.configure(config);
+        configure(ftp, config, defaultDateFormat, recentDateFormat, saveUnparseable);
 
         try {
             final int reply;
@@ -363,6 +368,9 @@ public final class FTPClientExample {
             }
 
             System.out.println("Remote system is " + ftp.getSystemType());
+            if (!ftp.getSystemType().contains(config.getServerSystemKey())) {
+                configure(ftp, new FTPClientConfig(ftp.getSystemType()), defaultDateFormat, recentDateFormat, saveUnparseable);
+            }
             if (opts != null) {
                 ftp.opts(opts);
             }
