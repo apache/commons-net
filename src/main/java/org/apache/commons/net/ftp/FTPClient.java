@@ -635,11 +635,7 @@ public class FTPClient extends FTP implements Configurable {
         dataTimeout = Duration.ofMillis(-1);
         remoteVerificationEnabled = true;
         parserFactory = new DefaultFTPFileEntryParserFactory();
-        configuration = null;
-        listHiddenFiles = false;
-        useEPSVwithIPv4 = false;
         random = new Random();
-        passiveLocalHost = null;
     }
 
     @Override
