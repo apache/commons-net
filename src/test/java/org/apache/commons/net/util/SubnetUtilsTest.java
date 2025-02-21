@@ -521,7 +521,6 @@ public class SubnetUtilsTest {
 
     @Test
     public void testZeroAddressAndCidr() {
-        final SubnetUtils snu = new SubnetUtils("0.0.0.0/0");
-        assertNotNull(snu);
+        testSubnetAddressStream("0.0.0.0/0", 0);
     }
 }
