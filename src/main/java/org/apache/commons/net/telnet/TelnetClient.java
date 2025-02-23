@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.Duration;
 
+import org.apache.commons.io.IOUtils;
+
 /**
  * The TelnetClient class implements the simple network virtual terminal (NVT) for the Telnet protocol according to RFC 854. It does not implement any of the
  * extra Telnet options because it is meant to be used within a Java program providing automated access to Telnet accessible resources.
@@ -162,12 +164,8 @@ public class TelnetClient extends Telnet {
     @Override
     public void disconnect() throws IOException {
         try {
-            if (input != null) {
-                input.close();
-            }
-            if (output != null) {
-                output.close();
-            }
+            IOUtils.close(input);
+            IOUtils.close(output);
         } finally { // NET-594
             output = null;
             input = null;

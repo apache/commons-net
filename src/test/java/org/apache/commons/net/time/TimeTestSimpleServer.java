@@ -116,11 +116,7 @@ public class TimeTestSimpleServer implements Runnable {
     public void stop() {
         running = false;
         if (server != null) {
-            try {
-                server.close(); // force closing of the socket
-            } catch (final IOException e) {
-                System.err.println("close socket error: " + e);
-            }
+            IOUtils.closeQuietly(server, e -> System.err.println("close socket error: " + e));
             server = null;
         }
     }

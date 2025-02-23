@@ -38,6 +38,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ProtocolCommandEvent;
 import org.apache.commons.net.imap.IMAP;
@@ -203,9 +204,7 @@ public final class IMAPExportMbox {
         }
 
         public void close() throws IOException {
-            if (bufferedWriter != null) {
-                bufferedWriter.close();
-            }
+            IOUtils.close(bufferedWriter);
         }
     }
 

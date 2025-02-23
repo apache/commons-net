@@ -22,6 +22,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.apache.commons.io.IOUtils;
+
 /**
  * Simple TCP server. Waits for connections on a TCP port in a separate thread.
  */
@@ -83,30 +85,17 @@ public class TelnetTestSimpleServer implements Runnable {
                     } catch (final Exception e) {
                         System.err.println("Exception in wait, " + e.getMessage());
                     }
-                    try {
-                        clientSocket.close();
-                    } catch (final Exception e) {
-                        System.err.println("Exception in close, " + e.getMessage());
-                    }
+                    IOUtils.close(clientSocket, e -> System.err.println("Exception in close, " + e.getMessage()));
                 }
             } catch (final IOException e) {
                 bError = true;
             }
         }
-
-        try {
-            serverSocket.close();
-        } catch (final Exception e) {
-            System.err.println("Exception in close, " + e.getMessage());
-        }
+        IOUtils.closeQuietly(serverSocket, e -> System.err.println("Exception in close, " + e.getMessage()));
     }
 
     public void stop() {
         listener.interrupt();
-        try {
-            serverSocket.close();
-        } catch (final Exception e) {
-            System.err.println("Exception in close, " + e.getMessage());
-        }
+        IOUtils.closeQuietly(serverSocket, e -> System.err.println("Exception in close, " + e.getMessage()));
     }
 }

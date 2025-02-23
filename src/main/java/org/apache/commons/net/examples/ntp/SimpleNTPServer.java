@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ntp.NtpUtils;
 import org.apache.commons.net.ntp.NtpV3Impl;
 import org.apache.commons.net.ntp.NtpV3Packet;
@@ -197,10 +198,9 @@ public class SimpleNTPServer implements Runnable {
      */
     public void stop() {
         running = false;
-        if (socket != null) {
-            socket.close(); // force closing of the socket
-            socket = null;
-        }
+        // force closing of the socket
+        IOUtils.closeQuietly(socket);
+        socket = null;
         started = false;
     }
 

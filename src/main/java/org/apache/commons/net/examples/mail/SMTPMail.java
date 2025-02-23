@@ -28,6 +28,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.examples.PrintCommandListeners;
 import org.apache.commons.net.io.Util;
 import org.apache.commons.net.smtp.SMTPClient;
@@ -135,13 +136,8 @@ public final class SMTPMail {
                 writer.close();
                 client.completePendingCommand();
             }
-
-            if (fileReader != null) {
-                fileReader.close();
-            }
-
+            IOUtils.close(fileReader);
             client.logout();
-
             client.disconnect();
         } catch (final IOException e) {
             e.printStackTrace();
