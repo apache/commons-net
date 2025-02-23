@@ -39,7 +39,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
 
     /*
      * List of units in order of increasing significance. This allows the code to clear all units in the Calendar until it reaches the least significant unit in
-     * the parse string. The date formats are analysed to find the least significant unit (e.g. Minutes or Milliseconds) and the appropriate index to the array
+     * the parse string. The date formats are analyzed to find the least significant unit (e.g. Minutes or Milliseconds) and the appropriate index to the array
      * is saved. This is done by searching the array for the unit specifier, and returning the index. When clearing the Calendar units, the code loops through
      * the array until the previous entry. e.g. for MINUTE it would clear MILLISECOND and SECOND
      */
