@@ -522,11 +522,11 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     private int dataConnectionMode;
-    private Duration dataTimeout;
+    private Duration dataTimeout = Duration.ofMillis(-1);
 
     private int passivePort;
     private String passiveHost;
-    private final Random random;
+    private final Random random = new Random();
     private int activeMinPort;
     private int activeMaxPort;
     private InetAddress activeExternalHost;
@@ -543,11 +543,11 @@ public class FTPClient extends FTP implements Configurable {
     private int fileStructure;
     private int fileTransferMode;
 
-    private boolean remoteVerificationEnabled;
+    private boolean remoteVerificationEnabled = true;
 
     private long restartOffset;
 
-    private FTPFileEntryParserFactory parserFactory;
+    private FTPFileEntryParserFactory parserFactory = new DefaultFTPFileEntryParserFactory();
 
     /**
      * For buffered data streams.
@@ -632,10 +632,6 @@ public class FTPClient extends FTP implements Configurable {
      */
     public FTPClient() {
         initDefaults();
-        dataTimeout = Duration.ofMillis(-1);
-        remoteVerificationEnabled = true;
-        parserFactory = new DefaultFTPFileEntryParserFactory();
-        random = new Random();
     }
 
     @Override
