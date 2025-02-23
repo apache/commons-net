@@ -37,12 +37,13 @@ public class FTPClientTest extends TestCase {
             return systemType;
         }
 
-        public void setSystemType(final String type) {
-            systemType = type;
+        public void setSystemType(final String systemType) {
+            this.systemType = systemType;
         }
     }
 
     private static final class PassiveNatWorkAroundLocalClient extends FTPClient {
+
         private final String passiveModeServerIP;
 
         public PassiveNatWorkAroundLocalClient(final String passiveModeServerIP) {
@@ -57,7 +58,6 @@ public class FTPClientTest extends TestCase {
                 throw new IllegalStateException(e);
             }
         }
-
     }
 
     private static final String[] TESTS = { "257 /path/without/quotes", "/path/without/quotes",
