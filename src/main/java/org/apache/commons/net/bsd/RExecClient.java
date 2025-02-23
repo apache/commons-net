@@ -104,9 +104,7 @@ public class RExecClient extends SocketClient {
      */
     @Override
     public void disconnect() throws IOException {
-        if (_errorStream_ != null) {
-            _errorStream_.close();
-        }
+        IOUtils.close(_errorStream_);
         _errorStream_ = null;
         super.disconnect();
     }

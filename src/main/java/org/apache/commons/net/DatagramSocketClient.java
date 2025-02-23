@@ -24,6 +24,8 @@ import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.Objects;
 
+import org.apache.commons.io.IOUtils;
+
 /**
  * The DatagramSocketClient provides the basic operations that are required of client objects accessing datagram sockets. It is meant to be subclassed to avoid
  * having to rewrite the same code over and over again to open a socket, close a socket, set timeouts, etc. Of special note is the
@@ -89,9 +91,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
      */
     @Override
     public void close() {
-        if (_socket_ != null) {
-            _socket_.close();
-        }
+        IOUtils.closeQuietly(_socket_); // DatagramSocket#close() doesn't throw in its signature.
         _socket_ = null;
         _isOpen_ = false;
     }
