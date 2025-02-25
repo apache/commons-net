@@ -1038,7 +1038,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Abort a transfer in progress.
+     * Aborts a transfer in progress.
      *
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -1051,7 +1051,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Reserve a number of bytes on the server for the next file transfer.
+     * Allocates a number of bytes on the server for the next file transfer.
      *
      * @param bytes The number of bytes which the server should allocate.
      * @return True if successfully completed, false if not.
@@ -1065,7 +1065,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Reserve space on the server for the next file transfer.
+     * Allocates space on the server for the next file transfer.
      *
      * @param bytes      The number of bytes which the server should allocate.
      * @param recordSize The size of a file record.
@@ -1080,7 +1080,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Reserve a number of bytes on the server for the next file transfer.
+     * Allocates a number of bytes on the server for the next file transfer.
      *
      * @param bytes The number of bytes which the server should allocate.
      * @return True if successfully completed, false if not.
@@ -1094,7 +1094,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Reserve space on the server for the next file transfer.
+     * Allocates space on the server for the next file transfer.
      *
      * @param bytes      The number of bytes which the server should allocate.
      * @param recordSize The size of a file record.
@@ -1165,7 +1165,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Change the current working directory of the FTP session.
+     * Changes the current working directory of the FTP session.
      *
      * @param path The new current working directory.
      * @return True if successfully completed, false if not.
@@ -1305,6 +1305,7 @@ public class FTPClient extends FTP implements Configurable {
      * Issue a command and wait for the reply.
      * <p>
      * Should only be used with commands that return replies on the command channel - do not use for LIST, NLST, MLSD etc.
+     * </p>
      *
      * @param command The command to invoke
      * @param params  The parameters string, may be {@code null}
@@ -1489,7 +1490,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Tells if automatic server encoding detection is enabled or disabled.
+     * Gets whether automatic server encoding detection is enabled.
      *
      * @return true, if automatic server encoding detection is enabled.
      */
@@ -1512,7 +1513,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Retrieve the current internal buffer size for buffered data streams.
+     * Gets the current internal buffer size for buffered data streams.
      *
      * @return The current buffer size.
      */
@@ -1571,7 +1572,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Obtain the currently active listener.
+     * Gets the currently active listener.
      *
      * @return the listener, may be {@code null}
      * @since 3.0
@@ -1604,7 +1605,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Returns the current data connection mode (one of the {@code _DATA_CONNECTION_MODE} constants).
+     * Gets the current data connection mode (one of the {@code _DATA_CONNECTION_MODE} constants).
      *
      * @return The current data connection mode (one of the {@code _DATA_CONNECTION_MODE} constants).
      */
@@ -1694,7 +1695,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Returns the hostname or IP address (in the form of a string) returned by the server when entering passive mode. If not in passive mode, returns null.
+     * Gets the hostname or IP address (in the form of a string) returned by the server when entering passive mode. If not in passive mode, returns null.
      * This method only returns a valid value AFTER a data connection has been opened after a call to {@link #enterLocalPassiveMode enterLocalPassiveMode()}.
      * This is because FTPClient sends a PASV command to the server only just before opening a data connection, and not when you call
      * {@link #enterLocalPassiveMode enterLocalPassiveMode()}.
@@ -1706,7 +1707,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the local IP address in passive mode. Useful when there are multiple network cards.
+     * Gets the local IP address in passive mode. Useful when there are multiple network cards.
      *
      * @return The local IP address in passive mode.
      */
@@ -1726,7 +1727,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Retrieve the value to be used for the data socket SO_RCVBUF option.
+     * Gets the value to be used for the data socket SO_RCVBUF option.
      *
      * @return The current buffer size.
      * @since 3.3
@@ -1750,7 +1751,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Fetches the restart offset.
+     * Gets the restart offset.
      *
      * @return offset The offset into the remote file at which to start the next file transfer.
      */
@@ -1759,7 +1760,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Retrieve the value to be used for the data socket SO_SNDBUF option.
+     * Gets the value to be used for the data socket SO_SNDBUF option.
      *
      * @return The current buffer size.
      * @since 3.3
@@ -1820,9 +1821,11 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * @deprecated use {@link #getSystemType()} instead
+     * Gets the system name.
+     *
      * @return the name
      * @throws IOException on error
+     * @deprecated use {@link #getSystemType()} instead
      */
     @Deprecated
     public String getSystemName() throws IOException {
@@ -1833,7 +1836,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Fetches the system type from the server and returns the string. This value is cached for the duration of the connection after the first call to this
+     * Gets the system type from the server and returns the string. This value is cached for the duration of the connection after the first call to this
      * method. In other words, only the first time that you invoke this method will it issue a SYST command to the FTP server. FTPClient will remember the value
      * and return the cached value until a call to disconnect.
      * <p>
@@ -1943,7 +1946,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /*
-     * Create the feature map if not already created.
+     * Initializes the feature map if not already created.
      */
     private boolean initFeatureMap() throws IOException {
         if (featuresMap == null) {
@@ -2145,7 +2148,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Returns, whether the IP address from the server's response should be used. Until 3.9.0, this has always been the case. Beginning with 3.9.0, that IP
+     * Tests whether the IP address from the server's response should be used. Until 3.9.0, this has always been the case. Beginning with 3.9.0, that IP
      * address will be silently ignored, and replaced with the remote IP address of the control connection, unless this configuration option is given, which
      * restores the old behavior. To enable this by default, use the system property {@link FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE}.
      *
@@ -2159,7 +2162,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Return whether or not verification of the remote host participating in data connections is enabled. The default behavior is for verification to be
+     * Tests whether or not verification of the remote host participating in data connections is enabled. The default behavior is for verification to be
      * enabled.
      *
      * @return True if verification is enabled, false if not.
@@ -2169,7 +2172,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Whether to attempt using EPSV with IPv4. Default (if not set) is {@code false}
+     * Tests whether to attempt using EPSV with IPv4. Default (if not set) is {@code false}
      *
      * @return true if EPSV shall be attempted with IPv4.
      * @since 2.2
