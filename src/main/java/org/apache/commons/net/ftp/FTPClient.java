@@ -375,25 +375,22 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     private static final class PropertiesSingleton {
+        static final Properties PROPERTIES = loadResourceProperties(SYSTEM_TYPE_PROPERTIES);
+    }
 
-        static final Properties PROPERTIES;
-
-        static {
-            final InputStream resourceAsStream = FTPClient.class.getResourceAsStream(SYSTEM_TYPE_PROPERTIES);
-            Properties p = null;
-            if (resourceAsStream != null) {
-                p = new Properties();
-                try {
-                    p.load(resourceAsStream);
-                } catch (final IOException e) {
-                    // Ignored
-                } finally {
-                    IOUtils.closeQuietly(resourceAsStream);
+    static Properties loadResourceProperties(final String systemTypeProperties) {
+        Properties properties = null;
+        if (systemTypeProperties != null) {
+            try (InputStream inputStream = FTPClient.class.getResourceAsStream(systemTypeProperties)) {
+                if (inputStream != null) {
+                    properties = new Properties();
+                    properties.load(inputStream);
                 }
+            } catch (final IOException ignore) {
+                // ignore
             }
-            PROPERTIES = p;
         }
-
+        return properties;
     }
 
     /**

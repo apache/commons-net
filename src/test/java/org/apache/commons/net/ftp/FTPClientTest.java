@@ -128,6 +128,16 @@ public class FTPClientTest extends TestCase {
         assertEquals(-1, client.getPassivePort());
     }
 
+    public void testLoadResourceProperties() {
+        assertNull(FTPClient.loadResourceProperties(null));
+        assertNull(FTPClient.loadResourceProperties("this/does/not/exist.properties"));
+        assertNull(FTPClient.loadResourceProperties("/this/does/not/exist.properties"));
+        assertNull(FTPClient.loadResourceProperties(FTPClient.SYSTEM_TYPE_PROPERTIES));
+        assertNotNull(FTPClient.loadResourceProperties(""));
+        assertNotNull(FTPClient.loadResourceProperties("/org/apache/commons/net/examples/examples.properties"));
+        assertNotNull(FTPClient.loadResourceProperties("/org/apache/commons/net/test.properties"));
+    }
+
     public void testParseClient() {
         for (int i = 0; i < TESTS.length; i += 2) {
             assertEquals("Failed to parse", TESTS[i + 1], FTPClient.parsePathname(TESTS[i]));
