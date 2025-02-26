@@ -51,8 +51,12 @@ jobs:
             os: ubuntu-latest
             experimental: false
             deploy: true
-          # Experimental builds
+          # Experimental build
           - java: 24-ea
+            experimental: true        
+            os: ubuntu-latest
+          # Experimental build
+          - java: 25-ea
             experimental: true        
             os: ubuntu-latest
 
