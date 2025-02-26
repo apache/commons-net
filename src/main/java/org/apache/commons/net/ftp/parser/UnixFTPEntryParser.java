@@ -114,7 +114,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     final boolean trimLeadingSpaces; // package protected for access from test code
 
     /**
-     * The default constructor for a UnixFTPEntryParser object.
+     * Constructs a new instance.
      *
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions.
      *                                  If this exception is seen, this is a sign that {@code REGEX} is not a valid regular expression.
@@ -124,7 +124,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * This constructor allows the creation of a UnixFTPEntryParser object with something other than the default configuration.
+     * Constructs a new instance with something other than the default configuration.
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions.

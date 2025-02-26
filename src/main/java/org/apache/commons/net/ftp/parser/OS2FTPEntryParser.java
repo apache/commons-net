@@ -39,7 +39,7 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             + "(\\S.*)";
 
     /**
-     * The default constructor for a OS2FTPEntryParser object.
+     * Constructs a new instance.
      *
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
      *                                  sign that {@code REGEX} is not a valid regular expression.
@@ -49,7 +49,7 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * This constructor allows the creation of an OS2FTPEntryParser object with something other than the default configuration.
+     * Constructs a new instance with something other than the default configuration.
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a

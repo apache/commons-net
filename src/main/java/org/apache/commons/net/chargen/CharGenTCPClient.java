@@ -52,7 +52,7 @@ public final class CharGenTCPClient extends SocketClient {
     public static final int DEFAULT_PORT = 19;
 
     /**
-     * The default constructor for CharGenTCPClient. It merely sets the default port to {@code DEFAULT_PORT}.
+     * Constructs a new instance. It merely sets the default port to {@code DEFAULT_PORT}.
      */
     public CharGenTCPClient() {
         setDefaultPort(DEFAULT_PORT);

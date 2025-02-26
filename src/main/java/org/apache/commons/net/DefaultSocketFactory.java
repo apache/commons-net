@@ -41,7 +41,7 @@ public class DefaultSocketFactory extends SocketFactory {
     private final Proxy connProxy;
 
     /**
-     * The default constructor.
+     * Constructs a new instance.
      */
     public DefaultSocketFactory() {
         this(null);
