@@ -739,7 +739,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Return whether strict multiline parsing is enabled, as per RFC 959, section 4.2.
+     * Tests whether strict multiline parsing is enabled, as per RFC 959, section 4.2.
      *
      * @return True if strict, false if lenient
      * @since 2.0
@@ -749,7 +749,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * Return whether strict non-multiline parsing is enabled, as per RFC 959, section 4.2.
+     * Tests whether strict non-multiline parsing is enabled, as per RFC 959, section 4.2.
      * <p>
      * The default is true, which requires the 3-digit code be followed by space and some text.
      * If false, only the 3-digit code is required (as was the case for versions up to 3.5).

@@ -108,7 +108,7 @@ public class SubnetUtils {
         }
 
         /**
-         * Converts this instance's address into dotted decimal String.
+         * Gets this instance's address into a dotted decimal String.
          *
          * @return a dotted decimal String.
          */

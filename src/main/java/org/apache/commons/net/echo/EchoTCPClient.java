@@ -30,8 +30,8 @@ import org.apache.commons.net.discard.DiscardTCPClient;
  * @see EchoUDPClient
  * @see DiscardTCPClient
  */
-
 public final class EchoTCPClient extends DiscardTCPClient {
+
     /** The default echo port. It is set to 7 according to RFC 862. */
     public static final int DEFAULT_PORT = 7;
 
@@ -43,13 +43,13 @@ public final class EchoTCPClient extends DiscardTCPClient {
     }
 
     /**
-     * Returns an InputStream from which you may read echoed data from the server. You should NOT close the InputStream when you're finished reading from it.
-     * Rather, you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } to clean up properly.
+     * Gets the time string from the specified server and port and returns it. an InputStream from which you may read echoed data from the server. You should
+     * NOT close the InputStream when you're finished reading from it. Rather, you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect
+     * } to clean up properly.
      *
      * @return An InputStream from which you can read echoed data from the server.
      */
     public InputStream getInputStream() {
         return _input_;
     }
-
 }

@@ -93,7 +93,7 @@ public final class IMAPReply {
     private static final Pattern LITERAL_PATTERN = Pattern.compile("\\{(\\d+)\\}$"); // {dd}
 
     /**
-     * Interpret the String reply code - OK, NO, BAD - in a tagged response as an integer.
+     * Gets the String reply code - OK, NO, BAD - in a tagged response as an integer.
      *
      * @param line the tagged line to be checked
      * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}
@@ -126,7 +126,7 @@ public final class IMAPReply {
     }
 
     /**
-     * Interpret the String reply code - OK, NO, BAD - in an untagged response as an integer.
+     * Gets the String reply code - OK, NO, BAD - in an untagged response as an integer.
      *
      * @param line the untagged line to be checked
      * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}

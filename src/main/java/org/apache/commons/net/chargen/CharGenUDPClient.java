@@ -34,6 +34,7 @@ import org.apache.commons.net.util.NetConstants;
  * } to send the datagram that will initiate the data reply. For chargen or quote of the day, just call {@link #receive receive }, and you're done. For netstat
  * and systat, call receive in a while loop, and catch a SocketException and InterruptedIOException to detect a timeout (don't forget to set the timeout
  * duration beforehand). Don't forget to call {@link org.apache.commons.net.DatagramSocketClient#close close() } to clean up properly.
+ * </p>
  *
  * @see CharGenTCPClient
  */

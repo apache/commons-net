@@ -38,12 +38,14 @@ import org.apache.commons.net.util.NetConstants;
  * use RExecClient is to first connect to the server, call the {@link #rexec rexec()} method, and then fetch the connection's input, output, and optionally
  * error streams. Interaction with the remote command is controlled entirely through the I/O streams. Once you have finished processing the streams, you should
  * invoke {@link #disconnect disconnect()} to clean up properly.
+ * </p>
  * <p>
  * By default, the standard output and standard error streams of the remote process are transmitted over the same connection, readable from the input stream
  * returned by {@link #getInputStream getInputStream()}. However, it is possible to tell the rexecd daemon to return the standard error stream over a separate
  * connection, readable from the input stream returned by {@link #getErrorStream getErrorStream()}. You can specify that a separate connection should be created
  * for standard error by setting the boolean {@code separateErrorStream} parameter of {@link #rexec rexec()} to {@code true}. The standard input
  * of the remote process can be written to through the output stream returned by {@link #getOutputStream getOutputSream()}.
+ * </p>
  *
  * @see SocketClient
  * @see RCommandClient
@@ -110,7 +112,7 @@ public class RExecClient extends SocketClient {
     }
 
     /**
-     * Returns the InputStream from which the standard error of the remote process can be read if a separate error stream is requested from the server.
+     * Gets the InputStream from which the standard error of the remote process can be read if a separate error stream is requested from the server.
      * Otherwise, null will be returned. The error stream will only be set after a successful rexec() invocation.
      *
      * @return The InputStream from which the standard error of the remote process can be read if a separate error stream is requested from the server.
@@ -121,7 +123,7 @@ public class RExecClient extends SocketClient {
     }
 
     /**
-     * Returns the InputStream from which the standard output of the remote process can be read. The input stream will only be set after a successful rexec()
+     * Gets the InputStream from which the standard output of the remote process can be read. The input stream will only be set after a successful rexec()
      * invocation.
      *
      * @return The InputStream from which the standard output of the remote process can be read.
@@ -131,7 +133,7 @@ public class RExecClient extends SocketClient {
     }
 
     /**
-     * Returns the OutputStream through which the standard input of the remote process can be written. The output stream will only be set after a successful
+     * Gets the OutputStream through which the standard input of the remote process can be written. The output stream will only be set after a successful
      * rexec() invocation.
      *
      * @return The OutputStream through which the standard input of the remote process can be written.
@@ -141,7 +143,7 @@ public class RExecClient extends SocketClient {
     }
 
     /**
-     * Return whether or not verification of the remote host providing a separate error stream is enabled. The default behavior is for verification to be
+     * Tests whether or not verification of the remote host providing a separate error stream is enabled. The default behavior is for verification to be
      * enabled.
      *
      * @return True if verification is enabled, false if not.
@@ -173,6 +175,7 @@ public class RExecClient extends SocketClient {
      * connection does not originate from the remote server, an IOException will be thrown. This serves as a simple protection against possible hijacking of the
      * error stream by an attacker monitoring the rexec() negotiation. You may disable this behavior with {@link #setRemoteVerificationEnabled
      * setRemoteVerificationEnabled()}.
+     * </p>
      *
      * @param user            The account name on the server through which to execute the command.
      * @param password            The plain text password of the user account.
@@ -207,7 +210,7 @@ public class RExecClient extends SocketClient {
     }
 
     /**
-     * Enable or disable verification that the remote host connecting to create a separate error stream is the same as the host to which the standard out stream
+     * Sets verification for the remote host connecting to create a separate error stream is the same as the host to which the standard out stream
      * is connected. The default is for verification to be enabled. You may set this value at any time, whether the client is currently connected or not.
      *
      * @param enable True to enable verification, false to disable verification.

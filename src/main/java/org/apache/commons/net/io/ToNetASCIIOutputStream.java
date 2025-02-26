@@ -26,7 +26,6 @@ import java.io.OutputStream;
  * linefeed), which is the NETASCII standard for representing a newline. You would use this class to implement ASCII file transfers requiring conversion to
  * NETASCII.
  */
-
 public final class ToNetASCIIOutputStream extends FilterOutputStream {
     private boolean lastWasCR;
 

@@ -29,7 +29,6 @@ import java.net.SocketException;
  * @see DatagramSocketClient
  * @see DatagramSocketClient#setDatagramSocketFactory
  */
-
 public class DefaultDatagramSocketFactory implements DatagramSocketFactory {
 
     /**

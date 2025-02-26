@@ -61,7 +61,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Same as {@code getTime(host, DEFAULT_PORT);}
+     * Gets the time from a server and returns a Java Date containing the time converted to the local time zone.
      *
      * @param host the time-server
      * @return the date
@@ -72,7 +72,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Retrieves the time from the server and returns a Java Date containing the time converted to the local time zone.
+     * Gets the time from a server and returns a Java Date containing the time converted to the local time zone.
      *
      * @param host The address of the server.
      * @param port The port of the service.
@@ -84,7 +84,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Same as {@code getTime(host, DEFAULT_PORT);}
+     * Gets the time from the specified server and default port.
      *
      * @param host the time-server
      * @return the time returned from the server
@@ -95,7 +95,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Retrieves the time from the specified server and port and returns it. The time is the number of seconds since 00:00 (midnight) 1 January 1900 GMT, as
+     * Gets the time from the specified server and port. The time is the number of seconds since 00:00 (midnight) 1 January 1900 GMT, as
      * specified by RFC 868. This method reads the raw 32-bit big-endian unsigned integer from the server, converts it to a Java long, and returns the value.
      *
      * @param host The address of the server.

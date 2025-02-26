@@ -46,7 +46,7 @@ public class CopyStreamException extends IOException {
     }
 
     /**
-     * Returns the IOException responsible for the failure of a copy operation.
+     * Gets the IOException responsible for the failure of a copy operation.
      *
      * @return The IOException responsible for the failure of a copy operation.
      */
@@ -55,7 +55,7 @@ public class CopyStreamException extends IOException {
     }
 
     /**
-     * Returns the total number of bytes confirmed to have been transferred by a failed copy operation.
+     * Gets the total number of bytes confirmed to have been transferred by a failed copy operation.
      *
      * @return The total number of bytes confirmed to have been transferred by a failed copy operation.
      */

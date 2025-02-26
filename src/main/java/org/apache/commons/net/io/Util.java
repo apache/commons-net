@@ -40,7 +40,6 @@ import org.apache.commons.net.util.NetConstants;
  * @see CopyStreamListener
  * @see CopyStreamAdapter
  */
-
 public final class Util {
 
     /**

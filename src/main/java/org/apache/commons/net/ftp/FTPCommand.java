@@ -318,7 +318,7 @@ public final class FTPCommand {
     }
 
     /**
-     * Retrieve the FTP protocol command string corresponding to a specified command code.
+     * Gets the FTP protocol command string corresponding to a specified command code.
      *
      * @param command The command code.
      * @return The FTP protcol command string corresponding to a specified command code.

@@ -49,11 +49,12 @@ public final class TimeTCPClient extends SocketClient {
     }
 
     /**
-     * Retrieves the time from the server and returns a Java Date containing the time converted to the local time zone.
+     * Gets the time from the server and returns a Java Date containing the time converted to the local time zone.
      * <p>
      * The server will have closed the connection at this point, so you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } after
      * calling this method. To retrieve another time, you must initiate another connection with {@link org.apache.commons.net.SocketClient#connect connect }
      * before calling {@code getDate()} again.
+     * </p>
      *
      * @return A Date value containing the time retrieved from the server converted to the local time zone.
      * @throws IOException If an error occurs while fetching the time.
@@ -63,12 +64,13 @@ public final class TimeTCPClient extends SocketClient {
     }
 
     /**
-     * Retrieves the time from the server and returns it. The time is the number of seconds since 00:00 (midnight) 1 January 1900 GMT, as specified by RFC 868.
+     * Gets the time from the server and returns it. The time is the number of seconds since 00:00 (midnight) 1 January 1900 GMT, as specified by RFC 868.
      * This method reads the raw 32-bit big-endian unsigned integer from the server, converts it to a Java long, and returns the value.
      * <p>
      * The server will have closed the connection at this point, so you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } after
      * calling this method. To retrieve another time, you must initiate another connection with {@link org.apache.commons.net.SocketClient#connect connect }
      * before calling {@code getTime()} again.
+     * </p>
      *
      * @return The time value retrieved from the server.
      * @throws IOException If an error occurs while fetching the time.

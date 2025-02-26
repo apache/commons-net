@@ -404,7 +404,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns the current value of the default port (stored in {@link #_defaultPort_ _defaultPort_ }).
+     * Gets the current value of the default port (stored in {@link #_defaultPort_ _defaultPort_ }).
      *
      * @return The current value of the default port.
      */
@@ -413,7 +413,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns the default timeout in milliseconds that is used when opening a socket.
+     * Gets the default timeout in milliseconds that is used when opening a socket.
      *
      * @return The default timeout in milliseconds that is used when opening a socket.
      */
@@ -422,7 +422,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns the current value of the SO_KEEPALIVE flag on the currently opened socket. Delegates to {@link Socket#getKeepAlive()}
+     * Gets the current value of the SO_KEEPALIVE flag on the currently opened socket. Delegates to {@link Socket#getKeepAlive()}
      *
      * @return True if SO_KEEPALIVE is enabled.
      * @throws SocketException      if there is a problem with the socket
@@ -434,7 +434,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns the local address to which the client's socket is bound. Delegates to {@link Socket#getLocalAddress()}
+     * Gets the local address to which the client's socket is bound. Delegates to {@link Socket#getLocalAddress()}
      *
      * @return The local address to which the client's socket is bound.
      * @throws NullPointerException if the socket is not currently open
@@ -444,7 +444,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns the port number of the open socket on the local host used for the connection. Delegates to {@link Socket#getLocalPort()}
+     * Gets the port number of the open socket on the local host used for the connection. Delegates to {@link Socket#getLocalPort()}
      *
      * @return The port number of the open socket on the local host used for the connection.
      * @throws NullPointerException if the socket is not currently open
@@ -493,7 +493,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns the port number of the remote host to which the client is connected. Delegates to {@link Socket#getPort()}
+     * Gets the port number of the remote host to which the client is connected. Delegates to {@link Socket#getPort()}
      *
      * @return The port number of the remote host to which the client is connected.
      * @throws NullPointerException if the socket is not currently open
@@ -523,7 +523,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns the current SO_LINGER timeout of the currently opened socket.
+     * Gets the current SO_LINGER timeout of the currently opened socket.
      *
      * @return The current SO_LINGER timeout. If SO_LINGER is disabled returns -1.
      * @throws SocketException      If the operation fails.
@@ -534,7 +534,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns the timeout in milliseconds of the currently opened socket.
+     * Gets the timeout in milliseconds of the currently opened socket.
      *
      * @return The timeout in milliseconds of the currently opened socket.
      * @throws SocketException      If the operation fails.
@@ -545,7 +545,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns true if Nagle's algorithm is enabled on the currently opened socket.
+     * Gets true if Nagle's algorithm is enabled on the currently opened socket.
      *
      * @return True if Nagle's algorithm is enabled on the currently opened socket, false otherwise.
      * @throws SocketException      If the operation fails.
@@ -556,7 +556,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Make various checks on the socket to test if it is available for use. Note that the only sure test is to use it, but these checks may help in some cases.
+     * Tests the socket to test if it is available for use. Note that the only sure test is to use it, but these checks may help in some cases.
      *
      * @see <a href="https://issues.apache.org/jira/browse/NET-350">NET-350</a>
      * @return {@code true} if the socket appears to be available for use
@@ -601,7 +601,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Returns true if the client is currently connected to a server.
+     * Tests whether the client is currently connected to a server.
      *
      * Delegates to {@link Socket#isConnected()}
      *

@@ -368,7 +368,7 @@ public class Base64 {
     }
 
     /**
-     * Returns whether or not the {@code octet} is in the base 64 alphabet.
+     * Tests whether or not the {@code octet} is in the base 64 alphabet.
      *
      * @param octet The value to test
      * @return {@code true} if the value is defined in the base 64 alphabet, {@code false} otherwise.

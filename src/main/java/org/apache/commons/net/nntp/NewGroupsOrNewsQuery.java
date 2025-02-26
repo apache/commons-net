@@ -183,7 +183,7 @@ public final class NewGroupsOrNewsQuery {
     }
 
     /**
-     * Return the NNTP query formatted date (year, month, day in the form YYMMDD).
+     * Gets the NNTP query formatted date (year, month, day in the form YYMMDD).
      *
      * @return The NNTP query formatted date.
      */
@@ -192,7 +192,7 @@ public final class NewGroupsOrNewsQuery {
     }
 
     /**
-     * Return the comma separated list of distributions. This may be null if there are no distributions.
+     * Gets the comma separated list of distributions. This may be null if there are no distributions.
      *
      * @return The list of distributions, which may be null if no distributions have been specified.
      */
@@ -201,7 +201,7 @@ public final class NewGroupsOrNewsQuery {
     }
 
     /**
-     * Return the comma separated list of newsgroups. This may be null if there are no newsgroups
+     * Gets the comma separated list of newsgroups. This may be null if there are no newsgroups
      *
      * @return The list of newsgroups, which may be null if no newsgroups have been specified.
      */
@@ -210,7 +210,7 @@ public final class NewGroupsOrNewsQuery {
     }
 
     /**
-     * Return the NNTP query formatted time (hour, minutes, seconds in the form HHMMSS).
+     * Gets the NNTP query formatted time (hour, minutes, seconds in the form HHMMSS).
      *
      * @return The NNTP query formatted time.
      */
@@ -219,7 +219,7 @@ public final class NewGroupsOrNewsQuery {
     }
 
     /**
-     * Return whether or not the query date should be treated as GMT.
+     * Tests whether or not the query date should be treated as GMT.
      *
      * @return True if the query date is to be treated as GMT, false if not.
      */

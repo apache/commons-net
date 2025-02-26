@@ -40,12 +40,14 @@ public interface Threadable<T extends Threadable<T>> {
 
     /**
      * Gets an ID.
+     *
      * @return an ID.
      */
     String messageThreadId();
 
     /**
      * Gets reference strings.
+     *
      * @return  reference strings.
      */
     String[] messageThreadReferences();
@@ -59,6 +61,7 @@ public interface Threadable<T extends Threadable<T>> {
 
     /**
      * Sets the next instance.
+     *
      * @param next  the next instance.
      */
     void setNext(T next);

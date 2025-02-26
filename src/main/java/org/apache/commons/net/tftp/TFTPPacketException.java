@@ -23,7 +23,6 @@ package org.apache.commons.net.tftp;
  * class if you wanted more functionality than the {@link org.apache.commons.net.tftp.TFTPClient#receiveFile receiveFile()} and
  * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()} methods provide.
  *
- *
  * @see TFTPPacket
  * @see TFTP
  */

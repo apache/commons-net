@@ -194,7 +194,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Returns the names of the cipher suites which could be enabled for use on this connection. When the underlying {@link java.net.Socket Socket} is not an
+     * Gets the names of the cipher suites which could be enabled for use on this connection. When the underlying {@link java.net.Socket Socket} is not an
      * {@link SSLSocket} instance, returns null.
      *
      * @return An array of cipher suite names, or {@code null}.
@@ -207,7 +207,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Returns the names of the protocol versions which are currently enabled for use on this connection. When the underlying {@link java.net.Socket Socket} is
+     * Gets the names of the protocol versions which are currently enabled for use on this connection. When the underlying {@link java.net.Socket Socket} is
      * not an {@link SSLSocket} instance, returns null.
      *
      * @return An array of protocols, or {@code null}.
@@ -259,7 +259,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Return whether or not endpoint identification using the HTTPS algorithm on Java 1.7+ is enabled. The default behavior is for this to be disabled.
+     * Tests whether or not endpoint identification using the HTTPS algorithm on Java 1.7+ is enabled. The default behavior is for this to be disabled.
      *
      * @return True if enabled, false if not.
      * @since 3.4
@@ -308,7 +308,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Controls which particular cipher suites are enabled for use on this connection. Called before server negotiation.
+     * Sets which particular cipher suites are enabled for use on this connection. Called before server negotiation.
      *
      * @param cipherSuites The cipher suites.
      */
@@ -317,7 +317,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Controls which particular protocol versions are enabled for use on this connection. I perform setting before a server negotiation.
+     * Sets which particular protocol versions are enabled for use on this connection. I perform setting before a server negotiation.
      *
      * @param protocolVersions The protocol versions.
      */
@@ -326,7 +326,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Automatic endpoint identification checking using the HTTPS algorithm is supported on Java 1.7+. The default behavior is for this to be disabled.
+     * Sets automatic endpoint identification checking using the HTTPS algorithm is supported on Java 1.7+. The default behavior is for this to be disabled.
      *
      * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
      * @since 3.4
@@ -336,7 +336,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Override the default {@link HostnameVerifier} to use.
+     * Sets to override the default {@link HostnameVerifier} to use.
      *
      * @param newHostnameVerifier The HostnameVerifier implementation to set or {@code null} to disable.
      * @since 3.4
@@ -356,7 +356,7 @@ public class IMAPSClient extends IMAPClient {
     }
 
     /**
-     * Override the default {@link TrustManager} to use.
+     * Sets to override the default {@link TrustManager} to use.
      *
      * @param newTrustManager The TrustManager implementation to set.
      * @see org.apache.commons.net.util.TrustManagerUtils

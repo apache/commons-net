@@ -99,7 +99,7 @@ public final class TelnetCommand {
     private static final int LAST_COMMAND = EOF;
 
     /**
-     * Returns the string representation of the Telnet protocol command corresponding to the given command code.
+     * Gets the string representation of the Telnet protocol command corresponding to the given command code.
      *
      * @param code The command code of the Telnet protocol command.
      * @return The string representation of the Telnet protocol command.
@@ -109,7 +109,7 @@ public final class TelnetCommand {
     }
 
     /**
-     * Determines if a given command code is valid. Returns true if valid, false if not.
+     * Tests if a given command code is valid. Returns true if valid, false if not.
      *
      * @param code The command code to test.
      * @return True if the command code is valid, false if not.

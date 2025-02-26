@@ -85,6 +85,7 @@ public final class TrustManagerUtils {
      * This should be the same as the default used by
      * {@link javax.net.ssl.SSLContext#init(javax.net.ssl.KeyManager[], javax.net.ssl.TrustManager[], java.security.SecureRandom) SSLContext#init(KeyManager[],
      * TrustManager[], SecureRandom)} when the TrustManager parameter is set to {@code null}
+     * </p>
      *
      * @param keyStore the KeyStore to use, may be {@code null}
      * @return the default TrustManager

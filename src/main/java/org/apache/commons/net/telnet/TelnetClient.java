@@ -181,7 +181,7 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Returns the Telnet connection input stream. You should not close the stream when you finish with it. Rather, you should call {@link #disconnect
+     * Gets the Telnet connection input stream. You should not close the stream when you finish with it. Rather, you should call {@link #disconnect
      * disconnect }.
      *
      * @return The Telnet connection input stream.
@@ -191,7 +191,7 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Returns the state of the option on the local side.
+     * Gets the state of the option on the local side.
      *
      * @param option   Option to be checked.
      * @return The state of the option on the local side.
@@ -205,7 +205,7 @@ public class TelnetClient extends Telnet {
     /* Code Section added for supporting AYT (start) */
 
     /**
-     * Returns the Telnet connection output stream. You should not close the stream when you finish with it. Rather, you should call {@link #disconnect
+     * Gets the Telnet connection output stream. You should not close the stream when you finish with it. Rather, you should call {@link #disconnect
      * disconnect }.
      *
      * @return The Telnet connection output stream.
@@ -224,7 +224,7 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Returns the state of the option on the remote side.
+     * Gets the state of the option on the remote side.
      *
      * @param option   Option to be checked.
      * @return The state of the option on the remote side.

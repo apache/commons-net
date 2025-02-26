@@ -29,7 +29,6 @@ import org.apache.commons.net.util.NetConstants;
  * for representing a newline, with the local line separator representation. You would use this class to implement ASCII file transfers requiring conversion
  * from NETASCII.
  */
-
 public final class FromNetASCIIInputStream extends PushbackInputStream {
     static final boolean _noConversionRequired;
     static final String _lineSeparator;

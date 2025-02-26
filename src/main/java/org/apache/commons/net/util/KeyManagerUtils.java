@@ -49,9 +49,12 @@ import org.apache.commons.io.IOUtils;
  * cl.setKeyManager(km);
  * cl.connect(...);
  * </pre>
- *
- * If using the default store type and the key password is the same as the store password, these parameters can be omitted. <br>
+ * <p>
+ * If using the default store type and the key password is the same as the store password, these parameters can be omitted.
+ * </p>
+ * <p>
  * If the desired key is the first or only key in the keystore, the keyAlias parameter can be omitted, in which case the code becomes:
+ * </p>
  *
  * <pre>
  * KeyManager km = KeyManagerUtils.createClientKeyManager(

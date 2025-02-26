@@ -1675,8 +1675,11 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Gets a file modification time.
+     * <p>
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last modification time of a file. The modification string should be in the ISO
      * 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in GMT, but not all FTP servers honor this.
+     * </p>
      *
      * @param path The file path to query.
      * @return A string representing the last file modification time in {@code yyyyMMDDhhmmss} format.
@@ -1713,7 +1716,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * If in passive mode, returns the data port of the passive host. This method only returns a valid value AFTER a data connection has been opened after a
+     * Gets the data port of the passive host if we are in passive mode. This method only returns a valid value AFTER a data connection has been opened after a
      * call to {@link #enterLocalPassiveMode enterLocalPassiveMode()}. This is because FTPClient sends a PASV command to the server only just before opening a
      * data connection, and not when you call {@link #enterLocalPassiveMode enterLocalPassiveMode()}.
      *
@@ -1767,7 +1770,10 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Gets the size for a path.
+     * <p>
      * Issue the FTP SIZE command to the server for a given path. This should produce the size of the file.
+     * </p>
      *
      * @param path the file name
      * @return The size information returned by the server; {@code null} if there was an error
@@ -1785,8 +1791,10 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Gets the status of the server.
+     * <p>
      * Issue the FTP STAT command to the server.
-     *
+     * </p>
      * @return The status information returned by the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1801,7 +1809,10 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Gets the status of the server for a given path.
+     * <p>
      * Issue the FTP STAT command to the server for a given path. This should produce a listing of the file or directory.
+     * </p>
      *
      * @param path the file name
      * @return The status information returned by the server.
@@ -2896,7 +2907,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Enables or disables automatic server encoding detection (only UTF-8 supported).
+     * Sets automatic server encoding detection (only UTF-8 supported).
      * <p>
      * Does not affect existing connections; must be invoked before a connection is established.
      * </p>
@@ -3123,7 +3134,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * You can set this to true if you would like to get hidden files when {@link #listFiles} too. A {@code LIST -a} will be issued to the ftp server. It
+     * Sets whether to get hidden files when {@link #listFiles} too. A {@code LIST -a} will be issued to the ftp server. It
      * depends on your ftp server if you need to call this method, also don't expect to get rid of hidden files if you call this method with "false".
      *
      * @param listHiddenFiles true if hidden files should be listed
@@ -3134,15 +3145,18 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Issue the FTP MFMT command (not supported by all servers) which sets the last modified time of a file.
-     *
+     * Sets the last modified time of a file.
+     * <p>
+     * Issue the FTP MFMT command (not supported by all servers) which
      * The timestamp should be in the form {@code yyyyMMDDhhmmss}. It should also be in GMT, but not all servers honor this.
-     *
+     * </p>
+     * <p>
      * An FTP server would indicate its support of this feature by including "MFMT" in its response to the FEAT command, which may be retrieved by
      * FTPClient.features()
+     * </p>
      *
-     * @param path The file path for which last modified time is to be changed.
-     * @param timeval  The timestamp to set to, in {@code yyyyMMDDhhmmss} format.
+     * @param path    The file path for which last modified time is to be changed.
+     * @param timeval The timestamp to set to, in {@code yyyyMMDDhhmmss} format.
      * @return true if successfully set, false if not
      * @throws IOException if an I/O error occurs.
      * @since 2.2
@@ -3153,7 +3167,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * set the factory used for parser creation to the supplied factory object.
+     * Sets the factory used for parser creation to the supplied factory object.
      *
      * @param parserFactory factory object used to create FTPFileEntryParsers
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
@@ -3183,7 +3197,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Enables or disables passive mode NAT workaround. If enabled, a site-local PASV mode reply address will be replaced with the remote host address to which
+     * Sets the passive mode NAT workaround. If enabled, a site-local PASV mode reply address will be replaced with the remote host address to which
      * the PASV mode request was sent (unless that is also a site local address). This gets around the problem that some NAT boxes may change the reply.
      * <p>
      * The default is true, i.e. site-local replies are replaced.
@@ -3405,6 +3419,7 @@ public class FTPClient extends FTP implements Configurable {
      * <p>
      * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand } and check its return value to verify
      * success.</strong> If this is not done, subsequent commands may behave unexpectedly.
+     * </p>
      *
      * @param remote The name on which to base the unique name given to the remote file.
      * @return An OutputStream through which the remote file can be written. If the data connection cannot be opened (e.g., the file does not exist), null is

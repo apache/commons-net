@@ -134,7 +134,7 @@ public interface NtpV3Packet {
     DatagramPacket getDatagramPacket();
 
     /**
-     * gets the leap indicator as defined in RFC-1305.
+     * Gets the leap indicator as defined in RFC-1305.
      *
      * @return the leap indicator as defined in RFC-1305.
      */

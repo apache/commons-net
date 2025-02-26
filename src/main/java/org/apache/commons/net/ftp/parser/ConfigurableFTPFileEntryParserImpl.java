@@ -24,12 +24,12 @@ import org.apache.commons.net.ftp.Configurable;
 import org.apache.commons.net.ftp.FTPClientConfig;
 
 /**
- * <p>
  * This abstract class implements the common timestamp parsing algorithm for all the concrete parsers. Classes derived from this one will parse file listings
  * via a supplied regular expression that pulls out the date portion as a separate string which is passed to the underlying {@link FTPTimestampParser delegate}
  * to handle parsing of the file timestamp.
  * <p>
  * This class also implements the {@link Configurable Configurable} interface to allow the parser to be configured from the outside.
+ * </p>
  *
  * @since 1.4
  */

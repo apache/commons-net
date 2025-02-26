@@ -23,7 +23,7 @@ package org.apache.commons.net.ntp;
 public final class NtpUtils {
 
     /**
-     * Returns 32-bit integer address to IPv4 address string "%d.%d.%d.%d" format.
+     * Gets the 32-bit integer address to IPv4 address string "%d.%d.%d.%d" format.
      *
      * @param address the 32-bit address
      * @return the raw IP address in a string format.
@@ -33,7 +33,7 @@ public final class NtpUtils {
     }
 
     /**
-     * Return human-readable name of message mode type (RFC 1305).
+     * Gets a human-readable name of message mode type (RFC 1305).
      *
      * @param mode the mode type
      * @return mode name
@@ -62,7 +62,7 @@ public final class NtpUtils {
     }
 
     /**
-     * Returns NTP packet reference identifier as IP address.
+     * Gets the NTP packet reference identifier as IP address.
      *
      * @param packet NTP packet
      * @return the packet reference id (as IP address) in "%d.%d.%d.%d" format.

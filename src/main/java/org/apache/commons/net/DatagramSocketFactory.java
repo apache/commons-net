@@ -26,7 +26,6 @@ import java.net.SocketException;
  * implementations for use by all classes derived from {@link org.apache.commons.net.DatagramSocketClient} . This allows you to provide your own DatagramSocket
  * implementations and to perform security checks or browser capability requests before creating a DatagramSocket.
  */
-
 public interface DatagramSocketFactory {
 
     /**

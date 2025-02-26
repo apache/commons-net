@@ -27,10 +27,11 @@ import java.util.List;
  * implementation of FTPFileEntryParser and if necessary, subclass FTPFile.
  * <p>
  * Here are some examples showing how to use one of the classes that implement this interface.
+ * </p>
  * <p>
- *
  * The first example uses the {@code FTPClient.listFiles()} API to pull the whole list from the subfolder {@code subfolder} in one call, attempting to
  * automatically detect the parser type. This method, without a parserKey parameter, indicates that autodection should be used.
+ * </p>
  *
  * <pre>
  * FTPClient f = FTPClient();
@@ -58,8 +59,9 @@ import java.util.List;
  * f.login(user, password);
  * FTPFile[] files = f.listFiles("VMS", "subfolder/foo.java");
  * </pre>
- *
+ * <p>
  * For an alternative approach, see the {@link FTPListParseEngine} class which provides iterative access.
+ * </p>
  *
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#listFiles()

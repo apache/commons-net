@@ -38,7 +38,7 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * <p>
  * Details regarding the TFTP protocol and the format of TFTP packets can be found in RFC 783. But the point of these classes is to keep you from having to
  * worry about the internals.
- *
+ * </p>
  *
  * @see TFTP
  * @see TFTPPacket

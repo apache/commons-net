@@ -26,9 +26,10 @@ import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * Implementation FTPFileEntryParser and FTPFileListParser for standard Unix Systems.
- *
+ * <p>
  * This class is based on the logic of Daniel Savarese's DefaultFTPListParser, but adapted to use regular expressions and to fit the new FTPFileEntryParser
  * interface.
+ * </p>
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
@@ -57,18 +58,20 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * accommodate it, but do not make it the default.
      * <p>
      * For now end users may specify this format only via {@code UnixFTPEntryParser(FTPClientConfig)}. Steve Cohen - 2005-04-17
+     * </p>
      */
     public static final FTPClientConfig NUMERIC_DATE_CONFIG = new FTPClientConfig(FTPClientConfig.SYST_UNIX, NUMERIC_DATE_FORMAT, null);
 
     /**
      * this is the regular expression used by this parser.
-     *
+     * <p>
      * Permissions: r the file is readable w the file is writable x the file is executable - the indicated permission is not granted L mandatory locking occurs
      * during access (the set-group-ID bit is on and the group execution bit is off) s the set-user-ID or set-group-ID bit is on, and the corresponding user or
      * group execution bit is also on S undefined bit-state (the set-user-ID bit is on and the user execution bit is off) t the 1000 (octal) bit, or sticky bit,
      * is on [see chmod(1)], and execution is on T the 1000 bit is turned on, and execution is off (undefined bit-state) e z/OS external link bit. Final letter
      * may be appended: + file has extended security attributes (e.g. ACL) Note: local listings on MacOSX also use '@'; this is not allowed for here as does not
      * appear to be shown by FTP servers {@code @} file has extended attributes
+     * </p>
      */
     private static final String REGEX = "([bcdelfmpSs-])" // file type
             + "(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?" // permissions
@@ -148,7 +151,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Defines a default configuration to be used when this class is instantiated without a {@link FTPClientConfig FTPClientConfig} parameter being specified.
+     * Gets a new default configuration to be used when this class is instantiated without a {@link FTPClientConfig FTPClientConfig} parameter being specified.
      *
      * @return the default configuration for this parser.
      */

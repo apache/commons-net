@@ -302,7 +302,7 @@ public class IMAP extends SocketClient {
     }
 
     /**
-     * Returns the reply to the last command sent to the server. The value is a single string containing all the reply lines including newlines.
+     * Gets the reply to the last command sent to the server. The value is a single string containing all the reply lines including newlines.
      *
      * @return The last server response.
      */
@@ -317,7 +317,7 @@ public class IMAP extends SocketClient {
     }
 
     /**
-     * Returns an array of lines received as a reply to the last command sent to the server. The lines have end of lines truncated.
+     * Gets an array of lines received as a reply to the last command sent to the server. The lines have end of lines truncated.
      *
      * @return The last server response.
      */
@@ -326,7 +326,7 @@ public class IMAP extends SocketClient {
     }
 
     /**
-     * Returns the current IMAP client state.
+     * Gets the current IMAP client state.
      *
      * @return The current IMAP client state.
      */

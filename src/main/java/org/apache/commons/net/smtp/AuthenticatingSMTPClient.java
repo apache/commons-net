@@ -272,7 +272,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
     }
 
     /**
-     * Returns the integer values of the enhanced reply code of the last SMTP reply.
+     * Gets the integer values of the enhanced reply code of the last SMTP reply.
      *
      * @return The integer values of the enhanced reply code of the last SMTP reply. First digit is in the first array element.
      */

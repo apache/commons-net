@@ -44,7 +44,7 @@ public final class NTPUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Retrieves the time information from the specified server on the default NTP port and returns it. The time is the number of milliseconds since 00:00
+     * Gets the time information from the specified server on the default NTP port and returns it. The time is the number of milliseconds since 00:00
      * (midnight) 1 January 1900 UTC, as specified by RFC 1305. This method reads the raw NTP packet and constructs a <em>TimeInfo</em> object that allows
      * access to all the fields of the NTP message header.
      *
@@ -57,7 +57,7 @@ public final class NTPUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Retrieves the time information from the specified server and port and returns it. The time is the number of milliseconds since 00:00 (midnight) 1 January
+     * Gets the time information from the specified server and port and returns it. The time is the number of milliseconds since 00:00 (midnight) 1 January
      * 1900 UTC, as specified by RFC 1305. This method reads the raw NTP packet and constructs a <em>TimeInfo</em> object that allows access to all the fields
      * of the NTP message header.
      *
@@ -107,7 +107,7 @@ public final class NTPUDPClient extends DatagramSocketClient {
     }
 
     /**
-     * Returns the NTP protocol version number that client sets on request packet that is sent to remote host (e.g. 3=NTP v3, 4=NTP v4, etc.)
+     * Gets the NTP protocol version number that client sets on request packet that is sent to remote host (e.g. 3=NTP v3, 4=NTP v4, etc.)
      *
      * @return the NTP protocol version number that client sets on request packet.
      * @see #setVersion(int)

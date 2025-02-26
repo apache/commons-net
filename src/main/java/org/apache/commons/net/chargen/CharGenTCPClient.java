@@ -30,10 +30,10 @@ import org.apache.commons.net.SocketClient;
  * To use the CharGenTCPClient class, just establish a connection with {@link org.apache.commons.net.SocketClient#connect connect } and call
  * {@link #getInputStream getInputStream() } to access the data. Don't close the input stream when you're done with it. Rather, call
  * {@link org.apache.commons.net.SocketClient#disconnect disconnect } to clean up properly.
+ * </p>
  *
  * @see CharGenUDPClient
  */
-
 public final class CharGenTCPClient extends SocketClient {
 
     /** The systat port value of 11 according to RFC 866. */
@@ -59,7 +59,7 @@ public final class CharGenTCPClient extends SocketClient {
     }
 
     /**
-     * Returns an InputStream from which the server generated data can be read. You should NOT close the InputStream when you're finished reading from it.
+     * Gets an InputStream from which the server generated data can be read. You should NOT close the InputStream when you're finished reading from it.
      * Rather, you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } to clean up properly.
      *
      * @return An InputStream from which the server generated data can be read.

@@ -54,7 +54,10 @@ public final class DaytimeUDPClient extends DatagramSocketClient {
     }
 
     /**
+     * Gets the time string from the specified server and port and returns it.
+     * <p>
      * Shorthand for {@code getTime(host, DaytimeUDPClient.DEFAULT_PORT);}
+     * </p>
      *
      * @param host the host
      * @return the time

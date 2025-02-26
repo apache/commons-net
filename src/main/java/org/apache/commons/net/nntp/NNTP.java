@@ -266,7 +266,7 @@ public class NNTP extends SocketClient {
     }
 
     /**
-     * Provide command support to super-class
+     * Gets the command support.
      */
     @Override
     protected ProtocolCommandSupport getCommandSupport() {
@@ -274,7 +274,7 @@ public class NNTP extends SocketClient {
     }
 
     /**
-     * Fetches a reply from the NNTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from
+     * Gets a reply from the NNTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from
      * {@link #getReplyString getReplyString }. Only use this method if you are implementing your own NNTP client or if you need to fetch a secondary response
      * from the NNTP server.
      *
@@ -312,7 +312,7 @@ public class NNTP extends SocketClient {
     }
 
     /**
-     * Returns the integer value of the reply code of the last NNTP reply. You will usually only use this method after you connect to the NNTP server to check
+     * Gets the integer value of the reply code of the last NNTP reply. You will usually only use this method after you connect to the NNTP server to check
      * that the connection was successful since {@code connect} is of type void.
      *
      * @return The integer value of the reply code of the last NNTP reply.
@@ -322,7 +322,7 @@ public class NNTP extends SocketClient {
     }
 
     /**
-     * Returns the entire text of the last NNTP server response exactly as it was received, not including the end of line marker.
+     * Gets the entire text of the last NNTP server response exactly as it was received, not including the end of line marker.
      *
      * @return The entire text from the last NNTP response as a String.
      */

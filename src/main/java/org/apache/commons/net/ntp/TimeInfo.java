@@ -242,7 +242,7 @@ public class TimeInfo {
     }
 
     /**
-     * Return list of comments (if any) during processing of NTP packet.
+     * Gets the list of comments (if any) during processing of NTP packet.
      *
      * @return List or null if not yet computed
      */
@@ -251,7 +251,7 @@ public class TimeInfo {
     }
 
     /**
-     * Gets round-trip network delay. If null then could not compute the delay.
+     * Gets the round-trip network delay. If null then could not compute the delay.
      *
      * @return Long or null if delay not available.
      */
@@ -260,7 +260,7 @@ public class TimeInfo {
     }
 
     /**
-     * Returns NTP message packet.
+     * Gets the NTP message packet.
      *
      * @return NTP message packet.
      */
@@ -269,7 +269,7 @@ public class TimeInfo {
     }
 
     /**
-     * Gets clock offset needed to adjust local clock to match remote clock. If null then could not compute the offset.
+     * Gets the clock offset needed to adjust local clock to match remote clock. If null then could not compute the offset.
      *
      * @return Long or null if offset not available.
      */
@@ -278,7 +278,7 @@ public class TimeInfo {
     }
 
     /**
-     * Returns time at which time message packet was received by local machine.
+     * Gets the time at which time message packet was received by local machine.
      *
      * @return packet return time.
      */

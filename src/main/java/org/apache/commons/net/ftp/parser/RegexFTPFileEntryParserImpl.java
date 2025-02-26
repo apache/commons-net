@@ -27,8 +27,9 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 /**
  * This abstract class implements both the older FTPFileListParser and newer FTPFileEntryParser interfaces with default functionality. All the classes in the
  * parser subpackage inherit from this.
- *
+ * <p>
  * This is the base class for all regular expression based FTPFileEntryParser classes
+ * </p>
  */
 public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl {
     /**
@@ -95,7 +96,6 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      *
      * @return the number of groups() in the internal MatchResult.
      */
-
     public int getGroupCnt() {
         if (result == null) {
             return 0;
@@ -104,11 +104,13 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     }
 
     /**
-     * For debugging purposes - returns a string shows each match group by number.
+     * Gets a string shows each match group by number.
+     * <p>
+     * For debugging purposes.
+     * </p>
      *
      * @return a string shows each match group by number.
      */
-
     public String getGroupsAsString() {
         final StringBuilder b = new StringBuilder();
         for (int i = 1; i <= result.groupCount(); i++) {
@@ -147,7 +149,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     }
 
     /**
-     * Alter the current regular expression being utilized for entry parsing and create a new {@link Pattern} instance.
+     * Sets the regular expression for entry parsing and create a new {@link Pattern} instance.
      *
      * @param regex The new regular expression
      * @return true
@@ -160,7 +162,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     }
 
     /**
-     * Alter the current regular expression being utilized for entry parsing and create a new {@link Pattern} instance.
+     * Sets the regular expression for entry parsing and create a new {@link Pattern} instance.
      *
      * @param regex The new regular expression
      * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.

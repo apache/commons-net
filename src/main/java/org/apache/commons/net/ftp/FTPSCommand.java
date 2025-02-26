@@ -82,7 +82,7 @@ public final class FTPSCommand {
     private static final String[] commands = { "AUTH", "ADAT", "PBSZ", "PROT", "CCC" };
 
     /**
-     * Retrieve the FTPS command string corresponding to a specified command code.
+     * Gets the FTPS command string corresponding to a specified command code.
      *
      * @param command The command code.
      * @return The FTPS command string corresponding to a specified command code.

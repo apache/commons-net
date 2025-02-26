@@ -33,7 +33,7 @@ import org.apache.commons.net.DatagramSocketClient;
  * <p>
  * Details regarding the TFTP protocol and the format of TFTP packets can be found in RFC 783. But the point of these classes is to keep you from having to
  * worry about the internals.
- *
+ * </p>
  *
  * @see org.apache.commons.net.DatagramSocketClient
  * @see TFTPPacket

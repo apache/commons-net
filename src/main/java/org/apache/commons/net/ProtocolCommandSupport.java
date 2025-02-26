@@ -96,7 +96,7 @@ public class ProtocolCommandSupport implements Serializable {
     }
 
     /**
-     * Returns the number of ProtocolCommandListeners currently registered.
+     * Gets the number of ProtocolCommandListeners currently registered.
      *
      * @return The number of ProtocolCommandListeners currently registered.
      */

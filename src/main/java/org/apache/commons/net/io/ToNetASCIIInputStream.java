@@ -28,7 +28,6 @@ import org.apache.commons.net.util.NetConstants;
  * linefeed), which is the NETASCII standard for representing a newline. You would use this class to implement ASCII file transfers requiring conversion to
  * NETASCII.
  */
-
 public final class ToNetASCIIInputStream extends FilterInputStream {
     private static final int NOTHING_SPECIAL = 0;
     private static final int LAST_WAS_CR = 1;

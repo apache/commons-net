@@ -104,7 +104,7 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Returns a list of FTPFile objects containing the whole list of files returned by the server as read by this object's parser. The files are filtered
+     * Gets a list of FTPFile objects containing the whole list of files returned by the server as read by this object's parser. The files are filtered
      * before being added to the array.
      *
      * @param filter FTPFileFilter, must not be {@code null}.
@@ -122,7 +122,7 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Returns an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
+     * Gets an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
      *
      * @return an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser. None of the entries will
      *         be null
@@ -134,7 +134,7 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Returns an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser. The files are filtered
+     * Gets an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser. The files are filtered
      * before being added to the array.
      *
      * @param filter FTPFileFilter, must not be {@code null}.
@@ -151,7 +151,7 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Returns an array of at most {@code quantityRequested} FTPFile objects starting at this object's internal iterator's current position. If fewer than
+     * Gets an array of at most {@code quantityRequested} FTPFile objects starting at this object's internal iterator's current position. If fewer than
      * {@code quantityRequested} such elements are available, the returned array will have a length equal to the number of entries at and after the current
      * position. If no such entries are found, this array will have a length of 0.
      *
@@ -181,7 +181,7 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Returns an array of at most {@code quantityRequested} FTPFile objects starting at this object's internal iterator's current position, and working back
+     * Gets an array of at most {@code quantityRequested} FTPFile objects starting at this object's internal iterator's current position, and working back
      * toward the beginning.
      *
      * If fewer than {@code quantityRequested} such elements are available, the returned array will have a length equal to the number of entries at and after

@@ -36,10 +36,8 @@ import org.apache.commons.io.IOUtils;
  * them by directly invoking a constructor. By honoring this contract you guarantee that a user will always be able to provide his own Socket implementations by
  * substituting his own SocketFactory.
  *
- *
  * @see DatagramSocketFactory
  */
-
 public abstract class DatagramSocketClient implements AutoCloseable {
     /**
      * The default DatagramSocketFactory shared by all DatagramSocketClient instances.
@@ -172,7 +170,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     }
 
     /**
-     * Gets true if the client has a currently open socket.
+     * Tests whether the client has a currently open socket.
      *
      * @return True if the client has a currently open socket, false otherwise.
      */
@@ -185,6 +183,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
      * {@link #setDefaultTimeout setDefaultTimeout() }.
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_ is set to the newly opened socket.
+     * </p>
      *
      * @throws SocketException If the socket could not be opened or the timeout could not be set.
      */
@@ -199,6 +198,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
      * setDefaultTimeout() }.
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_ is set to the newly opened socket.
+     * </p>
      *
      * @param port The port to use for the socket.
      * @throws SocketException If the socket could not be opened or the timeout could not be set.
@@ -214,6 +214,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
      * {@link #setDefaultTimeout setDefaultTimeout() }.
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_ is set to the newly opened socket.
+     * </p>
      *
      * @param port  The port to use for the socket.
      * @param localAddress The local address to use.

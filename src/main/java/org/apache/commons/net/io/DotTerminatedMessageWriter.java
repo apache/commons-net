@@ -27,6 +27,7 @@ import java.io.Writer;
  * <p>
  * This class handles the doubling of line-starting periods, converts single linefeeds to NETASCII newlines, and on closing will send the final message
  * terminator dot and NETASCII newline sequence.
+ * </p>
  */
 public final class DotTerminatedMessageWriter extends Writer {
     private static final int NOTHING_SPECIAL_STATE = 0;

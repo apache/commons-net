@@ -221,7 +221,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * Returns a DateFormatSymbols object configured with short month names as in the supplied string
+     * Gets a DateFormatSymbols object configured with short month names as in the supplied string
      *
      * @param shortmonths This should be as described in {@link #setShortMonthNames(String) shortMonthNames}
      * @return a DateFormatSymbols object configured with short month names as in the supplied string
@@ -234,7 +234,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * Returns a Collection of all the language codes currently supported by this class. See {@link #setServerLanguageCode(String) serverLanguageCode} for a
+     * Gets a Collection of all the language codes currently supported by this class. See {@link #setServerLanguageCode(String) serverLanguageCode} for a
      * functional description of language codes within this system.
      *
      * @return a Collection of all the language codes currently supported by this class
@@ -471,9 +471,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * <p>
-     * getter for the {@link #setLenientFutureDates(boolean) lenientFutureDates} property.
-     * </p>
+     * Tests whether the {@link #setLenientFutureDates(boolean) lenientFutureDates} property.
      *
      * @return the lenientFutureDates (default true).
      * @since 1.5
@@ -483,11 +481,9 @@ public class FTPClientConfig {
     }
 
     /**
-     * <p>
-     * setter for the defaultDateFormatStr property. This property specifies the main date format that will be used by a parser configured by this configuration
+     * Sets the defaultDateFormatStr property. This property specifies the main date format that will be used by a parser configured by this configuration
      * to parse file timestamps. If this is not specified, such a parser will use as a default value, the most commonly used format which will be in as used in
      * {@code en_US} locales.
-     * </p>
      * <p>
      * This should be in the format described for {@code java.text.SimpleDateFormat}. property.
      * </p>
@@ -499,13 +495,11 @@ public class FTPClientConfig {
     }
 
     /**
-     * <p>
-     * setter for the lenientFutureDates property. This boolean property (default: true) only has meaning when a {@link #setRecentDateFormatStr(String)
+     * Sets the lenientFutureDates property. This boolean property (default: true) only has meaning when a {@link #setRecentDateFormatStr(String)
      * recentDateFormatStr} property has been set. In that case, if this property is set true, then the parser, when it encounters a listing parseable with the
      * recent date format, will only consider a date to belong to the previous year if it is more than one day in the future. This will allow all out-of-synch
      * situations (whether based on "slop" - i.e. servers simply out of synch with one another or because of time zone differences - but in the latter case it
      * is highly recommended to use the {@link #setServerTimeZoneId(String) serverTimeZoneId} property instead) to resolve correctly.
-     * </p>
      * <p>
      * This is used primarily in unix-based systems.
      * </p>
@@ -517,11 +511,9 @@ public class FTPClientConfig {
     }
 
     /**
-     * <p>
-     * setter for the recentDateFormatStr property. This property specifies a secondary date format that will be used by a parser configured by this
+     * Sets the recentDateFormatStr property. This property specifies a secondary date format that will be used by a parser configured by this
      * configuration to parse file timestamps, typically those less than a year old. If this is not specified, such a parser will not attempt to parse using an
      * alternate format.
-     * </p>
      * <p>
      * This is used primarily in unix-based systems.
      * </p>
@@ -536,13 +528,11 @@ public class FTPClientConfig {
     }
 
     /**
-     * <p>
-     * setter for the serverLanguageCode property. This property allows user to specify a <a href="http://www.ics.uci.edu/pub/ietf/http/related/iso639.txt">
+     * Sets the serverLanguageCode property. This property allows user to specify a <a href="http://www.ics.uci.edu/pub/ietf/http/related/iso639.txt">
      * two-letter ISO-639 language code</a> that will be used to configure the set of month names used by the file timestamp parser. If neither this nor the
      * {@link #setShortMonthNames(String) shortMonthNames} is specified, parsing will assume English month names, which may or may not be significant, depending
      * on whether the date format(s) specified via {@link #setDefaultDateFormatStr(String) defaultDateFormatStr} and/or {@link #setRecentDateFormatStr(String)
      * recentDateFormatStr} are using numeric or alphabetic month names.
-     * </p>
      * <p>
      * If the code supplied is not supported here, {@code en_US} month names will be used. We are supporting here those language codes which, when a
      * {@code java.util.Locale} is constructed using it, and a {@code java.text.SimpleDateFormat} is constructed using that Locale, the array
@@ -564,10 +554,8 @@ public class FTPClientConfig {
     }
 
     /**
-     * <p>
-     * setter for the serverTimeZoneId property. This property allows a time zone to be specified corresponding to that known to be used by an FTP server in
+     * Sets the serverTimeZoneId property. This property allows a time zone to be specified corresponding to that known to be used by an FTP server in
      * file listings. This might be particularly useful to clients such as Ant that try to use these timestamps for dependency checking.
-     * </p>
      * <p>
      * This should be one of the identifiers used by {@code java.util.TimeZone} to refer to time zones, for example, {@code America/Chicago} or
      * {@code Asia/Rangoon}.
@@ -580,10 +568,8 @@ public class FTPClientConfig {
     }
 
     /**
-     * <p>
-     * setter for the shortMonthNames property. This property allows the user to specify a set of month names used by the server that is different from those
+     * Sets the shortMonthNames property. This property allows the user to specify a set of month names used by the server that is different from those
      * that may be specified using the {@link #setServerLanguageCode(String) serverLanguageCode} property.
-     * </p>
      * <p>
      * This should be a string containing twelve strings each composed of three characters, delimited by pipe (|) characters. Currently, only 8-bit ASCII
      * characters are known to be supported. For example, a set of month names used by a hypothetical Icelandic FTP server might conceivably be specified as
@@ -597,9 +583,10 @@ public class FTPClientConfig {
     }
 
     /**
-     * Allow list parsing methods to create basic FTPFile entries if parsing fails.
+     * Sets list parsing methods to create basic FTPFile entries if parsing fails.
      * <p>
      * In this case, the FTPFile will contain only the unparsed entry {@link FTPFile#getRawListing()} and {@link FTPFile#isValid()} will return {@code false}
+     * </p>
      *
      * @param saveUnparseableEntries if true, then create FTPFile entries if parsing fails
      * @since 3.4

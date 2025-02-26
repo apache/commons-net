@@ -98,7 +98,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the datagram packet with the NTP details already filled in.
+     * Gets the datagram packet with the NTP details already filled in.
      *
      * @return a datagram packet.
      */
@@ -112,6 +112,8 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
+     * Gets 4 bytes as 32-bit int.
+     *
      * @return 4 bytes as 32-bit int
      */
     private int getInt(final int index) {
@@ -119,7 +121,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns leap indicator as defined in RFC-1305 which is a two-bit code: 0=no warning 1=last minute has 61 seconds 2=last minute has 59 seconds 3=alarm
+     * Gets leap indicator as defined in RFC-1305 which is a two-bit code: 0=no warning 1=last minute has 61 seconds 2=last minute has 59 seconds 3=alarm
      * condition (clock not synchronized)
      *
      * @return leap indicator as defined in RFC-1305.
@@ -140,7 +142,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns mode as defined in RFC-1305 which is a 3-bit integer whose value is indicated by the MODE_xxx parameters.
+     * Gets the mode as defined in RFC-1305 which is a 3-bit integer whose value is indicated by the MODE_xxx parameters.
      *
      * @return mode as defined in RFC-1305.
      */
@@ -150,7 +152,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Return human-readable name of message mode type as described in RFC 1305.
+     * Gets the human-readable name of message mode type as described in RFC 1305.
      *
      * @return mode name as string.
      */
@@ -160,7 +162,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the {@code originate} time as defined in RFC-1305.
+     * Gets the {@code originate} time as defined in RFC-1305.
      *
      * @return the {@code originate} time. Never returns null.
      */
@@ -170,7 +172,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns poll interval as defined in RFC-1305, which is an eight-bit signed integer indicating the maximum interval between successive messages, in
+     * Gets the poll interval as defined in RFC-1305, which is an eight-bit signed integer indicating the maximum interval between successive messages, in
      * seconds to the nearest power of two (e.g. value of six indicates an interval of 64 seconds). The values that can appear in this field range from
      * NTP_MINPOLL to NTP_MAXPOLL inclusive.
      *
@@ -182,7 +184,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns precision as defined in RFC-1305 encoded as an 8-bit signed integer (seconds to the nearest power of two). Values normally range from -6 to -20.
+     * Gets the precision as defined in RFC-1305 encoded as an 8-bit signed integer (seconds to the nearest power of two). Values normally range from -6 to -20.
      *
      * @return precision as defined in RFC-1305.
      */
@@ -192,7 +194,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns {@code receive} timestamp as defined in RFC-1305.
+     * Gets the {@code receive} timestamp as defined in RFC-1305.
      *
      * @return the {@code receive} time. Never returns null.
      */
@@ -202,7 +204,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the reference id as defined in RFC-1305, which is a 32-bit integer whose value is dependent on several criteria.
+     * Gets the reference id as defined in RFC-1305, which is a 32-bit integer whose value is dependent on several criteria.
      *
      * @return the reference id as defined in RFC-1305.
      */
@@ -212,7 +214,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the reference id string. String cannot be null but value is dependent on the version of the NTP spec supported and stratum level. Value can be an
+     * Gets the reference id string. String cannot be null but value is dependent on the version of the NTP spec supported and stratum level. Value can be an
      * empty string, clock type string, IP address, or a hexadecimal string.
      *
      * @return the reference id string.
@@ -240,7 +242,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the reference time as defined in RFC-1305.
+     * Gets the reference time as defined in RFC-1305.
      *
      * @return the reference time as {@code TimeStamp} object. Never returns null.
      */
@@ -250,7 +252,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Return root delay as defined in RFC-1305, which is the total roundtrip delay to the primary reference source, in seconds. Values can take positive and
+     * Gets the root delay as defined in RFC-1305, which is the total roundtrip delay to the primary reference source, in seconds. Values can take positive and
      * negative values, depending on clock precision and skew.
      *
      * @return root delay as defined in RFC-1305.
@@ -261,8 +263,8 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Return root delay as defined in RFC-1305 in milliseconds, which is the total roundtrip delay to the primary reference source, in seconds. Values can take
-     * positive and negative values, depending on clock precision and skew.
+     * Gets the root delay as defined in RFC-1305 in milliseconds, which is the total roundtrip delay to the primary reference source, in seconds. Values can
+     * take positive and negative values, depending on clock precision and skew.
      *
      * @return root delay in milliseconds
      */
@@ -273,7 +275,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns root dispersion as defined in RFC-1305.
+     * Gets the root dispersion as defined in RFC-1305.
      *
      * @return root dispersion.
      */
@@ -283,7 +285,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns root dispersion (as defined in RFC-1305) in milliseconds.
+     * Gets the root dispersion (as defined in RFC-1305) in milliseconds.
      *
      * @return root dispersion in milliseconds
      */
@@ -294,7 +296,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns root dispersion (as defined in RFC-1305) in milliseconds as double precision value.
+     * Gets the root dispersion (as defined in RFC-1305) in milliseconds as double precision value.
      *
      * @return root dispersion in milliseconds
      */
@@ -305,7 +307,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns Stratum as defined in RFC-1305, which indicates the stratum level of the local clock, with values defined as follows: 0=unspecified, 1=primary
+     * Gets the Stratum as defined in RFC-1305, which indicates the stratum level of the local clock, with values defined as follows: 0=unspecified, 1=primary
      * ref clock, and all others a secondary reference (via NTP).
      *
      * @return Stratum level as defined in RFC-1305.
@@ -316,7 +318,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Gets NTP Timestamp at specified starting index.
+     * Gets the NTP Timestamp at specified starting index.
      *
      * @param index index into data array
      * @return TimeStamp object for 64 bits starting at index
@@ -326,7 +328,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the {@code transmit} timestamp as defined in RFC-1305.
+     * Gets the {@code transmit} timestamp as defined in RFC-1305.
      *
      * @return the {@code transmit} timestamp as defined in RFC-1305. Never returns a null object.
      */
@@ -336,7 +338,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Return type of time packet. The values (e.g. NTP, TIME, ICMP, ...) correspond to the protocol used to obtain the timing information.
+     * Gets the type of time packet. The values (e.g. NTP, TIME, ICMP, ...) correspond to the protocol used to obtain the timing information.
      *
      * @return packet type string identifier which in this case is "NTP".
      */
@@ -346,7 +348,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns NTP version number as defined in RFC-1305.
+     * Gets the NTP version number as defined in RFC-1305.
      *
      * @return NTP version number.
      */

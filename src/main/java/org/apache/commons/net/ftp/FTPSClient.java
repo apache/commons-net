@@ -555,7 +555,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Return AUTH command use value.
+     * Gets AUTH command use value.
      *
      * @return AUTH command use value.
      */
@@ -564,7 +564,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns the names of the cipher suites which could be enabled for use on this connection. When the underlying {@link Socket} is not an {@link SSLSocket}
+     * Gets the names of the cipher suites which could be enabled for use on this connection. When the underlying {@link Socket} is not an {@link SSLSocket}
      * instance, returns null.
      *
      * @return An array of cipher suite names, or {@code null}
@@ -577,7 +577,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns the names of the protocol versions which are currently enabled for use on this connection. When the underlying {@link Socket} is not an
+     * Gets the names of the protocol versions which are currently enabled for use on this connection. When the underlying {@link Socket} is not an
      * {@link SSLSocket} instance, returns null.
      *
      * @return An array of protocols, or {@code null}
@@ -590,7 +590,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns true if new SSL sessions may be established by this socket. When the underlying {@link Socket} instance is not SSL-enabled (i.e. an instance of
+     * Gets true if new SSL sessions may be established by this socket. When the underlying {@link Socket} instance is not SSL-enabled (i.e. an instance of
      * {@link SSLSocket} with {@link SSLSocket}{@link #getEnableSessionCreation()}) enabled, this returns False.
      *
      * @return true - Indicates that sessions may be created; this is the default. false - indicates that an existing session must be resumed.
@@ -622,7 +622,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns true if the socket will require client authentication. When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
+     * Gets true if the socket will require client authentication. When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
      *
      * @return true - If the server mode socket should request that the client authenticate itself.
      */
@@ -635,6 +635,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Gets the secure socket protocol to be used, e.g. SSL/TLS.
+     *
      * @since 3.11.0
      * @return the protocol
      */
@@ -645,6 +646,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Gets the protocol versions. The {@link #getEnabledProtocols()} method gets the value from the socket while
      * this method gets its value from this instance's config.
+     *
      * @since 3.11.0
      * @return a clone of the protocols, may be null
      */
@@ -655,6 +657,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Gets the cipher suites. The {@link #getEnabledCipherSuites()} method gets the value from the socket while
      * this method gets its value from this instance's config.
+     *
      * @since 3.11.0
      * @return a clone of the suites, may be null
      */
@@ -672,7 +675,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns true if the socket is set to use client mode in its first handshake. When the underlying {@link Socket} is not an {@link SSLSocket} instance,
+     * Gets whether the socket is set to use client mode in its first handshake. When the underlying {@link Socket} is not an {@link SSLSocket} instance,
      * returns false.
      *
      * @return true - If the socket should start its first handshake in "client" mode.
@@ -685,7 +688,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns true if the socket will request client authentication. When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
+     * Gets whether the socket will request client authentication. When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
      *
      * @return true - If the server mode socket should request that the client authenticate itself.
      */
@@ -708,8 +711,9 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the use client mode flag. The {@link #getUseClientMode()} method gets the value from the socket while
+     * Tests the use client mode flag. The {@link #getUseClientMode()} method gets the value from the socket while
      * this method gets its value from this instance's config.
+     *
      * @since 3.11.0
      * @return True If the socket should start its first handshake in "client" mode.
      */
@@ -718,7 +722,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets whether a new SSL session may be established by this socket. Default true
+     * Tests whether a new SSL session may be established by this socket. Default true
+     *
      * @since 3.11.0
      * @return True if session may be established
      */
@@ -739,7 +744,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the security mode. (True - Implicit Mode / False - Explicit Mode)
+     * Tests the security mode. (True - Implicit Mode / False - Explicit Mode).
+     *
      * @since 3.11.0
      * @return True if enabled, false if not.
      */
@@ -748,8 +754,9 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the need client auth flag. The {@link #getNeedClientAuth()} method gets the value from the socket while
+     * Tests the need client auth flag. The {@link #getNeedClientAuth()} method gets the value from the socket while
      * this method gets its value from this instance's config.
+     *
      * @since 3.11.0
      * @return True if enabled, false if not.
      */
@@ -758,8 +765,9 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Gets the want client auth flag. The {@link #getWantClientAuth()} method gets the value from the socket while
+     * Tests the want client auth flag. The {@link #getWantClientAuth()} method gets the value from the socket while
      * this method gets its value from this instance's config.
+     *
      * @since 3.11.0
      * @return True if enabled, false if not.
      */
@@ -989,7 +997,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Controls which particular cipher suites are enabled for use on this connection. Called before server negotiation.
+     * Sets which particular cipher suites are enabled for use on this connection. Called before server negotiation.
      *
      * @param cipherSuites The cipher suites.
      */
@@ -998,7 +1006,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Controls which particular protocol versions are enabled for use on this connection. I perform setting before a server negotiation.
+     * Sets which particular protocol versions are enabled for use on this connection. I perform setting before a server negotiation.
      *
      * @param protocolVersions The protocol versions.
      */
@@ -1007,7 +1015,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Controls whether a new SSL session may be established by this socket.
+     * Sets whether a new SSL session may be established by this socket.
      *
      * @param isCreation The established socket flag.
      */
@@ -1016,7 +1024,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Automatic endpoint identification checking using the HTTPS algorithm is supported on Java 1.7+. The default behavior is for this to be disabled.
+     * Sets automatic endpoint identification checking using the HTTPS algorithm is supported on Java 1.7+. The default behavior is for this to be disabled.
      *
      * This check is only performed on client mode connections.
      *
@@ -1028,7 +1036,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Override the default {@link HostnameVerifier} to use. The verifier is only used on client mode connections.
+     * Sets to override the default {@link HostnameVerifier} to use. The verifier is only used on client mode connections.
      *
      * @param newHostnameVerifier The HostnameVerifier implementation to set or {@code null} to disable.
      * @since 3.4
@@ -1048,7 +1056,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Configures the socket to require client authentication.
+     * Sets the socket to require client authentication.
      *
      * @param isNeedClientAuth The need client auth flag.
      */
@@ -1057,7 +1065,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Override the default {@link TrustManager} to use; if set to {@code null}, the default TrustManager from the JVM will be used.
+     * Sets to override the default {@link TrustManager} to use; if set to {@code null}, the default TrustManager from the JVM will be used.
      *
      * @param trustManager The TrustManager implementation to set, may be {@code null}
      * @see org.apache.commons.net.util.TrustManagerUtils
@@ -1067,7 +1075,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Configures the socket to use client (or server) mode in its first handshake.
+     * Sets the socket to use client (or server) mode in its first handshake.
      *
      * @param isClientMode The use client mode flag.
      */
@@ -1076,7 +1084,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Configures the socket to request client authentication, but only if such a request is appropriate to the cipher suite negotiated.
+     * Sets the socket to request client authentication, but only if such a request is appropriate to the cipher suite negotiated.
      *
      * @param isWantClientAuth The want client auth flag.
      */

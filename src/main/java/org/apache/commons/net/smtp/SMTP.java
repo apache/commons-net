@@ -173,7 +173,7 @@ public class SMTP extends SocketClient {
     }
 
     /**
-     * Fetches a reply from the SMTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from either
+     * Gets a reply from the SMTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from either
      * calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }. Only use this method if you are implementing your own SMTP
      * client or if you need to fetch a secondary response from the SMTP server.
      *
@@ -240,7 +240,7 @@ public class SMTP extends SocketClient {
     }
 
     /**
-     * Returns the integer value of the reply code of the last SMTP reply. You will usually only use this method after you connect to the SMTP server to check
+     * Gets the integer value of the reply code of the last SMTP reply. You will usually only use this method after you connect to the SMTP server to check
      * that the connection was successful since {@code connect} is of type void.
      *
      * @return The integer value of the reply code of the last SMTP reply.
@@ -250,7 +250,7 @@ public class SMTP extends SocketClient {
     }
 
     /**
-     * Returns the entire text of the last SMTP server response exactly as it was received, including all end of line markers in NETASCII format.
+     * Gets the entire text of the last SMTP server response exactly as it was received, including all end of line markers in NETASCII format.
      *
      * @return The entire text from the last SMTP response as a String.
      */
@@ -275,7 +275,7 @@ public class SMTP extends SocketClient {
     }
 
     /**
-     * Returns the lines of text from the last SMTP server response as an array of strings, one entry per line. The end of line markers of each are stripped
+     * Gets the lines of text from the last SMTP server response as an array of strings, one entry per line. The end of line markers of each are stripped
      * from each line.
      *
      * @return The lines of text from the last SMTP response as an array.

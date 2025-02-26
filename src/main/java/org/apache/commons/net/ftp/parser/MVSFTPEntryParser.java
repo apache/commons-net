@@ -225,9 +225,6 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         super.configure(null); // configure parser with default configurations
     }
 
-    /*
-     * @return
-     */
     @Override
     protected FTPClientConfig getDefaultConfiguration() {
         return new FTPClientConfig(FTPClientConfig.SYST_MVS, DEFAULT_DATE_FORMAT, null);

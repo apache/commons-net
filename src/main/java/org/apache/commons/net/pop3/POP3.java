@@ -178,7 +178,7 @@ public class POP3 extends SocketClient {
     }
 
     /**
-     * Returns the reply to the last command sent to the server. The value is a single string containing all the reply lines including newlines. If the reply is
+     * Gets the reply to the last command sent to the server. The value is a single string containing all the reply lines including newlines. If the reply is
      * a single line, but its format ndicates it should be a multiline reply, then you must call {@link #getAdditionalReply getAdditionalReply() } to fetch the
      * rest of the reply, and then call {@code getReplyString} again. You only have to worry about this if you are implementing your own client using the
      * {@link #sendCommand sendCommand } methods.
@@ -197,7 +197,7 @@ public class POP3 extends SocketClient {
     }
 
     /**
-     * Returns an array of lines received as a reply to the last command sent to the server. The lines have end of lines truncated. If the reply is a single
+     * Gets an array of lines received as a reply to the last command sent to the server. The lines have end of lines truncated. If the reply is a single
      * line, but its format ndicates it should be a multiline reply, then you must call {@link #getAdditionalReply getAdditionalReply() } to fetch the rest of
      * the reply, and then call {@code getReplyStrings} again. You only have to worry about this if you are implementing your own client using the
      * {@link #sendCommand sendCommand } methods.
@@ -209,7 +209,7 @@ public class POP3 extends SocketClient {
     }
 
     /**
-     * Returns the current POP3 client state.
+     * Gets the current POP3 client state.
      *
      * @return The current POP3 client state.
      */
