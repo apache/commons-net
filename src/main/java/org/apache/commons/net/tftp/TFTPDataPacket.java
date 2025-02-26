@@ -72,16 +72,11 @@ public final class TFTPDataPacket extends TFTPPacket {
         this.blockNumber = (this.data[2] & 0xff) << 8 | this.data[3] & 0xff;
 
         this.length = datagram.getLength() - 4;
-
-        if (this.length > MAX_DATA_LENGTH) {
-            this.length = MAX_DATA_LENGTH;
-        }
     }
 
     /**
      * Creates a data packet to be sent to a host at a given port with a given block number. The actual data to be sent is passed as an array, an offset, and a
-     * length. The offset is the offset into the byte array where the data starts. The length is the length of the data. If the length is greater than
-     * MAX_DATA_LENGTH, it is truncated.
+     * length. The offset is the offset into the byte array where the data starts. The length is the length of the data.
      *
      * @param destination The host to which the packet is going to be sent.
      * @param port        The port to which the packet is going to be sent.
@@ -94,8 +89,7 @@ public final class TFTPDataPacket extends TFTPPacket {
 
     /**
      * Creates a data packet to be sent to a host at a given port with a given block number. The actual data to be sent is passed as an array, an offset, and a
-     * length. The offset is the offset into the byte array where the data starts. The length is the length of the data. If the length is greater than
-     * MAX_DATA_LENGTH, it is truncated.
+     * length. The offset is the offset into the byte array where the data starts. The length is the length of the data.
      *
      * @param destination The host to which the packet is going to be sent.
      * @param port        The port to which the packet is going to be sent.
@@ -109,7 +103,7 @@ public final class TFTPDataPacket extends TFTPPacket {
         this.blockNumber = blockNumber;
         this.data = data;
         this.offset = offset;
-        this.length = Math.min(length, MAX_DATA_LENGTH);
+        this.length = length;
     }
 
     /**
@@ -218,8 +212,6 @@ public final class TFTPDataPacket extends TFTPPacket {
         this.data = data;
         this.offset = offset;
         this.length = length;
-
-        this.length = Math.min(length, MAX_DATA_LENGTH);
     }
 
     /**
