@@ -76,12 +76,12 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
         <jacoco.skip>false</jacoco.skip>
         <!-- TODO Improve dismal coverage -->
-        <commons.jacoco.classRatio>0.47</commons.jacoco.classRatio>
+        <commons.jacoco.classRatio>0.54</commons.jacoco.classRatio>
         <commons.jacoco.instructionRatio>0.41</commons.jacoco.instructionRatio>
-        <commons.jacoco.methodRatio>0.40</commons.jacoco.methodRatio>
+        <commons.jacoco.methodRatio>0.43</commons.jacoco.methodRatio>
         <commons.jacoco.branchRatio>0.31</commons.jacoco.branchRatio>
         <commons.jacoco.lineRatio>0.38</commons.jacoco.lineRatio>    
-        <commons.jacoco.complexityRatio>0.31</commons.jacoco.complexityRatio>
+        <commons.jacoco.complexityRatio>0.32</commons.jacoco.complexityRatio>
     </properties>
     <scm>
         <connection>scm:git:https://gitbox.apache.org/repos/asf/commons-net</connection>
