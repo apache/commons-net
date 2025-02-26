@@ -121,7 +121,7 @@ public final class TFTPErrorPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the error code of the packet.
+     * Gets the error code of the packet.
      *
      * @return The error code of the packet.
      */
@@ -130,7 +130,7 @@ public final class TFTPErrorPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the error message of the packet.
+     * Gets the error message of the packet.
      *
      * @return The error message of the packet.
      */

@@ -134,7 +134,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the requested file name.
+     * Gets the requested file name.
      *
      * @return The requested file name.
      */
@@ -143,7 +143,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the transfer mode of the request.
+     * Gets the transfer mode of the request.
      *
      * @return The transfer mode of the request.
      */

@@ -113,7 +113,7 @@ public final class TFTPDataPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the block number of the data packet.
+     * Gets the block number of the data packet.
      *
      * @return The block number of the data packet.
      */
@@ -122,7 +122,7 @@ public final class TFTPDataPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the byte array containing the packet data.
+     * Gets the byte array containing the packet data.
      *
      * @return The byte array containing the packet data.
      */
@@ -131,7 +131,7 @@ public final class TFTPDataPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the length of the data part of the data packet.
+     * Gets the length of the data part of the data packet.
      *
      * @return The length of the data part of the data packet.
      */
@@ -140,7 +140,7 @@ public final class TFTPDataPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the offset into the byte array where the packet data actually starts.
+     * Gets the offset into the byte array where the packet data actually starts.
      *
      * @return The offset into the byte array where the packet data actually starts.
      */

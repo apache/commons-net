@@ -136,7 +136,7 @@ public abstract class TFTPPacket {
     }
 
     /**
-     * Returns the address of the host where the packet is going to be sent or where it came from.
+     * Gets the address of the host where the packet is going to be sent or where it came from.
      *
      * @return The type of the packet.
      */
@@ -145,7 +145,7 @@ public abstract class TFTPPacket {
     }
 
     /**
-     * Returns the port where the packet is going to be sent or where it came from.
+     * Gets the port where the packet is going to be sent or where it came from.
      *
      * @return The port where the packet came from or where it is going.
      */
@@ -154,7 +154,7 @@ public abstract class TFTPPacket {
     }
 
     /**
-     * Returns the type of the packet.
+     * Gets the type of the packet.
      *
      * @return The type of the packet.
      */

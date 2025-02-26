@@ -71,7 +71,7 @@ public final class TFTPAckPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the block number of the acknowledgement.
+     * Gets the block number of the acknowledgement.
      *
      * @return The block number of the acknowledgement.
      */
