@@ -67,6 +67,12 @@ public abstract class TFTPPacket {
     public static final int ERROR = 5;
 
     /**
+     * This is the actual TFTP spec identifier and is equal to 6.
+     * Identifier returned by {@link #getType getType()} indicating an options acknowledgement packet.
+     */
+    public static final int OACK = 6;
+
+    /**
      * The TFTP data packet maximum segment size in bytes. This is 512 and is useful for those familiar with the TFTP protocol who want to use the
      * {@link org.apache.commons.net.tftp.TFTP} class methods to implement their own TFTP servers or clients.
      */
