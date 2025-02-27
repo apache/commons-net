@@ -17,8 +17,6 @@
 
 package org.apache.commons.net.tftp;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
@@ -29,13 +27,16 @@ import java.util.Map;
  * A final class derived from TFTPPacket defining the TFTP OACK (Option Acknowledgment) packet type.
  * <p>
  * Details regarding this packet type can be found in RFC 2347.
+ * </p>
+ *
+ * @since 3.12.0
  */
 public final class TFTPOptionsAckPacket extends TFTPPacket {
 
     private final Map<String, String> options;
 
     /**
-     * Creates an OACK packet informing which options are accepted.
+     * Constructs an OACK packet informing which options are accepted.
      *
      * @param address The host to which the packet is going to be sent.
      * @param port The port to which the packet is going to be sent.
@@ -46,41 +47,46 @@ public final class TFTPOptionsAckPacket extends TFTPPacket {
         this.options = new HashMap<>(options);
     }
 
+    /**
+     * Gets the options extensions being acknowledged.
+     *
+     * @return The options being acknowledged.
+     */
     public Map<String, String> getOptions() {
         return options;
     }
 
     /**
-     * Creates a UDP datagram containing all the accepted options data in the proper format. This is a method exposed to the programmer in case he
+     * Creates a UDP datagram containing all the accepted options data in the proper format.
+     * <p>
+     * This is a method exposed to the programmer in case he
      * wants to implement his own TFTP client instead of using the {@link org.apache.commons.net.tftp.TFTPClient} class. Under normal circumstances, you should
      * not have a need to call this method.
+     * </p>
      *
      * @return A UDP datagram containing the TFTP OACK packet.
      */
     @Override
     public DatagramPacket newDatagram() {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        byteStream.write(0);
-        byteStream.write(OACK);
-
-        try {
-            for (Map.Entry<String, String> entry : options.entrySet()) {
-                byteStream.write(entry.getKey().getBytes(StandardCharsets.US_ASCII));
-                byteStream.write(0);
-                byteStream.write(entry.getValue().getBytes(StandardCharsets.US_ASCII));
-                byteStream.write(0);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error creating OACK packet", e);
+        int optionsLength = 0;
+        for (Map.Entry<String, String> entry : options.entrySet()) {
+            optionsLength += entry.getKey().length() + 1 + entry.getValue().length() + 1;
         }
 
-        byte[] data = byteStream.toByteArray();
+        byte[] data = new byte[2 + optionsLength];
+        data[0] = 0;
+        data[1] = (byte) type;
+        writeOptionsData(data, 2);
+
         return new DatagramPacket(data, data.length, getAddress(), getPort());
     }
 
     /**
+     * Creates a datagram with all the accepted options data in the proper format.
+     * <p>
      * This is a method only available within the package for implementing efficient datagram transport by eliminating buffering. It takes a datagram as an
      * argument, and a byte buffer in which to store the raw datagram data. Inside the method, the data is set as the datagram's data and the datagram returned.
+     * </p>
      *
      * @param datagram The datagram to create.
      * @param data     The buffer to store the packet and to use in the datagram.
@@ -92,19 +98,7 @@ public final class TFTPOptionsAckPacket extends TFTPPacket {
         data[offset++] = 0;
         data[offset++] = (byte) type;
 
-        for (Map.Entry<String, String> entry : options.entrySet()) {
-            byte[] key = entry.getKey().getBytes(StandardCharsets.US_ASCII);
-            System.arraycopy(key, 0, data, offset, key.length);
-            offset += key.length;
-
-            data[offset++] = 0;
-
-            byte[] value = entry.getValue().getBytes(StandardCharsets.US_ASCII);
-            System.arraycopy(value, 0, data, offset, value.length);
-            offset += value.length;
-
-            data[offset++] = 0;
-        }
+        offset = writeOptionsData(data, offset);
 
         datagram.setAddress(address);
         datagram.setPort(port);
@@ -112,5 +106,24 @@ public final class TFTPOptionsAckPacket extends TFTPPacket {
         datagram.setLength(offset);
 
         return datagram;
+    }
+
+    private int writeOptionsData(byte[] data, int offset) {
+        // all the options would get written to the data byte array in following format
+        // +---~~---+---+---~~---+---+---~~---+---+---~~---+---+
+        // |  opt1  | 0 | value1 | 0 |  optN  | 0 | valueN | 0 |
+        // +---~~---+---+---~~---+---+---~~---+---+---~~---+---+
+        for (Map.Entry<String, String> entry : options.entrySet()) {
+            byte[] key = entry.getKey().getBytes(StandardCharsets.US_ASCII);
+            System.arraycopy(key, 0, data, offset, key.length);
+            offset += key.length;
+            data[offset++] = 0;
+            byte[] value = entry.getValue().getBytes(StandardCharsets.US_ASCII);
+            System.arraycopy(value, 0, data, offset, value.length);
+            offset += value.length;
+            data[offset++] = 0;
+        }
+
+        return offset;
     }
 }
