@@ -67,8 +67,8 @@ public abstract class TFTPPacket {
     public static final int ERROR = 5;
 
     /**
-     * This is the actual TFTP spec identifier and is equal to 6.
-     * Identifier returned by {@link #getType getType()} indicating an options acknowledgement packet.
+     * TFTP spec identifier {@value}. Identifier returned by {@link #getType getType()} indicating an options acknowledgement packet.
+     * @since 3.12.0
      */
     public static final int OACK = 6;
 

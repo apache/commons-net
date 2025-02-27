@@ -116,7 +116,7 @@ public class TFTP extends DatagramSocketClient {
     private int packetSize = TFTPPacket.SEGMENT_SIZE + 4;
 
     /** Internal state to track if the send/receive buffers are initialized */
-    private boolean buffersInityialized = false;
+    private boolean buffersInitialized = false;
 
     /**
      * A buffer used to accelerate sends in bufferedSend(). It is left package visible so that TFTPClient may be slightly more efficient during file sends. It
@@ -143,7 +143,7 @@ public class TFTP extends DatagramSocketClient {
         receiveDatagram = new DatagramPacket(receiveBuffer, receiveBuffer.length);
         sendBuffer = new byte[packetSize];
         sendDatagram = new DatagramPacket(sendBuffer, sendBuffer.length);
-        buffersInityialized = true;
+        buffersInitialized = true;
     }
 
     /**
@@ -216,7 +216,7 @@ public class TFTP extends DatagramSocketClient {
         receiveDatagram = null;
         sendBuffer = null;
         sendDatagram = null;
-        buffersInityialized = false;
+        buffersInitialized = false;
     }
 
     /**
@@ -273,22 +273,23 @@ public class TFTP extends DatagramSocketClient {
      * This only refers to the number of data octets, it does not include the four octets of TFTP header
      *
      * @param packetSize The size of the data octets not including 4 octets for the header.
+     * @since 3.12.0
      */
     public final void resetBuffersToSize(int packetSize) {
         // the packet size should be between 8 - 65464 (inclusively) then we add 4 for the header
         this.packetSize = (Math.min(Math.max(packetSize, 8), 65464) + 4);
-
         // if the buffers are already initialized reinitialize
-        if (buffersInityialized) {
+        if (buffersInitialized) {
             endBufferedOps();
             beginBufferedOps();
         }
     }
 
     /**
-     * Returns the buffer size of the buffered used by {@link #bufferedSend bufferedSend() } and {@link #bufferedReceive bufferedReceive() }.
+     * Gets the buffer size of the buffered used by {@link #bufferedSend bufferedSend() } and {@link #bufferedReceive bufferedReceive() }.
      *
      * @return current buffer size
+     * @since 3.12.0
      */
     public int getBufferSize() {
         return packetSize;

@@ -184,10 +184,11 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
     }
 
     /**
-     * Returns the options extensions of the request as a map.
+     * Gets the options extensions of the request as a map.
      * The keys are the option names and the values are the option values.
      *
      * @return The options extensions of the request as a map.
+     * @since 3.12.0
      */
     public final Map<String, String> getOptions() {
         return options;
