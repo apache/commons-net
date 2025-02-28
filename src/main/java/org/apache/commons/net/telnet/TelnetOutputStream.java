@@ -92,13 +92,13 @@ final class TelnetOutputStream extends OutputStream {
         synchronized (client) {
             ch &= 0xff;
 
-            if (client.requestedWont(TelnetOption.BINARY)) // i.e. ASCII
-            {
+            // i.e. ASCII
+            if (client.requestedWont(TelnetOption.BINARY)) {
                 if (lastWasCR) {
                     if (CONVERT_TO_CRLF) {
                         client.sendByte('\n');
-                        if (ch == '\n') // i.e. was CRLF anyway
-                        {
+                        if (ch == '\n') {
+                            // i.e. was CRLF anyway
                             lastWasCR = false;
                             return;
                         }
