@@ -150,7 +150,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
      */
     @Override
     public void configure(final FTPClientConfig config) {
-        DateFormatSymbols dfs;
+        final DateFormatSymbols dfs;
 
         final String languageCode = config.getServerLanguageCode();
         final String shortmonths = config.getShortMonthNames();

@@ -81,15 +81,11 @@ public abstract class TFTPPacket {
      * @throws TFTPPacketException If the datagram does not contain a valid TFTP packet.
      */
     public static final TFTPPacket newTFTPPacket(final DatagramPacket datagram) throws TFTPPacketException {
-        final byte[] data;
-        TFTPPacket packet;
-
         if (datagram.getLength() < MIN_PACKET_SIZE) {
             throw new TFTPPacketException("Bad packet. Datagram data length is too short.");
         }
-
-        data = datagram.getData();
-
+        final byte[] data = datagram.getData();
+        final TFTPPacket packet;
         switch (data[1]) {
         case READ_REQUEST:
             packet = new TFTPReadRequestPacket(datagram);
@@ -109,7 +105,6 @@ public abstract class TFTPPacket {
         default:
             throw new TFTPPacketException("Bad packet.  Invalid TFTP operator code.");
         }
-
         return packet;
     }
 

@@ -175,7 +175,7 @@ public final class TFTPExample {
             System.err.println("Error: " + localFilename + " already exists.");
             return false;
         }
-        FileOutputStream output;
+        final FileOutputStream output;
         // Try to open local file for writing
         try {
             output = new FileOutputStream(file);
@@ -210,7 +210,7 @@ public final class TFTPExample {
 
     private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename, final TFTPClient tftp)
             throws IOException {
-        FileInputStream input;
+        final FileInputStream input;
         // Try to open local file for reading
         try {
             input = new FileInputStream(localFilename);

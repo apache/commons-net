@@ -126,7 +126,7 @@ public class FTPHTTPClient extends FTPClient {
         }
 
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
-        String passiveHost;
+        final String passiveHost;
 
         final boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
         if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
@@ -207,7 +207,7 @@ public class FTPHTTPClient extends FTPClient {
             throw new IOException("No response from proxy");
         }
 
-        String code;
+        final String code;
         final String resp = response.get(0);
         if (!resp.startsWith("HTTP/") || resp.length() < 12) {
             throw new IOException("Invalid response from proxy: " + resp);

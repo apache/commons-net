@@ -630,7 +630,7 @@ public class FTP extends SocketClient {
         if (length < REPLY_CODE_LEN) {
             throw new MalformedServerReplyException("Truncated server reply: " + line);
         }
-        String code;
+        final String code;
         try {
             code = line.substring(0, REPLY_CODE_LEN);
             _replyCode = Integer.parseInt(code);

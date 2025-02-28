@@ -857,7 +857,7 @@ public class FTPClient extends FTP implements Configurable {
         if (!m.find()) {
             throw new MalformedServerReplyException("Could not parse passive host information.\nServer Reply: " + reply);
         }
-        int pasvPort;
+        final int pasvPort;
         // Fix up to look like IP address
         String pasvHost = "0,0,0,0".equals(m.group(1)) ? _socket_.getInetAddress().getHostAddress() : m.group(1).replace(',', '.');
         try {

@@ -92,7 +92,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
         final ListIterator<String> iter = original.listIterator();
         while (iter.hasNext()) {
             final String entry = iter.next().trim();
-            MatchResult result;
+            final MatchResult result;
             final Matcher matcher = PATTERN.matcher(entry);
             if (matcher.matches()) {
                 result = matcher.toMatchResult();
