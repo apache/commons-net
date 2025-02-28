@@ -90,6 +90,7 @@ limitations under the License.
     <module name="RightCurly" />
     <module name="UnusedImports"/>
     <module name="SimplifyBooleanExpression" />
+    <module name="SimplifyBooleanReturn" />
     <module name="SuppressionCommentFilter"/>
     <!--
         Allow comment to suppress checkstyle for a single line
