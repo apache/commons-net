@@ -930,8 +930,8 @@ class Telnet extends SocketClient {
         final OutputStream spy = spyStream;
         if (spy != null) {
             try {
-                if (ch != '\r') // never write '\r' on its own
-                {
+                // never write '\r' on its own
+                if (ch != '\r') {
                     if (ch == '\n') {
                         spy.write('\r'); // add '\r' before '\n'
                     }

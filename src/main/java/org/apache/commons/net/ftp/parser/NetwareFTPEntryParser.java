@@ -129,8 +129,8 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             // is it a DIR or a file
             if (dirString.trim().equals("d")) {
                 f.setType(FTPFile.DIRECTORY_TYPE);
-            } else // Should be "-"
-            {
+            } else {
+                // Should be "-"
                 f.setType(FTPFile.FILE_TYPE);
             }
 

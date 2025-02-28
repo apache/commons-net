@@ -233,8 +233,8 @@ public final class FTPClientExample {
         if (user != null) {
             minParams -= 2;
         }
-        if (remain < minParams) // server, user, pass, remote, local [protocol]
-        {
+        if (remain < minParams) {
+            // server, user, pass, remote, local [protocol]
             if (args.length > 0) {
                 System.err.println("Actual Parameters: " + Arrays.toString(args));
             }
