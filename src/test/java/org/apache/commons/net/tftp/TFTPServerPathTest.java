@@ -131,7 +131,8 @@ public class TFTPServerPathTest {
         // but we cannot write to it
         try (InputStream is = Files.newInputStream(fileToRead)) {
             final String readFileName = fileToRead.getFileName().toString();
-            final IOException exception = assertThrows(IOException.class, () -> tftpClient.sendFile(readFileName, TFTP.BINARY_MODE, is, serverAddress, serverPort));
+            final IOException exception = assertThrows(IOException.class,
+                    () -> tftpClient.sendFile(readFileName, TFTP.BINARY_MODE, is, serverAddress, serverPort));
             assertEquals("Error code 4 received: Write not allowed by server.", exception.getMessage());
         }
     }
@@ -150,10 +151,10 @@ public class TFTPServerPathTest {
         // we cannot read file
         try (OutputStream os = Files.newOutputStream(fileToWrite)) {
             final String readFileName = fileToRead.getFileName().toString();
-            final IOException exception = assertThrows(IOException.class, () -> tftpClient.receiveFile(readFileName, TFTP.BINARY_MODE, os, serverAddress, serverPort));
+            final IOException exception = assertThrows(IOException.class,
+                    () -> tftpClient.receiveFile(readFileName, TFTP.BINARY_MODE, os, serverAddress, serverPort));
             assertEquals("Error code 4 received: Read not allowed by server.", exception.getMessage());
         }
-
         // but we can write to it
         try (InputStream is = Files.newInputStream(fileToRead)) {
             deleteFile(fileToWrite, false);

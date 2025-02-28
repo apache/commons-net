@@ -26,7 +26,8 @@ import java.io.OutputStream;
 public class TelnetTestResponder implements Runnable {
     InputStream _is;
     OutputStream _os;
-    String _inputs[], _outputs[];
+    String _inputs[];
+    String _outputs[];
     long _timeout;
 
     /**

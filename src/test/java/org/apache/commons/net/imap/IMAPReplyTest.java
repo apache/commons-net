@@ -87,7 +87,8 @@ public class IMAPReplyTest {
     @Test
     public void testGetReplyCodeMalformedLine() {
         final String malformedTaggedLine = "A064 FOO-BAR 0";
-        final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class, () -> IMAPReply.getReplyCode(malformedTaggedLine));
+        final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class,
+                () -> IMAPReply.getReplyCode(malformedTaggedLine));
         assertEquals("Received unexpected IMAP protocol response from server: 'A064 FOO-BAR 0'.", replyException.getMessage());
     }
 
@@ -128,7 +129,8 @@ public class IMAPReplyTest {
     public void testGetUntaggedReplyCodeMalformedLine() {
         // invalid experimental comm response (missing X prefix)
         final String malformedUntaggedLine = "* FOO-BAR hello-world";
-        final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class, () -> IMAPReply.getUntaggedReplyCode(malformedUntaggedLine));
+        final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class,
+                () -> IMAPReply.getUntaggedReplyCode(malformedUntaggedLine));
         assertEquals("Received unexpected IMAP protocol response from server: '* FOO-BAR hello-world'.", replyException.getMessage());
     }
 
@@ -143,9 +145,8 @@ public class IMAPReplyTest {
         assertEquals(IMAPReply.OK, IMAPReply.getUntaggedReplyCode("* OK Salvage successful, no data lost"));
         assertEquals(IMAPReply.OK,
                 IMAPReply.getUntaggedReplyCode("* OK The Microsoft Exchange IMAP4 service is ready. [xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]"));
-        assertEquals(IMAPReply.OK, IMAPReply.getUntaggedReplyCode(
-                "* OK The Microsoft Exchange IMAP4 service is ready. [TQBXADIAUABSADIAMQAwADEAQwBBADAAMAAzADYALgBuAGEAbQBwAHIAZAAyADEALgBwAHIAbwBkAC4AbwB1AHQAbABvAG8AawAuAGMAbwBtAA==]"));
-
+        assertEquals(IMAPReply.OK, IMAPReply.getUntaggedReplyCode("* OK The Microsoft Exchange IMAP4 service is ready. " +
+                "[TQBXADIAUABSADIAMQAwADEAQwBBADAAMAAzADYALgBuAGEAbQBwAHIAZAAyADEALgBwAHIAbwBkAC4AbwB1AHQAbABvAG8AawAuAGMAbwBtAA==]"));
     }
 
     @Test

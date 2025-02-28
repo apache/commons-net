@@ -82,8 +82,8 @@ public abstract class AbstractFtpsTest {
      * @param defaultHome default home folder
      * @throws FtpException Thrown when the FTP classes cannot fulfill a request.
      */
-    protected synchronized static void setupServer(final boolean implicit, final String userPropertiesResource, final String serverJksResourceResource, final String defaultHome)
-            throws FtpException {
+    protected static synchronized void setupServer(final boolean implicit, final String userPropertiesResource, final String serverJksResourceResource,
+            final String defaultHome) throws FtpException {
         if (EmbeddedFtpServer != null) {
             return;
         }

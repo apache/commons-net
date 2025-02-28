@@ -103,10 +103,12 @@ public class MLSDComparison {
     private void compareSortedLists(final FTPFile[] lst, final FTPFile[] mlst) {
         Arrays.sort(lst, cmp);
         Arrays.sort(mlst, cmp);
-        FTPFile first, second;
+        FTPFile first;
+        FTPFile second;
         final int firstl = lst.length;
         final int secondl = mlst.length;
-        int one = 0, two = 0;
+        int one = 0;
+        int two = 0;
         first = lst[one++];
         second = mlst[two++];
         int cmp;

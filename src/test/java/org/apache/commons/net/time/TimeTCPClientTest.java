@@ -56,8 +56,10 @@ public class TimeTCPClientTest extends TestCase {
     public void testCompareTimes() throws Exception {
         openConnections();
 
-        long time, time2;
-        long clientTime, clientTime2;
+        final long time;
+        final long time2;
+        final long clientTime;
+        final long clientTime2;
         final TimeTCPClient client = new TimeTCPClient();
         try {
             // Not sure why code used to use getLocalHost.

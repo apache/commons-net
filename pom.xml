@@ -383,6 +383,7 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <propertyExpansion>config_loc=${checkstyle.configdir}</propertyExpansion>
                     <suppressionsLocation>${checkstyle.configdir}/checkstyle-suppressions.xml</suppressionsLocation>
                     <enableRulesSummary>false</enableRulesSummary>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
             </plugin>
         </plugins>
@@ -413,6 +414,7 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <propertyExpansion>config_loc=${checkstyle.configdir}</propertyExpansion>
                     <suppressionsLocation>${checkstyle.configdir}/checkstyle-suppressions.xml</suppressionsLocation>
                     <enableRulesSummary>false</enableRulesSummary>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
             </plugin>
             <plugin>
