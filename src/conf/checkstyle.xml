@@ -65,6 +65,7 @@ limitations under the License.
     </module>
     <module name="EmptyCatchBlock"></module>
     <module name="EqualsHashCode" />
+    <module name="ExplicitInitialization" />
     <module name="ImportOrder">
       <property name="option" value="top"/>
       <property name="groups" value="java,javax,org"/>
