@@ -412,9 +412,8 @@ public final class FTPClientExample {
                 if (keepAliveTimeoutSeconds > 0) {
                     showCslStats(ftp);
                 }
-            }
-            // Allow multiple list types for single invocation
-            else if (listFiles || mlsd || mdtm || mlst || listNames || size) {
+            } else if (listFiles || mlsd || mdtm || mlst || listNames || size) {
+                // Allow multiple list types for single invocation
                 if (mlsd) {
                     for (final FTPFile f : ftp.mlistDir(remote)) {
                         System.out.println(f.getRawListing());

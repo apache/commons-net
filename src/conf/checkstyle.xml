@@ -87,6 +87,7 @@ limitations under the License.
     <module name="NeedBraces"/>
     <module name="ParenPad"/>
     <module name="RedundantImport"/>
+    <module name="RightCurly" />
     <module name="UnusedImports"/>
     <module name="SuppressionCommentFilter"/>
     <!--

@@ -79,12 +79,11 @@ public final class chargen {
 
                 try {
                     data = client.receive();
-                }
-                // Here we catch both SocketException and InterruptedIOException,
-                // because even though the JDK 1.1 docs claim that
-                // InterruptedIOException is thrown on a timeout, it seems
-                // SocketException is also thrown.
-                catch (final SocketException e) {
+                } catch (final SocketException e) {
+                    // Here we catch both SocketException and InterruptedIOException,
+                    // because even though the JDK 1.1 docs claim that
+                    // InterruptedIOException is thrown on a timeout, it seems
+                    // SocketException is also thrown.
                     // We timed out and assume the packet is lost.
                     System.err.println("SocketException: Timed out and dropped packet");
                     continue;

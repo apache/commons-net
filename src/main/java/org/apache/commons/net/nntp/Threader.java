@@ -319,13 +319,10 @@ public class Threader {
                 } else {
                     prev.next = container.next;
                 }
-
                 // Set container to prev so that prev keeps its same value the next time through the loop
                 container = prev;
-            }
-
-            // Else if empty, with kids, and (not at root or only one kid)
-            else if (container.threadable == null && (container.parent != null || container.child.next == null)) {
+                // Else if empty, with kids, and (not at root or only one kid)
+            } else if (container.threadable == null && (container.parent != null || container.child.next == null)) {
                 // We have an invalid/expired message with kids. Promote the kids to this level.
                 NntpThreadContainer tail;
                 final NntpThreadContainer kids = container.child;

@@ -287,8 +287,8 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl {
                     default:
                         break;
                     } // mode
-                } // unix.
-                else if (!hasUnixMode && "perm".equals(factname)) { // skip if we have the UNIX.mode
+                // unix.
+                } else if (!hasUnixMode && "perm".equals(factname)) { // skip if we have the UNIX.mode
                     doUnixPerms(file, valueLowerCase);
                 }
                 break;

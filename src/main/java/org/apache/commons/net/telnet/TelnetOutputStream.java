@@ -102,8 +102,8 @@ final class TelnetOutputStream extends OutputStream {
                             lastWasCR = false;
                             return;
                         }
-                    } // __convertCRtoCRLF
-                    else if (ch != '\n') {
+                    } else if (ch != '\n') {
+                        // convertCRtoCRLF
                         client.sendByte(Telnet.NUL); // RFC854 requires CR NUL for bare CR
                     }
                 }
@@ -130,8 +130,8 @@ final class TelnetOutputStream extends OutputStream {
                     lastWasCR = false;
                     break;
                 }
-            } // end ASCII
-            else if (ch == TelnetCommand.IAC) {
+            // end ASCII
+            } else if (ch == TelnetCommand.IAC) {
                 client.sendByte(ch);
                 client.sendByte(TelnetCommand.IAC);
             } else {

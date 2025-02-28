@@ -131,9 +131,8 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
             final String upperKey = key.toUpperCase(Locale.ENGLISH);
             if (upperKey.contains(FTPClientConfig.SYST_UNIX_TRIM_LEADING)) {
                 parser = new UnixFTPEntryParser(config, true);
-            }
-            // must check this after SYST_UNIX_TRIM_LEADING as it is a substring of it
-            else if (upperKey.contains(FTPClientConfig.SYST_UNIX)) {
+                // must check this after SYST_UNIX_TRIM_LEADING as it is a substring of it
+            } else if (upperKey.contains(FTPClientConfig.SYST_UNIX)) {
                 parser = new UnixFTPEntryParser(config, false);
             } else if (upperKey.contains(FTPClientConfig.SYST_VMS)) {
                 parser = new VMSVersioningFTPEntryParser(config);
