@@ -57,9 +57,7 @@ limitations under the License.
     <property name="file" value="${config_loc}/checkstyle-suppressions.xml"/>
   </module>
   <module name="TreeWalker">
-    <module name="AvoidStarImport">
-      <property name="excludes" value="org.junit.Assert"/>
-    </module>
+    <module name="AvoidStarImport"/>
     <module name="EmptyBlock">
       <property name="option" value="text"/>
     </module>
