@@ -93,6 +93,7 @@ limitations under the License.
     <module name="SimplifyBooleanReturn" />
     <module name="SuppressionCommentFilter"/>
     <module name="StringLiteralEquality" />
+    <module name="SuperClone" />
     <!--
         Allow comment to suppress checkstyle for a single line
         e.g. // CHECKSTYLE IGNORE MagicNumber
