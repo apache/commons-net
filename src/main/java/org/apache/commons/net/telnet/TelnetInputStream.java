@@ -30,13 +30,23 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
     private static final int WOULD_BLOCK = -2;
 
     // TODO should these be private enums?
-    static final int STATE_DATA = 0, STATE_IAC = 1, STATE_WILL = 2, STATE_WONT = 3, STATE_DO = 4, STATE_DONT = 5, STATE_SB = 6, STATE_SE = 7, STATE_CR = 8,
-            STATE_IAC_SB = 9;
-
+    static final int STATE_DATA = 0;
+    static final int STATE_IAC = 1;
+    static final int STATE_WILL = 2;
+    static final int STATE_WONT = 3;
+    static final int STATE_DO = 4;
+    static final int STATE_DONT = 5;
+    static final int STATE_SB = 6;
+    static final int STATE_SE = 7;
+    static final int STATE_CR = 8;
+    static final int STATE_IAC_SB = 9;
     private boolean hasReachedEOF; // @GuardedBy("queue")
     private volatile boolean isClosed;
     private boolean readIsWaiting;
-    private int receiveState, queueHead, queueTail, bytesAvailable;
+    private int receiveState;
+    private int queueHead;
+    private int queueTail;
+    private int bytesAvailable;
     private final int[] queue;
     private final TelnetClient client;
     private final Thread thread;

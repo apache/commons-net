@@ -33,8 +33,10 @@ public final class finger {
 
     public static void main(final String[] args) {
         boolean longOutput = false;
-        int arg = 0, index;
-        String handle, host;
+        int arg = 0;
+        int index;
+        String handle;
+        String host;
         final FingerClient finger;
         InetAddress address = null;
 

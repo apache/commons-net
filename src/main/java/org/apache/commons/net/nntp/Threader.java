@@ -106,7 +106,8 @@ public class Threader {
         // a parent based on the other entries in that field. Now that we have the actual message, we can
         // throw away the old parent and use this new one
         if (container.parent != null) {
-            NntpThreadContainer rest, prev;
+            NntpThreadContainer rest;
+            NntpThreadContainer prev;
 
             for (prev = null, rest = container.parent.child; rest != null; prev = rest, rest = rest.next) {
                 if (rest == container) {
@@ -214,7 +215,9 @@ public class Threader {
 
         // subjectTable is now populated with one entry for each subject which occurs in the
         // root set. Iterate over the root set, and gather together the difference.
-        NntpThreadContainer prev, c, rest;
+        NntpThreadContainer prev;
+        NntpThreadContainer c;
+        NntpThreadContainer rest;
         for (prev = null, c = root.child, rest = c.next; c != null; prev = c, c = rest, rest = rest == null ? null : rest.next) {
             Threadable threadable = c.threadable;
 
@@ -302,7 +305,9 @@ public class Threader {
      * @param parent
      */
     private void pruneEmptyContainers(final NntpThreadContainer parent) {
-        NntpThreadContainer container, prev, next;
+        NntpThreadContainer container;
+        NntpThreadContainer prev;
+        NntpThreadContainer next;
         for (prev = null, container = parent.child, next = container.next; container != null; prev = container, container = next, next = container == null
                 ? null
                 : container.next) {

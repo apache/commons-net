@@ -46,7 +46,8 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
 public class POP3Client extends POP3 {
 
     private static POP3MessageInfo parseStatus(final String line) {
-        int num, size;
+        int num;
+        int size;
         final StringTokenizer tokenizer;
 
         tokenizer = new StringTokenizer(line);

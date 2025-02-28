@@ -40,7 +40,8 @@ import java.util.Objects;
  */
 
 public final class NewGroupsOrNewsQuery {
-    private final String date, time;
+    private final String date;
+    private final String time;
     private StringBuffer distributions;
     private StringBuffer newsgroups;
     private final boolean isGMT;

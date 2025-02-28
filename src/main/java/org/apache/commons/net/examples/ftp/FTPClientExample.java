@@ -121,9 +121,20 @@ public final class FTPClientExample {
     }
 
     public static void main(final String[] args) throws UnknownHostException {
-        boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
-        boolean localActive = false, useEpsvWithIPv4 = false, feat = false, printHash = false;
-        boolean mlst = false, mlsd = false, mdtm = false, saveUnparseable = false;
+        boolean storeFile = false;
+        boolean binaryTransfer = false;
+        boolean error = false;
+        boolean listFiles = false;
+        boolean listNames = false;
+        boolean hidden = false;
+        boolean localActive = false;
+        boolean useEpsvWithIPv4 = false;
+        boolean feat = false;
+        boolean printHash = false;
+        boolean mlst = false;
+        boolean mlsd = false;
+        boolean mdtm = false;
+        boolean saveUnparseable = false;
         boolean size = false;
         boolean lenient = false;
         long keepAliveTimeoutSeconds = -1;

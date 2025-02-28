@@ -68,8 +68,10 @@ public final class TFTPExample {
      * @throws IOException if a network or I/O error occurs.
      */
     public static void main(final String[] args) throws IOException {
-        boolean receiveFile = true, closed;
-        int transferMode = TFTP.BINARY_MODE, argc;
+        boolean receiveFile = true;
+        boolean closed;
+        int transferMode = TFTP.BINARY_MODE;
+        int argc;
         String arg;
         final String hostname;
         final String localFilename;

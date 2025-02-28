@@ -80,7 +80,9 @@ final class NntpThreadContainer {
      */
     void reverseChildren() {
         if (child != null) {
-            NntpThreadContainer kid, prev, rest;
+            NntpThreadContainer kid;
+            NntpThreadContainer prev;
+            NntpThreadContainer rest;
             for (prev = null, kid = child, rest = kid.next; kid != null; prev = kid, kid = rest, rest = rest == null ? null : rest.next) {
                 kid.next = prev;
             }

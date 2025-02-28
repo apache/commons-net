@@ -66,7 +66,8 @@ public final class echo {
     }
 
     public static void echoUDP(final String host) throws IOException {
-        int length, count;
+        int length;
+        int count;
         byte[] data;
         String line;
         final BufferedReader input;

@@ -44,7 +44,8 @@ public final class ServerToServerFTP {
         final String password2;
         final String file2;
         String[] parts;
-        int port1 = 0, port2 = 0;
+        int port1 = 0;
+        int port2 = 0;
         final FTPClient ftp1;
         final FTPClient ftp2;
         final ProtocolCommandListener listener;
