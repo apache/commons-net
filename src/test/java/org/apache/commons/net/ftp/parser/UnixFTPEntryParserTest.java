@@ -104,7 +104,7 @@ public class UnixFTPEntryParserTest extends AbstractFTPParseTest {
         case 'b':
         case 'c':
             assertEquals(0, f.getHardLinkCount());
-            //$FALL-THROUGH$ TODO this needs to be fixed if a device type is introduced
+            // falls through$ TODO this needs to be fixed if a device type is introduced
         case 'f':
         case '-':
             assertEquals("Type of " + test, type, FTPFile.FILE_TYPE);

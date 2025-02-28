@@ -141,7 +141,7 @@ public final class DotTerminatedMessageWriter extends Writer {
                 if (state == LAST_WAS_NL_STATE) {
                     output.write('.');
                 }
-                //$FALL-THROUGH$
+                // falls through$
             default:
                 state = NOTHING_SPECIAL_STATE;
                 output.write(ch);

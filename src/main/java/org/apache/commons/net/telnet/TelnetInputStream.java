@@ -305,7 +305,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
 
                 // Handle as normal data by falling through to _STATE_DATA case
 
-                //$FALL-THROUGH$
+                // falls through$
             case STATE_DATA:
                 if (ch == TelnetCommand.IAC) {
                     receiveState = STATE_IAC;

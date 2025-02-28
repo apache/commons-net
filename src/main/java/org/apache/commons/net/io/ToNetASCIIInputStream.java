@@ -89,7 +89,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream {
                 status = LAST_WAS_NL;
                 return '\r';
             }
-            //$FALL-THROUGH$
+            // falls through$
         default:
             status = NOTHING_SPECIAL;
             return ch;

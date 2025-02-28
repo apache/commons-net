@@ -83,7 +83,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream {
             if (!lastWasCR) {
                 out.write('\r');
             }
-            //$FALL-THROUGH$
+            // falls through$
         default:
             lastWasCR = false;
             out.write(ch);
