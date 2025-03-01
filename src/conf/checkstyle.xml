@@ -105,6 +105,7 @@ limitations under the License.
     </module>
     <module name="TypecastParenPad" />
     <module name="UnnecessaryParentheses" />
+    <module name="UnusedImports" />
     <module name="WhitespaceAfter" />
     <module name="WhitespaceAround" />
   </module>
