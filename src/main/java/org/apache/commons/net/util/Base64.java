@@ -600,8 +600,9 @@ public class Base64 {
     }
 
     @Override
-    public final void finalize() {
+    public final void finalize() throws Throwable {
         // CT: Be wary of letting constructors throw exceptions. (CT_CONSTRUCTOR_THROW)
+        super.finalize();
     }
 
     int getLineLength() {

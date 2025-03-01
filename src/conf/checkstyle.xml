@@ -94,6 +94,7 @@ limitations under the License.
     <module name="SuppressionCommentFilter"/>
     <module name="StringLiteralEquality" />
     <module name="SuperClone" />
+    <module name="SuperFinalize" />
     <!--
         Allow comment to suppress checkstyle for a single line
         e.g. // CHECKSTYLE IGNORE MagicNumber
