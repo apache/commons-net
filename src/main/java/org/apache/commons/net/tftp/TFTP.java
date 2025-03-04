@@ -112,6 +112,12 @@ public class TFTP extends DatagramSocketClient {
     /** A datagram used to minimize memory allocation in bufferedSend() */
     private DatagramPacket sendDatagram;
 
+    /** Internal packet size, which is the data octet size plus 4 (for TFTP header octets) */
+    private int packetSize = PACKET_SIZE;
+
+    /** Internal state to track if the send/receive buffers are initialized */
+    private boolean buffersInitialized;
+
     /**
      * A buffer used to accelerate sends in bufferedSend(). It is left package visible so that TFTPClient may be slightly more efficient during file sends. It
      * saves the creation of an additional buffer and prevents a buffer copy in _newDataPcket().
@@ -133,10 +139,11 @@ public class TFTP extends DatagramSocketClient {
      * endBufferedOps() }.
      */
     public final void beginBufferedOps() {
-        receiveBuffer = new byte[PACKET_SIZE];
+        receiveBuffer = new byte[packetSize];
         receiveDatagram = new DatagramPacket(receiveBuffer, receiveBuffer.length);
-        sendBuffer = new byte[PACKET_SIZE];
+        sendBuffer = new byte[packetSize];
         sendDatagram = new DatagramPacket(sendBuffer, sendBuffer.length);
+        buffersInitialized = true;
     }
 
     /**
@@ -188,7 +195,7 @@ public class TFTP extends DatagramSocketClient {
      * @throws IOException if an I/O error occurs.
      */
     public final void discardPackets() throws IOException {
-        final DatagramPacket datagram = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
+        final DatagramPacket datagram = new DatagramPacket(new byte[packetSize], packetSize);
         final Duration to = getSoTimeoutDuration();
         setSoTimeout(Duration.ofMillis(1));
         try {
@@ -209,6 +216,7 @@ public class TFTP extends DatagramSocketClient {
         receiveDatagram = null;
         sendBuffer = null;
         sendDatagram = null;
+        buffersInitialized = false;
     }
 
     /**
@@ -225,7 +233,7 @@ public class TFTP extends DatagramSocketClient {
     public final TFTPPacket receive() throws IOException, InterruptedIOException, SocketException, TFTPPacketException {
         final DatagramPacket packet;
 
-        packet = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
+        packet = new DatagramPacket(new byte[packetSize], packetSize);
 
         checkOpen().receive(packet);
 
@@ -258,4 +266,32 @@ public class TFTP extends DatagramSocketClient {
     protected void trace(final String direction, final TFTPPacket packet) {
     }
 
+    /**
+     * Sets the size of the buffers used to receive and send packets.
+     * This method can be used to increase the size of the buffer to support `blksize`.
+     * For which valid values range between "8" and "65464" octets (RFC-2348).
+     * This only refers to the number of data octets, it does not include the four octets of TFTP header.
+     *
+     * @param packetSize The size of the data octets not including 4 octets for the header.
+     * @since 3.12.0
+     */
+    public final void resetBuffersToSize(final int packetSize) {
+        // the packet size should be between 8 - 65464 (inclusively) then we add 4 for the header
+        this.packetSize = Math.min(Math.max(packetSize, 8), 65464) + 4;
+        // if the buffers are already initialized reinitialize
+        if (buffersInitialized) {
+            endBufferedOps();
+            beginBufferedOps();
+        }
+    }
+
+    /**
+     * Gets the buffer size of the buffered used by {@link #bufferedSend(TFTPPacket)} and {@link #bufferedReceive}.
+     *
+     * @return current buffer size
+     * @since 3.12.0
+     */
+    public int getPacketSize() {
+        return packetSize;
+    }
 }
