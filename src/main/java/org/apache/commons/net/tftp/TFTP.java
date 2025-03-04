@@ -113,10 +113,10 @@ public class TFTP extends DatagramSocketClient {
     private DatagramPacket sendDatagram;
 
     /** Internal packet size, which is the data octet size plus 4 (for TFTP header octets) */
-    private int packetSize = TFTPPacket.SEGMENT_SIZE + 4;
+    private int packetSize = PACKET_SIZE;
 
     /** Internal state to track if the send/receive buffers are initialized */
-    private boolean buffersInitialized = false;
+    private boolean buffersInitialized;
 
     /**
      * A buffer used to accelerate sends in bufferedSend(). It is left package visible so that TFTPClient may be slightly more efficient during file sends. It
@@ -270,14 +270,14 @@ public class TFTP extends DatagramSocketClient {
      * Sets the size of the buffers used to receive and send packets.
      * This method can be used to increase the size of the buffer to support `blksize`.
      * For which valid values range between "8" and "65464" octets (RFC-2348).
-     * This only refers to the number of data octets, it does not include the four octets of TFTP header
+     * This only refers to the number of data octets, it does not include the four octets of TFTP header.
      *
      * @param packetSize The size of the data octets not including 4 octets for the header.
      * @since 3.12.0
      */
-    public final void resetBuffersToSize(int packetSize) {
+    public final void resetBuffersToSize(final int packetSize) {
         // the packet size should be between 8 - 65464 (inclusively) then we add 4 for the header
-        this.packetSize = (Math.min(Math.max(packetSize, 8), 65464) + 4);
+        this.packetSize = Math.min(Math.max(packetSize, 8), 65464) + 4;
         // if the buffers are already initialized reinitialize
         if (buffersInitialized) {
             endBufferedOps();
@@ -286,12 +286,12 @@ public class TFTP extends DatagramSocketClient {
     }
 
     /**
-     * Gets the buffer size of the buffered used by {@link #bufferedSend bufferedSend() } and {@link #bufferedReceive bufferedReceive() }.
+     * Gets the buffer size of the buffered used by {@link #bufferedSend(TFTPPacket)} and {@link #bufferedReceive}.
      *
      * @return current buffer size
      * @since 3.12.0
      */
-    public int getBufferSize() {
+    public int getPacketSize() {
         return packetSize;
     }
 }

@@ -41,7 +41,7 @@ public class TFTPTest extends TestCase {
     private static final String FILE_PREFIX = "tftp-";
     private static final File[] FILES = new File[8];
 
-    static int testsLeftToRun = 9; // TODO Nasty hack.
+    static int testsLeftToRun = 10; // TODO Nasty hack.
 
     // only want to do this once...
     static {
@@ -182,6 +182,14 @@ public class TFTPTest extends TestCase {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
             testUpload(TFTP.BINARY_MODE, FILES[i]);
+        }
+    }
+
+    public void testResizeBuffer() {
+        try (TFTPClient tftp = new TFTPClient()) {
+            final int bufferSize = 1024;
+            tftp.resetBuffersToSize(bufferSize);
+            assertEquals("Packet size should be 1028", bufferSize + 4, tftp.getPacketSize());
         }
     }
 

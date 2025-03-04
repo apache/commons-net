@@ -98,7 +98,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         final StringBuilder buffer = new StringBuilder();
 
         int index = 2;
-        int length = datagram.getLength();
+        final int length = datagram.getLength();
 
         while (index < length && data[index] != 0) {
             buffer.append((char) data[index]);
@@ -147,9 +147,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
                     throw new TFTPPacketException("Invalid option format");
                 }
             }
-
-            String option = new String(data, start, index - start, StandardCharsets.US_ASCII);
-
+            final String option = new String(data, start, index - start, StandardCharsets.US_ASCII);
             ++index;
             start = index;
             for (; data[index] != 0; ++index) {
@@ -157,9 +155,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
                     throw new TFTPPacketException("Invalid option format");
                 }
             }
-
-            String octets = new String(data, start, index - start, StandardCharsets.US_ASCII);
-
+            final String octets = new String(data, start, index - start, StandardCharsets.US_ASCII);
             this.options.put(option, octets);
             ++index;
         }
@@ -214,7 +210,6 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         for (Map.Entry<String, String> entry : options.entrySet()) {
             optionsLength += entry.getKey().length() + 1 + entry.getValue().length() + 1;
         }
-
         data = new byte[fileLength + modeLength + 3 + optionsLength];
         data[0] = 0;
         data[1] = (byte) type;
@@ -265,8 +260,8 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         int index = fileLength + modeLength + 2;
         for (Map.Entry<String, String> entry : options.entrySet()) {
             data[index] = 0;
-            String key = entry.getKey();
-            String value = entry.getValue();
+            final String key = entry.getKey();
+            final String value = entry.getValue();
 
             System.arraycopy(key.getBytes(StandardCharsets.US_ASCII), 0, data, ++index, key.length());
             index += key.length();

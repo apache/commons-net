@@ -17,7 +17,9 @@
 
 package org.apache.commons.net.tftp;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,7 +29,7 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link TFTPRequestPacket}.
@@ -36,20 +38,20 @@ class TFTPRequestPacketTest {
 
     @Test
     public void testGetOptions() throws UnknownHostException, TFTPPacketException {
-        DatagramPacket datagramPacket = getDatagramPacket();
-        TFTPReadRequestPacket requestPacket = new TFTPReadRequestPacket(datagramPacket);
+        final DatagramPacket datagramPacket = getDatagramPacket();
+        final TFTPReadRequestPacket requestPacket = new TFTPReadRequestPacket(datagramPacket);
         assertNotNull(requestPacket.toString());
-        Map<String, String> options = requestPacket.getOptions();
+        final Map<String, String> options = requestPacket.getOptions();
         assertEquals(1, options.size());
         assertEquals("1024", options.get("blksize"));
     }
 
     @Test
     public void testNewDatagram() throws TFTPPacketException, UnknownHostException {
-        DatagramPacket datagramPacket = getDatagramPacket();
+        final DatagramPacket datagramPacket = getDatagramPacket();
 
-        TFTPReadRequestPacket requestPacket = new TFTPReadRequestPacket(datagramPacket);
-        DatagramPacket newDatagram = requestPacket.newDatagram();
+        final TFTPReadRequestPacket requestPacket = new TFTPReadRequestPacket(datagramPacket);
+        final DatagramPacket newDatagram = requestPacket.newDatagram();
 
         assertNotNull(newDatagram);
         assertEquals(datagramPacket.getAddress(), newDatagram.getAddress());
@@ -57,8 +59,8 @@ class TFTPRequestPacketTest {
         assertEquals(datagramPacket.getLength(), newDatagram.getLength());
         assertArrayEquals(datagramPacket.getData(), newDatagram.getData());
 
-        byte[] data = new byte[datagramPacket.getLength()];
-        DatagramPacket newDatagram2 = new DatagramPacket(data, data.length, InetAddress.getLocalHost(), 0);
+        final byte[] data = new byte[datagramPacket.getLength()];
+        final DatagramPacket newDatagram2 = new DatagramPacket(data, data.length, InetAddress.getLocalHost(), 0);
         requestPacket.newDatagram(newDatagram2, data);
 
         assertEquals(datagramPacket.getAddress(), newDatagram2.getAddress());
@@ -67,7 +69,7 @@ class TFTPRequestPacketTest {
     }
 
     private static DatagramPacket getDatagramPacket() throws UnknownHostException {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        final ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         byteStream.write(0);
         byteStream.write(1);
 
@@ -85,7 +87,7 @@ class TFTPRequestPacketTest {
             throw new RuntimeException("Error creating TFTP request packet", e);
         }
 
-        byte[] data = byteStream.toByteArray();
+        final byte[] data = byteStream.toByteArray();
         return new DatagramPacket(data, data.length, InetAddress.getLocalHost(), 0);
     }
 }

@@ -72,8 +72,7 @@ public final class TFTPOptionsAckPacket extends TFTPPacket {
         for (Map.Entry<String, String> entry : options.entrySet()) {
             optionsLength += entry.getKey().length() + 1 + entry.getValue().length() + 1;
         }
-
-        byte[] data = new byte[2 + optionsLength];
+        final byte[] data = new byte[2 + optionsLength];
         data[0] = 0;
         data[1] = (byte) type;
         writeOptionsData(data, 2);
@@ -97,7 +96,6 @@ public final class TFTPOptionsAckPacket extends TFTPPacket {
         int offset = 0;
         data[offset++] = 0;
         data[offset++] = (byte) type;
-
         offset = writeOptionsData(data, offset);
 
         datagram.setAddress(address);
@@ -108,22 +106,30 @@ public final class TFTPOptionsAckPacket extends TFTPPacket {
         return datagram;
     }
 
+    /**
+     * This helper method will write all the options data to the provided byte array starting from the given offset.
+     * All the options would get written to the data byte array in following format,
+     * <pre>
+     *     +--------+---+--------+---+--------+---+--------+---+
+     *     |  opt1  | 0 | value1 | 0 |  optN  | 0 | valueN | 0 |
+     *     +--------+---+--------+---+--------+---+--------+---+
+     * </pre>
+     *
+     * @param data byte array to update
+     * @param offset initial offset (usually the header octets)
+     * @return the final offset value after writing options data to the byte array
+     */
     private int writeOptionsData(byte[] data, int offset) {
-        // all the options would get written to the data byte array in following format
-        // +---~~---+---+---~~---+---+---~~---+---+---~~---+---+
-        // |  opt1  | 0 | value1 | 0 |  optN  | 0 | valueN | 0 |
-        // +---~~---+---+---~~---+---+---~~---+---+---~~---+---+
-        for (Map.Entry<String, String> entry : options.entrySet()) {
-            byte[] key = entry.getKey().getBytes(StandardCharsets.US_ASCII);
+        for (final Map.Entry<String, String> entry : options.entrySet()) {
+            final byte[] key = entry.getKey().getBytes(StandardCharsets.US_ASCII);
             System.arraycopy(key, 0, data, offset, key.length);
             offset += key.length;
             data[offset++] = 0;
-            byte[] value = entry.getValue().getBytes(StandardCharsets.US_ASCII);
+            final byte[] value = entry.getValue().getBytes(StandardCharsets.US_ASCII);
             System.arraycopy(value, 0, data, offset, value.length);
             offset += value.length;
             data[offset++] = 0;
         }
-
         return offset;
     }
 }
