@@ -24,8 +24,8 @@ import org.apache.commons.net.SocketClient;
 
 /**
  * The DaytimeTCPClient class is a TCP implementation of a client for the Daytime protocol described in RFC 867. To use the class, merely establish a connection
- * with {@link org.apache.commons.net.SocketClient#connect connect } and call {@link #getTime getTime()} to retrieve the daytime string, then call
- * {@link org.apache.commons.net.SocketClient#disconnect disconnect } to close the connection properly.
+ * with {@link org.apache.commons.net.SocketClient#connect connect} and call {@link #getTime getTime()} to retrieve the daytime string, then call
+ * {@link org.apache.commons.net.SocketClient#disconnect disconnect} to close the connection properly.
  *
  * @see DaytimeUDPClient
  */
@@ -45,8 +45,8 @@ public final class DaytimeTCPClient extends SocketClient {
 
     /**
      * Gets the time string from the server and returns it. The server will have closed the connection at this point, so you should call
-     * {@link org.apache.commons.net.SocketClient#disconnect disconnect } after calling this method. To retrieve another time, you must initiate another
-     * connection with {@link org.apache.commons.net.SocketClient#connect connect } before calling {@code getTime()} again.
+     * {@link org.apache.commons.net.SocketClient#disconnect disconnect} after calling this method. To retrieve another time, you must initiate another
+     * connection with {@link org.apache.commons.net.SocketClient#connect connect} before calling {@code getTime()} again.
      *
      * @return The time string retrieved from the server.
      * @throws IOException If an error occurs while fetching the time string.

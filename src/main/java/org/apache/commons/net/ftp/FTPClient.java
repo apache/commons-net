@@ -66,7 +66,7 @@ import org.apache.commons.net.util.NetConstants;
 /**
  * FTPClient encapsulates all the functionality necessary to store and retrieve files from an FTP server. This class takes care of all low level details of
  * interacting with an FTP server and provides a convenient higher level interface. As with all classes derived from
- * {@link org.apache.commons.net.SocketClient}, you must first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect } before
+ * {@link org.apache.commons.net.SocketClient}, you must first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect} before
  * doing anything, and finally {@link org.apache.commons.net.SocketClient#disconnect() disconnect} after you're completely finished interacting with the server.
  * Then you need to check the FTP reply code to see if the connection was successful. For example:
  *
@@ -114,7 +114,7 @@ import org.apache.commons.net.util.NetConstants;
  * methods in FTPClient is such that they either return a boolean value or some other value. The boolean methods return true on a successful completion reply
  * from the FTP server and false on a reply resulting in an error condition or failure. The methods returning a value other than boolean return a value
  * containing the higher level data produced by the FTP command, or null if a reply resulted in an error condition or failure. If you want to access the exact
- * FTP reply code causing a success or failure, you must call {@link org.apache.commons.net.ftp.FTP#getReplyCode getReplyCode } after a success or failure.
+ * FTP reply code causing a success or failure, you must call {@link org.apache.commons.net.ftp.FTP#getReplyCode getReplyCode} after a success or failure.
  * </p>
  * <p>
  * The default settings for FTPClient are for it to use {@link FTP#ASCII_FILE_TYPE}, {@link FTP#NON_PRINT_TEXT_FORMAT}, {@link FTP#STREAM_TRANSFER_MODE}, and
@@ -141,12 +141,12 @@ import org.apache.commons.net.util.NetConstants;
  * <p>
  * You should keep in mind that the FTP server may choose to prematurely close a connection if the client has been idle for longer than a given time period
  * (usually 900 seconds). The FTPClient class will detect a premature FTP server connection closing when it receives a
- * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE } response to a command. When that occurs, the FTP class
+ * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE} response to a command. When that occurs, the FTP class
  * method encountering that reply will throw an {@link org.apache.commons.net.ftp.FTPConnectionClosedException}. {@link FTPConnectionClosedException} is a
  * subclass of {@code IOException} and therefore need not be caught separately, but if you are going to catch it separately, its catch block must appear before
  * the more general {@code IOException} catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you must disconnect
  * the connection with {@link #disconnect disconnect()} to properly clean up the system resources used by FTPClient. Before disconnecting, you may check the
- * last reply code and text with {@link org.apache.commons.net.ftp.FTP#getReplyCode getReplyCode }, {@link org.apache.commons.net.ftp.FTP#getReplyString
+ * last reply code and text with {@link org.apache.commons.net.ftp.FTP#getReplyCode getReplyCode}, {@link org.apache.commons.net.ftp.FTP#getReplyString
  * getReplyString }, and {@link org.apache.commons.net.ftp.FTP#getReplyStrings getReplyStrings}. You may avoid server disconnections while the client is idle by
  * periodically sending NOOP commands to the server.
  * </p>
@@ -1132,7 +1132,7 @@ public class FTPClient extends FTP implements Configurable {
      * do this). You must close the OutputStream when you finish writing to it. The OutputStream itself will take care of closing the parent data connection
      * socket upon being closed.
      * <p>
-     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand } and check its return value to verify
+     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand} and check its return value to verify
      * success.</strong> If this is not done, subsequent commands may behave unexpectedly.
      * </p>
      *
@@ -2839,7 +2839,7 @@ public class FTPClient extends FTP implements Configurable {
      * separators in the file to the local representation. You must close the InputStream when you finish reading from it. The InputStream itself will take care
      * of closing the parent data connection socket upon being closed.
      * <p>
-     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand } and check its return value to verify
+     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand} and check its return value to verify
      * success.</strong> If this is not done, subsequent commands may behave unexpectedly.
      * <p>
      * Note: if you have used {@link #setRestartOffset(long)}, the file data will start from the selected offset.
@@ -3333,7 +3333,7 @@ public class FTPClient extends FTP implements Configurable {
      * do this). You must close the OutputStream when you finish writing to it. The OutputStream itself will take care of closing the parent data connection
      * socket upon being closed.
      * <p>
-     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand } and check its return value to verify
+     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand} and check its return value to verify
      * success.</strong> If this is not done, subsequent commands may behave unexpectedly.
      * </p>
      *
@@ -3396,7 +3396,7 @@ public class FTPClient extends FTP implements Configurable {
      * special OutputStream to do this). You must close the OutputStream when you finish writing to it. The OutputStream itself will take care of closing the
      * parent data connection socket upon being closed.
      * <p>
-     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand } and check its return value to verify
+     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand} and check its return value to verify
      * success.</strong> If this is not done, subsequent commands may behave unexpectedly.
      * </p>
      *
@@ -3417,7 +3417,7 @@ public class FTPClient extends FTP implements Configurable {
      * special OutputStream to do this). You must close the OutputStream when you finish writing to it. The OutputStream itself will take care of closing the
      * parent data connection socket upon being closed.
      * <p>
-     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand } and check its return value to verify
+     * <strong>To finalize the file transfer you must call {@link #completePendingCommand completePendingCommand} and check its return value to verify
      * success.</strong> If this is not done, subsequent commands may behave unexpectedly.
      * </p>
      *

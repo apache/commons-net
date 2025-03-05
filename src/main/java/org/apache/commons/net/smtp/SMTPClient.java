@@ -26,8 +26,8 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
 /**
  * SMTPClient encapsulates all the functionality necessary to send files through an SMTP server. This class takes care of all low level details of interacting
  * with an SMTP server and provides a convenient higher level interface. As with all classes derived from {@link org.apache.commons.net.SocketClient}, you must
- * first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect } before doing anything, and finally
- * {@link org.apache.commons.net.SocketClient#disconnect disconnect } after you're completely finished interacting with the server. Then you need to check the
+ * first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect} before doing anything, and finally
+ * {@link org.apache.commons.net.SocketClient#disconnect disconnect} after you're completely finished interacting with the server. Then you need to check the
  * SMTP reply code to see if the connection was successful. For example:
  *
  * <pre>
@@ -66,17 +66,17 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * command methods in SMTPClient is such that they either return a boolean value or some other value. The boolean methods return true on a successful completion
  * reply from the SMTP server and false on a reply resulting in an error condition or failure. The methods returning a value other than boolean return a value
  * containing the higher level data produced by the SMTP command, or null if a reply resulted in an error condition or failure. If you want to access the exact
- * SMTP reply code causing a success or failure, you must call {@link org.apache.commons.net.smtp.SMTP#getReplyCode getReplyCode } after a success or failure.
+ * SMTP reply code causing a success or failure, you must call {@link org.apache.commons.net.smtp.SMTP#getReplyCode getReplyCode} after a success or failure.
  * </p>
  * <p>
  * You should keep in mind that the SMTP server may choose to prematurely close a connection for various reasons. The SMTPClient class will detect a premature
- * SMTP server connection closing when it receives a {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE }
+ * SMTP server connection closing when it receives a {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE}
  * response to a command. When that occurs, the method encountering that reply will throw an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException}.
  * {@code SMTPConnectionClosedException} is a subclass of {@code IOException} and therefore need not be caught separately, but if you are going to
  * catch it separately, its catch block must appear before the more general {@code IOException} catch block. When you encounter an
  * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect()} to properly
  * clean up the system resources used by SMTPClient. Before disconnecting, you may check the last reply code and text with
- * {@link org.apache.commons.net.smtp.SMTP#getReplyCode getReplyCode }, {@link org.apache.commons.net.smtp.SMTP#getReplyString getReplyString }, and
+ * {@link org.apache.commons.net.smtp.SMTP#getReplyCode getReplyCode}, {@link org.apache.commons.net.smtp.SMTP#getReplyString getReplyString}, and
  * {@link org.apache.commons.net.smtp.SMTP#getReplyStrings getReplyStrings}.
  * </p>
  * <p>
@@ -141,7 +141,7 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * At least one SMTPClient method ({@link #sendMessageData sendMessageData }) does not complete the entire sequence of SMTP commands to complete a
+     * At least one SMTPClient method ({@link #sendMessageData sendMessageData}) does not complete the entire sequence of SMTP commands to complete a
      * transaction. These types of commands require some action by the programmer after the reception of a positive intermediate command. After the programmer's
      * code completes its actions, it must call this method to receive the completion reply from the server and verify the success of the entire transaction.
      * <p>
@@ -333,7 +333,7 @@ public class SMTPClient extends SMTP {
 
     /**
      * Sends a short email without having to explicitly set the sender and recipient(s). This method sets the sender and recipient
-     * using {@link #setSender setSender } and {@link #addRecipient addRecipient }, and then sends the message using {@link #sendShortMessageData
+     * using {@link #setSender setSender} and {@link #addRecipient addRecipient}, and then sends the message using {@link #sendShortMessageData
      * sendShortMessageData }.
      *
      * @param sender    The email address of the sender.

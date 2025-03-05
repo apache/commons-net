@@ -39,13 +39,13 @@ import org.apache.commons.net.util.NetConstants;
  * protocol and implement their own clients. A set of methods with names corresponding to the SMTP command names are provided to facilitate this interaction.
  * <p>
  * You should keep in mind that the SMTP server may choose to prematurely close a connection for various reasons. The SMTP class will detect a premature SMTP
- * server connection closing when it receives a {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE } response to
+ * server connection closing when it receives a {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE} response to
  * a command. When that occurs, the SMTP class method encountering that reply will throw an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException}.
  * {@code SMTPConnectionClosedException} is a subclass of {@code IOException} and therefore need not be caught separately, but if you are going to
  * catch it separately, its catch block must appear before the more general {@code IOException} catch block. When you encounter an
  * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} , you must disconnect the connection with
  * {@link org.apache.commons.net.SocketClient#disconnect disconnect()} to properly clean up the system resources used by SMTP. Before disconnecting, you may
- * check the last reply code and text with {@link #getReplyCode getReplyCode }, {@link #getReplyString getReplyString }, and {@link #getReplyStrings
+ * check the last reply code and text with {@link #getReplyCode getReplyCode}, {@link #getReplyString getReplyString}, and {@link #getReplyStrings
  * getReplyStrings}.
  * </p>
  * <p>
@@ -174,7 +174,7 @@ public class SMTP extends SocketClient {
 
     /**
      * Gets a reply from the SMTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from either
-     * calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }. Only use this method if you are implementing your own SMTP
+     * calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}. Only use this method if you are implementing your own SMTP
      * client or if you need to fetch a secondary response from the SMTP server.
      *
      * @return The integer value of the reply code of the fetched SMTP reply.
@@ -434,7 +434,7 @@ public class SMTP extends SocketClient {
 
     /**
      * Sends an SMTP command with no arguments to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The SMTPCommand constant corresponding to the SMTP command to send.
      * @return The integer value of the SMTP reply code returned by the server in response to the command.
@@ -449,7 +449,7 @@ public class SMTP extends SocketClient {
 
     /**
      * Sends an SMTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
-     * actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The SMTPCommand constant corresponding to the SMTP command to send.
      * @param args    The arguments to the SMTP command. If this parameter is set to null, then the command is sent with no argument.
@@ -477,7 +477,7 @@ public class SMTP extends SocketClient {
 
     /**
      * Sends an SMTP command with no arguments to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The text representation of the SMTP command to send.
      * @return The integer value of the SMTP reply code returned by the server in response to the command.
@@ -492,7 +492,7 @@ public class SMTP extends SocketClient {
 
     /**
      * Sends an SMTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
-     * actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The text representation of the SMTP command to send.
      * @param args    The arguments to the SMTP command. If this parameter is set to null, then the command is sent with no argument.

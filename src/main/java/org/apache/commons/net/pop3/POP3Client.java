@@ -272,8 +272,8 @@ public class POP3Client extends POP3 {
      * parse out the timestamp information yourself.
      * <p>
      * You must first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect} before attempting to log in. A login attempt is
-     * only valid if the client is in the {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE }. After logging in, the client enters
-     * the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }. After connecting, you must parse out the server specific information
+     * only valid if the client is in the {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE}. After logging in, the client enters
+     * the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE}. After connecting, you must parse out the server specific information
      * to use as a timestamp, and pass that information to this method. The secret is a shared secret known to you and the server. See RFC 1939 for more details
      * regarding the APOP command.
      * </p>
@@ -325,8 +325,8 @@ public class POP3Client extends POP3 {
 
     /**
      * Logout of the POP3 server. To fully disconnect from the server you must call {@link org.apache.commons.net.pop3.POP3#disconnect disconnect}. A logout
-     * attempt is valid in any state. If the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE } , it enters the
-     * {@link org.apache.commons.net.pop3.POP3#UPDATE_STATE UPDATE_STATE } on a successful logout.
+     * attempt is valid in any state. If the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE} , it enters the
+     * {@link org.apache.commons.net.pop3.POP3#UPDATE_STATE UPDATE_STATE} on a successful logout.
      *
      * @return True if the logout attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of logging out.
@@ -341,7 +341,7 @@ public class POP3Client extends POP3 {
 
     /**
      * Send a NOOP command to the POP3 server. This is useful for keeping a connection alive since most POP3 servers will time out after 10 minutes of
-     * inactivity. A noop attempt will only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }.
+     * inactivity. A noop attempt will only succeed if the client is in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE}.
      *
      * @return True if the noop attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of sending the NOOP command.
@@ -355,7 +355,7 @@ public class POP3Client extends POP3 {
 
     /**
      * Reset the POP3 session. This is useful for undoing any message deletions that may have been performed. A reset attempt can only succeed if the client is
-     * in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }.
+     * in the {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE}.
      *
      * @return True if the reset attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of sending the reset command.
@@ -369,7 +369,7 @@ public class POP3Client extends POP3 {
 
     /**
      * Retrieve a message from the POP3 server. A retrieve message attempt can only succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE}
      * <p>
      * You must not issue any commands to the POP3 server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
      * instance. The POP3 protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
@@ -396,7 +396,7 @@ public class POP3Client extends POP3 {
 
     /**
      * Retrieve only the specified top number of lines of a message from the POP3 server. A retrieve top lines attempt can only succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE}
      * <p>
      * You must not issue any commands to the POP3 server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
      * instance. The POP3 protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually

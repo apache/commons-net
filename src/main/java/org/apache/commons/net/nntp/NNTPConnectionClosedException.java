@@ -21,7 +21,7 @@ import java.io.IOException;
 
 /**
  * NNTPConnectionClosedException is used to indicate the premature or unexpected closing of an NNTP connection resulting from a
- * {@link org.apache.commons.net.nntp.NNTPReply#SERVICE_DISCONTINUED NNTPReply.SERVICE_DISCONTINUED } response (NNTP reply code 400) to a failed NNTP command.
+ * {@link org.apache.commons.net.nntp.NNTPReply#SERVICE_DISCONTINUED NNTPReply.SERVICE_DISCONTINUED} response (NNTP reply code 400) to a failed NNTP command.
  * This exception is derived from IOException and therefore may be caught either as an IOException or specifically as an NNTPConnectionClosedException.
  *
  * @see NNTP

@@ -35,20 +35,20 @@ import org.apache.commons.net.util.NetConstants;
 
 /**
  * NNTPClient encapsulates all the functionality necessary to post and retrieve articles from an NNTP server. As with all classes derived from
- * {@link org.apache.commons.net.SocketClient}, you must first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect } before
+ * {@link org.apache.commons.net.SocketClient}, you must first connect to the server with {@link org.apache.commons.net.SocketClient#connect connect} before
  * doing anything, and finally {@link org.apache.commons.net.nntp.NNTP#disconnect disconnect()} after you're completely finished interacting with the server.
  * Remember that the {@link org.apache.commons.net.nntp.NNTP#isAllowedToPost isAllowedToPost()} method is defined in {@link org.apache.commons.net.nntp.NNTP}.
  * <p>
  * You should keep in mind that the NNTP server may choose to prematurely close a connection if the client has been idle for longer than a given time period or
  * if the server is being shutdown by the operator or some other reason. The NNTP class will detect a premature NNTP server connection closing when it receives
- * a {@link org.apache.commons.net.nntp.NNTPReply#SERVICE_DISCONTINUED NNTPReply.SERVICE_DISCONTINUED } response to a command. When that occurs, the NNTP class
+ * a {@link org.apache.commons.net.nntp.NNTPReply#SERVICE_DISCONTINUED NNTPReply.SERVICE_DISCONTINUED} response to a command. When that occurs, the NNTP class
  * method encountering that reply will throw an {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} . {@code NNTPConectionClosedException} is
  * a subclass of {@code IOException} and therefore need not be caught separately, but if you are going to catch it separately, its catch block must
  * appear before the more general {@code IOException} catch block. When you encounter an
  * {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} , you must disconnect the connection with
  * {@link org.apache.commons.net.nntp.NNTP#disconnect disconnect()} to properly clean up the system resources used by NNTP. Before disconnecting, you may check
- * the last reply code and text with {@link org.apache.commons.net.nntp.NNTP#getReplyCode getReplyCode } and
- * {@link org.apache.commons.net.nntp.NNTP#getReplyString getReplyString }.
+ * the last reply code and text with {@link org.apache.commons.net.nntp.NNTP#getReplyCode getReplyCode} and
+ * {@link org.apache.commons.net.nntp.NNTP#getReplyString getReplyString}.
  * </p>
  * <p>
  * Rather than list it separately for each method, we mention here that every method communicating with the server and throwing an IOException can also throw a

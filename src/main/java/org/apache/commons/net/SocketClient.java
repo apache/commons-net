@@ -35,10 +35,10 @@ import org.apache.commons.io.IOUtils;
 
 /**
  * The SocketClient provides the basic operations that are required of client objects accessing sockets. It is meant to be subclassed to avoid having to rewrite
- * the same code over and over again to open a socket, close a socket, set timeouts, etc. Of special note is the {@link #setSocketFactory setSocketFactory }
+ * the same code over and over again to open a socket, close a socket, set timeouts, etc. Of special note is the {@link #setSocketFactory setSocketFactory}
  * method, which allows you to control the type of Socket the SocketClient creates for initiating network connections. This is especially useful for adding SSL
  * or proxy support as well as better support for applets. For example, you could create a {@link javax.net.SocketFactory} that requests browser security
- * capabilities before creating a socket. All classes derived from SocketClient should use the {@link #_socketFactory_ _socketFactory_ } member variable to
+ * capabilities before creating a socket. All classes derived from SocketClient should use the {@link #_socketFactory_ _socketFactory_} member variable to
  * create Socket and ServerSocket instances rather than instantiating them by directly invoking a constructor. By honoring this contract you guarantee that a
  * user will always be able to provide his own Socket implementations by substituting his own SocketFactory.
  *
@@ -404,7 +404,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Gets the current value of the default port (stored in {@link #_defaultPort_ _defaultPort_ }).
+     * Gets the current value of the default port (stored in {@link #_defaultPort_ _defaultPort_}).
      *
      * @return The current value of the default port.
      */
@@ -646,7 +646,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Sets the default port the SocketClient should connect to when a port is not specified. The {@link #_defaultPort_ _defaultPort_ } variable stores this
+     * Sets the default port the SocketClient should connect to when a port is not specified. The {@link #_defaultPort_ _defaultPort_} variable stores this
      * value. If never set, the default port is equal to zero.
      *
      * @param port The default port to set.

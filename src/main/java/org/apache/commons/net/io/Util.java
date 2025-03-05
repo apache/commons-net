@@ -43,7 +43,7 @@ import org.apache.commons.net.util.NetConstants;
 public final class Util {
 
     /**
-     * The default buffer size ({@value}) used by {@link #copyStream copyStream } and {@link #copyReader copyReader} and by the copyReader/copyStream methods if
+     * The default buffer size ({@value}) used by {@link #copyStream copyStream} and {@link #copyReader copyReader} and by the copyReader/copyStream methods if
      * a zero or negative buffer size is supplied.
      */
     public static final int DEFAULT_COPY_BUFFER_SIZE = 1024;

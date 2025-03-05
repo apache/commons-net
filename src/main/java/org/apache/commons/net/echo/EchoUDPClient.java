@@ -26,7 +26,7 @@ import org.apache.commons.net.util.NetConstants;
 
 /**
  * The EchoUDPClient class is a UDP implementation of a client for the Echo protocol described in RFC 862. To use the class, just open a local UDP port with
- * {@link org.apache.commons.net.DatagramSocketClient#open open } and call {@link #send send } to send datagrams to the server, then call {@link #receive
+ * {@link org.apache.commons.net.DatagramSocketClient#open open} and call {@link #send send} to send datagrams to the server, then call {@link #receive
  * receive } to receive echoes. After you're done echoing data, call {@link org.apache.commons.net.DatagramSocketClient#close close()} to clean up properly.
  *
  * @see EchoTCPClient

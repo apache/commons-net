@@ -29,10 +29,10 @@ import org.apache.commons.io.IOUtils;
 /**
  * The DatagramSocketClient provides the basic operations that are required of client objects accessing datagram sockets. It is meant to be subclassed to avoid
  * having to rewrite the same code over and over again to open a socket, close a socket, set timeouts, etc. Of special note is the
- * {@link #setDatagramSocketFactory setDatagramSocketFactory } method, which allows you to control the type of DatagramSocket the DatagramSocketClient creates
+ * {@link #setDatagramSocketFactory setDatagramSocketFactory)} method, which allows you to control the type of DatagramSocket the DatagramSocketClient creates
  * for network communications. This is especially useful for adding things like proxy support as well as better support for applets. For example, you could
  * create a {@link org.apache.commons.net.DatagramSocketFactory} that requests browser security capabilities before creating a socket. All classes derived from
- * DatagramSocketClient should use the {@link #_socketFactory_ _socketFactory_ } member variable to create DatagramSocket instances rather than instantiating
+ * DatagramSocketClient should use the {@link #_socketFactory_ _socketFactory_} member variable to create DatagramSocket instances rather than instantiating
  * them by directly invoking a constructor. By honoring this contract you guarantee that a user will always be able to provide his own Socket implementations by
  * substituting his own SocketFactory.
  *

@@ -22,7 +22,7 @@ import java.util.Objects;
 
 /**
  * The NewGroupsOrNewsQuery class. This is used to issue NNTP NEWGROUPS and NEWNEWS queries, implemented by
- * {@link org.apache.commons.net.nntp.NNTPClient#listNewNewsgroups listNewNewsGroups } and {@link org.apache.commons.net.nntp.NNTPClient#listNewNews listNewNews
+ * {@link org.apache.commons.net.nntp.NNTPClient#listNewNewsgroups listNewNewsGroups} and {@link org.apache.commons.net.nntp.NNTPClient#listNewNews listNewNews
  * } respectively. It prevents you from having to format date, time, distribution, and newgroup arguments.
  * <p>
  * You might use the class as follows:

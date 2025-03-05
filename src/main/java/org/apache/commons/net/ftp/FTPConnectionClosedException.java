@@ -21,7 +21,7 @@ import java.io.IOException;
 
 /**
  * FTPConnectionClosedException is used to indicate the premature or unexpected closing of an FTP connection resulting from a
- * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE } response (FTP reply code 421) to a failed FTP command. This
+ * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE} response (FTP reply code 421) to a failed FTP command. This
  * exception is derived from IOException and therefore may be caught either as an IOException or specifically as an FTPConnectionClosedException.
  *
  * @see FTP

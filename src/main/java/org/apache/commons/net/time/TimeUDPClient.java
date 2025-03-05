@@ -26,9 +26,9 @@ import org.apache.commons.net.DatagramSocketClient;
 
 /**
  * The TimeUDPClient class is a UDP implementation of a client for the Time protocol described in RFC 868. To use the class, merely open a local datagram socket
- * with {@link org.apache.commons.net.DatagramSocketClient#open open } and call {@link #getTime getTime } or {@link #getTime getDate } to retrieve the time.
- * Then call {@link org.apache.commons.net.DatagramSocketClient#close close } to close the connection properly. Unlike
- * {@link org.apache.commons.net.time.TimeTCPClient}, successive calls to {@link #getTime getTime } or {@link #getDate getDate } are permitted without
+ * with {@link org.apache.commons.net.DatagramSocketClient#open open} and call {@link #getTime getTime} or {@link #getTime getDate} to retrieve the time.
+ * Then call {@link org.apache.commons.net.DatagramSocketClient#close close} to close the connection properly. Unlike
+ * {@link org.apache.commons.net.time.TimeTCPClient}, successive calls to {@link #getTime getTime} or {@link #getDate getDate} are permitted without
  * re-establishing a connection. That is because UDP is a connectionless protocol and the Time protocol is stateless.
  *
  *

@@ -25,8 +25,8 @@ import org.apache.commons.net.SocketClient;
 
 /**
  * The TimeTCPClient class is a TCP implementation of a client for the Time protocol described in RFC 868. To use the class, merely establish a connection with
- * {@link org.apache.commons.net.SocketClient#connect connect } and call either {@link #getTime getTime()} or {@link #getDate getDate()} to retrieve the time,
- * then call {@link org.apache.commons.net.SocketClient#disconnect disconnect } to close the connection properly.
+ * {@link org.apache.commons.net.SocketClient#connect connect} and call either {@link #getTime getTime()} or {@link #getDate getDate()} to retrieve the time,
+ * then call {@link org.apache.commons.net.SocketClient#disconnect disconnect} to close the connection properly.
  *
  *
  * @see TimeUDPClient
@@ -51,8 +51,8 @@ public final class TimeTCPClient extends SocketClient {
     /**
      * Gets the time from the server and returns a Java Date containing the time converted to the local time zone.
      * <p>
-     * The server will have closed the connection at this point, so you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } after
-     * calling this method. To retrieve another time, you must initiate another connection with {@link org.apache.commons.net.SocketClient#connect connect }
+     * The server will have closed the connection at this point, so you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect} after
+     * calling this method. To retrieve another time, you must initiate another connection with {@link org.apache.commons.net.SocketClient#connect connect}
      * before calling {@code getDate()} again.
      * </p>
      *
@@ -67,8 +67,8 @@ public final class TimeTCPClient extends SocketClient {
      * Gets the time from the server and returns it. The time is the number of seconds since 00:00 (midnight) 1 January 1900 GMT, as specified by RFC 868.
      * This method reads the raw 32-bit big-endian unsigned integer from the server, converts it to a Java long, and returns the value.
      * <p>
-     * The server will have closed the connection at this point, so you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } after
-     * calling this method. To retrieve another time, you must initiate another connection with {@link org.apache.commons.net.SocketClient#connect connect }
+     * The server will have closed the connection at this point, so you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect} after
+     * calling this method. To retrieve another time, you must initiate another connection with {@link org.apache.commons.net.SocketClient#connect connect}
      * before calling {@code getTime()} again.
      * </p>
      *

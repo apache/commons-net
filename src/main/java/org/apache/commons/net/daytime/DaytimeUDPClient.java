@@ -25,9 +25,9 @@ import org.apache.commons.net.DatagramSocketClient;
 
 /**
  * The DaytimeUDPClient class is a UDP implementation of a client for the Daytime protocol described in RFC 867. To use the class, merely open a local datagram
- * socket with {@link org.apache.commons.net.DatagramSocketClient#open open } and call {@link #getTime getTime } to retrieve the daytime string, then call
- * {@link org.apache.commons.net.DatagramSocketClient#close close } to close the connection properly. Unlike
- * {@link org.apache.commons.net.daytime.DaytimeTCPClient}, successive calls to {@link #getTime getTime } are permitted without re-establishing a connection.
+ * socket with {@link org.apache.commons.net.DatagramSocketClient#open open} and call {@link #getTime getTime} to retrieve the daytime string, then call
+ * {@link org.apache.commons.net.DatagramSocketClient#close close} to close the connection properly. Unlike
+ * {@link org.apache.commons.net.daytime.DaytimeTCPClient}, successive calls to {@link #getTime getTime} are permitted without re-establishing a connection.
  * That is because UDP is a connectionless protocol and the Daytime protocol is stateless.
  *
  * @see DaytimeTCPClient

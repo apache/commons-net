@@ -27,9 +27,9 @@ import org.apache.commons.net.SocketClient;
  * stream. The chargen protocol actually sends data until the receiving end closes the connection. All the others send only a fixed amount of data and then
  * close the connection.
  * <p>
- * To use the CharGenTCPClient class, just establish a connection with {@link org.apache.commons.net.SocketClient#connect connect } and call
+ * To use the CharGenTCPClient class, just establish a connection with {@link org.apache.commons.net.SocketClient#connect connect} and call
  * {@link #getInputStream getInputStream()} to access the data. Don't close the input stream when you're done with it. Rather, call
- * {@link org.apache.commons.net.SocketClient#disconnect disconnect } to clean up properly.
+ * {@link org.apache.commons.net.SocketClient#disconnect disconnect} to clean up properly.
  * </p>
  *
  * @see CharGenUDPClient
@@ -60,7 +60,7 @@ public final class CharGenTCPClient extends SocketClient {
 
     /**
      * Gets an InputStream from which the server generated data can be read. You should NOT close the InputStream when you're finished reading from it.
-     * Rather, you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect } to clean up properly.
+     * Rather, you should call {@link org.apache.commons.net.SocketClient#disconnect disconnect} to clean up properly.
      *
      * @return An InputStream from which the server generated data can be read.
      */

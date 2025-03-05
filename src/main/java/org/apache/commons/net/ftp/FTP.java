@@ -52,12 +52,12 @@ import org.apache.commons.net.util.NetConstants;
  * <p>
  * You should keep in mind that the FTP server may choose to prematurely close a connection if the client has been idle for longer than a given time period
  * (usually 900 seconds). The FTP class will detect a premature FTP server connection closing when it receives a
- * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE } response to a command. When that occurs, the FTP class
+ * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE} response to a command. When that occurs, the FTP class
  * method encountering that reply will throw an {@link org.apache.commons.net.ftp.FTPConnectionClosedException}. {@code FTPConectionClosedException} is a
  * subclass of {@code IOException} and therefore need not be caught separately, but if you are going to catch it separately, its catch block must appear
  * before the more general {@code IOException} catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you
  * must disconnect the connection with {@link #disconnect disconnect()} to properly clean up the system resources used by FTP. Before disconnecting, you may
- * check the last reply code and text with {@link #getReplyCode getReplyCode }, {@link #getReplyString getReplyString }, and {@link #getReplyStrings
+ * check the last reply code and text with {@link #getReplyCode getReplyCode}, {@link #getReplyString getReplyString}, and {@link #getReplyStrings
  * getReplyStrings}. You may avoid server disconnections while the client is idle by periodically sending NOOP commands to the server.
  * </p>
  * <p>
@@ -588,7 +588,7 @@ public class FTP extends SocketClient {
 
     /**
      * Gets a reply from the FTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from either
-     * calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }. Only use this method if you are implementing your own FTP
+     * calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}. Only use this method if you are implementing your own FTP
      * client or if you need to fetch a secondary response from the FTP server.
      *
      * @return The integer value of the reply code of the fetched FTP reply.
@@ -1203,7 +1203,7 @@ public class FTP extends SocketClient {
 
     /**
      * Sends an FTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
-     * actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The FTPCmd enum corresponding to the FTP command to send.
      * @return The integer value of the FTP reply code returned by the server in response to the command.
@@ -1219,7 +1219,7 @@ public class FTP extends SocketClient {
 
     /**
      * Sends an FTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
-     * actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The FTPCmd enum corresponding to the FTP command to send.
      * @param args    The arguments to the FTP command. If this parameter is set to null, then the command is sent with no argument.
@@ -1236,7 +1236,7 @@ public class FTP extends SocketClient {
 
     /**
      * Sends an FTP command with no arguments to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The FTPCommand constant corresponding to the FTP command to send.
      * @return The integer value of the FTP reply code returned by the server in response to the command.
@@ -1251,7 +1251,7 @@ public class FTP extends SocketClient {
 
     /**
      * Sends an FTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
-     * actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The FTPCommand constant corresponding to the FTP command to send.
      * @param args    The arguments to the FTP command. If this parameter is set to null, then the command is sent with no argument.
@@ -1269,7 +1269,7 @@ public class FTP extends SocketClient {
 
     /**
      * Sends an FTP command with no arguments to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The text representation of the FTP command to send.
      * @return The integer value of the FTP reply code returned by the server in response to the command.
@@ -1284,7 +1284,7 @@ public class FTP extends SocketClient {
 
     /**
      * Sends an FTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
-     * actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
+     * actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
      *
      * @param command The text representation of the FTP command to send.
      * @param args    The arguments to the FTP command. If this parameter is set to null, then the command is sent with no argument.
