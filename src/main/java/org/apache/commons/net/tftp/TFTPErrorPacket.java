@@ -62,6 +62,13 @@ public final class TFTPErrorPacket extends TFTPPacket {
     /** The no such user error code according to RFC 783, value 7. */
     public static final int NO_SUCH_USER = 7;
 
+    /**
+     * The invalid options error code according to RFC 2347, value 8.
+     *
+     * @since 3.12.0
+     */
+    public static final int INVALID_OPTIONS_VALUE = 8;
+
     /** The error code of this packet. */
     private final int error;
 
