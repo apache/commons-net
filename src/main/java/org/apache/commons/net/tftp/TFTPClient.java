@@ -32,9 +32,9 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * The TFTPClient class encapsulates all the aspects of the TFTP protocol necessary to receive and send files through TFTP. It is derived from the
  * {@link org.apache.commons.net.tftp.TFTP} because it is more convenient than using aggregation, and as a result exposes the same set of methods to allow you
  * to deal with the TFTP protocol directly. However, almost every user should only be concerend with the the
- * {@link org.apache.commons.net.DatagramSocketClient#open open() }, {@link org.apache.commons.net.DatagramSocketClient#close close() }, {@link #sendFile
- * sendFile() }, and {@link #receiveFile receiveFile() } methods. Additionally, the {@link #setMaxTimeouts setMaxTimeouts() } and
- * {@link org.apache.commons.net.DatagramSocketClient#setDefaultTimeout setDefaultTimeout() } methods may be of importance for performance tuning.
+ * {@link org.apache.commons.net.DatagramSocketClient#open open()}, {@link org.apache.commons.net.DatagramSocketClient#close close()}, {@link #sendFile
+ * sendFile()}, and {@link #receiveFile receiveFile()} methods. Additionally, the {@link #setMaxTimeouts setMaxTimeouts()} and
+ * {@link org.apache.commons.net.DatagramSocketClient#setDefaultTimeout setDefaultTimeout()} methods may be of importance for performance tuning.
  * <p>
  * Details regarding the TFTP protocol and the format of TFTP packets can be found in RFC 783. But the point of these classes is to keep you from having to
  * worry about the internals.

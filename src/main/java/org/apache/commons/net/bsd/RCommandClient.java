@@ -43,16 +43,16 @@ import org.apache.commons.net.io.SocketInputStream;
  * <p>
  * As with virtually all the client classes in org.apache.commons.net, this class derives from SocketClient. But it overrides most of its connection methods
  * so that the local Socket will originate from an acceptable rshell port. The way to use RCommandClient is to first connect to the server, call the
- * {@link #rcommand rcommand() } method, and then fetch the connection's input, output, and optionally error streams. Interaction with the remote command is
+ * {@link #rcommand rcommand()} method, and then fetch the connection's input, output, and optionally error streams. Interaction with the remote command is
  * controlled entirely through the I/O streams. Once you have finished processing the streams, you should invoke
- * {@link org.apache.commons.net.bsd.RExecClient#disconnect disconnect() } to clean up properly.
+ * {@link org.apache.commons.net.bsd.RExecClient#disconnect disconnect()} to clean up properly.
  * </p>
  * <p>
  * By default, the standard output and standard error streams of the remote process are transmitted over the same connection, readable from the input stream
- * returned by {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream() } . However, it is possible to tell the rshd daemon to return the
+ * returned by {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream()} . However, it is possible to tell the rshd daemon to return the
  * standard error stream over a separate connection, readable from the input stream returned by {@link org.apache.commons.net.bsd.RExecClient#getErrorStream
- * getErrorStream() } . You can specify that a separate connection should be created for standard error by setting the boolean
- * {@code separateErrorStream} parameter of {@link #rcommand rcommand() } to {@code true}. The standard input of the remote process can be written
+ * getErrorStream()} . You can specify that a separate connection should be created for standard error by setting the boolean
+ * {@code separateErrorStream} parameter of {@link #rcommand rcommand()} to {@code true}. The standard input of the remote process can be written
  * to through the output stream returned by {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputStream()}.
  * </p>
  *
@@ -86,7 +86,7 @@ public class RCommandClient extends RExecClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the current host at a port in a range acceptable to the BSD rshell
-     * daemon. Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_() } is called to perform connection initialization
+     * daemon. Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_()} is called to perform connection initialization
      * actions.
      *
      * @param host The remote host.
@@ -103,7 +103,7 @@ public class RCommandClient extends RExecClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the specified local address using a port in a range acceptable to
-     * the BSD rshell daemon. Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_() } is called to perform connection
+     * the BSD rshell daemon. Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_()} is called to perform connection
      * initialization actions.
      *
      * @param host      The remote host.
@@ -136,7 +136,7 @@ public class RCommandClient extends RExecClient {
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the specified local address and port. The local port must lie
      * between {@code MIN_CLIENT_PORT} and {@code MAX_CLIENT_PORT} or an IllegalArgumentException will be thrown. Before returning,
-     * {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_() } is called to perform connection initialization actions.
+     * {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_()} is called to perform connection initialization actions.
      *
      * @param host      The remote host.
      * @param port      The port to connect to on the remote host.
@@ -158,7 +158,7 @@ public class RCommandClient extends RExecClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the current host at a port in a range acceptable to the BSD rshell
-     * daemon. Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_() } is called to perform connection initialization
+     * daemon. Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_()} is called to perform connection initialization
      * actions.
      *
      * @param hostname The name of the remote host.
@@ -176,7 +176,7 @@ public class RCommandClient extends RExecClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the specified local address using a port in a range acceptable to
-     * the BSD rshell daemon. Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_() } is called to perform connection
+     * the BSD rshell daemon. Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_()} is called to perform connection
      * initialization actions.
      *
      * @param hostname  The remote host.
@@ -194,7 +194,7 @@ public class RCommandClient extends RExecClient {
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the specified local address and port. The local port must lie
      * between {@code MIN_CLIENT_PORT} and {@code MAX_CLIENT_PORT} or an IllegalArgumentException will be thrown. Before returning,
-     * {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_() } is called to perform connection initialization actions.
+     * {@link org.apache.commons.net.SocketClient#_connectAction_ _connectAction_()} is called to perform connection initialization actions.
      *
      * @param hostname  The name of the remote host.
      * @param port      The port to connect to on the remote host.

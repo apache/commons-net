@@ -23,8 +23,8 @@ import org.apache.commons.net.discard.DiscardTCPClient;
 
 /**
  * The EchoTCPClient class is a TCP implementation of a client for the Echo protocol described in RFC 862. To use the class, merely establish a connection with
- * {@link org.apache.commons.net.SocketClient#connect connect } and call {@link DiscardTCPClient#getOutputStream getOutputStream() } to retrieve the echo output
- * stream and {@link #getInputStream getInputStream() } to get the echo input stream. Don't close either stream when you're done using them. Rather, call
+ * {@link org.apache.commons.net.SocketClient#connect connect } and call {@link DiscardTCPClient#getOutputStream getOutputStream()} to retrieve the echo output
+ * stream and {@link #getInputStream getInputStream()} to get the echo input stream. Don't close either stream when you're done using them. Rather, call
  * {@link org.apache.commons.net.SocketClient#disconnect disconnect } to clean up properly.
  *
  * @see EchoUDPClient

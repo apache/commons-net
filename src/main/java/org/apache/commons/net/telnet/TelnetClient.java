@@ -30,8 +30,8 @@ import org.apache.commons.io.IOUtils;
  * extra Telnet options because it is meant to be used within a Java program providing automated access to Telnet accessible resources.
  * <p>
  * The class can be used by first connecting to a server using the SocketClient {@link org.apache.commons.net.SocketClient#connect connect} method. Then an
- * InputStream and OutputStream for sending and receiving data over the Telnet connection can be obtained by using the {@link #getInputStream getInputStream() }
- * and {@link #getOutputStream getOutputStream() } methods. When you finish using the streams, you must call {@link #disconnect disconnect } rather than simply
+ * InputStream and OutputStream for sending and receiving data over the Telnet connection can be obtained by using the {@link #getInputStream getInputStream()}
+ * and {@link #getOutputStream getOutputStream()} methods. When you finish using the streams, you must call {@link #disconnect disconnect } rather than simply
  * closing the streams.
  * </p>
  */

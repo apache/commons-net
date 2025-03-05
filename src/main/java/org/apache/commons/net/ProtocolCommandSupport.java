@@ -65,7 +65,7 @@ public class ProtocolCommandSupport implements Serializable {
 
     /**
      * Fires a ProtocolCommandEvent signalling the sending of a command to all registered listeners, invoking their
-     * {@link org.apache.commons.net.ProtocolCommandListener#protocolCommandSent protocolCommandSent() } methods.
+     * {@link org.apache.commons.net.ProtocolCommandListener#protocolCommandSent protocolCommandSent()} methods.
      *
      * @param command The string representation of the command type sent, not including the arguments (e.g., "STAT" or "GET").
      * @param message The entire command string verbatim as sent to the server, including all arguments.
@@ -80,7 +80,7 @@ public class ProtocolCommandSupport implements Serializable {
 
     /**
      * Fires a ProtocolCommandEvent signalling the reception of a command reply to all registered listeners, invoking their
-     * {@link org.apache.commons.net.ProtocolCommandListener#protocolReplyReceived protocolReplyReceived() } methods.
+     * {@link org.apache.commons.net.ProtocolCommandListener#protocolReplyReceived protocolReplyReceived()} methods.
      *
      * @param replyCode The integer code indicating the natureof the reply. This will be the protocol integer value for protocols that use integer reply codes,
      *                  or the reply class constant corresponding to the reply for protocols like POP3 that use strings like OK rather than integer codes (i.e.,

@@ -42,7 +42,7 @@ import org.apache.commons.net.io.CRLFLineReader;
  * method encountering that reply will throw an {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} . {@code NNTPConectionClosedException} is
  * a subclass of {@code IOException} and therefore need not be caught separately, but if you are going to catch it separately, its catch block must
  * appear before the more general {@code IOException} catch block. When you encounter an
- * {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect() } to properly
+ * {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect()} to properly
  * clean up the system resources used by NNTP. Before disconnecting, you may check the last reply code and text with {@link #getReplyCode getReplyCode } and
  * {@link #getReplyString getReplyString }.
  * </p>

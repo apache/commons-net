@@ -170,7 +170,7 @@ public abstract class SocketClient {
      * a connection, rather than reimplementing all the connect() methods. The last action performed by every connect() method after opening a socket is to
      * call this method.
      * <p>
-     * This method sets the timeout on the just opened socket to the default timeout set by {@link #setDefaultTimeout setDefaultTimeout() }, sets _input_ and
+     * This method sets the timeout on the just opened socket to the default timeout set by {@link #setDefaultTimeout setDefaultTimeout()}, sets _input_ and
      * _output_ to the socket's InputStream and OutputStream respectively, and sets _isConnected_ to true.
      * <p>
      * Subclasses overriding this method should start by calling {@code super._connectAction_()} first to ensure the initialization of the aforementioned
@@ -220,7 +220,7 @@ public abstract class SocketClient {
 
     /**
      * Opens a Socket connected to a remote host at the current default port and originating from the current host at a system assigned port. Before returning,
-     * {@link #_connectAction_ _connectAction_() } is called to perform connection initialization actions.
+     * {@link #_connectAction_ _connectAction_()} is called to perform connection initialization actions.
      *
      * @param host The remote host.
      * @throws SocketException If the socket timeout could not be set.
@@ -234,7 +234,7 @@ public abstract class SocketClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the current host at a system assigned port. Before returning,
-     * {@link #_connectAction_ _connectAction_() } is called to perform connection initialization actions.
+     * {@link #_connectAction_ _connectAction_()} is called to perform connection initialization actions.
      *
      * @param host The remote host.
      * @param port The port to connect to on the remote host.
@@ -249,7 +249,7 @@ public abstract class SocketClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the specified local address and port. Before returning,
-     * {@link #_connectAction_ _connectAction_() } is called to perform connection initialization actions.
+     * {@link #_connectAction_ _connectAction_()} is called to perform connection initialization actions.
      *
      * @param host      The remote host.
      * @param port      The port to connect to on the remote host.
@@ -266,7 +266,7 @@ public abstract class SocketClient {
 
     /**
      * Opens a Socket connected to a remote host at the current default port and originating from the current host at a system assigned port. Before returning,
-     * {@link #_connectAction_ _connectAction_() } is called to perform connection initialization actions.
+     * {@link #_connectAction_ _connectAction_()} is called to perform connection initialization actions.
      *
      * @param hostname The name of the remote host.
      * @throws SocketException               If the socket timeout could not be set.
@@ -280,7 +280,7 @@ public abstract class SocketClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the current host at a system assigned port. Before returning,
-     * {@link #_connectAction_ _connectAction_() } is called to perform connection initialization actions.
+     * {@link #_connectAction_ _connectAction_()} is called to perform connection initialization actions.
      *
      * @param hostname The name of the remote host.
      * @param port     The port to connect to on the remote host.
@@ -295,7 +295,7 @@ public abstract class SocketClient {
 
     /**
      * Opens a Socket connected to a remote host at the specified port and originating from the specified local address and port. Before returning,
-     * {@link #_connectAction_ _connectAction_() } is called to perform connection initialization actions.
+     * {@link #_connectAction_ _connectAction_()} is called to perform connection initialization actions.
      *
      * @param hostname  The name of the remote host.
      * @param port      The port to connect to on the remote host.
@@ -320,7 +320,7 @@ public abstract class SocketClient {
 
     /**
      * Disconnects the socket connection. You should call this method after you've finished using the class instance and also before you call {@link #connect
-     * connect() } again. _isConnected_ is set to false, _socket_ is set to null, _input_ is set to null, and _output_ is set to null.
+     * connect()} again. _isConnected_ is set to false, _socket_ is set to null, _input_ is set to null, and _output_ is set to null.
      *
      * @throws IOException not thrown, subclasses may throw.
      */

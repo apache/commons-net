@@ -44,7 +44,7 @@ import org.apache.commons.net.util.NetConstants;
  * {@code SMTPConnectionClosedException} is a subclass of {@code IOException} and therefore need not be caught separately, but if you are going to
  * catch it separately, its catch block must appear before the more general {@code IOException} catch block. When you encounter an
  * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} , you must disconnect the connection with
- * {@link org.apache.commons.net.SocketClient#disconnect disconnect() } to properly clean up the system resources used by SMTP. Before disconnecting, you may
+ * {@link org.apache.commons.net.SocketClient#disconnect disconnect()} to properly clean up the system resources used by SMTP. Before disconnecting, you may
  * check the last reply code and text with {@link #getReplyCode getReplyCode }, {@link #getReplyString getReplyString }, and {@link #getReplyStrings
  * getReplyStrings}.
  * </p>

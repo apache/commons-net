@@ -25,7 +25,7 @@ import org.apache.commons.net.SocketClient;
 
 /**
  * The TimeTCPClient class is a TCP implementation of a client for the Time protocol described in RFC 868. To use the class, merely establish a connection with
- * {@link org.apache.commons.net.SocketClient#connect connect } and call either {@link #getTime getTime() } or {@link #getDate getDate() } to retrieve the time,
+ * {@link org.apache.commons.net.SocketClient#connect connect } and call either {@link #getTime getTime()} or {@link #getDate getDate()} to retrieve the time,
  * then call {@link org.apache.commons.net.SocketClient#disconnect disconnect } to close the connection properly.
  *
  *

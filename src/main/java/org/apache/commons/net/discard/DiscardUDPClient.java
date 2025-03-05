@@ -27,7 +27,7 @@ import org.apache.commons.net.util.NetConstants;
 /**
  * The DiscardUDPClient class is a UDP implementation of a client for the Discard protocol described in RFC 863. To use the class, just open a local UDP port
  * with {@link org.apache.commons.net.DatagramSocketClient#open open } and call {@link #send send } to send datagrams to the server After you're done sending
- * discard data, call {@link org.apache.commons.net.DatagramSocketClient#close close() } to clean up properly.
+ * discard data, call {@link org.apache.commons.net.DatagramSocketClient#close close()} to clean up properly.
  *
  * @see DiscardTCPClient
  */

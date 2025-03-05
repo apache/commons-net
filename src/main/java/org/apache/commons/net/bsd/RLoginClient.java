@@ -27,18 +27,18 @@ import java.io.IOException;
  * <p>
  * As with virtually all the client classes in org.apache.commons.net, this class derives from SocketClient. But it relies on the connection methods defined
  * in RcommandClient which ensure that the local Socket will originate from an acceptable rshell port. The way to use RLoginClient is to first connect to the
- * server, call the {@link #rlogin rlogin() } method, and then fetch the connection's input and output streams. Interaction with the remote command is
+ * server, call the {@link #rlogin rlogin()} method, and then fetch the connection's input and output streams. Interaction with the remote command is
  * controlled entirely through the I/O streams. Once you have finished processing the streams, you should invoke
- * {@link org.apache.commons.net.bsd.RExecClient#disconnect disconnect() } to clean up properly.
+ * {@link org.apache.commons.net.bsd.RExecClient#disconnect disconnect()} to clean up properly.
  * </p>
  * <p>
  * The standard output and standard error streams of the remote process are transmitted over the same connection, readable from the input stream returned by
- * {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream() }
+ * {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream()}
  * </p>
  * <p>
  * Unlike RExecClient and RCommandClient, it is not possible to tell the rlogind daemon to return the standard error stream over a separate connection.
- * {@link org.apache.commons.net.bsd.RExecClient#getErrorStream getErrorStream() } will always return null. The standard input of the remote process can be
- * written to through the output stream returned by {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputSream() }
+ * {@link org.apache.commons.net.bsd.RExecClient#getErrorStream getErrorStream()} will always return null. The standard input of the remote process can be
+ * written to through the output stream returned by {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputSream()}
  * </p>
  *
  * @see org.apache.commons.net.SocketClient

@@ -74,7 +74,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * response to a command. When that occurs, the method encountering that reply will throw an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException}.
  * {@code SMTPConnectionClosedException} is a subclass of {@code IOException} and therefore need not be caught separately, but if you are going to
  * catch it separately, its catch block must appear before the more general {@code IOException} catch block. When you encounter an
- * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect() } to properly
+ * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect()} to properly
  * clean up the system resources used by SMTPClient. Before disconnecting, you may check the last reply code and text with
  * {@link org.apache.commons.net.smtp.SMTP#getReplyCode getReplyCode }, {@link org.apache.commons.net.smtp.SMTP#getReplyString getReplyString }, and
  * {@link org.apache.commons.net.smtp.SMTP#getReplyStrings getReplyStrings}.
@@ -278,7 +278,7 @@ public class SMTPClient extends SMTP {
      * about is writing the header and the message.
      * </p>
      * <p>
-     * Upon closing the returned Writer, you need to call {@link #completePendingCommand completePendingCommand() } to finalize the transaction and verify its
+     * Upon closing the returned Writer, you need to call {@link #completePendingCommand completePendingCommand()} to finalize the transaction and verify its
      * success or failure from the server reply.
      * </p>
      *
@@ -310,8 +310,8 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Sends a short messages. This method fetches the Writer returned by {@link #sendMessageData sendMessageData() } and writes the
-     * specified String to it. After writing the message, this method calls {@link #completePendingCommand completePendingCommand() } to finalize the
+     * Sends a short messages. This method fetches the Writer returned by {@link #sendMessageData sendMessageData()} and writes the
+     * specified String to it. After writing the message, this method calls {@link #completePendingCommand completePendingCommand()} to finalize the
      * transaction and returns its success or failure.
      *
      * @param message The short email message to send. This must include the headers and the body, but not the trailing "."

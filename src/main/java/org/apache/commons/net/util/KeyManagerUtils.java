@@ -123,7 +123,7 @@ public final class KeyManagerUtils {
 
         @Override
         public String[] getClientAliases(final String keyType, final Principal[] issuers) {
-            return new String[] { keyStore.getAlias() };
+            return new String[] { keyStore.getAlias()};
         }
 
         // Call sequence: 3

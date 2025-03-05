@@ -379,7 +379,7 @@ public class POP3Client extends POP3 {
      *
      * @param messageId The number of the message to fetch.
      * @return A DotTerminatedMessageReader instance from which the entire message can be read. This can safely be cast to a {@link BufferedReader} in order to
-     *         use the {@link BufferedReader#readLine() } method. Returns null if the retrieval attempt fails (e.g., if the specified message number does not
+     *         use the {@link BufferedReader#readLine()} method. Returns null if the retrieval attempt fails (e.g., if the specified message number does not
      *         exist).
      * @throws IOException If a network I/O error occurs in the process of sending the retrieve message command.
      */

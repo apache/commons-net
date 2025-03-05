@@ -145,7 +145,7 @@ import org.apache.commons.net.util.NetConstants;
  * method encountering that reply will throw an {@link org.apache.commons.net.ftp.FTPConnectionClosedException}. {@link FTPConnectionClosedException} is a
  * subclass of {@code IOException} and therefore need not be caught separately, but if you are going to catch it separately, its catch block must appear before
  * the more general {@code IOException} catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you must disconnect
- * the connection with {@link #disconnect disconnect() } to properly clean up the system resources used by FTPClient. Before disconnecting, you may check the
+ * the connection with {@link #disconnect disconnect()} to properly clean up the system resources used by FTPClient. Before disconnecting, you may check the
  * last reply code and text with {@link org.apache.commons.net.ftp.FTP#getReplyCode getReplyCode }, {@link org.apache.commons.net.ftp.FTP#getReplyString
  * getReplyString }, and {@link org.apache.commons.net.ftp.FTP#getReplyStrings getReplyStrings}. You may avoid server disconnections while the client is idle by
  * periodically sending NOOP commands to the server.
@@ -1368,7 +1368,7 @@ public class FTPClient extends FTP implements Configurable {
      * Sets the current data connection mode to {@code ACTIVE_REMOTE_DATA_CONNECTION}. Use this method only for server to server data transfers. This method
      * issues a PORT command to the server, indicating the other server and port to which it should connect for data transfers. You must call this method before
      * EVERY server to server transfer attempt. The FTPClient will NOT automatically continue to issue PORT commands. You also must remember to call
-     * {@link #enterLocalActiveMode enterLocalActiveMode() } if you wish to return to the normal data connection mode.
+     * {@link #enterLocalActiveMode enterLocalActiveMode()} if you wish to return to the normal data connection mode.
      *
      * @param host The passive mode server accepting connections for data transfers.
      * @param port The passive mode server's data port.
@@ -1392,7 +1392,7 @@ public class FTPClient extends FTP implements Configurable {
      * Sets the current data connection mode to {@code PASSIVE_REMOTE_DATA_CONNECTION_MODE}. Use this method only for server to server data transfers. This
      * method issues a PASV command to the server, telling it to open a data port to which the active server will connect to conduct data transfers. You must
      * call this method before EVERY server to server transfer attempt. The FTPClient will NOT automatically continue to issue PASV commands. You also must
-     * remember to call {@link #enterLocalActiveMode enterLocalActiveMode() } if you wish to return to the normal data connection mode.
+     * remember to call {@link #enterLocalActiveMode enterLocalActiveMode()} if you wish to return to the normal data connection mode.
      *
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason

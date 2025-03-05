@@ -28,7 +28,7 @@ import org.apache.commons.net.SocketClient;
  * close the connection.
  * <p>
  * To use the CharGenTCPClient class, just establish a connection with {@link org.apache.commons.net.SocketClient#connect connect } and call
- * {@link #getInputStream getInputStream() } to access the data. Don't close the input stream when you're done with it. Rather, call
+ * {@link #getInputStream getInputStream()} to access the data. Don't close the input stream when you're done with it. Rather, call
  * {@link org.apache.commons.net.SocketClient#disconnect disconnect } to clean up properly.
  * </p>
  *

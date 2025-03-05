@@ -85,7 +85,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
 
     /**
      * Closes the DatagramSocket used for the connection. You should call this method after you've finished using the class instance and also before you call
-     * {@link #open open() } again. _isOpen_ is set to false and _socket_ is set to null.
+     * {@link #open open()} again. _isOpen_ is set to false and _socket_ is set to null.
      */
     @Override
     public void close() {
@@ -180,7 +180,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
 
     /**
      * Opens a DatagramSocket on the local host at the first available port. Also sets the timeout on the socket to the default timeout set by
-     * {@link #setDefaultTimeout setDefaultTimeout() }.
+     * {@link #setDefaultTimeout setDefaultTimeout()}.
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_ is set to the newly opened socket.
      * </p>
@@ -195,7 +195,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
 
     /**
      * Opens a DatagramSocket on the local host at a specified port. Also sets the timeout on the socket to the default timeout set by {@link #setDefaultTimeout
-     * setDefaultTimeout() }.
+     * setDefaultTimeout()}.
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_ is set to the newly opened socket.
      * </p>
@@ -211,7 +211,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
 
     /**
      * Opens a DatagramSocket at the specified address on the local host at a specified port. Also sets the timeout on the socket to the default timeout set by
-     * {@link #setDefaultTimeout setDefaultTimeout() }.
+     * {@link #setDefaultTimeout setDefaultTimeout()}.
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_ is set to the newly opened socket.
      * </p>

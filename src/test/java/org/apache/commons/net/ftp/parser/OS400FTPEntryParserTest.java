@@ -77,7 +77,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
      */
     @Override
     protected FTPFileEntryParser getParser() {
-        return new CompositeFileEntryParser(new FTPFileEntryParser[] { new OS400FTPEntryParser(), new UnixFTPEntryParser() });
+        return new CompositeFileEntryParser(new FTPFileEntryParser[] { new OS400FTPEntryParser(), new UnixFTPEntryParser()});
     }
 
     @Override

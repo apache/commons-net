@@ -23,7 +23,7 @@ import org.apache.commons.net.SocketClient;
 
 /**
  * The DiscardTCPClient class is a TCP implementation of a client for the Discard protocol described in RFC 863. To use the class, merely establish a connection
- * with {@link org.apache.commons.net.SocketClient#connect connect } and call {@link #getOutputStream getOutputStream() } to retrieve the discard output stream.
+ * with {@link org.apache.commons.net.SocketClient#connect connect } and call {@link #getOutputStream getOutputStream()} to retrieve the discard output stream.
  * Don't close the output stream when you're done writing to it. Rather, call {@link org.apache.commons.net.SocketClient#disconnect disconnect } to clean up
  * properly.
  *

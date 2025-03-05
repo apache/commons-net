@@ -24,7 +24,7 @@ import org.apache.commons.net.SocketClient;
 
 /**
  * The DaytimeTCPClient class is a TCP implementation of a client for the Daytime protocol described in RFC 867. To use the class, merely establish a connection
- * with {@link org.apache.commons.net.SocketClient#connect connect } and call {@link #getTime getTime() } to retrieve the daytime string, then call
+ * with {@link org.apache.commons.net.SocketClient#connect connect } and call {@link #getTime getTime()} to retrieve the daytime string, then call
  * {@link org.apache.commons.net.SocketClient#disconnect disconnect } to close the connection properly.
  *
  * @see DaytimeUDPClient
