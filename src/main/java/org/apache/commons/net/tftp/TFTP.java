@@ -27,9 +27,9 @@ import org.apache.commons.net.DatagramSocketClient;
 
 /**
  * The TFTP class exposes a set of methods to allow you to deal with the TFTP protocol directly, in case you want to write your own TFTP client or server.
- * However, almost every user should only be concerend with the {@link org.apache.commons.net.DatagramSocketClient#open open() }, and
- * {@link org.apache.commons.net.DatagramSocketClient#close close() }, methods. Additionally,the a
- * {@link org.apache.commons.net.DatagramSocketClient#setDefaultTimeout setDefaultTimeout() } method may be of importance for performance tuning.
+ * However, almost every user should only be concerend with the {@link org.apache.commons.net.DatagramSocketClient#open open()}, and
+ * {@link org.apache.commons.net.DatagramSocketClient#close close()}, methods. Additionally,the a
+ * {@link org.apache.commons.net.DatagramSocketClient#setDefaultTimeout setDefaultTimeout()} method may be of importance for performance tuning.
  * <p>
  * Details regarding the TFTP protocol and the format of TFTP packets can be found in RFC 783. But the point of these classes is to keep you from having to
  * worry about the internals.
@@ -40,8 +40,12 @@ import org.apache.commons.net.DatagramSocketClient;
  * @see TFTPPacketException
  * @see TFTPClient
  */
-
 public class TFTP extends DatagramSocketClient {
+
+    /**
+     * The header size.
+     */
+    private static final int HEADER_SIZE = 4;
 
     /**
      * The ASCII transfer mode. Its value is 0 and equivalent to NETASCII_MODE
@@ -91,7 +95,7 @@ public class TFTP extends DatagramSocketClient {
     /**
      * The size to use for TFTP packet buffers. Its 4 plus the TFTPPacket.SEGMENT_SIZE, i.e. 516.
      */
-    static final int PACKET_SIZE = TFTPPacket.SEGMENT_SIZE + 4;
+    static final int PACKET_SIZE = TFTPPacket.SEGMENT_SIZE + HEADER_SIZE;
 
     /**
      * Returns the TFTP string representation of a TFTP transfer mode. Will throw an ArrayIndexOutOfBoundsException if an invalid transfer mode is specified.
@@ -134,9 +138,9 @@ public class TFTP extends DatagramSocketClient {
     }
 
     /**
-     * Initializes the internal buffers. Buffers are used by {@link #bufferedSend bufferedSend() } and {@link #bufferedReceive bufferedReceive() }. This method
+     * Initializes the internal buffers. Buffers are used by {@link #bufferedSend bufferedSend()} and {@link #bufferedReceive bufferedReceive()}. This method
      * must be called before calling either one of those two methods. When you finish using buffered operations, you must call {@link #endBufferedOps
-     * endBufferedOps() }.
+     * endBufferedOps()}.
      */
     public final void beginBufferedOps() {
         receiveBuffer = new byte[packetSize];
@@ -147,7 +151,7 @@ public class TFTP extends DatagramSocketClient {
     }
 
     /**
-     * This is a special method to perform a more efficient packet receive. It should only be used after calling {@link #beginBufferedOps beginBufferedOps() }.
+     * This is a special method to perform a more efficient packet receive. It should only be used after calling {@link #beginBufferedOps beginBufferedOps()}.
      * beginBufferedOps() initializes a set of buffers used internally that prevent the new allocation of a DatagramPacket and byte array for each send and
      * receive. To use these buffers you must call the bufferedReceive() and bufferedSend() methods instead of send() and receive(). You must also be certain
      * that you don't manipulate the resulting packet in such a way that it interferes with future buffered operations. For example, a TFTPDataPacket received
@@ -173,7 +177,7 @@ public class TFTP extends DatagramSocketClient {
     }
 
     /**
-     * This is a special method to perform a more efficient packet send. It should only be used after calling {@link #beginBufferedOps beginBufferedOps() }.
+     * This is a special method to perform a more efficient packet send. It should only be used after calling {@link #beginBufferedOps beginBufferedOps()}.
      * beginBufferedOps() initializes a set of buffers used internally that prevent the new allocation of a DatagramPacket and byte array for each send and
      * receive. To use these buffers you must call the bufferedReceive() and bufferedSend() methods instead of send() and receive(). You must also be certain
      * that you don't manipulate the resulting packet in such a way that it interferes with future buffered operations. For example, a TFTPDataPacket received
@@ -277,7 +281,7 @@ public class TFTP extends DatagramSocketClient {
      */
     public final void resetBuffersToSize(final int packetSize) {
         // the packet size should be between 8 - 65464 (inclusively) then we add 4 for the header
-        this.packetSize = Math.min(Math.max(packetSize, 8), 65464) + 4;
+        this.packetSize = Math.min(Math.max(packetSize, 8), 65464) + HEADER_SIZE;
         // if the buffers are already initialized reinitialize
         if (buffersInitialized) {
             endBufferedOps();
