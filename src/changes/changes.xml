@@ -99,6 +99,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add FTP.opts(String...).</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add FTP.setControlEncoding(Charset).</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add --OPTS to FTPClientExample.</action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory" issue="NET-727">Add accessing options map for TFTP request packet and allow using 'blksize' option #331.</action> 
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 70 to 81 #261, #278, #280, #285, #298, #293, #300.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #268, #273, #281.</action>
