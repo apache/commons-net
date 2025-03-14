@@ -100,15 +100,15 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         return result;
     }
 
-    /*
+    /**
      * Callback method called when TelnetClient receives an option negotiation command. <p>
      *
-     * @param negotiation_code   type of negotiation command received (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT) <p>
-     * @param option_code   code of the option negotiated <p>
+     * @param negotiationCode   type of negotiation command received (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT) <p>
+     * @param optionCode   code of the option negotiated <p>
      */
     @Override
-    public void receivedNegotiation(final int negotiation_code, final int option_code) {
-        switch (negotiation_code) {
+    public void receivedNegotiation(final int negotiationCode, final int optionCode) {
+        switch (negotiationCode) {
         case TelnetNotificationHandler.RECEIVED_DO:
             numdo++;
             break;
@@ -220,8 +220,8 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
      * test of AYT functionality
      */
     public void testAYT() throws Exception {
-        boolean ayt_true_ok = false;
-        boolean ayt_false_ok = false;
+        boolean aytTrueOk = false;
+        boolean aytFalseOk = false;
 
         final byte[] AYT = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.AYT };
         final byte[] response = { (byte) '[', (byte) 'Y', (byte) 'e', (byte) 's', (byte) ']' };
@@ -237,7 +237,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         final boolean res1 = ANSI.client.sendAYT(Duration.ofSeconds(2));
 
         if (res1) {
-            ayt_true_ok = true;
+            aytTrueOk = true;
         }
 
         Thread.sleep(1000);
@@ -246,20 +246,20 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         final boolean res2 = ANSI.client.sendAYT(Duration.ofSeconds(2));
 
         if (!res2) {
-            ayt_false_ok = true;
+            aytFalseOk = true;
         }
 
-        assertTrue(ayt_true_ok);
-        assertTrue(ayt_false_ok);
+        assertTrue(aytTrueOk);
+        assertTrue(aytFalseOk);
     }
 
     /*
      * protocol compliance test in case of option handler removal
      */
     public void testDeleteOptionHandler() throws Exception {
-        boolean remove_ok = false;
-        boolean remove_invalid_ok1 = false;
-        boolean remove_invalid_ok2 = false;
+        boolean removeOk = false;
+        boolean removeInvalidOk1 = false;
+        boolean removeInvalidOk2 = false;
 
         final byte[] buffread = new byte[6];
         final byte[] send = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) TelnetOption.ECHO, (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
@@ -281,7 +281,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             if (is.available() == 6) {
                 is.read(buffread);
                 if (equalBytes(buffread, expected)) {
-                    remove_ok = true;
+                    removeOk = true;
                 }
             }
         }
@@ -289,18 +289,18 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         try {
             OPTIONS.client.deleteOptionHandler(TelnetOption.SUPPRESS_GO_AHEAD);
         } catch (final Exception e) {
-            remove_invalid_ok1 = true;
+            removeInvalidOk1 = true;
         }
 
         try {
             OPTIONS.client.deleteOptionHandler(550);
         } catch (final Exception e) {
-            remove_invalid_ok2 = true;
+            removeInvalidOk2 = true;
         }
 
-        assertTrue(remove_ok);
-        assertTrue(remove_invalid_ok1);
-        assertTrue(remove_invalid_ok2);
+        assertTrue(removeOk);
+        assertTrue(removeInvalidOk1);
+        assertTrue(removeInvalidOk2);
         assertTrue(OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
         assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
         assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
@@ -310,12 +310,12 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
      * tests the initial condition of the sessions
      */
     public void testInitial() throws Exception {
-        boolean connect1_ok = false;
-        boolean connect2_ok = false;
-        boolean connect3_ok = false;
-        boolean init2_ok = false;
-        boolean add_invalid_ok1 = false;
-        boolean add_invalid_ok2 = false;
+        boolean connect1Ok = false;
+        boolean connect2Ok = false;
+        boolean connect3Ok = false;
+        boolean init2Ok = false;
+        boolean addInvalidOk1 = false;
+        boolean addInvalidOk2 = false;
         final byte[] buffread2 = new byte[9];
         final byte[] expected2 = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, (byte) TelnetOption.ECHO, (byte) TelnetCommand.IAC,
                 (byte) TelnetCommand.WILL, (byte) TelnetOption.SUPPRESS_GO_AHEAD, (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
@@ -325,50 +325,50 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         try {
             STANDARD.client.addOptionHandler(hand);
         } catch (final Exception e) {
-            add_invalid_ok1 = true;
+            addInvalidOk1 = true;
         }
 
         try {
             OPTIONS.client.addOptionHandler(hand);
         } catch (final Exception e) {
-            add_invalid_ok2 = true;
+            addInvalidOk2 = true;
         }
 
         final InputStream is1 = STANDARD.server.getInputStream();
         Thread.sleep(1000);
         if (is1.available() == 0) {
-            connect1_ok = true;
+            connect1Ok = true;
         }
 
         Thread.sleep(1000);
         final InputStream is2 = OPTIONS.server.getInputStream();
         if (is2.available() == 9) {
             is2.read(buffread2);
-            connect2_ok = true;
+            connect2Ok = true;
 
             if (equalBytes(buffread2, expected2)) {
-                init2_ok = true;
+                init2Ok = true;
             }
         }
 
         final InputStream is3 = ANSI.server.getInputStream();
         Thread.sleep(1000);
         if (is3.available() == 0) {
-            connect3_ok = true;
+            connect3Ok = true;
         }
 
-        assertTrue(connect1_ok);
-        assertTrue(connect2_ok);
-        assertTrue(connect3_ok);
+        assertTrue(connect1Ok);
+        assertTrue(connect2Ok);
+        assertTrue(connect3Ok);
         assertFalse(STANDARD.client.getLocalOptionState(TelnetOption.ECHO));
         assertFalse(STANDARD.client.getRemoteOptionState(TelnetOption.ECHO));
         assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
         assertFalse(OPTIONS.client.getRemoteOptionState(TelnetOption.ECHO));
         assertFalse(ANSI.client.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
         assertFalse(ANSI.client.getRemoteOptionState(TelnetOption.TERMINAL_TYPE));
-        assertTrue(init2_ok);
-        assertTrue(add_invalid_ok1);
-        assertTrue(add_invalid_ok2);
+        assertTrue(init2Ok);
+        assertTrue(addInvalidOk1);
+        assertTrue(addInvalidOk2);
     }
 
     /*
@@ -469,13 +469,13 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
      * protocol compliance test for option negotiation
      */
     public void testOptionNegotiation() throws Exception {
-        boolean negotiation1_ok = false;
+        boolean negotiation1Ok = false;
         final byte[] buffread1 = new byte[6];
         final byte[] send1 = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) 15, (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, (byte) 15, };
         final byte[] expected1 = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, (byte) 15, (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
                 (byte) 15, };
 
-        boolean negotiation2_ok = false;
+        boolean negotiation2Ok = false;
         final byte[] buffread2 = new byte[9];
         final byte[] send2 = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) TelnetOption.TERMINAL_TYPE, (byte) TelnetCommand.IAC,
                 (byte) TelnetCommand.DONT, (byte) TelnetOption.ECHO, (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) TelnetOption.SUPPRESS_GO_AHEAD,
@@ -490,7 +490,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         final byte[] expected2b = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, (byte) TelnetOption.TERMINAL_TYPE, (byte) 0, (byte) 'V', (byte) 'T',
                 (byte) '1', (byte) '0', (byte) '0', (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE, };
 
-        boolean negotiation3_ok = false;
+        boolean negotiation3Ok = false;
         final byte[] buffread3 = new byte[6];
         final byte[] send3 = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) TelnetOption.TERMINAL_TYPE, (byte) TelnetCommand.IAC,
                 (byte) TelnetCommand.DO, (byte) TelnetOption.SUPPRESS_GO_AHEAD };
@@ -512,7 +512,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             is1.read(buffread1);
 
             if (equalBytes(buffread1, expected1)) {
-                negotiation1_ok = true;
+                negotiation1Ok = true;
             }
         }
 
@@ -527,11 +527,11 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             is2.read(buffread2);
 
             if (equalBytes(buffread2, expected2)) {
-                negotiation2_ok = true;
+                negotiation2Ok = true;
             }
 
-            if (negotiation2_ok) {
-                negotiation2_ok = false;
+            if (negotiation2Ok) {
+                negotiation2Ok = false;
                 os2.write(send2b);
                 os2.flush();
                 Thread.sleep(1000);
@@ -539,7 +539,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
                     is2.read(buffread2b);
 
                     if (equalBytes(buffread2b, expected2b)) {
-                        negotiation2_ok = true;
+                        negotiation2Ok = true;
                     }
                 }
             }
@@ -556,26 +556,26 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             is3.read(buffread3);
 
             if (equalBytes(buffread3, expected3)) {
-                negotiation3_ok = true;
+                negotiation3Ok = true;
             }
 
-            if (negotiation3_ok) {
-                negotiation3_ok = false;
+            if (negotiation3Ok) {
+                negotiation3Ok = false;
                 os3.write(send3b);
                 os3.flush();
                 Thread.sleep(1000);
                 if (is3.available() == 10) {
                     is3.read(buffread3b);
                     if (equalBytes(buffread3b, expected3b)) {
-                        negotiation3_ok = true;
+                        negotiation3Ok = true;
                     }
                 }
             }
         }
 
-        assertTrue(negotiation1_ok);
-        assertTrue(negotiation2_ok);
-        assertTrue(negotiation3_ok);
+        assertTrue(negotiation1Ok);
+        assertTrue(negotiation2Ok);
+        assertTrue(negotiation3Ok);
         assertFalse(STANDARD.client.getLocalOptionState(15));
         assertFalse(STANDARD.client.getRemoteOptionState(15));
         assertFalse(STANDARD.client.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
@@ -592,7 +592,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
      * protocol compliance test for option renegotiation
      */
     public void testOptionRenegotiation() throws Exception {
-        boolean negotiation1_ok = false;
+        boolean negotiation1Ok = false;
 
         final byte[] buffread = new byte[6];
         final byte[] send = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) TelnetOption.ECHO, (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
@@ -615,24 +615,24 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             is.read(buffread);
 
             if (equalBytes(buffread, expected)) {
-                negotiation1_ok = true;
+                negotiation1Ok = true;
             }
 
-            if (negotiation1_ok) {
-                negotiation1_ok = false;
+            if (negotiation1Ok) {
+                negotiation1Ok = false;
                 os.write(send2);
                 os.flush();
                 Thread.sleep(1000);
                 if (is.available() == 3) {
                     is.read(buffread2);
                     if (equalBytes(buffread2, expected2)) {
-                        negotiation1_ok = true;
+                        negotiation1Ok = true;
                     }
                 }
             }
         }
 
-        assertTrue(negotiation1_ok);
+        assertTrue(negotiation1Ok);
         assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
     }
 
@@ -640,9 +640,9 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
      * test of setReaderThread
      */
     public void testSetReaderThread() throws Exception {
-        boolean negotiation1_ok = false;
-        boolean negotiation2_ok = false;
-        boolean read_ok = false;
+        boolean negotiation1Ok = false;
+        boolean negotiation2Ok = false;
+        boolean readOk = false;
         final byte[] buffread1 = new byte[6];
         final byte[] send1 = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) 15, (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, (byte) 15, };
         final byte[] expected1 = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, (byte) 15, (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
@@ -659,9 +659,9 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         final InputStream instr = NOREAD.client.getInputStream();
         final byte[] buff = new byte[4];
 
-        final int ret_read = instr.read(buff);
-        if (ret_read == 1 && buff[0] == 'A') {
-            read_ok = true;
+        final int retRead = instr.read(buff);
+        if (retRead == 1 && buff[0] == 'A') {
+            readOk = true;
         }
 
         // if (is1.available() == 6)
@@ -677,7 +677,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         }
 
         if (equalBytes(buffread1, expected1)) {
-            negotiation1_ok = true;
+            negotiation1Ok = true;
             // }
         }
 
@@ -700,24 +700,24 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         is2.read(buffread1);
 
         if (equalBytes(buffread1, expected1)) {
-            negotiation2_ok = true;
+            negotiation2Ok = true;
             // }
         }
 
         assertFalse(NOREAD.client.getReaderThread());
         assertTrue(STANDARD.client.getReaderThread());
-        assertTrue("Expected read_ok to be true, got " + read_ok, read_ok);
-        assertTrue("Expected negotiation1_ok to be true, got " + negotiation1_ok, negotiation1_ok);
-        assertTrue("Expected negotiation2_ok to be true, got " + negotiation2_ok, negotiation2_ok);
+        assertTrue("Expected readOk to be true, got " + readOk, readOk);
+        assertTrue("Expected negotiation1Ok to be true, got " + negotiation1Ok, negotiation1Ok);
+        assertTrue("Expected negotiation2Ok to be true, got " + negotiation2Ok, negotiation2Ok);
     }
 
     /*
      * test of Spy functionality
      */
     public void testSpy() throws Exception {
-        boolean test1spy_ok = false;
-        boolean test2spy_ok = false;
-        boolean stopspy_ok = false;
+        boolean test1spyOk = false;
+        boolean test2spyOk = false;
+        boolean stopspyOk = false;
         final byte[] expected1 = { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '1' };
         final byte[] expected2 = { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '2' };
 
@@ -737,7 +737,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             if (pi.available() == 5) {
                 pi.read(buffer);
                 if (equalBytes(buffer, expected1)) {
-                    test1spy_ok = true;
+                    test1spyOk = true;
                 }
             }
 
@@ -749,7 +749,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             if (pi.available() == 5) {
                 pi.read(buffer);
                 if (equalBytes(buffer, expected2)) {
-                    test2spy_ok = true;
+                    test2spyOk = true;
                 }
             }
 
@@ -760,12 +760,12 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             ostc.flush();
             Thread.sleep(1000);
             if (pi.available() == 0) {
-                stopspy_ok = true;
+                stopspyOk = true;
             }
 
-            assertTrue(test1spy_ok);
-            assertTrue(test2spy_ok);
-            assertTrue(stopspy_ok);
+            assertTrue(test1spyOk);
+            assertTrue(test2spyOk);
+            assertTrue(stopspyOk);
         }
     }
 

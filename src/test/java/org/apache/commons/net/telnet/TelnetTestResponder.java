@@ -24,11 +24,11 @@ import java.io.OutputStream;
  * thread.
  */
 public class TelnetTestResponder implements Runnable {
-    InputStream _is;
-    OutputStream _os;
-    String _inputs[];
-    String _outputs[];
-    long _timeout;
+    InputStream in;
+    OutputStream out;
+    String inputs[];
+    String outputs[];
+    long timeout;
 
     /**
      * Constructs a new instance. Starts a new thread for the reader.
@@ -41,11 +41,11 @@ public class TelnetTestResponder implements Runnable {
      * @param timeout   milliseconds
      */
     public TelnetTestResponder(final InputStream is, final OutputStream os, final String inputs[], final String outputs[], final long timeout) {
-        _is = is;
-        _os = os;
-        _timeout = timeout;
-        _inputs = inputs;
-        _outputs = outputs;
+        this.in = is;
+        this.out = os;
+        this.timeout = timeout;
+        this.inputs = inputs;
+        this.outputs = outputs;
         final Thread reader = new Thread(this);
 
         reader.start();
@@ -62,15 +62,15 @@ public class TelnetTestResponder implements Runnable {
 
         try {
             final StringBuilder readbytes = new StringBuilder();
-            while (!result && System.currentTimeMillis() - starttime < _timeout) {
-                if (_is.available() > 0) {
-                    final int ret_read = _is.read(buffer);
+            while (!result && System.currentTimeMillis() - starttime < timeout) {
+                if (in.available() > 0) {
+                    final int ret_read = in.read(buffer);
                     readbytes.append(new String(buffer, 0, ret_read));
 
-                    for (int ii = 0; ii < _inputs.length; ii++) {
-                        if (readbytes.indexOf(_inputs[ii]) >= 0) {
+                    for (int ii = 0; ii < inputs.length; ii++) {
+                        if (readbytes.indexOf(inputs[ii]) >= 0) {
                             Thread.sleep(1000 * ii);
-                            _os.write(_outputs[ii].getBytes());
+                            out.write(outputs[ii].getBytes());
                             result = true;
                         }
                     }
