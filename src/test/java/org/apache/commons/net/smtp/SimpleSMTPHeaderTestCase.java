@@ -87,12 +87,12 @@ public class SimpleSMTPHeaderTestCase {
 
     @Test
     public void testToStringAddHeader() {
-        final SimpleSMTPHeader hdr = new SimpleSMTPHeader("from@here.invalid", null, null);
-        assertNotNull(hdr);
-        hdr.addHeaderField("X-Header1", "value 1");
-        hdr.addHeaderField("X-Header2", "value 2");
+        final SimpleSMTPHeader fromHeader = new SimpleSMTPHeader("from@here.invalid", null, null);
+        assertNotNull(fromHeader);
+        fromHeader.addHeaderField("X-Header1", "value 1");
+        fromHeader.addHeaderField("X-Header2", "value 2");
         // Note that the DotTerminatedMessageWriter converts LF to CRLF
-        assertEquals("X-Header1: value 1\nX-Header2: value 2\nFrom: from@here.invalid\n\n", checkDate(hdr.toString()));
+        assertEquals("X-Header1: value 1\nX-Header2: value 2\nFrom: from@here.invalid\n\n", checkDate(fromHeader.toString()));
     }
 
     @Test
