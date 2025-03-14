@@ -89,7 +89,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             + "\\s+" // separator
 
             /*
-             * numeric or standard format date: yyyy-mm-dd (expecting hh:mm to follow) MMM [d]d [d]d MMM N.B. use non-space for MMM to allow for languages such
+             * numeric or standard format date: yyyy-mm-dd (expecting hh:mm to follow) MMM [d]d [d]d MMM Use non-space for MMM to allow for languages such
              * as German which use diacritics (e.g. umlaut) in some abbreviations. Japanese uses numeric day and month with suffixes to distinguish them [d]dXX
              * [d]dZZ
              */

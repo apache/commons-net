@@ -82,7 +82,7 @@ jobs:
         server-password: NEXUS_PW # env variable for token in deploy
     - name: Build and test with Maven
       run: mvn --errors --show-version --batch-mode --no-transfer-progress -Ddoclint=all
-# N.B. Add  -Pslf4j-simple to enable logging above
+# Add  -Pslf4j-simple to enable logging above
     - name: Deploy SNAPSHOT using minimal build
       if: matrix.deploy && github.repository == 'apache/commons-net' && github.ref_name == 'master'
       env:

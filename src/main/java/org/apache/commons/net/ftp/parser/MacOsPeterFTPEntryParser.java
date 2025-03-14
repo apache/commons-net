@@ -47,7 +47,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             + "(" + "(folder\\s+)" + "|" + "((\\d+)\\s+(\\d+)\\s+)" // resource size & data size
             + ")" + "(\\d+)\\s+" // size
             /*
-             * numeric or standard format date: yyyy-mm-dd (expecting hh:mm to follow) MMM [d]d [d]d MMM N.B. use non-space for MMM to allow for languages such
+             * numeric or standard format date: yyyy-mm-dd (expecting hh:mm to follow) MMM [d]d [d]d MMM Use non-space for MMM to allow for languages such
              * as German which use diacritics (e.g. umlaut) in some abbreviations.
              */
             + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:\\S{3}\\s+\\d{1,2})|(?:\\d{1,2}\\s+\\S{3}))\\s+"

@@ -276,7 +276,7 @@ public class NNTPClient extends NNTP {
         if (info == null) {
             throw new IOException("XOVER command failed: " + getReplyString());
         }
-        // N.B. info is already DotTerminated, so don't rewrap
+        // Info is already DotTerminated, so don't rewrap
         return new ArticleIterator(new ReplyIterator(info, false));
     }
 

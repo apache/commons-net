@@ -2195,7 +2195,7 @@ public class FTPClient extends FTP implements Configurable {
      * This information is obtained through the LIST command. The contents of the returned array is determined by the{@link FTPFileEntryParser} used.
      * </p>
      * <p>
-     * N.B. the LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
+     * The LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
      * For older files, the output may only contain a date. If the server supports it, the MLSD command returns timestamps with a precision of seconds, and may
      * include milliseconds. See {@link #mlistDir()}
      * </p>
@@ -2227,7 +2227,7 @@ public class FTPClient extends FTP implements Configurable {
      * This information is obtained through the LIST command. The contents of the returned array is determined by the{@link FTPFileEntryParser} used.
      * </p>
      * <p>
-     * N.B. the LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
+     * The LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
      * For older files, the output may only contain a date. If the server supports it, the MLSD command returns timestamps with a precision of seconds, and may
      * include milliseconds. See {@link #mlistDir()}
      * </p>
@@ -2260,7 +2260,7 @@ public class FTPClient extends FTP implements Configurable {
      * This information is obtained through the LIST command. The contents of the returned array is determined by the {@link FTPFileEntryParser} used.
      * </p>
      * <p>
-     * N.B. the LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
+     * The LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
      * For older files, the output may only contain a date. If the server supports it, the MLSD command returns timestamps with a precision of seconds, and may
      * include milliseconds. See {@link #mlistDir()}
      * </p>
@@ -2293,7 +2293,7 @@ public class FTPClient extends FTP implements Configurable {
      * This information is obtained through the LIST command. The contents of the returned array is determined by the {@link FTPFileEntryParser} used.
      * </p>
      * <p>
-     * N.B. the LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
+     * The LIST command does not generally return very precise timestamps. For recent files, the response usually contains hours and minutes (not seconds).
      * For older files, the output may only contain a date. If the server supports it, the MLSD command returns timestamps with a precision of seconds, and may
      * include milliseconds. See {@link #mlistDir()}
      * </p>

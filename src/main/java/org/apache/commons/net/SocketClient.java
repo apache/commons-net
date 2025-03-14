@@ -793,7 +793,7 @@ public abstract class SocketClient {
     }
 
     /*
-     * N.B. Fields cannot be pulled up into a super-class without breaking binary compatibility, so the abstract method is needed to pass the instance to the
+     * Fields cannot be pulled up into a super-class without breaking binary compatibility, so the abstract method is needed to pass the instance to the
      * methods which were moved here.
      */
 }

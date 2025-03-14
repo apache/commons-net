@@ -550,7 +550,7 @@ public class FTPSClient extends FTPClient {
         if (idx == -1) {
             return null;
         }
-        // N.B. Cannot use trim before substring as leading space would affect the offset.
+        // Cannot use trim before substring as leading space would affect the offset.
         return reply.substring(idx + prefix.length()).trim();
     }
 
