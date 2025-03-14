@@ -31,12 +31,14 @@ import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Tests {@link SimpleSMTPHeader}.
+ */
 public class SimpleSMTPHeaderTestCase {
 
-    private SimpleSMTPHeader header;
     private Date beforeDate;
 
-    // Returns the msg without a date
+    /** Returns the msg without a date. */
     private String checkDate(final String msg) {
         final Pattern pat = Pattern.compile("^(Date: (.+))$", Pattern.MULTILINE);
         final Matcher m = pat.matcher(msg);
@@ -75,33 +77,32 @@ public class SimpleSMTPHeaderTestCase {
     @Before
     public void setUp() {
         beforeDate = new Date();
-        header = new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", "Test email");
     }
 
     @Test
     public void testToString() {
-        assertNotNull(header);
         // Note that the DotTerminatedMessageWriter converts LF to CRLF
+        final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", "Test email");
         assertEquals("From: from@here.invalid\nTo: to@there.invalid\nSubject: Test email\n\n", checkDate(header.toString()));
     }
 
     @Test
     public void testToStringAddHeader() {
-        final SimpleSMTPHeader fromHeader = new SimpleSMTPHeader("from@here.invalid", null, null);
-        assertNotNull(fromHeader);
-        fromHeader.addHeaderField("X-Header1", "value 1");
-        fromHeader.addHeaderField("X-Header2", "value 2");
+        final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
+        assertNotNull(header);
+        header.addHeaderField("X-Header1", "value 1");
+        header.addHeaderField("X-Header2", "value 2");
         // Note that the DotTerminatedMessageWriter converts LF to CRLF
-        assertEquals("X-Header1: value 1\nX-Header2: value 2\nFrom: from@here.invalid\n\n", checkDate(fromHeader.toString()));
+        assertEquals("X-Header1: value 1\nX-Header2: value 2\nFrom: from@here.invalid\n\n", checkDate(header.toString()));
     }
 
     @Test
     public void testToStringAddHeaderDate() {
-        final SimpleSMTPHeader hdr = new SimpleSMTPHeader("from@here.invalid", null, null);
-        assertNotNull(hdr);
-        hdr.addHeaderField("Date", "dummy date");
+        final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
+        assertNotNull(header);
+        header.addHeaderField("Date", "dummy date");
         // does not replace the Date field
-        assertEquals("Date: dummy date\nFrom: from@here.invalid\n\n", hdr.toString());
+        assertEquals("Date: dummy date\nFrom: from@here.invalid\n\n", header.toString());
     }
 
     @Test
@@ -111,17 +112,17 @@ public class SimpleSMTPHeaderTestCase {
 
     @Test
     public void testToStringNoSubject() {
-        final SimpleSMTPHeader hdr = new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", null);
-        assertNotNull(hdr);
+        final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", null);
+        assertNotNull(header);
         // Note that the DotTerminatedMessageWriter converts LF to CRLF
-        assertEquals("From: from@here.invalid\nTo: to@there.invalid\n\n", checkDate(hdr.toString()));
+        assertEquals("From: from@here.invalid\nTo: to@there.invalid\n\n", checkDate(header.toString()));
     }
 
     @Test
     public void testToStringNoTo() {
-        final SimpleSMTPHeader hdr = new SimpleSMTPHeader("from@here.invalid", null, null);
-        assertNotNull(hdr);
+        final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
+        assertNotNull(header);
         // Note that the DotTerminatedMessageWriter converts LF to CRLF
-        assertEquals("From: from@here.invalid\n\n", checkDate(hdr.toString()));
+        assertEquals("From: from@here.invalid\n\n", checkDate(header.toString()));
     }
 }
