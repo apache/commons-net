@@ -17,7 +17,6 @@
 
 package org.apache.commons.net.ftp;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -41,19 +40,15 @@ public class FTPFileTest {
         final Calendar timestamp = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         timestamp.set(2023, Calendar.AUGUST, 4, 23, 40, 55);
         file.setTimestamp(timestamp);
-
         final Instant timestampInstant = file.getTimestampInstant();
-
         assertNotNull(timestampInstant);
         final LocalDateTime fileDateTime = LocalDateTime.ofInstant(file.getTimestampInstant(), ZoneId.of("GMT"));
-        assertAll(
-                () -> assertEquals(2023, fileDateTime.getYear()),
-                () -> assertEquals(Month.AUGUST, fileDateTime.getMonth()),
-                () -> assertEquals(4, fileDateTime.getDayOfMonth()),
-                () -> assertEquals(23, fileDateTime.getHour()),
-                () -> assertEquals(40, fileDateTime.getMinute()),
-                () -> assertEquals(55, fileDateTime.getSecond())
-        );
+        assertEquals(2023, fileDateTime.getYear());
+        assertEquals(Month.AUGUST, fileDateTime.getMonth());
+        assertEquals(4, fileDateTime.getDayOfMonth());
+        assertEquals(23, fileDateTime.getHour());
+        assertEquals(40, fileDateTime.getMinute());
+        assertEquals(55, fileDateTime.getSecond());
     }
 
     @Test
@@ -156,19 +151,15 @@ public class FTPFileTest {
         file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
         file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
         file.setPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION, true);
-
         final String formattedString = file.toFormattedString("GMT");
-
-        assertAll(
-                () -> assertTrue(formattedString.startsWith("-")),
-                () -> assertTrue(formattedString.startsWith("rwx", 1)),
-                () -> assertTrue(formattedString.contains(file.getUser())),
-                () -> assertTrue(formattedString.contains(file.getGroup())),
-                () -> assertTrue(formattedString.contains(String.valueOf(file.getSize()))),
-                () -> assertTrue(formattedString.contains("1969-07-16 13:32:00")),
-                () -> assertTrue(formattedString.contains("GMT")),
-                () -> assertTrue(formattedString.contains(file.getName()))
-        );
+        assertTrue(formattedString.startsWith("-"));
+        assertTrue(formattedString.startsWith("rwx", 1));
+        assertTrue(formattedString.contains(file.getUser()));
+        assertTrue(formattedString.contains(file.getGroup()));
+        assertTrue(formattedString.contains(String.valueOf(file.getSize())));
+        assertTrue(formattedString.contains("1969-07-16 13:32:00"));
+        assertTrue(formattedString.contains("GMT"));
+        assertTrue(formattedString.contains(file.getName()));
     }
 
     @Test
