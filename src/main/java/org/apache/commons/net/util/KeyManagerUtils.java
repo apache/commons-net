@@ -199,8 +199,7 @@ public final class KeyManagerUtils {
      */
     public static KeyManager createClientKeyManager(final String storeType, final File storePath, final String storePass, final String keyAlias,
             final String keyPass) throws IOException, GeneralSecurityException {
-        final KeyStore ks = loadStore(storeType, storePath, storePass);
-        return createClientKeyManager(ks, keyAlias, keyPass);
+        return createClientKeyManager(loadStore(storeType, storePath, storePass), keyAlias, keyPass);
     }
 
     private static String findAlias(final KeyStore ks) throws KeyStoreException {
