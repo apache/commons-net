@@ -17,7 +17,6 @@
 
 package org.apache.commons.net.imap;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -47,10 +46,8 @@ public class IMAPTest {
     @MethodSource("mailboxNamesToBeQuoted")
     public void quoteMailboxName(final String input) {
         final String quotedMailboxName = IMAP.quoteMailboxName(input);
-        assertAll(
-                () -> assertTrue(quotedMailboxName.startsWith("\""), "quoted string should start with quotation mark"),
-                () -> assertTrue(quotedMailboxName.endsWith("\""), "quoted string should end with quotation mark")
-        );
+        assertTrue(quotedMailboxName.startsWith("\""), "quoted string should start with quotation mark");
+        assertTrue(quotedMailboxName.endsWith("\""), "quoted string should end with quotation mark");
     }
 
     @Test
@@ -81,11 +78,9 @@ public class IMAPTest {
     @Test
     public void testConstructDefaultIMAP() {
         final IMAP imap = new IMAP();
-        assertAll(
-                () -> assertEquals(IMAP.DEFAULT_PORT, imap.getDefaultPort()),
-                () -> assertEquals(IMAP.IMAPState.DISCONNECTED_STATE, imap.getState()),
-                () -> assertEquals(0, imap.getReplyStrings().length)
-        );
+        assertEquals(IMAP.DEFAULT_PORT, imap.getDefaultPort());
+        assertEquals(IMAP.IMAPState.DISCONNECTED_STATE, imap.getState());
+        assertEquals(0, imap.getReplyStrings().length);
     }
 
     @Test
