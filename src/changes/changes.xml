@@ -88,6 +88,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">FTPClientExample uses the wrong FTP system type to parse file lines.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Base64 does not call super.finalize().</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">TFTPServer does not call super.finalize().</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">KeyManagerUtils.loadStore(String, File, String) shouldn't ignore an IOException closing a keystore stream; use try-with-resources.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.net.nntp.Article#getChild().</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.net.nntp.Article#getNext().</action>

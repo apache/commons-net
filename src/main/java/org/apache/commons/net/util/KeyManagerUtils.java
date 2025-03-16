@@ -20,6 +20,7 @@ package org.apache.commons.net.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
@@ -33,8 +34,6 @@ import java.util.Enumeration;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.X509ExtendedKeyManager;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * General KeyManager utilities
@@ -213,15 +212,10 @@ public final class KeyManagerUtils {
         throw new KeyStoreException("Cannot find a private key entry");
     }
 
-    private static KeyStore loadStore(final String storeType, final File storePath, final String storePass)
-            throws KeyStoreException, IOException, GeneralSecurityException {
+    private static KeyStore loadStore(final String storeType, final File storePath, final String storePass) throws IOException, GeneralSecurityException {
         final KeyStore ks = KeyStore.getInstance(storeType);
-        FileInputStream stream = null;
-        try {
-            stream = new FileInputStream(storePath);
+        try (InputStream stream = new FileInputStream(storePath)) {
             ks.load(stream, storePass.toCharArray());
-        } finally {
-            IOUtils.closeQuietly(stream);
         }
         return ks;
     }
