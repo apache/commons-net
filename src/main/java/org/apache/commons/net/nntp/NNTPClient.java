@@ -24,7 +24,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.MalformedServerReplyException;
@@ -63,8 +62,6 @@ import org.apache.commons.net.util.NetConstants;
  */
 
 public class NNTPClient extends NNTP {
-
-    private static final NewsgroupInfo[] EMPTY_NEWSGROUP_INFO_ARRAY = {};
 
     /**
      * Parse a response line from {@link #retrieveArticleInfo(long, long)}.
@@ -589,11 +586,9 @@ public class NNTPClient extends NNTP {
     }
 
     private NewsgroupInfo[] readNewsgroupListing() throws IOException {
-
         // Start of with a big vector because we may be reading a very large
         // amount of groups.
-        final Vector<NewsgroupInfo> list = new Vector<>(2048);
-
+        final List<NewsgroupInfo> list = new ArrayList<>(2048);
         String line;
         try (BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
             while ((line = reader.readLine()) != null) {
@@ -601,18 +596,13 @@ public class NNTPClient extends NNTP {
                 if (tmp == null) {
                     throw new MalformedServerReplyException(line);
                 }
-                list.addElement(tmp);
+                list.add(tmp);
             }
         }
-        final int size;
-        if ((size = list.size()) < 1) {
-            return EMPTY_NEWSGROUP_INFO_ARRAY;
+        if (list.size() < 1) {
+            return NewsgroupInfo.EMPTY_ARRAY;
         }
-
-        final NewsgroupInfo[] info = new NewsgroupInfo[size];
-        list.copyInto(info);
-
-        return info;
+        return list.toArray(NewsgroupInfo.EMPTY_ARRAY);
     }
 
     private BufferedReader retrieve(final int command, final long articleNumber, final ArticleInfo pointer) throws IOException {

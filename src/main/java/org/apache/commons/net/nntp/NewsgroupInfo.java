@@ -43,6 +43,11 @@ public final class NewsgroupInfo {
      */
     public static final int PROHIBITED_POSTING_PERMISSION = 3;
 
+    /**
+     * The empty array of this type.
+     */
+    static final NewsgroupInfo[] EMPTY_ARRAY = new NewsgroupInfo[0];
+
     private String newsgroup;
     private long estimatedArticleCount;
     private long firstArticle;

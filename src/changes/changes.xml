@@ -89,6 +89,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Base64 does not call super.finalize().</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">TFTPServer does not call super.finalize().</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">KeyManagerUtils.loadStore(String, File, String) shouldn't ignore an IOException closing a keystore stream; use try-with-resources.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">NNTPClient.readNewsgroupListing() can use an ArrayList instead of a Vector.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.net.nntp.Article#getChild().</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.net.nntp.Article#getNext().</action>
