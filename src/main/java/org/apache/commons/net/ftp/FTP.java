@@ -261,8 +261,8 @@ public class FTP extends SocketClient {
     /**
      * Gets the reply, but don't pass it to command listeners. Used for keep-alive processing only.
      *
-     * @since 3.0
      * @throws IOException on error
+     * @since 3.0
      */
     protected void __getReplyNoReport() throws IOException {
         getReply(false);

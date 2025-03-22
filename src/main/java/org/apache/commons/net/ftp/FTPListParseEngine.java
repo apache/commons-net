@@ -142,8 +142,8 @@ public class FTPListParseEngine {
      *         <p>
      *         <strong> NOTE:</strong> This array may contain null members if any of the individual file listings failed to parse. The caller should check each
      *         entry for null before referencing it, or use a filter such as {@link FTPFileFilters#NON_NULL} which does not allow null entries.
-     * @since 2.2
      * @throws IOException - not ever thrown, may be removed in a later release
+     * @since 2.2
      */
     // TODO remove; not actually thrown
     public FTPFile[] getFiles(final FTPFileFilter filter) throws IOException {

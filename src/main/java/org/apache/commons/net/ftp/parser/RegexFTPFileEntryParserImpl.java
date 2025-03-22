@@ -153,8 +153,8 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      *
      * @param regex The new regular expression
      * @return true
-     * @since 2.0
      * @throws IllegalArgumentException if the regex cannot be compiled
+     * @since 2.0
      */
     public boolean setRegex(final String regex) {
         compileRegex(regex, 0);
@@ -167,8 +167,8 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * @param regex The new regular expression
      * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
      * @return true
-     * @since 3.4
      * @throws IllegalArgumentException if the regex cannot be compiled
+     * @since 3.4
      */
     public boolean setRegex(final String regex, final int flags) {
         compileRegex(regex, flags);
