@@ -848,9 +848,9 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Parses a reply.
      *
-     * @since 3.1
      * @param reply the reply to parse
      * @throws MalformedServerReplyException if the server reply does not match (n,n,n,n),(n),(n)
+     * @since 3.1
      */
     protected void _parsePassiveModeReply(final String reply) throws MalformedServerReplyException {
         final Matcher m = PARMS_PAT.matcher(reply);
@@ -964,12 +964,12 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Stores the given stream.
      *
-     * @since 3.1
      * @param command the command to send
      * @param remote  the remote file name
      * @param local   The local InputStream from which to read the data to be written/appended to the remote file.
      * @return true if successful
      * @throws IOException on error
+     * @since 3.1
      */
     protected boolean _storeFile(final String command, final String remote, final InputStream local) throws IOException {
         final Socket socket = _openDataConnection_(command, remote);

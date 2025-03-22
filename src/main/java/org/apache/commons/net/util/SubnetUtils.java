@@ -494,8 +494,8 @@ public class SubnetUtils {
     /**
      * Tests if the return value of {@link SubnetInfo#getAddressCount()} includes the network and broadcast addresses.
      *
-     * @since 2.2
      * @return true if the host count includes the network and broadcast addresses
+     * @since 2.2
      */
     public boolean isInclusiveHostCount() {
         return inclusiveHostCount;
