@@ -35,7 +35,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        java: [ 8, 11, 17, 21, 23 ]
+        java: [ 8, 11, 17, 21, 24 ]
         os: [ubuntu-latest]
         experimental: [false]
         # Don't need to run all javas on all OSes
@@ -51,10 +51,6 @@ jobs:
             os: ubuntu-latest
             experimental: false
             deploy: true
-          # Experimental build
-          - java: 24-ea
-            experimental: true        
-            os: ubuntu-latest
           # Experimental build
           - java: 25-ea
             experimental: true        
