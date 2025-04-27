@@ -42,7 +42,7 @@ public final class CRLFLineReader extends BufferedReader {
     }
 
     /**
-     * Read a line of text. A line is considered to be terminated by carriage return followed immediately by a linefeed. This contrasts with BufferedReader
+     * Reads a line of text. A line is considered to be terminated by carriage return followed immediately by a linefeed. This contrasts with BufferedReader
      * which also allows other combinations.
      *
      * @since 3.0
