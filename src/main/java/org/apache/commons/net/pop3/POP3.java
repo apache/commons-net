@@ -126,7 +126,7 @@ public class POP3 extends SocketClient {
     }
 
     /**
-     * Retrieves the additional lines of a multi-line server reply.
+     * Gets the additional lines of a multi-line server reply.
      *
      * @throws IOException on error
      */
