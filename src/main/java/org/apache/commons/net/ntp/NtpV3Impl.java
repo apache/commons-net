@@ -18,6 +18,7 @@
 package org.apache.commons.net.ntp;
 
 import java.net.DatagramPacket;
+import java.util.Arrays;
 
 /**
  * Implements {@link NtpV3Packet} to convert Java objects to and from the Network Time Protocol (NTP) data message header format described in RFC-1305.
@@ -94,7 +95,7 @@ public class NtpV3Impl implements NtpV3Packet {
             return false;
         }
         final NtpV3Impl other = (NtpV3Impl) obj;
-        return java.util.Arrays.equals(buf, other.buf);
+        return Arrays.equals(buf, other.buf);
     }
 
     /**
@@ -365,7 +366,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public int hashCode() {
-        return java.util.Arrays.hashCode(buf);
+        return Arrays.hashCode(buf);
     }
 
     private String idAsHex() {
