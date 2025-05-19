@@ -22,6 +22,7 @@ import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -118,7 +119,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
             ++index;
         }
 
-        final String modeString = buffer.toString().toLowerCase(java.util.Locale.ENGLISH);
+        final String modeString = buffer.toString().toLowerCase(Locale.ENGLISH);
         final int modeStringsLength = modeStrings.length;
 
         int mode = 0;
