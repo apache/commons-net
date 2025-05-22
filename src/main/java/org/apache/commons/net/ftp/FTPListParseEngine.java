@@ -26,7 +26,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.stream.Collectors;
 
-import org.apache.commons.net.util.Charsets;
+import org.apache.commons.io.Charsets;
+
 
 /**
  * This class handles the entire process of parsing a listing of file entries from the server.

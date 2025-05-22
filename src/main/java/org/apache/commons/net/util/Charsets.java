@@ -23,7 +23,9 @@ import java.nio.charset.Charset;
  * Helps to deal with Charsets.
  *
  * @since 3.3
+ * @deprecated Use {@link org.apache.commons.io.Charsets}.
  */
+@Deprecated
 public class Charsets {
 
     /**

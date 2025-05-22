@@ -21,9 +21,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.SocketClient;
-import org.apache.commons.net.util.Charsets;
 
 /**
  * The FingerClient class implements the client side of the Internet Finger Protocol defined in RFC 1288. To finger a host you create a FingerClient instance,
