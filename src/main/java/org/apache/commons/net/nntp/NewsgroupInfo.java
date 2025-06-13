@@ -46,7 +46,7 @@ public final class NewsgroupInfo {
     /**
      * The empty array of this type.
      */
-    static final NewsgroupInfo[] EMPTY_ARRAY = new NewsgroupInfo[0];
+    static final NewsgroupInfo[] EMPTY_ARRAY = {};
 
     private String newsgroup;
     private long estimatedArticleCount;

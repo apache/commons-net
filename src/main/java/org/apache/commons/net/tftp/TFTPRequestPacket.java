@@ -208,7 +208,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         modeLength = modeBytes[mode].length;
 
         int optionsLength = 0;
-        for (Map.Entry<String, String> entry : options.entrySet()) {
+        for (final Map.Entry<String, String> entry : options.entrySet()) {
             optionsLength += entry.getKey().length() + 1 + entry.getValue().length() + 1;
         }
         data = new byte[fileLength + modeLength + 3 + optionsLength];
@@ -257,9 +257,9 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         return datagram;
     }
 
-    private void handleOptions(byte[] data, int fileLength, int modeLength) {
+    private void handleOptions(final byte[] data, final int fileLength, final int modeLength) {
         int index = fileLength + modeLength + 2;
-        for (Map.Entry<String, String> entry : options.entrySet()) {
+        for (final Map.Entry<String, String> entry : options.entrySet()) {
             data[index] = 0;
             final String key = entry.getKey();
             final String value = entry.getValue();

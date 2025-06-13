@@ -83,7 +83,7 @@ class TFTPRequestPacketTest {
             byteStream.write(0);
             byteStream.write("1024".getBytes(StandardCharsets.US_ASCII));
             byteStream.write(0);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException("Error creating TFTP request packet", e);
         }
 
