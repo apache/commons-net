@@ -47,6 +47,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.MalformedServerReplyException;
@@ -461,10 +462,10 @@ public class FTPClient extends FTP implements Configurable {
     public static final int PASSIVE_REMOTE_DATA_CONNECTION_MODE = 3;
 
     /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
-    private static final java.util.regex.Pattern PARMS_PAT;
+    private static final Pattern PARMS_PAT;
 
     static {
-        PARMS_PAT = java.util.regex.Pattern.compile("(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
+        PARMS_PAT = Pattern.compile("(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
     }
 
     private static Properties getOverrideProperties() {
