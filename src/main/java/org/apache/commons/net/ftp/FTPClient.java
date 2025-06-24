@@ -462,11 +462,7 @@ public class FTPClient extends FTP implements Configurable {
     public static final int PASSIVE_REMOTE_DATA_CONNECTION_MODE = 3;
 
     /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
-    private static final Pattern PARMS_PAT;
-
-    static {
-        PARMS_PAT = Pattern.compile("(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
-    }
+    private static final Pattern PARMS_PAT = Pattern.compile("(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
 
     private static Properties getOverrideProperties() {
         return PropertiesSingleton.PROPERTIES;
