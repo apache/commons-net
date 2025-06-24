@@ -30,15 +30,9 @@ import org.apache.commons.net.util.NetConstants;
  * from NETASCII.
  */
 public final class FromNetASCIIInputStream extends PushbackInputStream {
-    static final boolean _noConversionRequired;
-    static final String _lineSeparator;
-    static final byte[] _lineSeparatorBytes;
 
-    static {
-        _lineSeparator = System.lineSeparator();
-        _noConversionRequired = _lineSeparator.equals("\r\n");
-        _lineSeparatorBytes = _lineSeparator.getBytes(StandardCharsets.US_ASCII);
-    }
+    static final boolean _noConversionRequired = System.lineSeparator().equals("\r\n");
+    static final byte[] _lineSeparatorBytes = System.lineSeparator().getBytes(StandardCharsets.US_ASCII);
 
     /**
      * Returns true if the NetASCII line separator differs from the system line separator, false if they are the same. This method is useful to determine
