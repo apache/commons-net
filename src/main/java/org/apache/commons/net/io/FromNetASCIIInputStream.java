@@ -31,8 +31,8 @@ import org.apache.commons.net.util.NetConstants;
  */
 public final class FromNetASCIIInputStream extends PushbackInputStream {
 
-    static final boolean _noConversionRequired = System.lineSeparator().equals("\r\n");
-    static final byte[] _lineSeparatorBytes = System.lineSeparator().getBytes(StandardCharsets.US_ASCII);
+    static final boolean NO_CONVERSION_REQUIRED = System.lineSeparator().equals("\r\n");
+    static final byte[] LINE_SEPARATOR_BYTES = System.lineSeparator().getBytes(StandardCharsets.US_ASCII);
 
     /**
      * Returns true if the NetASCII line separator differs from the system line separator, false if they are the same. This method is useful to determine
@@ -41,7 +41,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream {
      * @return True if the NETASCII line separator differs from the local system line separator, false if they are the same.
      */
     public static boolean isConversionRequired() {
-        return !_noConversionRequired;
+        return !NO_CONVERSION_REQUIRED;
     }
 
     private int length;
@@ -52,7 +52,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream {
      * @param input the stream to wrap
      */
     public FromNetASCIIInputStream(final InputStream input) {
-        super(input, _lineSeparatorBytes.length + 1);
+        super(input, LINE_SEPARATOR_BYTES.length + 1);
     }
 
     // PushbackInputStream in JDK 1.1.3 returns the wrong thing
@@ -79,7 +79,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream {
      */
     @Override
     public int read() throws IOException {
-        if (_noConversionRequired) {
+        if (NO_CONVERSION_REQUIRED) {
             return super.read();
         }
 
@@ -110,7 +110,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream {
      */
     @Override
     public int read(final byte buffer[], int offset, final int length) throws IOException {
-        if (_noConversionRequired) {
+        if (NO_CONVERSION_REQUIRED) {
             return super.read(buffer, offset, length);
         }
 
@@ -156,7 +156,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream {
                 }
                 return '\r';
             }
-            unread(_lineSeparatorBytes);
+            unread(LINE_SEPARATOR_BYTES);
             ch = super.read();
             // This is a kluge for read(byte[], ...) to read the right amount
             --length;

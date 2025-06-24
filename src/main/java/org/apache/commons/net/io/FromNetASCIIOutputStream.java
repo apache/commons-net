@@ -50,7 +50,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream {
      */
     @Override
     public synchronized void close() throws IOException {
-        if (FromNetASCIIInputStream._noConversionRequired) {
+        if (FromNetASCIIInputStream.NO_CONVERSION_REQUIRED) {
             super.close();
             return;
         }
@@ -82,7 +82,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream {
      */
     @Override
     public synchronized void write(final byte buffer[], int offset, int length) throws IOException {
-        if (FromNetASCIIInputStream._noConversionRequired) {
+        if (FromNetASCIIInputStream.NO_CONVERSION_REQUIRED) {
             // FilterOutputStream method is very slow.
             // super.write(buffer, offset, length);
             out.write(buffer, offset, length);
@@ -104,7 +104,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream {
      */
     @Override
     public synchronized void write(final int ch) throws IOException {
-        if (FromNetASCIIInputStream._noConversionRequired) {
+        if (FromNetASCIIInputStream.NO_CONVERSION_REQUIRED) {
             out.write(ch);
             return;
         }
@@ -120,7 +120,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream {
             break;
         case '\n':
             if (lastWasCR) {
-                out.write(FromNetASCIIInputStream._lineSeparatorBytes);
+                out.write(FromNetASCIIInputStream.LINE_SEPARATOR_BYTES);
                 lastWasCR = false;
                 break;
             }
