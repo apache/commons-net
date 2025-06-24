@@ -40,7 +40,6 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream {
      */
     public FromNetASCIIOutputStream(final OutputStream output) {
         super(output);
-        lastWasCR = false;
     }
 
     /**
