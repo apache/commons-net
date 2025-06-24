@@ -82,7 +82,6 @@ public final class FromNetASCIIInputStream extends PushbackInputStream {
         if (NO_CONVERSION_REQUIRED) {
             return super.read();
         }
-
         return readInt();
     }
 
@@ -113,41 +112,30 @@ public final class FromNetASCIIInputStream extends PushbackInputStream {
         if (NO_CONVERSION_REQUIRED) {
             return super.read(buffer, offset, length);
         }
-
         if (length < 1) {
             return 0;
         }
-
         int ch;
         final int off;
-
         ch = available();
-
         this.length = Math.min(length, ch);
-
         // If nothing is available, block to read only one character
         if (this.length < 1) {
             this.length = 1;
         }
-
         if ((ch = readInt()) == -1) {
             return NetConstants.EOS;
         }
-
         off = offset;
-
         do {
             buffer[offset++] = (byte) ch;
         } while (--this.length > 0 && (ch = readInt()) != -1);
-
         return offset - off;
     }
 
     private int readInt() throws IOException {
         int ch;
-
         ch = super.read();
-
         if (ch == '\r') {
             ch = super.read();
             if (ch != '\n') {
@@ -161,7 +149,6 @@ public final class FromNetASCIIInputStream extends PushbackInputStream {
             // This is a kluge for read(byte[], ...) to read the right amount
             --length;
         }
-
         return ch;
     }
 

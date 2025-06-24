@@ -54,7 +54,6 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream {
             super.close();
             return;
         }
-
         if (lastWasCR) {
             out.write('\r');
         }
@@ -88,7 +87,6 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream {
             out.write(buffer, offset, length);
             return;
         }
-
         while (length-- > 0) {
             writeInt(buffer[offset++]);
         }
@@ -108,7 +106,6 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream {
             out.write(ch);
             return;
         }
-
         writeInt(ch);
     }
 
