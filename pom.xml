@@ -99,6 +99,10 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
             <url>scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net/</url>
         </site>
     </distributionManagement>
+    <ciManagement>
+      <system>GitHub</system>
+      <url>https://github.com/apache/commons-net/actions</url>
+    </ciManagement>
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
