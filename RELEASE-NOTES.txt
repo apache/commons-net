@@ -1,4 +1,5 @@
 Apache Commons Net 3.11.1 Release Notes
+---------------------------------------
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.11.1.
 
