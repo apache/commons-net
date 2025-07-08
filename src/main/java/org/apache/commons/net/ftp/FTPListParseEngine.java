@@ -97,11 +97,7 @@ public class FTPListParseEngine {
      */
     FTPListParseEngine(final FTPFileEntryParser parser, final FTPClientConfig configuration) {
         this.parser = parser;
-        if (configuration != null) {
-            this.saveUnparseableEntries = configuration.getUnparseableEntries();
-        } else {
-            this.saveUnparseableEntries = false;
-        }
+        this.saveUnparseableEntries = configuration != null && configuration.getUnparseableEntries();
     }
 
     /**
