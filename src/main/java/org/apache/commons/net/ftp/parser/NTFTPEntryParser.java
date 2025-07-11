@@ -99,6 +99,9 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             final String dirString = group(3);
             final String size = group(4);
             final String name = group(5);
+            if (null == name || name.equals(".") || name.equals("..")) {
+                return null;
+            }
             try {
                 f.setTimestamp(super.parseTimestamp(dateString));
             } catch (final ParseException e) {
@@ -108,9 +111,6 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 } catch (final ParseException e2) {
                     // intentionally do nothing
                 }
-            }
-            if (null == name || name.equals(".") || name.equals("..")) {
-                return null;
             }
             f.setName(name);
             if ("<DIR>".equals(dirString)) {
