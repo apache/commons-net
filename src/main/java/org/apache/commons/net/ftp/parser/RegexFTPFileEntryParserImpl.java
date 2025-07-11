@@ -33,12 +33,12 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  */
 public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl {
     /**
-     * internal pattern the matcher tries to match, representing a file entry
+     * Internal pattern the matcher tries to match, representing a file entry
      */
     private Pattern pattern;
 
     /**
-     * internal match result used by the parser
+     * Internal match result used by the parser
      */
     private MatchResult result;
 
@@ -138,7 +138,6 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * @param s the String to be matched
      * @return true if s matches this object's regular expression.
      */
-
     public boolean matches(final String s) {
         result = null;
         _matcher_ = pattern.matcher(s);
