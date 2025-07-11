@@ -35,7 +35,6 @@
       <item name="Security"               href="security.html"/>
     </menu>
     <menu name="Development">
-      <item name="Coding Specifications"  href="code-standards.html"/>
       <item name="Mailing lists"          href="mail-lists.html"/>
       <item name="Issue Tracking"         href="issue-tracking.html"/>
       <item name="Repository"             href="scm.html"/>
