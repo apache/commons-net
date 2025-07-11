@@ -92,30 +92,27 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      */
     @Override
     public FTPFile parseFTPEntry(final String entry) {
-        final FTPFile f = new FTPFile();
-        f.setRawListing(entry);
-
         if (matches(entry)) {
-            final String datestr = group(1) + " " + group(2);
+            final FTPFile f = new FTPFile();
+            f.setRawListing(entry);
+            final String dateString = group(1) + " " + group(2);
             final String dirString = group(3);
             final String size = group(4);
             final String name = group(5);
             try {
-                f.setTimestamp(super.parseTimestamp(datestr));
+                f.setTimestamp(super.parseTimestamp(dateString));
             } catch (final ParseException e) {
                 // parsing fails, try the other date format
                 try {
-                    f.setTimestamp(timestampParser.parseTimestamp(datestr));
+                    f.setTimestamp(timestampParser.parseTimestamp(dateString));
                 } catch (final ParseException e2) {
                     // intentionally do nothing
                 }
             }
-
             if (null == name || name.equals(".") || name.equals("..")) {
                 return null;
             }
             f.setName(name);
-
             if ("<DIR>".equals(dirString)) {
                 f.setType(FTPFile.DIRECTORY_TYPE);
                 f.setSize(0);
