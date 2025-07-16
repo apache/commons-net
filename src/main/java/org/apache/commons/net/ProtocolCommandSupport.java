@@ -72,8 +72,7 @@ public class ProtocolCommandSupport implements Serializable {
      */
     public void fireCommandSent(final String command, final String message) {
         if (!listeners.isEmpty()) {
-            final ProtocolCommandEvent event;
-            event = new ProtocolCommandEvent(source, command, message);
+            final ProtocolCommandEvent event = new ProtocolCommandEvent(source, command, message);
             for (final EventListener listener : listeners) {
                 ((ProtocolCommandListener) listener).protocolCommandSent(event);
             }
@@ -81,18 +80,17 @@ public class ProtocolCommandSupport implements Serializable {
     }
 
     /**
-     * Fires a ProtocolCommandEvent signalling the reception of a command reply to all registered listeners, invoking their
+     * Fires a ProtocolCommandEvent signaling the reception of a command reply to all registered listeners, invoking their
      * {@link org.apache.commons.net.ProtocolCommandListener#protocolReplyReceived protocolReplyReceived()} methods.
      *
-     * @param replyCode The integer code indicating the natureof the reply. This will be the protocol integer value for protocols that use integer reply codes,
+     * @param replyCode The integer code indicating the nature of the reply. This will be the protocol integer value for protocols that use integer reply codes,
      *                  or the reply class constant corresponding to the reply for protocols like POP3 that use strings like OK rather than integer codes (i.e.,
      *                  POP3Repy.OK).
      * @param message   The entire reply as received from the server.
      */
     public void fireReplyReceived(final int replyCode, final String message) {
         if (!listeners.isEmpty()) {
-            final ProtocolCommandEvent event;
-            event = new ProtocolCommandEvent(source, replyCode, message);
+            final ProtocolCommandEvent event = new ProtocolCommandEvent(source, replyCode, message);
             for (final EventListener listener : listeners) {
                 ((ProtocolCommandListener) listener).protocolReplyReceived(event);
             }
