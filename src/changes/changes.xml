@@ -106,6 +106,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add --OPTS to FTPClientExample.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory" issue="NET-727">Add accessing options map for TFTP request packet and allow using 'blksize' option #331.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.net.util.ListenerList.isEmpty().</action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.net.ftp.FTPClient.getSystemTypeOverride().</action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 70 to 85 #261, #278, #280, #285, #298, #293, #300, #345.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.18.0 #268, #273, #281, #354.</action>

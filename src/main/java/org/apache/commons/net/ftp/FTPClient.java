@@ -379,21 +379,6 @@ public class FTPClient extends FTP implements Configurable {
         static final Properties PROPERTIES = loadResourceProperties(SYSTEM_TYPE_PROPERTIES);
     }
 
-    static Properties loadResourceProperties(final String systemTypeProperties) {
-        Properties properties = null;
-        if (systemTypeProperties != null) {
-            try (InputStream inputStream = FTPClient.class.getResourceAsStream(systemTypeProperties)) {
-                if (inputStream != null) {
-                    properties = new Properties();
-                    properties.load(inputStream);
-                }
-            } catch (final IOException ignore) {
-                // ignore
-            }
-        }
-        return properties;
-    }
-
     /**
      * The system property ({@value}) which can be used to override the system type.<br>
      * If defined, the value will be used to create any automatically created parsers.
@@ -466,6 +451,21 @@ public class FTPClient extends FTP implements Configurable {
 
     private static Properties getOverrideProperties() {
         return PropertiesSingleton.PROPERTIES;
+    }
+
+    static Properties loadResourceProperties(final String systemTypeProperties) {
+        Properties properties = null;
+        if (systemTypeProperties != null) {
+            try (InputStream inputStream = FTPClient.class.getResourceAsStream(systemTypeProperties)) {
+                if (inputStream != null) {
+                    properties = new Properties();
+                    properties.load(inputStream);
+                }
+            } catch (final IOException ignore) {
+                // ignore
+            }
+        }
+        return properties;
     }
 
     /**
@@ -1241,7 +1241,7 @@ public class FTPClient extends FTP implements Configurable {
 
             } else // if no parserKey was supplied, check for a configuration
             // in the params, and if it has a non-empty system type, use that.
-            if (ftpClientConfig != null && ftpClientConfig.getServerSystemKey().length() > 0) {
+            if (ftpClientConfig != null && !ftpClientConfig.getServerSystemKey().isEmpty()) {
                 entryParser = parserFactory.createFileEntryParser(ftpClientConfig);
                 entryParserKey = ftpClientConfig.getServerSystemKey();
             } else {
@@ -1249,17 +1249,7 @@ public class FTPClient extends FTP implements Configurable {
                 // hasn't been supplied, and the override property is not set
                 // then autodetect by calling
                 // the SYST command and use that to choose the parser.
-                String systemType = System.getProperty(FTP_SYSTEM_TYPE);
-                if (systemType == null) {
-                    systemType = getSystemType(); // cannot be null
-                    final Properties override = getOverrideProperties();
-                    if (override != null) {
-                        final String newType = override.getProperty(systemType);
-                        if (newType != null) {
-                            systemType = newType;
-                        }
-                    }
-                }
+                final String systemType = getSystemTypeOverride();
                 if (ftpClientConfig != null) { // system type must have been empty above
                     entryParser = parserFactory.createFileEntryParser(new FTPClientConfig(systemType, ftpClientConfig));
                 } else {
@@ -1875,6 +1865,30 @@ public class FTPClient extends FTP implements Configurable {
             }
         }
         return systemName;
+    }
+
+    /**
+     * Gets the system type from the {@link #FTP_SYSTEM_TYPE} system property, or the server (@link #getSystemType()}, or the {@link #SYSTEM_TYPE_PROPERTIES}
+     * property file.
+     *
+     * @return The system type obtained from the server.
+     * @throws IOException If an I/O error occurs while either sending a command to the server or receiving a reply from the server (and the default system type
+     *                     property is not defined)
+     * @since 3.12.0
+     */
+    public String getSystemTypeOverride() throws IOException {
+        String systemType = System.getProperty(FTP_SYSTEM_TYPE);
+        if (systemType == null) {
+            systemType = getSystemType(); // cannot be null
+            final Properties override = getOverrideProperties();
+            if (override != null) {
+                final String newType = override.getProperty(systemType);
+                if (newType != null) {
+                    systemType = newType;
+                }
+            }
+        }
+        return systemType;
     }
 
     /**
