@@ -26,15 +26,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * A list of event listeners.
+ *
+ * @param <T> the type of elements returned by the iterator
  */
-public class ListenerList implements Serializable, Iterable<EventListener> {
+public class ListenerList<T extends EventListener> implements Serializable, Iterable<T> {
 
     private static final long serialVersionUID = -1934227607974228213L;
 
     /**
      * The thread-safe list of listeners.
      */
-    private final CopyOnWriteArrayList<EventListener> listeners;
+    private final CopyOnWriteArrayList<T> listeners;
 
     /**
      * Constructs a new instance.
@@ -48,7 +50,7 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
      *
      * @param listener A listener.
      */
-    public void addListener(final EventListener listener) {
+    public void addListener(final T listener) {
         listeners.add(listener);
     }
 
@@ -78,7 +80,7 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
      * @since 2.0 TODO Check that this is a good defensive strategy
      */
     @Override
-    public Iterator<EventListener> iterator() {
+    public Iterator<T> iterator() {
         return listeners.iterator();
     }
 
@@ -96,7 +98,7 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
      *
      * @param listener listener to be removed from this list, if present.
      */
-    public void removeListener(final EventListener listener) {
+    public void removeListener(final T listener) {
         listeners.remove(listener);
     }
 

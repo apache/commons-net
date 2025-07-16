@@ -17,8 +17,6 @@
 
 package org.apache.commons.net.io;
 
-import java.util.EventListener;
-
 import org.apache.commons.net.util.ListenerList;
 
 /**
@@ -33,13 +31,14 @@ import org.apache.commons.net.util.ListenerList;
  * @see Util
  */
 public class CopyStreamAdapter implements CopyStreamListener {
-    private final ListenerList internalListeners;
+
+    private final ListenerList<CopyStreamListener> internalListeners;
 
     /**
      * Creates a new copyStreamAdapter.
      */
     public CopyStreamAdapter() {
-        internalListeners = new ListenerList();
+        internalListeners = new ListenerList<>();
     }
 
     /**
@@ -61,8 +60,8 @@ public class CopyStreamAdapter implements CopyStreamListener {
      */
     @Override
     public void bytesTransferred(final CopyStreamEvent event) {
-        for (final EventListener listener : internalListeners) {
-            ((CopyStreamListener) listener).bytesTransferred(event);
+        for (final CopyStreamListener listener : internalListeners) {
+            listener.bytesTransferred(event);
         }
     }
 
@@ -78,8 +77,8 @@ public class CopyStreamAdapter implements CopyStreamListener {
      */
     @Override
     public void bytesTransferred(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
-        for (final EventListener listener : internalListeners) {
-            ((CopyStreamListener) listener).bytesTransferred(totalBytesTransferred, bytesTransferred, streamSize);
+        for (final CopyStreamListener listener : internalListeners) {
+            listener.bytesTransferred(totalBytesTransferred, bytesTransferred, streamSize);
         }
     }
 

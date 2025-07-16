@@ -19,7 +19,6 @@ package org.apache.commons.net;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.EventListener;
 
 import org.apache.commons.net.util.ListenerList;
 
@@ -42,7 +41,7 @@ public class ProtocolCommandSupport implements Serializable {
     /**
      * The ProtocolCommandListener.
      */
-    private final ListenerList listeners;
+    private final ListenerList<ProtocolCommandListener> listeners;
 
     /**
      * Creates a ProtocolCommandSupport instance using the indicated source as the source of ProtocolCommandEvents.
@@ -50,7 +49,7 @@ public class ProtocolCommandSupport implements Serializable {
      * @param source The source to use for all generated ProtocolCommandEvents.
      */
     public ProtocolCommandSupport(final Object source) {
-        this.listeners = new ListenerList();
+        this.listeners = new ListenerList<>();
         this.source = source;
     }
 
@@ -73,8 +72,8 @@ public class ProtocolCommandSupport implements Serializable {
     public void fireCommandSent(final String command, final String message) {
         if (!listeners.isEmpty()) {
             final ProtocolCommandEvent event = new ProtocolCommandEvent(source, command, message);
-            for (final EventListener listener : listeners) {
-                ((ProtocolCommandListener) listener).protocolCommandSent(event);
+            for (final ProtocolCommandListener listener : listeners) {
+                listener.protocolCommandSent(event);
             }
         }
     }
@@ -91,8 +90,8 @@ public class ProtocolCommandSupport implements Serializable {
     public void fireReplyReceived(final int replyCode, final String message) {
         if (!listeners.isEmpty()) {
             final ProtocolCommandEvent event = new ProtocolCommandEvent(source, replyCode, message);
-            for (final EventListener listener : listeners) {
-                ((ProtocolCommandListener) listener).protocolReplyReceived(event);
+            for (final ProtocolCommandListener listener : listeners) {
+                listener.protocolReplyReceived(event);
             }
         }
     }
