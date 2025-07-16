@@ -418,7 +418,6 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             }
             return file;
         }
-
         /*
          * Assigns the name to the first word of the entry. Only to be used from a safe context, for example from a memberlist, where the regex for some reason
          * fails. Then just assign the name field of FTPFile.
@@ -467,12 +466,10 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             } else {
                 setType(UNKNOWN_LIST_TYPE);
             }
-
             if (isType != JES_LEVEL_1_LIST_TYPE) { // remove header is necessary
                 orig.remove(0);
             }
         }
-
         return orig;
     }
 

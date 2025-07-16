@@ -67,6 +67,7 @@ import java.util.List;
  * @see org.apache.commons.net.ftp.FTPClient#listFiles()
  */
 public interface FTPFileEntryParser {
+
     /**
      * Parses a line of an FTP server file listing and converts it into a usable format in the form of an {@code FTPFile} instance. If the file listing
      * line doesn't describe a file, {@code null} should be returned, otherwise a {@code FTPFile} instance representing the files in the directory

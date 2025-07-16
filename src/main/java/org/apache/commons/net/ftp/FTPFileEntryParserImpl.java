@@ -26,6 +26,7 @@ import java.util.List;
  * parser subpackage inherit from this.
  */
 public abstract class FTPFileEntryParserImpl implements FTPFileEntryParser {
+
     /**
      * The constructor for a FTPFileEntryParserImpl object.
      */
