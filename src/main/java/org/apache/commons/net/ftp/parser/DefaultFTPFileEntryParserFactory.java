@@ -109,7 +109,6 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
     // Common method to process both key and config parameters.
     private FTPFileEntryParser createFileEntryParser(final String key, final FTPClientConfig config) {
         FTPFileEntryParser parser = null;
-
         // Is the key a possible class name?
         if (JAVA_QUALIFIED_NAME_PATTERN.matcher(key).matches()) {
             try {
@@ -118,15 +117,14 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
                     parser = (FTPFileEntryParser) parserClass.getConstructor().newInstance();
                 } catch (final ClassCastException e) {
                     throw new ParserInitializationException(
-                            parserClass.getName() + " does not implement the interface " + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
-                } catch (final Exception | ExceptionInInitializerError e) {
+                            parserClass.getName() + " does not implement the interface " + FTPFileEntryParser.class.getCanonicalName(), e);
+                } catch (final Exception | LinkageError e) {
                     throw new ParserInitializationException("Error initializing parser", e);
                 }
             } catch (final ClassNotFoundException e) {
                 // OK, assume it is an alias
             }
         }
-
         if (parser == null) { // Now try for aliases
             final String upperKey = key.toUpperCase(Locale.ENGLISH);
             if (upperKey.contains(FTPClientConfig.SYST_UNIX_TRIM_LEADING)) {
@@ -156,7 +154,6 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
                 throw new ParserInitializationException("Unknown parser type: " + key);
             }
         }
-
         if (parser instanceof Configurable) {
             ((Configurable) parser).configure(config);
         }
