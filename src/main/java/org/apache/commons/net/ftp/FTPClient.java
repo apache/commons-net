@@ -1241,7 +1241,7 @@ public class FTPClient extends FTP implements Configurable {
 
             } else // if no parserKey was supplied, check for a configuration
             // in the params, and if it has a non-empty system type, use that.
-            if (null != ftpClientConfig && ftpClientConfig.getServerSystemKey().length() > 0) {
+            if (ftpClientConfig != null && ftpClientConfig.getServerSystemKey().length() > 0) {
                 entryParser = parserFactory.createFileEntryParser(ftpClientConfig);
                 entryParserKey = ftpClientConfig.getServerSystemKey();
             } else {
@@ -1260,7 +1260,7 @@ public class FTPClient extends FTP implements Configurable {
                         }
                     }
                 }
-                if (null != ftpClientConfig) { // system type must have been empty above
+                if (ftpClientConfig != null) { // system type must have been empty above
                     entryParser = parserFactory.createFileEntryParser(new FTPClientConfig(systemType, ftpClientConfig));
                 } else {
                     entryParser = parserFactory.createFileEntryParser(systemType);
