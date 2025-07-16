@@ -32,23 +32,23 @@ import org.apache.commons.net.util.ListenerList;
  */
 public class CopyStreamAdapter implements CopyStreamListener {
 
-    private final ListenerList<CopyStreamListener> internalListeners;
+    private final ListenerList<CopyStreamListener> listeners;
 
     /**
      * Creates a new copyStreamAdapter.
      */
     public CopyStreamAdapter() {
-        internalListeners = new ListenerList<>();
+        listeners = new ListenerList<>();
     }
 
     /**
-     * Registers a CopyStreamListener to receive CopyStreamEvents. Although this method is not declared to be synchronized, it is implemented in a thread safe
+     * Adds a CopyStreamListener to receive CopyStreamEvents. Although this method is not declared to be synchronized, it is implemented in a thread safe
      * manner.
      *
      * @param listener The CopyStreamlistener to register.
      */
     public void addCopyStreamListener(final CopyStreamListener listener) {
-        internalListeners.addListener(listener);
+        listeners.addListener(listener);
     }
 
     /**
@@ -60,9 +60,7 @@ public class CopyStreamAdapter implements CopyStreamListener {
      */
     @Override
     public void bytesTransferred(final CopyStreamEvent event) {
-        for (final CopyStreamListener listener : internalListeners) {
-            listener.bytesTransferred(event);
-        }
+        listeners.forEach(listener -> listener.bytesTransferred(event));
     }
 
     /**
@@ -77,17 +75,15 @@ public class CopyStreamAdapter implements CopyStreamListener {
      */
     @Override
     public void bytesTransferred(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
-        for (final CopyStreamListener listener : internalListeners) {
-            listener.bytesTransferred(totalBytesTransferred, bytesTransferred, streamSize);
-        }
+        listeners.forEach(listener -> listener.bytesTransferred(totalBytesTransferred, bytesTransferred, streamSize));
     }
 
     /**
-     * Unregisters a CopyStreamListener. Although this method is not synchronized, it is implemented in a thread safe manner.
+     * Removes a CopyStreamListener. Although this method is not synchronized, it is implemented in a thread safe manner.
      *
      * @param listener The CopyStreamlistener to unregister.
      */
     public void removeCopyStreamListener(final CopyStreamListener listener) {
-        internalListeners.removeListener(listener);
+        listeners.removeListener(listener);
     }
 }

@@ -54,7 +54,7 @@ public class ProtocolCommandEvent extends EventObject {
     private final String command;
 
     /**
-     * Creates a ProtocolCommandEvent signalling a reply to a command was received. ProtocolCommandEvents created with this constructor should only be sent
+     * Creates a ProtocolCommandEvent signaling a reply to a command was received. ProtocolCommandEvents created with this constructor should only be sent
      * after a complete command reply has been received from a server.
      *
      * @param source    The source of the event.
@@ -72,7 +72,7 @@ public class ProtocolCommandEvent extends EventObject {
     }
 
     /**
-     * Creates a ProtocolCommandEvent signalling a command was sent to the server. ProtocolCommandEvents created with this constructor should only be sent after
+     * Creates a ProtocolCommandEvent signaling a command was sent to the server. ProtocolCommandEvents created with this constructor should only be sent after
      * a command has been sent, but before the reply has been received.
      *
      * @param source  The source of the event.
