@@ -214,9 +214,7 @@ public class IMAP extends SocketClient {
      */
     @Override
     protected void fireReplyReceived(final int replyCode, final String ignored) {
-        if (getCommandSupport().getListenerCount() > 0) {
-            getCommandSupport().fireReplyReceived(replyCode, getReplyString());
-        }
+        getCommandSupport().fireReplyReceived(replyCode, getReplyString());
     }
 
     /**

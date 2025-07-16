@@ -62,6 +62,16 @@ public class ListenerList implements Serializable, Iterable<EventListener> {
     }
 
     /**
+     * Tests whether if this listener list is empty.
+     *
+     * @return whether if this listener list is empty.
+     * @since 3.12.0
+     */
+    public boolean isEmpty() {
+        return getListenerCount() == 0;
+    }
+
+    /**
      * Return an {@link Iterator} for the {@link EventListener} instances.
      *
      * @return an {@link Iterator} for the {@link EventListener} instances

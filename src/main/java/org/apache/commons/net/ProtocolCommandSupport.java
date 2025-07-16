@@ -71,10 +71,12 @@ public class ProtocolCommandSupport implements Serializable {
      * @param message The entire command string verbatim as sent to the server, including all arguments.
      */
     public void fireCommandSent(final String command, final String message) {
-        final ProtocolCommandEvent event;
-        event = new ProtocolCommandEvent(source, command, message);
-        for (final EventListener listener : listeners) {
-            ((ProtocolCommandListener) listener).protocolCommandSent(event);
+        if (!listeners.isEmpty()) {
+            final ProtocolCommandEvent event;
+            event = new ProtocolCommandEvent(source, command, message);
+            for (final EventListener listener : listeners) {
+                ((ProtocolCommandListener) listener).protocolCommandSent(event);
+            }
         }
     }
 
@@ -88,10 +90,12 @@ public class ProtocolCommandSupport implements Serializable {
      * @param message   The entire reply as received from the server.
      */
     public void fireReplyReceived(final int replyCode, final String message) {
-        final ProtocolCommandEvent event;
-        event = new ProtocolCommandEvent(source, replyCode, message);
-        for (final EventListener listener : listeners) {
-            ((ProtocolCommandListener) listener).protocolReplyReceived(event);
+        if (!listeners.isEmpty()) {
+            final ProtocolCommandEvent event;
+            event = new ProtocolCommandEvent(source, replyCode, message);
+            for (final EventListener listener : listeners) {
+                ((ProtocolCommandListener) listener).protocolReplyReceived(event);
+            }
         }
     }
 

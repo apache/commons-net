@@ -343,9 +343,7 @@ public abstract class SocketClient {
      * @since 3.0
      */
     protected void fireCommandSent(final String command, final String message) {
-        if (getCommandSupport().getListenerCount() > 0) {
-            getCommandSupport().fireCommandSent(command, message);
-        }
+        getCommandSupport().fireCommandSent(command, message);
     }
 
     /**
@@ -356,9 +354,7 @@ public abstract class SocketClient {
      * @since 3.0
      */
     protected void fireReplyReceived(final int replyCode, final String reply) {
-        if (getCommandSupport().getListenerCount() > 0) {
-            getCommandSupport().fireReplyReceived(replyCode, reply);
-        }
+        getCommandSupport().fireReplyReceived(replyCode, reply);
     }
 
     /**
