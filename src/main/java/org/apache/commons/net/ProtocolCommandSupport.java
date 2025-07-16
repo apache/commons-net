@@ -31,6 +31,9 @@ import org.apache.commons.net.util.ListenerList;
  */
 public class ProtocolCommandSupport implements Serializable {
 
+    /**
+     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     */
     private static final long serialVersionUID = -8017692739988399978L;
 
     /**
@@ -63,7 +66,7 @@ public class ProtocolCommandSupport implements Serializable {
     }
 
     /**
-     * Fires a ProtocolCommandEvent signalling the sending of a command to all registered listeners, invoking their
+     * Fires a ProtocolCommandEvent signaling the sending of a command to all registered listeners, invoking their
      * {@link org.apache.commons.net.ProtocolCommandListener#protocolCommandSent protocolCommandSent()} methods.
      *
      * @param command The string representation of the command type sent, not including the arguments (e.g., "STAT" or "GET").
@@ -72,9 +75,7 @@ public class ProtocolCommandSupport implements Serializable {
     public void fireCommandSent(final String command, final String message) {
         if (!listeners.isEmpty()) {
             final ProtocolCommandEvent event = new ProtocolCommandEvent(source, command, message);
-            for (final ProtocolCommandListener listener : listeners) {
-                listener.protocolCommandSent(event);
-            }
+            listeners.forEach(listener -> listener.protocolCommandSent(event));
         }
     }
 
@@ -90,9 +91,7 @@ public class ProtocolCommandSupport implements Serializable {
     public void fireReplyReceived(final int replyCode, final String message) {
         if (!listeners.isEmpty()) {
             final ProtocolCommandEvent event = new ProtocolCommandEvent(source, replyCode, message);
-            for (final ProtocolCommandListener listener : listeners) {
-                listener.protocolReplyReceived(event);
-            }
+            listeners.forEach(listener -> listener.protocolReplyReceived(event));
         }
     }
 
@@ -113,9 +112,6 @@ public class ProtocolCommandSupport implements Serializable {
     private void readObject(final ObjectInputStream ignored) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
-    /*
-     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
-     */
 
     /**
      * Removes a ProtocolCommandListener.
