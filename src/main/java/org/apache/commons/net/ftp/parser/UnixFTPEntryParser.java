@@ -109,8 +109,9 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             + "\\s" // separator
             + "(.*)"; // the rest (21)
 
-    // if true, leading spaces are trimmed from file names
-    // this was the case for the original implementation
+    /**
+     * Whether leading spaces are trimmed from file names this was the case for the original implementation.
+     */
     final boolean trimLeadingSpaces; // package protected for access from test code
 
     /**
@@ -136,7 +137,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * This constructor allows the creation of a UnixFTPEntryParser object with something other than the default configuration.
+     * Constructs a new instance  with something other than the default configuration.
      *
      * @param config            The {@link FTPClientConfig configuration} object used to configure this parser.
      * @param trimLeadingSpaces if {@code true}, trim leading spaces from file names
