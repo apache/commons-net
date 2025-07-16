@@ -25,7 +25,6 @@ import java.util.EventListener;
  * uninstantiable org.apache.commons.io.Util class, which would preclude the use of addCopyStreamListener and removeCopyStreamListener methods. However, future
  * additions may use the JavaBean event model, which is why the hooks have been included from the beginning.
  *
- *
  * @see CopyStreamEvent
  * @see CopyStreamAdapter
  * @see Util
