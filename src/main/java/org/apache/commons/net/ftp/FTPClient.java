@@ -1238,10 +1238,9 @@ public class FTPClient extends FTP implements Configurable {
                 // use that to create the parser
                 entryParser = parserFactory.createFileEntryParser(parserKey);
                 entryParserKey = parserKey;
-
-            } else // if no parserKey was supplied, check for a configuration
-            // in the params, and if it has a non-empty system type, use that.
-            if (ftpClientConfig != null && !ftpClientConfig.getServerSystemKey().isEmpty()) {
+            } else if (ftpClientConfig != null && !ftpClientConfig.getServerSystemKey().isEmpty()) {
+                // if no parserKey was supplied, check for a configuration
+                // in the params, and if it has a non-empty system type, use that.
                 entryParser = parserFactory.createFileEntryParser(ftpClientConfig);
                 entryParserKey = ftpClientConfig.getServerSystemKey();
             } else {
