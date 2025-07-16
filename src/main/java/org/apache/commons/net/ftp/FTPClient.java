@@ -574,7 +574,7 @@ public class FTPClient extends FTP implements Configurable {
      */
     private String entryParserKey;
 
-    private FTPClientConfig configuration;
+    private FTPClientConfig ftpClientConfig;
 
     /**
      * Listener used by store/retrieve methods to handle keepalive.
@@ -1219,12 +1219,12 @@ public class FTPClient extends FTP implements Configurable {
      * Implements the {@link Configurable} interface. In the case of this class, configuring merely makes the config object available for the factory methods
      * that construct parsers.
      *
-     * @param config {@link FTPClientConfig} object used to provide non-standard configurations to the parser.
+     * @param ftpClientConfig {@link FTPClientConfig} object used to provide non-standard configurations to the parser.
      * @since 1.4
      */
     @Override
-    public void configure(final FTPClientConfig config) {
-        configuration = config;
+    public void configure(final FTPClientConfig ftpClientConfig) {
+        this.ftpClientConfig = ftpClientConfig;
     }
 
     // package access for test purposes
@@ -1241,9 +1241,9 @@ public class FTPClient extends FTP implements Configurable {
 
             } else // if no parserKey was supplied, check for a configuration
             // in the params, and if it has a non-empty system type, use that.
-            if (null != configuration && configuration.getServerSystemKey().length() > 0) {
-                entryParser = parserFactory.createFileEntryParser(configuration);
-                entryParserKey = configuration.getServerSystemKey();
+            if (null != ftpClientConfig && ftpClientConfig.getServerSystemKey().length() > 0) {
+                entryParser = parserFactory.createFileEntryParser(ftpClientConfig);
+                entryParserKey = ftpClientConfig.getServerSystemKey();
             } else {
                 // if a parserKey hasn't been supplied, and a configuration
                 // hasn't been supplied, and the override property is not set
@@ -1260,8 +1260,8 @@ public class FTPClient extends FTP implements Configurable {
                         }
                     }
                 }
-                if (null != configuration) { // system type must have been empty above
-                    entryParser = parserFactory.createFileEntryParser(new FTPClientConfig(systemType, configuration));
+                if (null != ftpClientConfig) { // system type must have been empty above
+                    entryParser = parserFactory.createFileEntryParser(new FTPClientConfig(systemType, ftpClientConfig));
                 } else {
                     entryParser = parserFactory.createFileEntryParser(systemType);
                 }
@@ -2023,7 +2023,7 @@ public class FTPClient extends FTP implements Configurable {
      */
     private FTPListParseEngine initiateListParsing(final FTPFileEntryParser parser, final String path) throws IOException {
         final Socket socket = _openDataConnection_(FTPCmd.LIST, getListArguments(path));
-        final FTPListParseEngine engine = new FTPListParseEngine(parser, configuration);
+        final FTPListParseEngine engine = new FTPListParseEngine(parser, ftpClientConfig);
         if (socket == null) {
             return engine;
         }
@@ -2139,7 +2139,7 @@ public class FTPClient extends FTP implements Configurable {
      */
     public FTPListParseEngine initiateMListParsing(final String path) throws IOException {
         final Socket socket = _openDataConnection_(FTPCmd.MLSD, path);
-        final FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance(), configuration);
+        final FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance(), ftpClientConfig);
         if (socket == null) {
             return engine;
         }
