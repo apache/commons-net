@@ -63,14 +63,24 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     public static final FTPClientConfig NUMERIC_DATE_CONFIG = new FTPClientConfig(FTPClientConfig.SYST_UNIX, NUMERIC_DATE_FORMAT, null);
 
     /**
-     * this is the regular expression used by this parser.
+     * Regular expression used by this parser.
      * <p>
-     * Permissions: r the file is readable w the file is writable x the file is executable - the indicated permission is not granted L mandatory locking occurs
-     * during access (the set-group-ID bit is on and the group execution bit is off) s the set-user-ID or set-group-ID bit is on, and the corresponding user or
-     * group execution bit is also on S undefined bit-state (the set-user-ID bit is on and the user execution bit is off) t the 1000 (octal) bit, or sticky bit,
-     * is on [see chmod(1)], and execution is on T the 1000 bit is turned on, and execution is off (undefined bit-state) e z/OS external link bit. Final letter
-     * may be appended: + file has extended security attributes (e.g. ACL) Note: local listings on MacOSX also use '@'; this is not allowed for here as does not
-     * appear to be shown by FTP servers {@code @} file has extended attributes
+     * Permissions:
+     * </p>
+     * <ul>
+     * <li>r the file is readable</li>
+     * <li>w the file is writable</li>
+     * <li>x the file is executable</li>
+     * <li>- the indicated permission is not granted</li>
+     * <li>L mandatory locking occurs</li> during access (the set-group-ID bit is on and the group execution bit is off)</li>
+     * <li>s the set-user-ID or set-group-ID bit is on, and the corresponding user or group execution bit is also on
+     * <li>S undefined bit-state (the set-user-ID bit is on and the user execution bit is off)</li>
+     * <li>t the 1000 (octal) bit, or sticky bit, is on [see chmod(1)], and execution is on</li>
+     * <li>T the 1000 bit is turned on, and execution is off (undefined bit-state)</li>
+     * <li>e z/OS external link bit.</li>
+     * <p>
+     * Final letter may be appended: + file has extended security attributes (e.g. ACL) Note: local listings on MacOSX also use '@'; this is not allowed for
+     * here as does not appear to be shown by FTP servers {@code @} file has extended attributes
      * </p>
      */
     private static final String REGEX = "([bcdelfmpSs-])" // file type
