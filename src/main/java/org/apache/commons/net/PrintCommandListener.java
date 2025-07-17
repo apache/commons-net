@@ -19,6 +19,8 @@ package org.apache.commons.net;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.Locale;
+import java.util.Objects;
 
 import org.apache.commons.net.io.Util;
 
@@ -158,11 +160,11 @@ public class PrintCommandListener implements ProtocolCommandListener {
             writer.print("> ");
         }
         if (noLogin) {
-            final String cmd = event.getCommand();
-            if (CMD_PASS.equalsIgnoreCase(cmd) || CMD_USER.equalsIgnoreCase(cmd)) {
+            final String cmd = Objects.toString(event.getCommand()).toUpperCase(Locale.ROOT);
+            if (CMD_PASS.equals(cmd) || CMD_USER.equals(cmd)) {
                 writer.print(cmd);
                 writer.println(HIDDEN_MARKER); // Don't bother with EOL marker for this!
-            } else if (CMD_LOGIN.equalsIgnoreCase(cmd)) { // IMAP
+            } else if (CMD_LOGIN.equals(cmd)) { // IMAP
                 String msg = event.getMessage();
                 msg = msg.substring(0, msg.indexOf(CMD_LOGIN) + CMD_LOGIN.length());
                 writer.print(msg);
