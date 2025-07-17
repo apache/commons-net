@@ -35,7 +35,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
     private static final String CMD_USER = "USER";
     private static final String CMD_PASS = "PASS";
     private final PrintWriter writer;
-    private final boolean nologin;
+    private final boolean noLogin;
     private final char eolMarker;
     private final boolean directionMarker;
 
@@ -132,7 +132,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
      */
     public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin, final char eolMarker, final boolean showDirection) {
         this.writer = writer;
-        this.nologin = suppressLogin;
+        this.noLogin = suppressLogin;
         this.eolMarker = eolMarker;
         this.directionMarker = showDirection;
     }
@@ -157,7 +157,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
         if (directionMarker) {
             writer.print("> ");
         }
-        if (nologin) {
+        if (noLogin) {
             final String cmd = event.getCommand();
             if (CMD_PASS.equalsIgnoreCase(cmd) || CMD_USER.equalsIgnoreCase(cmd)) {
                 writer.print(cmd);
