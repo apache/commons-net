@@ -30,6 +30,10 @@ import org.apache.commons.net.io.Util;
  */
 public class PrintCommandListener implements ProtocolCommandListener {
 
+    private static final String HIDDEN_MARKER = " *******";
+    private static final String CMD_LOGIN = "LOGIN";
+    private static final String CMD_USER = "USER";
+    private static final String CMD_PASS = "PASS";
     private final PrintWriter writer;
     private final boolean nologin;
     private final char eolMarker;
@@ -155,16 +159,15 @@ public class PrintCommandListener implements ProtocolCommandListener {
         }
         if (nologin) {
             final String cmd = event.getCommand();
-            if ("PASS".equalsIgnoreCase(cmd) || "USER".equalsIgnoreCase(cmd)) {
+            if (CMD_PASS.equalsIgnoreCase(cmd) || CMD_USER.equalsIgnoreCase(cmd)) {
                 writer.print(cmd);
-                writer.println(" *******"); // Don't bother with EOL marker for this!
+                writer.println(HIDDEN_MARKER); // Don't bother with EOL marker for this!
             } else {
-                final String IMAP_LOGIN = "LOGIN";
-                if (IMAP_LOGIN.equalsIgnoreCase(cmd)) { // IMAP
+                if (CMD_LOGIN.equalsIgnoreCase(cmd)) { // IMAP
                     String msg = event.getMessage();
-                    msg = msg.substring(0, msg.indexOf(IMAP_LOGIN) + IMAP_LOGIN.length());
+                    msg = msg.substring(0, msg.indexOf(CMD_LOGIN) + CMD_LOGIN.length());
                     writer.print(msg);
-                    writer.println(" *******"); // Don't bother with EOL marker for this!
+                    writer.println(HIDDEN_MARKER); // Don't bother with EOL marker for this!
                 } else {
                     writer.print(getPrintableString(event.getMessage()));
                 }
