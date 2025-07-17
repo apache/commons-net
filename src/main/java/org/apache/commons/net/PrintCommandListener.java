@@ -39,7 +39,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
     private final PrintWriter writer;
     private final boolean noLogin;
     private final char eolMarker;
-    private final boolean directionMarker;
+    private final boolean showDirection;
 
     /**
      * Constructs an instance which prints everything using the default Charset.
@@ -136,7 +136,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
         this.writer = writer;
         this.noLogin = suppressLogin;
         this.eolMarker = eolMarker;
-        this.directionMarker = showDirection;
+        this.showDirection = showDirection;
     }
 
     private String getPrintableString(final String msg) {
@@ -156,7 +156,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
 
     @Override
     public void protocolCommandSent(final ProtocolCommandEvent event) {
-        if (directionMarker) {
+        if (showDirection) {
             writer.print("> ");
         }
         if (noLogin) {
@@ -180,7 +180,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
 
     @Override
     public void protocolReplyReceived(final ProtocolCommandEvent event) {
-        if (directionMarker) {
+        if (showDirection) {
             writer.print("< ");
         }
         final String message = event.getMessage();
