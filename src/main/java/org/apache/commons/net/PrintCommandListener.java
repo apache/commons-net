@@ -141,6 +141,14 @@ public class PrintCommandListener implements ProtocolCommandListener {
         this.showDirection = showDirection;
     }
 
+    private String getCommand(final ProtocolCommandEvent event) {
+        return Objects.toString(event.getCommand()).toUpperCase(Locale.ROOT);
+    }
+
+    private String getMessage(final ProtocolCommandEvent event) {
+        return Objects.toString(event.getMessage());
+    }
+
     private String getPrintableString(final String msg) {
         if (eolMarker == 0) {
             return msg;
@@ -162,20 +170,20 @@ public class PrintCommandListener implements ProtocolCommandListener {
             writer.print(DIRECTION_MARKER_SEND);
         }
         if (noLogin) {
-            final String cmd = Objects.toString(event.getCommand()).toUpperCase(Locale.ROOT);
+            final String cmd = getCommand(event);
             if (CMD_PASS.equals(cmd) || CMD_USER.equals(cmd)) {
                 writer.print(cmd);
                 writer.println(HIDDEN_MARKER); // Don't bother with EOL marker for this!
             } else if (CMD_LOGIN.equals(cmd)) { // IMAP
-                String msg = event.getMessage();
+                String msg = getMessage(event);
                 msg = msg.substring(0, msg.indexOf(CMD_LOGIN) + CMD_LOGIN.length());
                 writer.print(msg);
                 writer.println(HIDDEN_MARKER); // Don't bother with EOL marker for this!
             } else {
-                writer.print(getPrintableString(event.getMessage()));
+                writer.print(getPrintableString(getMessage(event)));
             }
         } else {
-            writer.print(getPrintableString(event.getMessage()));
+            writer.print(getPrintableString(getMessage(event)));
         }
         writer.flush();
     }
@@ -185,7 +193,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
         if (showDirection) {
             writer.print(DIRECTION_MARKER_RECEIVE);
         }
-        final String message = event.getMessage();
+        final String message = getMessage(event);
         final char last = message.charAt(message.length() - 1);
         writer.print(message);
         if (last != '\r' && last != '\n') {
