@@ -32,6 +32,8 @@ import org.apache.commons.net.io.Util;
  */
 public class PrintCommandListener implements ProtocolCommandListener {
 
+    private static final String DIRECTION_MARKER_RECEIVE = "< ";
+    private static final String DIRECTION_MARKER_SEND = "> ";
     private static final String HIDDEN_MARKER = " *******";
     private static final String CMD_LOGIN = "LOGIN";
     private static final String CMD_USER = "USER";
@@ -157,7 +159,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
     @Override
     public void protocolCommandSent(final ProtocolCommandEvent event) {
         if (showDirection) {
-            writer.print("> ");
+            writer.print(DIRECTION_MARKER_SEND);
         }
         if (noLogin) {
             final String cmd = Objects.toString(event.getCommand()).toUpperCase(Locale.ROOT);
@@ -181,7 +183,7 @@ public class PrintCommandListener implements ProtocolCommandListener {
     @Override
     public void protocolReplyReceived(final ProtocolCommandEvent event) {
         if (showDirection) {
-            writer.print("< ");
+            writer.print(DIRECTION_MARKER_RECEIVE);
         }
         final String message = event.getMessage();
         final char last = message.charAt(message.length() - 1);
