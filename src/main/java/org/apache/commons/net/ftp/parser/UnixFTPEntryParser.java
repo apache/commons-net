@@ -63,31 +63,35 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     public static final FTPClientConfig NUMERIC_DATE_CONFIG = new FTPClientConfig(FTPClientConfig.SYST_UNIX, NUMERIC_DATE_FORMAT, null);
 
     /**
-     * this is the regular expression used by this parser.
+     * Regular expression used by this parser.
      * <p>
-     * Permissions: r the file is readable w the file is writable x the file is executable - the indicated permission is not granted L mandatory locking occurs
-     * during access (the set-group-ID bit is on and the group execution bit is off) s the set-user-ID or set-group-ID bit is on, and the corresponding user or
-     * group execution bit is also on S undefined bit-state (the set-user-ID bit is on and the user execution bit is off) t the 1000 (octal) bit, or sticky bit,
-     * is on [see chmod(1)], and execution is on T the 1000 bit is turned on, and execution is off (undefined bit-state) e z/OS external link bit. Final letter
-     * may be appended: + file has extended security attributes (e.g. ACL) Note: local listings on MacOSX also use '@'; this is not allowed for here as does not
-     * appear to be shown by FTP servers {@code @} file has extended attributes
+     * Permissions:
+     * </p>
+     * <ul>
+     * <li>r the file is readable</li>
+     * <li>w the file is writable</li>
+     * <li>x the file is executable</li>
+     * <li>- the indicated permission is not granted</li>
+     * <li>L mandatory locking occurs</li> during access (the set-group-ID bit is on and the group execution bit is off)</li>
+     * <li>s the set-user-ID or set-group-ID bit is on, and the corresponding user or group execution bit is also on
+     * <li>S undefined bit-state (the set-user-ID bit is on and the user execution bit is off)</li>
+     * <li>t the 1000 (octal) bit, or sticky bit, is on [see chmod(1)], and execution is on</li>
+     * <li>T the 1000 bit is turned on, and execution is off (undefined bit-state)</li>
+     * <li>e z/OS external link bit.</li>
+     * <p>
+     * Final letter may be appended: + file has extended security attributes (e.g. ACL) Note: local listings on MacOSX also use '@'; this is not allowed for
+     * here as does not appear to be shown by FTP servers {@code @} file has extended attributes
      * </p>
      */
     private static final String REGEX = "([bcdelfmpSs-])" // file type
             + "(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?" // permissions
-
             + "\\s*" // separator TODO why allow it to be omitted??
-
             + "(\\d+)" // link count
-
             + "\\s+" // separator
-
             + "(?:(\\S+(?:\\s\\S+)*?)\\s+)?" // owner name (optional spaces)
             + "(?:(\\S+(?:\\s\\S+)*)\\s+)?" // group name (optional spaces)
             + "(\\d+(?:,\\s*\\d+)?)" // size or n,m
-
             + "\\s+" // separator
-
             /*
              * numeric or standard format date: yyyy-mm-dd (expecting hh:mm to follow) MMM [d]d [d]d MMM Use non-space for MMM to allow for languages such
              * as German which use diacritics (e.g. umlaut) in some abbreviations. Japanese uses numeric day and month with suffixes to distinguish them [d]dXX
@@ -97,20 +101,17 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "|(?:\\S{3}\\s+\\d{1,2})" + // MMM [d]d
             "|(?:\\d{1,2}\\s+\\S{3})" + // [d]d MMM
             "|(?:\\d{1,2}" + JA_MONTH + "\\s+\\d{1,2}" + JA_DAY + ")" + ")"
-
             + "\\s+" // separator
-
             /*
              * year (for non-recent standard format) - yyyy or time (for numeric or recent standard format) [h]h:mm or Japanese year - yyyyXX
              */
             + "((?:\\d+(?::\\d+)?)|(?:\\d{4}" + JA_YEAR + "))" // (20)
-
             + "\\s" // separator
-
             + "(.*)"; // the rest (21)
 
-    // if true, leading spaces are trimmed from file names
-    // this was the case for the original implementation
+    /**
+     * Whether leading spaces are trimmed from file names this was the case for the original implementation.
+     */
     final boolean trimLeadingSpaces; // package protected for access from test code
 
     /**
@@ -136,7 +137,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * This constructor allows the creation of a UnixFTPEntryParser object with something other than the default configuration.
+     * Constructs a new instance  with something other than the default configuration.
      *
      * @param config            The {@link FTPClientConfig configuration} object used to configure this parser.
      * @param trimLeadingSpaces if {@code true}, trim leading spaces from file names
@@ -174,7 +175,6 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         file.setRawListing(entry);
         final int type;
         boolean isDevice = false;
-
         if (matches(entry)) {
             final String typeStr = group(1);
             final String hardLinkCount = group(15);
@@ -186,7 +186,6 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             if (trimLeadingSpaces) {
                 name = name.replaceFirst("^\\s+", "");
             }
-
             try {
                 if (group(19).contains(JA_MONTH)) { // special processing for Japanese format
                     final FTPTimestampParserImpl jaParser = new FTPTimestampParserImpl();
@@ -198,10 +197,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             } catch (final ParseException e) {
                 // intentionally do nothing
             }
-
             // A 'whiteout' file is an ARTIFICIAL entry in any of several types of
             // 'translucent' filesystems, of which a 'union' filesystem is one.
-
             // bcdelfmpSs-
             switch (typeStr.charAt(0)) {
             case 'd':
@@ -225,19 +222,15 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             default: // e.g. ? and w = whiteout
                 type = FTPFile.UNKNOWN_TYPE;
             }
-
             file.setType(type);
-
             int g = 4;
             for (int access = 0; access < 3; access++, g += 4) {
                 // Use != '-' to avoid having to check for suid and sticky bits
                 file.setPermission(access, FTPFile.READ_PERMISSION, !group(g).equals("-"));
                 file.setPermission(access, FTPFile.WRITE_PERMISSION, !group(g + 1).equals("-"));
-
                 final String execPerm = group(g + 2);
                 file.setPermission(access, FTPFile.EXECUTE_PERMISSION, !execPerm.equals("-") && !Character.isUpperCase(execPerm.charAt(0)));
             }
-
             if (!isDevice) {
                 try {
                     file.setHardLinkCount(Integer.parseInt(hardLinkCount));
@@ -245,20 +238,16 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                     // intentionally do nothing
                 }
             }
-
             file.setUser(usr);
             file.setGroup(grp);
-
             try {
                 file.setSize(Long.parseLong(fileSize));
             } catch (final NumberFormatException e) {
                 // intentionally do nothing
             }
-
             // oddball cases like symbolic links, file names
             // with spaces in them.
             if (type == FTPFile.SYMBOLIC_LINK_TYPE) {
-
                 final int end = name.indexOf(" -> ");
                 // Give up if no link indicator is present
                 if (end == -1) {
@@ -267,7 +256,6 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                     file.setName(name.substring(0, end));
                     file.setLink(name.substring(end + 4));
                 }
-
             } else {
                 file.setName(name);
             }
