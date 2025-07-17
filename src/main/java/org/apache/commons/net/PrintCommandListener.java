@@ -162,15 +162,13 @@ public class PrintCommandListener implements ProtocolCommandListener {
             if (CMD_PASS.equalsIgnoreCase(cmd) || CMD_USER.equalsIgnoreCase(cmd)) {
                 writer.print(cmd);
                 writer.println(HIDDEN_MARKER); // Don't bother with EOL marker for this!
+            } else if (CMD_LOGIN.equalsIgnoreCase(cmd)) { // IMAP
+                String msg = event.getMessage();
+                msg = msg.substring(0, msg.indexOf(CMD_LOGIN) + CMD_LOGIN.length());
+                writer.print(msg);
+                writer.println(HIDDEN_MARKER); // Don't bother with EOL marker for this!
             } else {
-                if (CMD_LOGIN.equalsIgnoreCase(cmd)) { // IMAP
-                    String msg = event.getMessage();
-                    msg = msg.substring(0, msg.indexOf(CMD_LOGIN) + CMD_LOGIN.length());
-                    writer.print(msg);
-                    writer.println(HIDDEN_MARKER); // Don't bother with EOL marker for this!
-                } else {
-                    writer.print(getPrintableString(event.getMessage()));
-                }
+                writer.print(getPrintableString(event.getMessage()));
             }
         } else {
             writer.print(getPrintableString(event.getMessage()));
