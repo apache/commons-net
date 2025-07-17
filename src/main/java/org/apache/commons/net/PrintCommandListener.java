@@ -128,14 +128,14 @@ public class PrintCommandListener implements ProtocolCommandListener {
     /**
      * Constructs an instance which optionally suppresses login command text and indicates where the EOL starts with the specified character.
      *
-     * @param writer        where to write the commands and responses
+     * @param writer        where to write the commands and responses, not null.
      * @param suppressLogin if {@code true}, only print command name for login
      * @param eolMarker     if non-zero, add a marker just before the EOL.
      * @param showDirection if {@code true}, add {@code ">} " or {@code "< "} as appropriate to the output
      * @since 3.0
      */
     public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin, final char eolMarker, final boolean showDirection) {
-        this.writer = writer;
+        this.writer = Objects.requireNonNull(writer, "writer");
         this.noLogin = suppressLogin;
         this.eolMarker = eolMarker;
         this.showDirection = showDirection;
