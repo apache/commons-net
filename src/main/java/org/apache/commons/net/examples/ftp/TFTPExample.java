@@ -41,11 +41,19 @@ import org.apache.commons.net.tftp.TFTPPacket;
  * </p>
  */
 public final class TFTPExample {
-    static final String USAGE = "Usage: TFTPExample [options] hostname localfile remotefile\n\n" + "hostname   - The name of the remote host [:port]\n"
+    // @formatter:off
+    static final String USAGE = "Usage: TFTPExample [options] hostname localfile remotefile\n\n" 
+            + "hostname   - The name of the remote host [:port]\n"
             + "localfile  - The name of the local file to send or the name to use for\n" + "\tthe received file\n"
             + "remotefile - The name of the remote file to receive or the name for\n" + "\tthe remote server to use to name the local file being sent.\n\n"
-            + "options: (The default is to assume -r -b)\n" + "\t-t timeout in seconds (default 60s)\n" + "\t-s Send a local file\n"
-            + "\t-r Receive a remote file\n" + "\t-a Use ASCII transfer mode\n" + "\t-b Use binary transfer mode\n" + "\t-v Verbose (trace packets)\n";
+            + "options: (The default is to assume -r -b)\n"
+            + "\t-t timeout in seconds (default 60s)\n"
+            + "\t-s Send a local file\n"
+            + "\t-r Receive a remote file\n"
+            + "\t-a Use ASCII transfer mode\n"
+            + "\t-b Use binary transfer mode\n"
+            + "\t-v Verbose (trace packets)\n";
+    // @formatter:on
 
     private static boolean close(final TFTPClient tftp, final Closeable output) {
         boolean closed;
