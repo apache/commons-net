@@ -85,7 +85,7 @@ public final class IMAPImportMbox {
         if (args.length < 2) {
             System.err.println("Usage: IMAPImportMbox imap[s]://user:password@host[:port]/folder/path <mboxfile> [selectors]");
             System.err
-                    .println("\tWhere: a selector is a list of numbers/number ranges - 1,2,3-10" + " - or a list of strings to match in the initial From line");
+                    .println("\tWhere: a selector is a list of numbers/number ranges - 1,2,3-10 - or a list of strings to match in the initial From line");
             System.exit(1);
         }
 

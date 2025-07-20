@@ -101,7 +101,7 @@ public final class NTPClient {
         System.out.println(" mode: " + message.getModeName() + " (" + message.getMode() + ")");
         final int poll = message.getPoll();
         // poll value typically btwn MINPOLL (4) and MAXPOLL (14)
-        System.out.println(" poll: " + (poll <= 0 ? 1 : (int) Math.pow(2, poll)) + " seconds" + " (2 ** " + poll + ")");
+        System.out.println(" poll: " + (poll <= 0 ? 1 : (int) Math.pow(2, poll)) + " seconds (2 ** " + poll + ")");
         final double disp = message.getRootDispersionInMillisDouble();
         System.out.println(" rootdelay=" + numberFormat.format(message.getRootDelayInMillisDouble()) + ", rootdispersion(ms): " + numberFormat.format(disp));
 

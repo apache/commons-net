@@ -56,13 +56,13 @@ public class Main {
         if (args.length == 0) {
             if (Thread.currentThread().getStackTrace().length > 2) { // called by Maven
                 System.out.println(
-                        "Usage: mvn -q exec:java  -Dexec.arguments=<alias or" + " exampleClass>,<exampleClass parameters> (comma-separated, no spaces)");
-                System.out.println("Or   : mvn -q exec:java  -Dexec.args=\"<alias" + " or exampleClass> <exampleClass parameters>\" (space separated)");
+                        "Usage: mvn -q exec:java  -Dexec.arguments=<alias or exampleClass>,<exampleClass parameters> (comma-separated, no spaces)");
+                System.out.println("Or   : mvn -q exec:java  -Dexec.args=\"<alias or exampleClass> <exampleClass parameters>\" (space separated)");
             } else if (fromJar()) {
                 System.out.println("Usage: java -jar commons-net-examples-m.n.jar <alias or exampleClass> <exampleClass parameters>");
             } else {
                 System.out
-                        .println("Usage: java -cp target/classes org.apache.commons.net.examples.Main" + " <alias or exampleClass> <exampleClass parameters>");
+                        .println("Usage: java -cp target/classes org.apache.commons.net.examples.Main <alias or exampleClass> <exampleClass parameters>");
             }
             @SuppressWarnings("unchecked") // property names are Strings
             final List<String> l = (List<String>) Collections.list(fp.propertyNames());

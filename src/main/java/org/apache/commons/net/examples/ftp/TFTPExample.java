@@ -42,11 +42,11 @@ import org.apache.commons.net.tftp.TFTPPacket;
  */
 public final class TFTPExample {
     // @formatter:off
-    static final String USAGE = "Usage: TFTPExample [options] hostname localfile remotefile\n\n" 
+    static final String USAGE = "Usage: TFTPExample [options] hostname localfile remotefile\n\n"
             + "hostname   - The name of the remote host [:port]\n"
-            + "localfile  - The name of the local file to send or the name to use for\n" 
+            + "localfile  - The name of the local file to send or the name to use for\n"
             + "\tthe received file\n"
-            + "remotefile - The name of the remote file to receive or the name for\n" 
+            + "remotefile - The name of the remote file to receive or the name for\n"
             + "\tthe remote server to use to name the local file being sent.\n\n"
             + "options: (The default is to assume -r -b)\n"
             + "\t-t timeout in seconds (default 60s)\n"

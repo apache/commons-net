@@ -589,7 +589,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public String toString() {
-        return "[" + "version:" + getVersion() + ", mode:" + getMode() + ", poll:" + getPoll() + ", precision:" + getPrecision() + ", delay:" + getRootDelay()
+        return "[version:" + getVersion() + ", mode:" + getMode() + ", poll:" + getPoll() + ", precision:" + getPrecision() + ", delay:" + getRootDelay()
                 + ", dispersion(ms):" + getRootDispersionInMillisDouble() + ", id:" + getReferenceIdString() + ", xmitTime:"
                 + getTransmitTimeStamp().toDateString() + " ]";
     }

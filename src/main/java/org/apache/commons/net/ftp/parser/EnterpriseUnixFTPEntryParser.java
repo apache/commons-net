@@ -45,8 +45,10 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl {
     /**
      * this is the regular expression used by this parser.
      */
+    // @formatter:off
     private static final String REGEX = "(([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])"
-            + "([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z]))" + "(\\S*)\\s*" // 12
+            + "([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z]))"
+            + "(\\S*)\\s*" // 12
             + "(\\S+)\\s*" // 13
             + "(\\S*)\\s*" // 14 user
             + "(\\d*)\\s*" // 15 group
@@ -60,6 +62,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl {
             // 21 [01]\d or 2[0123] hour + ':'
             // 22 [012345]\d = minute
             + "(\\S*)(\\s*.*)"; // 23 name
+    // @formatter:on
 
     /**
      * The sole constructor for a EnterpriseUnixFTPEntryParser object.
