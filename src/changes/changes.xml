@@ -61,7 +61,7 @@ The <action> type attribute can be add,update,fix,remove.
     Defining changes.version allows one to create the RN without first removing the SNAPSHOT suffix.
     -->
   <body>
-    <release version="3.12.0" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+    <release version="3.12.0" date="2025-07-28" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Andreas Lemke, Gary Gregory">Increase message limit in IMAPReply.TAGGED_RESPONSE from 80 to 500 characters.</action>
       <action type="fix" dev="ggregory" due-to="Andreas Lemke, Gary Gregory">Increase message limit in IMAPReply.UNTAGGED_RESPONSE from 160 to 500 characters.</action>

@@ -1,3 +1,95 @@
+Apache Commons Net 3.12.0 Release Notes
+---------------------------------------
+
+The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.12.0.
+
+Apache Commons Net library contains a collection of network utilities and protocol implementations.
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
+
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+For complete information on Apache Commons Net, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Net website:
+
+https://commons.apache.org/proper/commons-net/
+
+Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
+
+
+New features
+------------
+
+o           Add org.apache.commons.net.nntp.Article#getChild(). Thanks to Gary Gregory.
+o           Add org.apache.commons.net.nntp.Article#getNext(). Thanks to Gary Gregory.
+o           Add private SubnetAddressStringIterable and private SubnetAddressStringIterator to implement SubnetInfo.iterableAddressStrings() and SubnetInfo.streamAddressStrings() #298. Thanks to Lixiongyou, Gary Gregory.
+o           Add SubnetInfo.iterableAddressStrings(). Thanks to Gary Gregory.
+o           Add SubnetInfo.streamAddressStrings(). Thanks to Gary Gregory.
+o           Add FTPCmd.OPTS. Thanks to Gary Gregory.
+o           Add FTP.opts(String, String). Thanks to Gary Gregory.
+o           Add FTP.opts(String...). Thanks to Gary Gregory.
+o           Add FTP.setControlEncoding(Charset). Thanks to Gary Gregory.
+o           Add --OPTS to FTPClientExample. Thanks to Gary Gregory.
+o NET-727:  Add accessing options map for TFTP request packet and allow using 'blksize' option #331. Thanks to Gary Gregory.
+o           Add org.apache.commons.net.util.ListenerList.isEmpty(). Thanks to Gary Gregory.
+o           Add org.apache.commons.net.ftp.FTPClient.getSystemTypeOverride(). Thanks to Gary Gregory.
+o           Add generics to ListenerList. Thanks to Gary Gregory.
+o           Add module-info.class in the JAR file instead of an Automatic-Module-Name in MANIFEST.MF. Thanks to Gary Gregory.
+
+Fixed Bugs
+----------
+
+o           Increase message limit in IMAPReply.TAGGED_RESPONSE from 80 to 500 characters. Thanks to Andreas Lemke, Gary Gregory.
+o           Increase message limit in IMAPReply.UNTAGGED_RESPONSE from 160 to 500 characters. Thanks to Andreas Lemke, Gary Gregory.
+o           Remove InvalidKeySpecException from AuthenticatingIMAPClient.auth(AUTH_METHOD, String, String) never throws, it's not thrown. Thanks to Gary Gregory.
+o           Remove InvalidKeySpecException from AuthenticatingIMAPClient.authenticate(AUTH_METHOD, String, String) never throws, it's not thrown. Thanks to Gary Gregory.
+o           Remove InvalidKeySpecException from ExtendedPOP3Client.auth(AUTH_METHOD, String, String) never throws, it's not thrown. Thanks to Gary Gregory.
+o           Remove InvalidKeySpecException from org.apache.commons.net.smtp.AuthenticatingSMTPClient.auth(AUTH_METHOD, String, String) never throws, it's not thrown. Thanks to Gary Gregory.
+o           Fix SpotBugs RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE in SSLSocketUtils. Thanks to Gary Gregory.
+o           Fix PMD UnnecessaryFullyQualifiedName. Thanks to Gary Gregory.
+o           Fix PMD UnusedFormalParameter. Thanks to Gary Gregory.
+o           Fix PMD AvoidBranchingStatementAsLastInLoop in org.apache.commons.net.bsd.RCommandClient. Thanks to Gary Gregory.
+o           Fix PMD UselessOverridingMethod in org.apache.commons.net.telnet.TelnetClient. Thanks to Gary Gregory.
+o           Fix PMD UnnecessaryModifier. Thanks to Gary Gregory.
+o           Deprecate MLSxEntryParser default constructor in favor of MLSxEntryParser.getInstance(). Thanks to Gary Gregory.
+o           Deprecate direct access to org.apache.commons.net.nntp.Article.kid and next fields. Thanks to Gary Gregory.
+o           Fix SpotBugs CT_CONSTRUCTOR_THROW in Base64 by implementing finalize() as a noop to avoid finalizer attacks. Thanks to Gary Gregory.
+o           Add missing Javadoc to ListenerList. Thanks to Gary Gregory.
+o           Add missing Javadoc to SubnetUtils. Thanks to Gary Gregory.
+o           Deprecate PrintCommandListeners.PrintCommandListeners(). Thanks to Gary Gregory.
+o           Deprecate NtpUtils.NtpUtils(). Thanks to Gary Gregory.
+o           Deprecate FTPFileFilters.FTPFileFilters(). Thanks to Gary Gregory.
+o           Avoid multiple possible NullPointerException in SocketClient.verifyRemote(Socket). Thanks to Gary Gregory.
+o           PrintCommandListener.protocolReplyReceived(ProtocolCommandEvent) doesn't always use an end-of-line. Thanks to Gary Gregory.
+o           FTPClientExample uses the wrong FTP system type to parse file lines. Thanks to Gary Gregory.
+o           Base64 does not call super.finalize(). Thanks to Gary Gregory.
+o           TFTPServer does not call super.finalize(). Thanks to Gary Gregory.
+o           KeyManagerUtils.loadStore(String, File, String) shouldn't ignore an IOException closing a keystore stream; use try-with-resources. Thanks to Gary Gregory.
+o           NNTPClient.readNewsgroupListing() can use an ArrayList instead of a Vector. Thanks to Gary Gregory.
+o           Deprecate org.apache.commons.net.util.Charsets. Thanks to Gary Gregory.
+o           Performance: NTFTPEntryParser.parseFTPEntry(String) doesn't need to parse timestamps if there is no name. Thanks to Gary Gregory.
+o           Improve error handling in org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory.createFileEntryParser(String, FTPClientConfig). Thanks to Gary Gregory.
+o           Fail-fast in org.apache.commons.net.PrintCommandListener.PrintCommandListener(PrintWriter, boolean, char, boolean) if the PrintWriter is null. Thanks to Gary Gregory.
+o           Avoid NullPointerException in org.apache.commons.net.PrintCommandListener.org.apache.commons.net.PrintCommandListener.protocolCommandSent(ProtocolCommandEvent). Thanks to Gary Gregory.
+o           Avoid NullPointerException in org.apache.commons.net.PrintCommandListener.org.apache.commons.net.PrintCommandListener.protocolReplyReceived(ProtocolCommandEvent). Thanks to Gary Gregory.
+
+Changes
+-------
+
+o           Bump org.apache.commons:commons-parent from 70 to 85 #261, #278, #280, #285, #298, #293, #300, #345. Thanks to Gary Gregory, Dependabot.
+o           Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.18.0 #268, #273, #281, #354. Thanks to Gary Gregory, Dependabot.
+o           Bump commons-io:commons-io from 2.16.1 to 2.20.0 #286, #308. Thanks to Gary Gregory, Dependabot.
+o           Bump org.apache.commons:commons-collections4 from 4.5.0-M2 to 4.5.0 #314. Thanks to Gary Gregory, Dependabot.
+o           Bump org.apache.ftpserver:ftpserver-core from 1.2.0 to 1.2.1. Thanks to Gary Gregory.
+
+
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes.html
+
+Enjoy!
+-Apache Commons Net team
+
+-----------------------------------------------------------------------------
+
 Apache Commons Net 3.11.1 Release Notes
 ---------------------------------------
 
@@ -30,7 +122,9 @@ Enjoy!
 -Apache Commons Net team
 
 -----------------------------------------------------------------------------
+
 Apache Commons Net 3.11.0 Release Notes
+---------------------------------------
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.11.0.
 
@@ -83,7 +177,9 @@ Enjoy!
 -Apache Commons Net team
 
 -----------------------------------------------------------------------------
+
 Apache Commons Net 3.10.0 Release Notes
+---------------------------------------
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.10.0.
 
@@ -157,6 +253,7 @@ Enjoy!
 -----------------------------------------------------------------------------
 
 Apache Commons Net 3.9.0 Release Notes
+--------------------------------------
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.9.0.
 
@@ -226,6 +323,7 @@ Enjoy!
 -----------------------------------------------------------------------------
 
 Apache Commons Net 3.8.0 Release Notes
+--------------------------------------
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.8.0.
 
@@ -274,6 +372,7 @@ Enjoy!
 -----------------------------------------------------------------------------
 
 Apache Commons Net 3.7.2 Release Notes
+--------------------------------------
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7.2.
 
@@ -313,6 +412,7 @@ Enjoy!
 -----------------------------------------------------------------------------
 
 Apache Commons Net 3.7.1 Release Notes
+--------------------------------------
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7.1
 
@@ -345,6 +445,7 @@ Enjoy!
 -----------------------------------------------------------------------------
 
 Apache Commons Net 3.7 Release Notes
+------------------------------------
 
 The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7
 
