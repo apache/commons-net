@@ -184,11 +184,6 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
                     <excludes>
                         <exclude>**/examples/**</exclude>
                     </excludes>
-                    <archive combine.children="append">
-                        <manifestEntries>
-                            <Automatic-Module-Name>${commons.module.name}</Automatic-Module-Name>
-                        </manifestEntries>
-                    </archive>
                 </configuration>
             </plugin>
             <!-- Exclude examples from source jar -->
