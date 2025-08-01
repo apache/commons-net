@@ -28,7 +28,7 @@
     </parent>
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
-    <version>3.12.0</version>
+    <version>3.12.1-SNAPSHOT</version>
     <name>Apache Commons Net</name>
     <!-- The description content is deliberately not indented ! to improve the layout of the Release Notes generated 
         by mvn changes:announcement-generate -->
@@ -56,7 +56,7 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
         <!-- project.build.outputTimestamp is managed by Maven plugins, see https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
-        <project.build.outputTimestamp>2025-07-28T11:56:25Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2025-08-01T19:06:31Z</project.build.outputTimestamp>
         <!-- Release plugin defines -->
         <!-- Previous version of the component (used for reporting binary compatibility check)-->
         <commons.bc.version>3.11.1</commons.bc.version>
