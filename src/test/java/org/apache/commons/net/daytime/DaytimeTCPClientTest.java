@@ -49,7 +49,7 @@ public class DaytimeTCPClientTest {
 
     @BeforeAll
     public static void beforeAll() throws IOException {
-        mockDaytimeTCPServer = new MockDaytimeTCPServer();
+        mockDaytimeTCPServer = new MockDaytimeTCPServer(0, getLocalHostInetAddress());
         mockDaytimeTCPServer.start();
     }
 
@@ -61,7 +61,20 @@ public class DaytimeTCPClientTest {
         );
     }
 
+    /**
+     * Gets the InetAddress to use as the localhost.
+     * <p>
+     * In order for this test to pass inside some VPNs, you cannot use the plain old {@link InetAddress#getLocalHost()}.
+     * </p>
+     *
+     * @return the InetAddress to use as the localhost.
+     */
+    private static InetAddress getLocalHostInetAddress() {
+        return InetAddress.getLoopbackAddress();
+    }
+
     private DaytimeTCPClient daytimeTCPClient;
+
     private InetAddress localHost;
 
     @Test
@@ -87,7 +100,7 @@ public class DaytimeTCPClientTest {
 
     @BeforeEach
     public void setUp() throws UnknownHostException {
-        localHost = InetAddress.getLocalHost();
+        localHost = getLocalHostInetAddress();
     }
 
     @AfterEach
