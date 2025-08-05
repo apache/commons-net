@@ -37,7 +37,7 @@ public final class DaytimeTCPClient extends SocketClient {
     public static final int DEFAULT_PORT = 13;
 
     /**
-     * The default DaytimeTCPClient constructor. It merely sets the default port to <code>DEFAULT_PORT</code>.
+     * The default DaytimeTCPClient constructor. It merely sets the default port to {@code DEFAULT_PORT}.
      */
     public DaytimeTCPClient() {
         setDefaultPort(DEFAULT_PORT);
