@@ -16,19 +16,23 @@
  */
 package org.apache.commons.net.ftp;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the socket connect timeout functionality
  */
-public class TestConnectTimeout extends TestCase {
+public class TestConnectTimeout {
 
+    @Test
     public void testConnectTimeout() throws SocketException, IOException {
         final FTPClient client = new FTPClient();
         client.setConnectTimeout(1000);

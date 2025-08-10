@@ -16,6 +16,12 @@
  */
 package org.apache.commons.net.telnet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 /**
  * JUnit test class for SuppressGAOptionHandler
  */
@@ -24,7 +30,7 @@ public class SuppressGAOptionHandlerTest extends AbstractTelnetOptionHandlerTest
     /**
      * setUp for the test.
      */
-    @Override
+    @BeforeEach
     protected void setUp() {
         opthand1 = new SuppressGAOptionHandler();
         opthand2 = new SuppressGAOptionHandler(true, true, true, true);
@@ -34,7 +40,7 @@ public class SuppressGAOptionHandlerTest extends AbstractTelnetOptionHandlerTest
     /**
      * test of server-driven subnegotiation. Checks that no subnegotiation is made.
      */
-    @Override
+    @Test
     public void testAnswerSubnegotiation() {
         final int[] subn = { TelnetCommand.IAC, TelnetCommand.SB, TelnetOption.SUPPRESS_GO_AHEAD, 1, TelnetCommand.IAC, TelnetCommand.SE, };
 
@@ -47,15 +53,16 @@ public class SuppressGAOptionHandlerTest extends AbstractTelnetOptionHandlerTest
      * test of the constructors.
      */
     @Override
+    @Test
     public void testConstructors() {
-        assertEquals(opthand1.getOptionCode(), TelnetOption.SUPPRESS_GO_AHEAD);
+        assertEquals(TelnetOption.SUPPRESS_GO_AHEAD, opthand1.getOptionCode());
         super.testConstructors();
     }
 
     /**
      * test of client-driven subnegotiation. Checks that no subnegotiation is made.
      */
-    @Override
+    @Test
     public void testStartSubnegotiation() {
 
         final int[] resp1 = opthand1.startSubnegotiationLocal();

@@ -16,22 +16,27 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
-
-public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
+public class DefaultFTPFileEntryParserFactoryTest {
     private void checkParserClass(final FTPFileEntryParserFactory fact, final String key, final Class<?> expected) {
         final FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);
         final FTPFileEntryParser parser = fact.createFileEntryParser(config);
         assertNotNull(parser);
-        assertTrue("Expected " + expected.getCanonicalName() + " got " + parser.getClass().getCanonicalName(), expected.isInstance(parser));
+        assertTrue(expected.isInstance(parser), "Expected " + expected.getCanonicalName() + " got " + parser.getClass().getCanonicalName());
     }
 
+    @Test
     public void testDefaultParserFactory() {
         final DefaultFTPFileEntryParserFactory factory = new DefaultFTPFileEntryParserFactory();
 
@@ -62,7 +67,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
             fail("Exception should have been thrown. \"NT\" is not a recognized key");
         } catch (final ParserInitializationException pie) {
             assertNull(pie.getCause());
-            assertTrue(pie.getMessage() + "should contain 'Unknown parser type:'", pie.getMessage().contains("Unknown parser type:"));
+            assertTrue(pie.getMessage().contains("Unknown parser type:"), pie.getMessage() + "should contain 'Unknown parser type:'");
         }
 
         parser = factory.createFileEntryParser("WindowsNT");
@@ -107,7 +112,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
             factory.createFileEntryParser("org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory");
             fail("ParserInitializationException should have been thrown.");
         } catch (final ParserInitializationException pie) {
-            assertTrue(pie.getCause().toString(), pie.getCause() instanceof ReflectiveOperationException);
+            assertTrue(pie.getCause() instanceof ReflectiveOperationException, pie.getCause().toString());
         }
         try {
             // Class exists, but is abstract
@@ -118,6 +123,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
         }
     }
 
+    @Test
     public void testDefaultParserFactoryConfig() throws Exception {
         final DefaultFTPFileEntryParserFactory factory = new DefaultFTPFileEntryParserFactory();
 

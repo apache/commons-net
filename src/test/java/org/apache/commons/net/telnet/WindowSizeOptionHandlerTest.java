@@ -16,6 +16,12 @@
  */
 package org.apache.commons.net.telnet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 /**
  * JUnit test class for TerminalTypeOptionHandler
  */
@@ -24,16 +30,16 @@ public class WindowSizeOptionHandlerTest extends AbstractTelnetOptionHandlerTest
      * compares two arrays of int
      */
     private void equalInts(final int a1[], final int a2[]) {
-        assertEquals("Arrays should be the same length", a1.length, a2.length);
+        assertEquals(a1.length, a2.length, "Arrays should be the same length");
         for (int ii = 0; ii < a1.length; ii++) {
-            assertEquals("Array entry " + ii + " should match", a1[ii], a2[ii]);
+            assertEquals(a1[ii], a2[ii], "Array entry " + ii + " should match");
         }
     }
 
     /**
      * setUp for the test.
      */
-    @Override
+    @BeforeEach
     protected void setUp() {
         opthand1 = new WindowSizeOptionHandler(80, 24);
         opthand2 = new WindowSizeOptionHandler(255, 255, true, true, true, true);
@@ -43,7 +49,7 @@ public class WindowSizeOptionHandlerTest extends AbstractTelnetOptionHandlerTest
     /**
      * test of client-driven subnegotiation. Checks that nothing is sent
      */
-    @Override
+    @Test
     public void testAnswerSubnegotiation() {
         final int[] subn = { TelnetOption.WINDOW_SIZE, 24, 80 };
 
@@ -60,6 +66,7 @@ public class WindowSizeOptionHandlerTest extends AbstractTelnetOptionHandlerTest
      * test of the constructors.
      */
     @Override
+    @Test
     public void testConstructors() {
         assertEquals(TelnetOption.WINDOW_SIZE, opthand1.getOptionCode());
         super.testConstructors();
@@ -68,7 +75,7 @@ public class WindowSizeOptionHandlerTest extends AbstractTelnetOptionHandlerTest
     /**
      * test of client-driven subnegotiation. Checks that no subnegotiation is made.
      */
-    @Override
+    @Test
     public void testStartSubnegotiation() {
         assertNull(opthand1.startSubnegotiationRemote());
         assertNull(opthand2.startSubnegotiationRemote());
@@ -78,6 +85,7 @@ public class WindowSizeOptionHandlerTest extends AbstractTelnetOptionHandlerTest
     /**
      * test of client-driven subnegotiation.
      */
+    @Test
     public void testStartSubnegotiationLocal() {
         final int[] exp1 = { 31, 0, 80, 0, 24 };
         final int[] start1 = opthand1.startSubnegotiationLocal();

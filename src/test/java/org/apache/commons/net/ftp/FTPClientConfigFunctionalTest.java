@@ -16,13 +16,18 @@
  */
 package org.apache.commons.net.ftp;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.TreeSet;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test was contributed in a different form by W. McDonald Buck of Boulder, Colorado, to help fix some bugs with the FTPClientConfig in a real world
@@ -36,20 +41,10 @@ import junit.framework.TestCase;
  * zone. Depending on the local machine's position relative to GMT and the time of day, the browsers may decide that a timestamp would be in the future if given
  * the current year, so they assume the year to be last year. This illustrates the value of FTPClientConfig's time zone functionality.
  */
-public class FTPClientConfigFunctionalTest extends TestCase {
+public class FTPClientConfigFunctionalTest {
 
     private final FTPClient ftpClient = new FTPClient();
     private FTPClientConfig ftpClientConfig;
-
-    /**
-     */
-    public FTPClientConfigFunctionalTest() {
-
-    }
-
-    public FTPClientConfigFunctionalTest(final String arg0) {
-        super(arg0);
-    }
 
     private TreeSet<FTPFile> getSortedSet(final FTPFile[] files) {
         // create a TreeSet which will sort each element
@@ -71,9 +66,8 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     /**
      * @throws Exception
      */
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
-        super.setUp();
         ftpClientConfig = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
         ftpClientConfig.setServerTimeZoneId("GMT");
         ftpClient.configure(ftpClientConfig);
@@ -90,12 +84,12 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     /**
      * @throws Exception
      */
-    @Override
+    @AfterEach
     protected void tearDown() throws Exception {
         ftpClient.disconnect();
-        super.tearDown();
     }
 
+    @Test
     public void testTimeZoneFunctionality() throws Exception {
         final java.util.Date nowDate = new java.util.Date();
         final Instant nowInstant = nowDate.toInstant();
@@ -133,8 +127,8 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             // by the parser and therefore been relegated to the same date a
             // year ago.
             firstCal.add(Calendar.DAY_OF_MONTH, 2);
-            assertTrue(lastFile.getTimestamp().getTime() + " before " + firstCal.getTime(), lastFile.getTimestamp().before(firstCal));
-            assertTrue(lastFile.getTimestampInstant() + " before " + firstInstant, lastFile.getTimestampInstant().isBefore(firstInstant));
+            assertTrue(lastFile.getTimestamp().before(firstCal), lastFile.getTimestamp().getTime() + " before " + firstCal.getTime());
+            assertTrue(lastFile.getTimestampInstant().isBefore(firstInstant), lastFile.getTimestampInstant() + " before " + firstInstant);
         }
     }
 }

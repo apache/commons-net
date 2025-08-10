@@ -16,24 +16,30 @@
  */
 package org.apache.commons.net.telnet;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit test class for TelnetOption
  */
-public class TelnetOptionTest extends TestCase {
+public class TelnetOptionTest {
     /**
      * test of the getOption method.
      */
+    @Test
     public void testGetOption() {
-        assertEquals(TelnetOption.getOption(0), "BINARY");
-        assertEquals(TelnetOption.getOption(91), "UNASSIGNED");
-        assertEquals(TelnetOption.getOption(255), "Extended-Options-List");
+        assertEquals("BINARY", TelnetOption.getOption(0));
+        assertEquals("UNASSIGNED", TelnetOption.getOption(91));
+        assertEquals("Extended-Options-List", TelnetOption.getOption(255));
     }
 
     /**
      * test of the isValidOption method.
      */
+    @Test
     public void testisValidOption() {
         assertTrue(TelnetOption.isValidOption(0));
         assertTrue(TelnetOption.isValidOption(91));

@@ -16,21 +16,24 @@
  */
 package org.apache.commons.net.telnet;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit functional test for TelnetClient. Connects to the weather forecast service rainmaker.wunderground.com and asks for Los Angeles forecast.
  */
-public class TelnetClientFunctionalTest extends TestCase {
+public class TelnetClientFunctionalTest {
     protected TelnetClient tc1;
 
     /**
      * test setUp
      */
-    @Override
+    @BeforeEach
     protected void setUp() {
         tc1 = new TelnetClient();
     }
@@ -38,6 +41,7 @@ public class TelnetClientFunctionalTest extends TestCase {
     /*
      * Do the functional test: - connect to the weather service - press return on the first menu - send LAX on the second menu - send X to exit
      */
+    @Test
     public void testFunctionalTest() throws Exception {
         boolean testresult = false;
         tc1.connect("rainmaker.wunderground.com", 3000);

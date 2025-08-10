@@ -16,6 +16,13 @@
  */
 package org.apache.commons.net.telnet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
     /*
      * compares two arrays of int
@@ -34,7 +41,7 @@ public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTe
         return result;
     }
 
-    @Override
+    @BeforeEach
     protected void setUp() {
         opthand1 = new TerminalTypeOptionHandler("VT100");
         opthand2 = new TerminalTypeOptionHandler("ANSI", true, true, true, true);
@@ -44,7 +51,7 @@ public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTe
     /*
      * test of client-driven subnegotiation. Checks that the terminal type is sent
      */
-    @Override
+    @Test
     public void testAnswerSubnegotiation() {
         final int[] subn = { TelnetOption.TERMINAL_TYPE, 1 };
 
@@ -60,15 +67,16 @@ public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTe
     }
 
     @Override
+    @Test
     public void testConstructors() {
-        assertEquals(opthand1.getOptionCode(), TelnetOption.TERMINAL_TYPE);
+        assertEquals(TelnetOption.TERMINAL_TYPE, opthand1.getOptionCode());
         super.testConstructors();
     }
 
     /*
      * test of client-driven subnegotiation. Checks that no subnegotiation is made.
      */
-    @Override
+    @Test
     public void testStartSubnegotiation() {
 
         final int[] resp1 = opthand1.startSubnegotiationLocal();

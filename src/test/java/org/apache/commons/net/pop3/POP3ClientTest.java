@@ -16,10 +16,14 @@
  */
 package org.apache.commons.net.pop3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.net.InetAddress;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -31,17 +35,13 @@ import junit.framework.TestCase;
  * The tests were originally run on a default installation of James. Your mileage may vary based on the POP3 server you run the tests against. Some servers are
  * more standards-compliant than others.
  */
-public class POP3ClientTest extends TestCase {
+public class POP3ClientTest {
     POP3Client p;
 
     String user = POP3Constants.user;
     String emptyUser = POP3Constants.emptyuser;
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
-
-    public POP3ClientTest(final String name) {
-        super(name);
-    }
 
     private void connect() throws Exception {
         p.connect(InetAddress.getByName(mailhost));
@@ -65,6 +65,7 @@ public class POP3ClientTest extends TestCase {
         p = new POP3Client();
     }
 
+    @Test
     public void testInvalidLoginWithBadName() throws Exception {
         reset();
         connect();
@@ -73,6 +74,7 @@ public class POP3ClientTest extends TestCase {
         assertFalse(p.login("badusername", password));
     }
 
+    @Test
     public void testInvalidLoginWithBadPassword() throws Exception {
         reset();
         connect();
@@ -84,6 +86,7 @@ public class POP3ClientTest extends TestCase {
     /*
      * Test to try to run the login method from the disconnected, transaction and update states
      */
+    @Test
     public void testLoginFromWrongState() throws Exception {
         reset();
 
@@ -104,6 +107,7 @@ public class POP3ClientTest extends TestCase {
         p.disconnect();
     }
 
+    @Test
     public void testLogoutFromAllStates() throws Exception {
         // From 'transaction' state
         reset();
@@ -123,6 +127,7 @@ public class POP3ClientTest extends TestCase {
     /*
      * Simple test to logon to a valid server using a valid user name and password.
      */
+    @Test
     public void testValidLoginWithNameAndPassword() throws Exception {
         reset();
         connect();

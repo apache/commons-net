@@ -16,21 +16,27 @@
  */
 package org.apache.commons.net.ntp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class that validates assertions for the basic TimeStamp operations and comparisons.
  */
-public class TimeStampTest extends TestCase {
+public class TimeStampTest {
 
     private static final String TIME1 = "c1a9ae1c.cf6ac48d"; // Tue, Dec 17 2002 14:07:24.810 UTC
     private static final String TIME2 = "c1a9ae1c.cf6ac48f"; // Tue, Dec 17 2002 14:07:24.810 UTC
     private static final String TIME3 = "c1a9ae1d.cf6ac48e"; // Tue, Dec 17 2002 14:07:25.810 UTC
 
+    @Test
     public void testCompare() {
 
         final TimeStamp ts1 = new TimeStamp(TIME1); // Tue, Dec 17 2002 14:07:24.810 UTC
@@ -39,40 +45,42 @@ public class TimeStampTest extends TestCase {
         final TimeStamp ts4 = new TimeStamp(TIME3); // Tue, Dec 17 2002 14:07:25.810 UTC
 
         // do assertion tests on TimeStamp class
-        assertEquals("equals(1,2)", ts1, ts2);
-        assertEquals("compareTo(1,2)", 0, ts1.compareTo(ts2));
-        assertEquals("ntpValue(1,2)", ts1.ntpValue(), ts2.ntpValue());
-        assertEquals("hashCode(1,2)", ts1.hashCode(), ts2.hashCode());
-        assertEquals("ts1==ts1", ts1, ts1);
+        assertEquals(ts1, ts2, "equals(1,2)");
+        assertEquals(0, ts1.compareTo(ts2), "compareTo(1,2)");
+        assertEquals(ts1.ntpValue(), ts2.ntpValue(), "ntpValue(1,2)");
+        assertEquals(ts1.hashCode(), ts2.hashCode(), "hashCode(1,2)");
+        assertEquals(ts1, ts1, "ts1==ts1");
 
         // timestamps in ts1 (TIME1) and ts3 (TIME2) are only off by the smallest
         // fraction of a second (~200 picoseconds) so the times are not equal but
         // when converted to Java dates (in milliseconds) they will be equal.
-        assertFalse("ts1 != ts3", ts1.equals(ts3));
-        assertEquals("compareTo(1,3)", -1, ts1.compareTo(ts3));
-        assertEquals("seconds", ts1.getSeconds(), ts3.getSeconds());
-        assertTrue("fraction", ts1.getFraction() != ts3.getFraction());
-        assertTrue("ntpValue(1,3)", ts1.ntpValue() != ts3.ntpValue());
-        assertTrue("hashCode(1,3)", ts1.hashCode() != ts3.hashCode());
+        assertFalse(ts1.equals(ts3), "ts1 != ts3");
+        assertEquals(-1, ts1.compareTo(ts3), "compareTo(1,3)");
+        assertEquals(ts1.getSeconds(), ts3.getSeconds(), "seconds");
+        assertTrue(ts1.getFraction() != ts3.getFraction(), "fraction");
+        assertTrue(ts1.ntpValue() != ts3.ntpValue(), "ntpValue(1,3)");
+        assertTrue(ts1.hashCode() != ts3.hashCode(), "hashCode(1,3)");
         final long time1 = ts1.getTime();
         final long time3 = ts3.getTime();
-        assertEquals("equals(time1,3)", time1, time3); // ntpTime1 != ntpTime3 but JavaTime(t1) == JavaTime(t3)...
+        assertEquals(time1, time3, "equals(time1,3)"); // ntpTime1 != ntpTime3 but JavaTime(t1) == JavaTime(t3)...
 
-        assertFalse("ts3 != ts4", ts3.equals(ts4));
-        assertTrue("time3 != ts4.time", time3 != ts4.getTime());
+        assertFalse(ts3.equals(ts4), "ts3 != ts4");
+        assertTrue(time3 != ts4.getTime(), "time3 != ts4.time");
     }
 
+    @Test
     public void testDateConversion() {
         // convert current date to NtpTimeStamp then compare Java date
         // computed from NTP timestamp with original Java date.
         final Calendar refCal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         final Date refDate = refCal.getTime();
         final TimeStamp ts = new TimeStamp(refDate);
-        assertEquals("refDate.getTime()", refDate.getTime(), ts.getTime());
+        assertEquals(refDate.getTime(), ts.getTime(), "refDate.getTime()");
         final Date tsDate = ts.getDate();
         assertEquals(refDate, tsDate);
     }
 
+    @Test
     public void testNotSame() {
         final TimeStamp time = TimeStamp.getCurrentTime();
         Object other = Integer.valueOf(0);
@@ -85,6 +93,7 @@ public class TimeStampTest extends TestCase {
         }
     }
 
+    @Test
     public void testUTCString() {
         final TimeStamp ts1 = new TimeStamp(TIME1); // Tue, Dec 17 2002 14:07:24.810 UTC
         final String actual = ts1.toUTCString();

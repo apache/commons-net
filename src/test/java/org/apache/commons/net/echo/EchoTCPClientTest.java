@@ -17,7 +17,7 @@
 
 package org.apache.commons.net.echo;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
