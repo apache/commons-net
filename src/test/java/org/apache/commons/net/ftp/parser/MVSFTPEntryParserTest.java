@@ -16,12 +16,18 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test suite addapted to new MVSFTPEntryParser.java.
@@ -72,18 +78,10 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "MigratedP201.$FTXPBI1.$CF2ITB.$AAB0402.I", "PSMLC133902005/04/041VB2799427998PSfile1.I", "file2.O", };
 
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
-    public MVSFTPEntryParserTest(final String name) {
-        super(name);
-
-    }
-
     @Override
     public void doAdditionalGoodTests(final String test, final FTPFile f) {
-        assertNotNull("Could not parse raw listing in " + test, f.getRawListing());
-        assertNotNull("Could not parse name in " + test, f.getName());
+        assertNotNull(f.getRawListing(), "Could not parse raw listing in " + test);
+        assertNotNull(f.getName(), "Could not parse name in " + test);
         // some tests don't produce any further details
     }
 
@@ -126,6 +124,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testDefaultPrecision() {
         // TODO Not sure what dates are parsed
     }
@@ -138,6 +137,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
      */
     @Override
+    @Test
     public void testGoodListing() {
         final String[] goodsamples = getGoodListing();
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
@@ -145,58 +145,62 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
         parser.setRegex(MVSFTPEntryParser.FILE_LIST_REGEX);
         for (final String test : goodsamples) {
             final FTPFile f = parser.parseFTPEntry(test);
-            assertNotNull("Failed to parse " + test, f);
+            assertNotNull(f, "Failed to parse " + test);
             doAdditionalGoodTests(test, f);
         }
     }
 
+    @Test
     public void testJesLevel1Listing() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.JES_LEVEL_1_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.JES_LEVEL_1_LIST_REGEX);
         for (final String test : goodsamplesJES1List) {
             final FTPFile f = parser.parseFTPEntry(test);
-            assertNotNull("Failed to parse " + test, f);
+            assertNotNull(f, "Failed to parse " + test);
             doAdditionalGoodTests(test, f);
         }
     }
 
+    @Test
     public void testJesLevel2Listing() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.JES_LEVEL_2_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.JES_LEVEL_2_LIST_REGEX);
         for (final String test : goodsamplesJES2List) {
             final FTPFile f = parser.parseFTPEntry(test);
-            assertNotNull("Failed to parse " + test, f);
+            assertNotNull(f, "Failed to parse " + test);
             doAdditionalGoodTests(test, f);
         }
     }
 
+    @Test
     public void testMemberListing() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.MEMBER_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.MEMBER_LIST_REGEX);
         for (final String test : goodsamplesMemberList) {
             final FTPFile f = parser.parseFTPEntry(test);
-            assertNotNull("Failed to parse " + test, f);
+            assertNotNull(f, "Failed to parse " + test);
             doAdditionalGoodTests(test, f);
         }
     }
 
     @Override
+    @Test
     public void testParseFieldsOnDirectory() throws Exception {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.FILE_LIST_REGEX);
 
         FTPFile file = parser.parseFTPEntry("SAVE01 3390   2004/06/23  1    1  FB     128  6144  PO    INCOMING.RPTBM024.D061704");
-        assertNotNull("Could not parse entry.", file);
-        assertTrue("Should have been a directory.", file.isDirectory());
+        assertNotNull(file, "Could not parse entry.");
+        assertTrue(file.isDirectory(), "Should have been a directory.");
         assertEquals("INCOMING.RPTBM024.D061704", file.getName());
 
         file = parser.parseFTPEntry("SAVE02 3390   2004/06/23  1    1  FB     128  6144  PO-E  INCOMING.RPTBM025.D061704");
-        assertNotNull("Could not parse entry.", file);
-        assertTrue("Should have been a directory.", file.isDirectory());
+        assertNotNull(file, "Could not parse entry.");
+        assertTrue(file.isDirectory(), "Should have been a directory.");
         assertEquals("INCOMING.RPTBM025.D061704", file.getName());
 
     }
@@ -207,6 +211,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
     @Override
+    @Test
     public void testParseFieldsOnFile() throws Exception {
         FTPFile file;
 
@@ -216,33 +221,35 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
         parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
 
         file = parser.parseFTPEntry("SAVE00 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.RPTBM023.D061704");
-        assertNotNull("Could not parse entry.", file);
-        assertTrue("Should have been a file.", file.isFile());
+        assertNotNull(file, "Could not parse entry.");
+        assertTrue(file.isFile(), "Should have been a file.");
         assertEquals("INCOMING.RPTBM023.D061704", file.getName());
-        assertNull("Timestamp should not have been set.", file.getTimestamp());
+        assertNull(file.getTimestamp(), "Timestamp should not have been set.");
 
         parser.setType(MVSFTPEntryParser.MEMBER_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.MEMBER_LIST_REGEX);
 
         file = parser.parseFTPEntry("SAVE03    01.03 2002/09/12 2002/10/11 09:37    11    11     0 KIL001");
-        assertNotNull("Could not parse entry.", file);
-        assertTrue("Should have been a file.", file.isFile());
+        assertNotNull(file, "Could not parse entry.");
+        assertTrue(file.isFile(), "Should have been a file.");
         assertEquals("SAVE03", file.getName());
-        assertNotNull("Timestamp should have been set.", file.getTimestamp());
+        assertNotNull(file.getTimestamp(), "Timestamp should have been set.");
 
         file = parser.parseFTPEntry("SAVE04                                                              ");
-        assertNotNull("Could not parse entry.", file);
-        assertTrue("Should have been a file.", file.isFile());
+        assertNotNull(file, "Could not parse entry.");
+        assertTrue(file.isFile(), "Should have been a file.");
         assertEquals("SAVE04", file.getName());
-        assertNull("Timestamp should not have been set.", file.getTimestamp());
+        assertNull(file.getTimestamp(), "Timestamp should not have been set.");
 
     }
 
     @Override
+    @Test
     public void testRecentPrecision() {
         // TODO Auto-generated method stub
     }
 
+    @Test
     public void testUnixListings() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         final List<String> list = new ArrayList<>();
@@ -250,7 +257,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
         parser.preParse(list);
         for (final String test : list) {
             final FTPFile f = parser.parseFTPEntry(test);
-            assertNotNull("Failed to parse " + test, f);
+            assertNotNull(f, "Failed to parse " + test);
             assertNotNull("Failed to parse name " + test, f.getName());
             assertNotNull("Failed to parse group " + test, f.getGroup());
             assertNotNull("Failed to parse user " + test, f.getUser());

@@ -16,10 +16,16 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.junit.jupiter.api.Test;
 
 /**
  */
@@ -32,10 +38,6 @@ public class NetwareFTPEntryParserTest extends AbstractFTPParseTest {
             "d [----AF--]          0                        512 Feb 22 17:32 _ADMIN", "d [-W---F--] SCION_VOL2                        512 Apr 13 23:12 VOL2",
             "- [RWCEAFMS] rwinston                        19968 Mar 12 15:20 Executive Summary.doc",
             "d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites" };
-
-    public NetwareFTPEntryParserTest(final String name) {
-        super(name);
-    }
 
     @Override
     protected String[] getBadListing() {
@@ -53,20 +55,22 @@ public class NetwareFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testDefaultPrecision() {
         testPrecision("d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites", CalendarUnit.DAY_OF_MONTH);
     }
 
     @Override
+    @Test
     public void testParseFieldsOnDirectory() throws Exception {
         final String reply = "d [-W---F--] testUser                        512 Apr 13 23:12 testFile";
         final FTPFile f = getParser().parseFTPEntry(reply);
 
-        assertNotNull("Could not parse file", f);
+        assertNotNull(f, "Could not parse file");
         assertEquals("testFile", f.getName());
         assertEquals(512L, f.getSize());
         assertEquals("testUser", f.getUser());
-        assertTrue("Directory flag is not set!", f.isDirectory());
+        assertTrue(f.isDirectory(), "Directory flag is not set!");
 
         final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, 3);
@@ -82,22 +86,24 @@ public class NetwareFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testParseFieldsOnFile() throws Exception {
         final String reply = "- [R-CEAFMS] rwinston                        19968 Mar 12 15:20 Document name with spaces.doc";
 
         final FTPFile f = getParser().parseFTPEntry(reply);
 
-        assertNotNull("Could not parse file", f);
+        assertNotNull(f, "Could not parse file");
         assertEquals("Document name with spaces.doc", f.getName());
         assertEquals(19968L, f.getSize());
         assertEquals("rwinston", f.getUser());
-        assertTrue("File flag is not set!", f.isFile());
+        assertTrue(f.isFile(), "File flag is not set!");
 
         assertTrue(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
         assertFalse(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
     }
 
     @Override
+    @Test
     public void testRecentPrecision() {
         testPrecision("- [RWCEAFMS] rwinston                        19968 Mar 12 15:20 Executive Summary.doc", CalendarUnit.MINUTE);
     }

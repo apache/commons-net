@@ -16,8 +16,13 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.junit.jupiter.api.Test;
 
 public class OS2FTPEntryParserTest extends AbstractFTPParseTest {
 
@@ -32,10 +37,6 @@ public class OS2FTPEntryParserTest extends AbstractFTPParseTest {
             "587823    RSA    DIR   01-08-97   13:58  OS2KRNL", " 33280      A          02-09-97   13:49  OS2LDR",
             "     0           DIR   11-28-97   09:42  PC", "149473      A          11-17-98   16:07  POPUPLOG.OS2",
             "     0           DIR   05-12-97   16:44  PSFONTS", "     0           DIR   05-19-2000 12:56  local", };
-
-    public OS2FTPEntryParserTest(final String name) {
-        super(name);
-    }
 
     @Override
     protected String[] getBadListing() {
@@ -57,32 +58,36 @@ public class OS2FTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testDefaultPrecision() {
         testPrecision("     0           DIR   05-12-97   16:44  PSFONTS", CalendarUnit.MINUTE);
         testPrecision("     0           DIR   05-19-2000 12:56  local", CalendarUnit.MINUTE);
     }
 
     @Override
+    @Test
     public void testParseFieldsOnDirectory() throws Exception {
         final FTPFile dir = getParser().parseFTPEntry("     0           DIR   11-28-97   09:42  PC");
-        assertNotNull("Could not parse entry.", dir);
-        assertTrue("Should have been a directory.", dir.isDirectory());
+        assertNotNull(dir, "Could not parse entry.");
+        assertTrue(dir.isDirectory(), "Should have been a directory.");
         assertEquals(0, dir.getSize());
         assertEquals("PC", dir.getName());
         assertEquals("Fri Nov 28 09:42:00 1997", df.format(dir.getTimestamp().getTime()));
     }
 
     @Override
+    @Test
     public void testParseFieldsOnFile() throws Exception {
         final FTPFile file = getParser().parseFTPEntry("5000000000      A          11-17-98   16:07  POPUPLOG.OS2");
-        assertNotNull("Could not parse entry.", file);
-        assertTrue("Should have been a file.", file.isFile());
+        assertNotNull(file, "Could not parse entry.");
+        assertTrue(file.isFile(), "Should have been a file.");
         assertEquals(5000000000L, file.getSize());
         assertEquals("POPUPLOG.OS2", file.getName());
         assertEquals("Tue Nov 17 16:07:00 1998", df.format(file.getTimestamp().getTime()));
     }
 
     @Override
+    @Test
     public void testRecentPrecision() {
         // Not needed
     }

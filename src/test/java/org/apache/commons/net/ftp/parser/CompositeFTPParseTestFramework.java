@@ -16,15 +16,16 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.junit.jupiter.api.Test;
 
 /**
  */
 public abstract class CompositeFTPParseTestFramework extends AbstractFTPParseTest {
-    public CompositeFTPParseTestFramework(final String name) {
-        super(name);
-    }
 
     @Override
     protected String[] getBadListing() {
@@ -56,6 +57,7 @@ public abstract class CompositeFTPParseTestFramework extends AbstractFTPParseTes
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
      */
     @Override
+    @Test
     public void testBadListing() {
         final String badsamples[][] = getBadListings();
 
@@ -63,7 +65,7 @@ public abstract class CompositeFTPParseTestFramework extends AbstractFTPParseTes
             final FTPFileEntryParser parser = getParser();
             for (final String test : badsample) {
                 final FTPFile f = parser.parseFTPEntry(test);
-                assertNull("Should have Failed to parse " + test, nullFileOrNullDate(f));
+                assertNull(nullFileOrNullDate(f), "Should have Failed to parse " + test);
 
                 doAdditionalBadTests(test, f);
             }
@@ -75,6 +77,7 @@ public abstract class CompositeFTPParseTestFramework extends AbstractFTPParseTes
      *
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
      */
+    @Test
     public void testConsistentListing() {
         final String goodsamples[][] = getGoodListings();
 
@@ -82,7 +85,7 @@ public abstract class CompositeFTPParseTestFramework extends AbstractFTPParseTes
             final FTPFileEntryParser parser = getParser();
             for (final String test : goodsample) {
                 final FTPFile f = parser.parseFTPEntry(test);
-                assertNotNull("Failed to parse " + test, f);
+                assertNotNull(f, "Failed to parse " + test);
 
                 doAdditionalGoodTests(test, f);
             }
@@ -92,6 +95,7 @@ public abstract class CompositeFTPParseTestFramework extends AbstractFTPParseTes
     // even though all these listings are good using one parser
     // or the other, this tests that a parser that has succeeded
     // on one format will fail if another format is substituted.
+    @Test
     public void testInconsistentListing() {
         final String goodsamples[][] = getGoodListings();
 
@@ -103,10 +107,10 @@ public abstract class CompositeFTPParseTestFramework extends AbstractFTPParseTes
 
             switch (i) {
             case 0:
-                assertNotNull("Failed to parse " + test, f);
+                assertNotNull(f, "Failed to parse " + test);
                 break;
             case 1:
-                assertNull("Should have failed to parse " + test, f);
+                assertNull(f, "Should have failed to parse " + test);
                 break;
             }
         }
