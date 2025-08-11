@@ -17,15 +17,12 @@
 
 package org.apache.commons.net.ftp;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class FTPCommandTest extends TestCase {
-
-    public FTPCommandTest(final String name) {
-        super(name);
-    }
+public class FTPCommandTest {
 
     @SuppressWarnings("deprecation") // test of deprecated code
+    @Test
     public void testArray() {
         FTPCommand.checkArray();
     }

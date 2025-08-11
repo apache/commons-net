@@ -16,9 +16,13 @@
  */
 package org.apache.commons.net.pop3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.io.Reader;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * The POP3* tests all presume the existence of the following parameters: mailserver: localhost (running on the default port 110) account: username=test;
@@ -29,20 +33,17 @@ import junit.framework.TestCase;
  * The tests were originally run on a default installation of James. Your mileage may vary based on the POP3 server you run the tests against. Some servers are
  * more standards-compliant than others.
  */
-public class POP3ConstructorTest extends TestCase {
+public class POP3ConstructorTest {
     String user = POP3Constants.user;
     String emptyUser = POP3Constants.emptyuser;
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
 
-    public POP3ConstructorTest(final String name) {
-        super(name);
-    }
-
     /*
      * This test will ensure that the constants are not inadvertently changed. If the constants are changed in org.apache.commons.net.pop3 for some reason, this
      * test will have to be updated.
      */
+    @Test
     public void testConstants() {
         // From POP3
         assertEquals(110, POP3.DEFAULT_PORT);
@@ -66,6 +67,7 @@ public class POP3ConstructorTest extends TestCase {
         assertEquals(11, POP3Command.UIDL);
     }
 
+    @Test
     public void testPOP3ClientStateTransition() throws Exception {
         final POP3Client pop = new POP3Client();
 
@@ -138,6 +140,7 @@ public class POP3ConstructorTest extends TestCase {
         assertEquals(POP3.UPDATE_STATE, pop.getState());
     }
 
+    @Test
     public void testPOP3DefaultConstructor() {
         final POP3 pop = new POP3();
 

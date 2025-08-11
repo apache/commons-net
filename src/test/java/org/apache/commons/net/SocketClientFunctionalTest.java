@@ -16,19 +16,20 @@
  */
 package org.apache.commons.net;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 
 import org.apache.commons.net.ftp.FTPClient;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * A simple functional test class for SocketClients.
  *
  * Requires a Java-compatible SOCK proxy server on 127.0.0.1:9050 and access to ftp.gnu.org.
  */
-public class SocketClientFunctionalTest extends TestCase {
+public class SocketClientFunctionalTest {
     private static final String PROXY_HOST = "127.0.0.1";
     private static final int PROXY_PORT = 9050;
     private static final String DEST_HOST = "ftp.gnu.org";
@@ -37,19 +38,11 @@ public class SocketClientFunctionalTest extends TestCase {
     SocketClient sc = new FTPClient();
 
     /**
-     * The constructor for this test case.
-     *
-     * @param name passed to TestCase
-     */
-    public SocketClientFunctionalTest(final String name) {
-        super(name);
-    }
-
-    /**
      * A simple test to verify that the Proxy settings work.
      *
      * @throws Exception in case of connection errors
      */
+    @Test
     public void testProxySettings() throws Exception {
         // NOTE: HTTP Proxies seem to be invalid for raw sockets
         final Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT));

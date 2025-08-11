@@ -17,6 +17,8 @@
 
 package org.apache.commons.net.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayReader;
@@ -31,8 +33,7 @@ import java.net.Socket;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
 import org.apache.commons.net.io.Util;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UtilTest {
 
@@ -50,13 +51,14 @@ public class UtilTest {
 
         @Override
         public void bytesTransferred(final CopyStreamEvent event) {
+            // noop
         }
 
         @Override
         public void bytesTransferred(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
-            Assert.assertEquals("Wrong total", expectedTotal, totalBytesTransferred);
-            Assert.assertEquals("Wrong streamSize", expectedSize, streamSize);
-            Assert.assertEquals("Wrong bytes", expectedBytes, bytesTransferred);
+            assertEquals(expectedTotal, totalBytesTransferred, "Wrong total");
+            assertEquals(expectedSize, streamSize, "Wrong streamSize");
+            assertEquals(expectedBytes, bytesTransferred, "Wrong bytes");
         }
 
     }
@@ -76,18 +78,19 @@ public class UtilTest {
 
         @Override
         public void bytesTransferred(final CopyStreamEvent event) {
+            // noop
         }
 
         @Override
         public void bytesTransferred(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
-            Assert.assertEquals("Wrong bytes", expectedBytes, bytesTransferred);
+            assertEquals(expectedBytes, bytesTransferred, "Wrong bytes");
             totalBytesTransferredTotal = totalBytesTransferred;
             bytesTransferredTotal += bytesTransferred;
         }
 
         void checkExpected() {
-            Assert.assertEquals("Wrong totalBytesTransferred total", expectedTotal, totalBytesTransferredTotal);
-            Assert.assertEquals("Total should equal sum of parts", totalBytesTransferredTotal, bytesTransferredTotal);
+            assertEquals(expectedTotal, totalBytesTransferredTotal, "Wrong totalBytesTransferred total");
+            assertEquals(totalBytesTransferredTotal, bytesTransferredTotal, "Total should equal sum of parts");
         }
 
     }

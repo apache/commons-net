@@ -16,6 +16,12 @@
  */
 package org.apache.commons.net.telnet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 /**
  * JUnit test class for SimpleOptionHandler
  */
@@ -23,7 +29,7 @@ public class SimpleOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
     /**
      * setUp for the test.
      */
-    @Override
+    @BeforeEach
     protected void setUp() {
         opthand1 = new SimpleOptionHandler(4);
         opthand2 = new SimpleOptionHandler(8, true, true, true, true);
@@ -33,7 +39,7 @@ public class SimpleOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
     /**
      * test of server-driven subnegotiation. Checks that no subnegotiation is made.
      */
-    @Override
+    @Test
     public void testAnswerSubnegotiation() {
         final int[] subn = { TelnetCommand.IAC, TelnetCommand.SB, 4, 1, TelnetCommand.IAC, TelnetCommand.SE, };
 
@@ -46,17 +52,18 @@ public class SimpleOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
      * test of the constructors.
      */
     @Override
+    @Test
     public void testConstructors() {
-        assertEquals(opthand1.getOptionCode(), 4);
-        assertEquals(opthand2.getOptionCode(), 8);
-        assertEquals(opthand3.getOptionCode(), 91);
+        assertEquals(4, opthand1.getOptionCode());
+        assertEquals(8, opthand2.getOptionCode());
+        assertEquals(91, opthand3.getOptionCode());
         super.testConstructors();
     }
 
     /**
      * test of client-driven subnegotiation. Checks that no subnegotiation is made.
      */
-    @Override
+    @Test
     public void testStartSubnegotiation() {
 
         final int[] resp1 = opthand1.startSubnegotiationLocal();

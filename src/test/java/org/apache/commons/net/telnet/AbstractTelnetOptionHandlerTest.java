@@ -16,29 +16,19 @@
  */
 package org.apache.commons.net.telnet;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * The TelnetOptionHandlerTest is the abstract class for testing TelnetOptionHandler. It can be used to derive the actual test classes for TelnetOptionHadler
  * derived classes, by adding creation of three new option handlers and testing of the specific subnegotiation behavior.
  */
-public abstract class AbstractTelnetOptionHandlerTest extends TestCase {
+public abstract class AbstractTelnetOptionHandlerTest {
     TelnetOptionHandler opthand1;
     TelnetOptionHandler opthand2;
     TelnetOptionHandler opthand3;
-
-    /**
-     * setUp for the test. The derived test class must implement this method by creating opthand1, opthand2, opthand3 like in the following: opthand1 = new
-     * EchoOptionHandler(); opthand2 = new EchoOptionHandler(true, true, true, true); opthand3 = new EchoOptionHandler(false, false, false, false);
-     */
-    @Override
-    protected abstract void setUp();
-
-    /**
-     * test of server-driven subnegotiation. Abstract test: the derived class should implement it.
-     */
-    public abstract void testAnswerSubnegotiation();
-    // test subnegotiation
 
     /**
      * test of the constructors. The derived class may add test of the option code.
@@ -64,6 +54,7 @@ public abstract class AbstractTelnetOptionHandlerTest extends TestCase {
     /**
      * test of setDo/getDo
      */
+    @Test
     public void testDo() {
         opthand2.setDo(true);
         opthand3.setDo(false);
@@ -74,13 +65,9 @@ public abstract class AbstractTelnetOptionHandlerTest extends TestCase {
     }
 
     /**
-     * test of client-driven subnegotiation. Abstract test: the derived class should implement it.
-     */
-    public abstract void testStartSubnegotiation();
-
-    /**
      * test of setWill/getWill
      */
+    @Test
     public void testWill() {
         opthand2.setWill(true);
         opthand3.setWill(false);

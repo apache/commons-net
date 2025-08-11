@@ -16,15 +16,19 @@
  */
 package org.apache.commons.net.ntp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.time.Duration;
 
 import org.apache.commons.net.examples.ntp.SimpleNTPServer;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit test class for NtpClient using SimpleNTPServer
@@ -33,7 +37,7 @@ public class TestNtpClient {
 
     private static SimpleNTPServer server;
 
-    @BeforeClass
+    @BeforeAll
     public static void oneTimeSetUp() throws IOException {
         // one-time initialization code
         server = new SimpleNTPServer(0);
@@ -42,9 +46,9 @@ public class TestNtpClient {
         try {
             server.start();
         } catch (final IOException e) {
-            Assert.fail("failed to start NTP server: " + e);
+            fail("failed to start NTP server: " + e);
         }
-        Assert.assertTrue(server.isStarted());
+        assertTrue(server.isStarted());
         // System.out.println("XXX: time server started");
         boolean running = false;
         for (int retries = 0; retries < 5; retries++) {
@@ -59,10 +63,10 @@ public class TestNtpClient {
                 // ignore
             }
         }
-        Assert.assertTrue(running);
+        assertTrue(running);
     }
 
-    @AfterClass
+    @AfterAll
     public static void oneTimeTearDown() {
         // one-time cleanup code
         if (server != null) {
@@ -81,31 +85,31 @@ public class TestNtpClient {
             // Java 1.7: use InetAddress.getLoopbackAddress() instead
             final InetAddress addr = InetAddress.getByAddress("loopback", new byte[] { 127, 0, 0, 1 });
             final TimeInfo timeInfo = client.getTime(addr, server.getPort());
-            Assert.assertNotNull(timeInfo);
-            Assert.assertTrue(timeInfo.getReturnTime() >= currentTimeMillis);
+            assertNotNull(timeInfo);
+            assertTrue(timeInfo.getReturnTime() >= currentTimeMillis);
             final NtpV3Packet message = timeInfo.getMessage();
-            Assert.assertNotNull(message);
+            assertNotNull(message);
 
             final TimeStamp rcvTimeStamp = message.getReceiveTimeStamp();
             final TimeStamp xmitTimeStamp = message.getTransmitTimeStamp();
-            Assert.assertTrue(xmitTimeStamp.compareTo(rcvTimeStamp) >= 0);
+            assertTrue(xmitTimeStamp.compareTo(rcvTimeStamp) >= 0);
 
             final TimeStamp originateTimeStamp = message.getOriginateTimeStamp();
-            Assert.assertNotNull(originateTimeStamp);
-            Assert.assertTrue(originateTimeStamp.getTime() >= currentTimeMillis);
+            assertNotNull(originateTimeStamp);
+            assertTrue(originateTimeStamp.getTime() >= currentTimeMillis);
 
-            Assert.assertEquals(NtpV3Packet.MODE_SERVER, message.getMode());
+            assertEquals(NtpV3Packet.MODE_SERVER, message.getMode());
 
             // following assertions are specific to the SimpleNTPServer
 
             final TimeStamp referenceTimeStamp = message.getReferenceTimeStamp();
-            Assert.assertNotNull(referenceTimeStamp);
-            Assert.assertTrue(referenceTimeStamp.getTime() >= currentTimeMillis);
+            assertNotNull(referenceTimeStamp);
+            assertTrue(referenceTimeStamp.getTime() >= currentTimeMillis);
 
-            Assert.assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
-            Assert.assertEquals(1, message.getStratum());
+            assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
+            assertEquals(1, message.getStratum());
 
-            Assert.assertEquals("LCL", NtpUtils.getReferenceClock(message));
+            assertEquals("LCL", NtpUtils.getReferenceClock(message));
         } finally {
             client.close();
         }

@@ -16,12 +16,15 @@
  */
 package org.apache.commons.net.telnet;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit test class for InvalidTelnetOptionException
  */
-public class InvalidTelnetOptionExceptionTest extends TestCase {
+public class InvalidTelnetOptionExceptionTest {
     private InvalidTelnetOptionException exc1;
     private String msg1;
     private int code1;
@@ -29,7 +32,7 @@ public class InvalidTelnetOptionExceptionTest extends TestCase {
     /**
      * setUp for the test.
      */
-    @Override
+    @BeforeEach
     protected void setUp() {
         msg1 = "MSG";
         code1 = 13;
@@ -39,6 +42,7 @@ public class InvalidTelnetOptionExceptionTest extends TestCase {
     /**
      * test of the constructors.
      */
+    @Test
     public void testConstructors() {
         assertTrue(exc1.getMessage().contains(msg1));
         assertTrue(exc1.getMessage().contains("" + code1));

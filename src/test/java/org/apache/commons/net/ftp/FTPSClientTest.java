@@ -17,20 +17,20 @@
 
 package org.apache.commons.net.ftp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.SocketException;
 import java.time.Instant;
 import java.util.Calendar;
+import java.util.stream.Stream;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests {@link FTPSClient}.
@@ -45,29 +45,26 @@ import org.junit.runners.Parameterized.Parameters;
  * This test does the above programmatically.
  * </p>
  */
-@RunWith(Parameterized.class)
 public class FTPSClientTest extends AbstractFtpsTest {
 
     private static final String USER_PROPS_RES = "org/apache/commons/net/ftpsserver/users.properties";
 
     private static final String SERVER_JKS_RES = "org/apache/commons/net/ftpsserver/ftpserver.jks";
 
-    @BeforeClass
+    @BeforeAll
     public static void setupServer() throws Exception {
         setupServer(IMPLICIT, USER_PROPS_RES, SERVER_JKS_RES, "target/test-classes/org/apache/commons/net/test-data");
     }
 
-    @Parameters(name = "endpointCheckingEnabled={0}")
-    public static Boolean[] testConstructurData() {
-        return new Boolean[] { Boolean.FALSE, Boolean.TRUE };
+    private static Stream<Boolean> endpointCheckingEnabledSource() {
+        return Stream.of(Boolean.FALSE, Boolean.TRUE);
     }
 
-    public FTPSClientTest(final boolean endpointCheckingEnabled) {
-        super(endpointCheckingEnabled, null, null);
-    }
-
-    @Test(timeout = TEST_TIMEOUT)
-    public void testHasFeature() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testHasFeature(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testHasFeature");
         loginClient().disconnect();
         trace("<<testHasFeature");
@@ -84,36 +81,51 @@ public class FTPSClientTest extends AbstractFtpsTest {
         }
     }
 
-    @Test(timeout = TEST_TIMEOUT)
-    public void testListFilesPathNameEmpty() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testListFilesPathNameEmpty(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testListFilesPathNameEmpty");
         testListFiles("");
         trace("<<testListFilesPathNameEmpty");
     }
 
-    @Test(timeout = TEST_TIMEOUT)
-    public void testListFilesPathNameJunk() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testListFilesPathNameJunk(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testListFilesPathNameJunk");
         testListFiles("   Junk   ");
         trace("<<testListFilesPathNameJunk");
     }
 
-    @Test(timeout = TEST_TIMEOUT)
-    public void testListFilesPathNameNull() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testListFilesPathNameNull(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testListFilesPathNameNull");
         testListFiles(null);
         trace("<<testListFilesPathNameNull");
     }
 
-    @Test(timeout = TEST_TIMEOUT)
-    public void testListFilesPathNameRoot() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testListFilesPathNameRoot(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testListFilesPathNameRoot");
         testListFiles("/");
         trace("<<testListFilesPathNameRoot");
     }
 
-    @Test(timeout = TEST_TIMEOUT)
-    public void testMdtmCalendar() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testMdtmCalendar(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testMdtmCalendar");
         testMdtmCalendar("/file.txt");
         trace("<<testMdtmCalendar");
@@ -133,8 +145,11 @@ public class FTPSClientTest extends AbstractFtpsTest {
         }
     }
 
-    @Test(timeout = TEST_TIMEOUT)
-    public void testMdtmFile() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testMdtmFile(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testMdtmFile");
         testMdtmFile("/file.txt");
         trace("<<testMdtmFile");
@@ -154,8 +169,11 @@ public class FTPSClientTest extends AbstractFtpsTest {
         }
     }
 
-    @Test(timeout = TEST_TIMEOUT)
-    public void testMdtmInstant() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testMdtmInstant(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testMdtmInstant");
         testMdtmInstant("/file.txt");
         trace("<<testMdtmInstant");
@@ -175,8 +193,11 @@ public class FTPSClientTest extends AbstractFtpsTest {
         }
     }
 
-    @Test(timeout = TEST_TIMEOUT)
-    public void testOpenClose() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testOpenClose(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testOpenClose");
         final FTPSClient ftpsClient = loginClient();
         try {
@@ -188,8 +209,11 @@ public class FTPSClientTest extends AbstractFtpsTest {
         trace("<<testOpenClose");
     }
 
-    @Test(timeout = TEST_TIMEOUT)
-    public void testRetrieveFilePathNameRoot() throws SocketException, IOException {
+    @ParameterizedTest(name = "endpointCheckingEnabled={0}")
+    @MethodSource("endpointCheckingEnabledSource")
+    @Timeout(TEST_TIMEOUT)
+    public void testRetrieveFilePathNameRoot(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+        setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testRetrieveFilePathNameRoot");
         retrieveFile("/file.txt");
         trace("<<testRetrieveFilePathNameRoot");

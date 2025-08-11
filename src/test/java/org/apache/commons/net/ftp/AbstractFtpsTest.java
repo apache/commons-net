@@ -17,8 +17,9 @@
 
 package org.apache.commons.net.ftp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +40,6 @@ import org.apache.ftpserver.ssl.SslConfigurationFactory;
 import org.apache.ftpserver.usermanager.Md5PasswordEncryptor;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
-import org.junit.Assert;
 
 /**
  * Tests {@link FTPSClient}.
@@ -73,6 +73,10 @@ public abstract class AbstractFtpsTest {
         return System.getProperty("test.basedir", defaultHome);
     }
 
+    public void setEndpointCheckingEnabled(final boolean value) {
+        this.endpointCheckingEnabled = value;
+    }
+
     /**
      * Creates and starts an embedded Apache MINA FTP Server.
      *
@@ -94,7 +98,7 @@ public abstract class AbstractFtpsTest {
         // TODO Update to SHA512
         propertiesUserManagerFactory.setPasswordEncryptor(new Md5PasswordEncryptor());
         final URL userPropsResource = ClassLoader.getSystemClassLoader().getResource(userPropertiesResource);
-        Assert.assertNotNull(userPropertiesResource, userPropsResource);
+        assertNotNull(userPropsResource, userPropertiesResource);
         propertiesUserManagerFactory.setUrl(userPropsResource);
         final UserManager userManager = propertiesUserManagerFactory.createUserManager();
         final BaseUser user = (BaseUser) userManager.getUserByName("test");
@@ -107,11 +111,11 @@ public abstract class AbstractFtpsTest {
 
         // define SSL configuration
         final URL serverJksResource = ClassLoader.getSystemClassLoader().getResource(serverJksResourceResource);
-        Assert.assertNotNull(serverJksResourceResource, serverJksResource);
+        assertNotNull(serverJksResource, serverJksResourceResource);
         // System.out.println("Loading " + serverJksResource);
         final SslConfigurationFactory sllConfigFactory = new SslConfigurationFactory();
         final File keyStoreFile = FileUtils.toFile(serverJksResource);
-        Assert.assertTrue(keyStoreFile.toString(), keyStoreFile.exists());
+        assertTrue(keyStoreFile.exists(), keyStoreFile.toString());
         sllConfigFactory.setKeystoreFile(keyStoreFile);
         sllConfigFactory.setKeystorePassword("password");
 
@@ -138,11 +142,7 @@ public abstract class AbstractFtpsTest {
         }
     }
 
-    private final boolean endpointCheckingEnabled;
-
-    public AbstractFtpsTest(final boolean endpointCheckingEnabled, final String userPropertiesResource, final String serverJksResource) {
-        this.endpointCheckingEnabled = endpointCheckingEnabled;
-    }
+    private boolean endpointCheckingEnabled;
 
     protected void assertClientCode(final FTPSClient client) {
         final int replyCode = client.getReplyCode();
@@ -204,8 +204,8 @@ public abstract class AbstractFtpsTest {
         try {
             // Do it twice.
             // Just testing that we are not getting an SSL error (the file MUST be present).
-            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.INSTANCE));
-            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.INSTANCE));
+            assertTrue(client.retrieveFile(pathname, NullOutputStream.INSTANCE), pathname);
+            assertTrue(client.retrieveFile(pathname, NullOutputStream.INSTANCE), pathname);
         } finally {
             client.disconnect();
         }

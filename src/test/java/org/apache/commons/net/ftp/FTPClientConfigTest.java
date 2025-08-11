@@ -16,7 +16,10 @@
  */
 package org.apache.commons.net.ftp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -24,9 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class FTPClientConfigTest extends TestCase {
+public class FTPClientConfigTest {
 
     private static final String A = "A";
 
@@ -45,6 +48,7 @@ public class FTPClientConfigTest extends TestCase {
     /*
      * Class under test for void FTPClientConfig(String)
      */
+    @Test
     public void testFTPClientConfigString() {
         final FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_VMS);
         assertEquals(FTPClientConfig.SYST_VMS, config.getServerSystemKey());
@@ -58,6 +62,7 @@ public class FTPClientConfigTest extends TestCase {
     /*
      * Class under test for void FTPClientConfig(String, String, String, String, String, String)
      */
+    @Test
     public void testFTPClientConfigStringStringStringStringStringString() {
         final FTPClientConfig conf = new FTPClientConfig(A, B, C, D, E, F);
 
@@ -69,6 +74,7 @@ public class FTPClientConfigTest extends TestCase {
         assertEquals("D", conf.getServerLanguageCode());
     }
 
+    @Test
     public void testGetDateFormatSymbols() {
 
         assertThrows(IllegalArgumentException.class, () -> FTPClientConfig.getDateFormatSymbols(badDelim), "bad delimiter");
@@ -96,15 +102,17 @@ public class FTPClientConfigTest extends TestCase {
             fail("failed.to.parse.weird");
         }
 
-        assertEquals("different.parser.same.date", d1, d2);
+        assertEquals(d1, d2, "different.parser.same.date");
 
         assertThrows(ParseException.class, () -> sdf1.parse("hij 31, 2004"));
         assertThrows(ParseException.class, () -> sdf2.parse("dec 31, 2004"));
     }
 
+    @Test
     public void testGetServerLanguageCode() {
     }
 
+    @Test
     public void testLookupDateFormatSymbols() {
         DateFormatSymbols dfs1 = null;
         DateFormatSymbols dfs2 = null;
@@ -157,11 +165,12 @@ public class FTPClientConfigTest extends TestCase {
         } catch (final ParseException px) {
             fail("failed.to.parse.'russian'");
         }
-        assertEquals("different.parser.same.date", d1, d2);
-        assertEquals("different.parser.same.date", d1, d3);
+        assertEquals(d1, d2, "different.parser.same.date");
+        assertEquals(d1, d3, "different.parser.same.date");
 
     }
 
+    @Test
     public void testSetShortMonthNames() {
     }
 

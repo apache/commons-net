@@ -16,11 +16,17 @@
  */
 package org.apache.commons.net.pop3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.net.InetAddress;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -32,17 +38,13 @@ import junit.framework.TestCase;
  * The tests were originally run on a default installation of James. Your mileage may vary based on the POP3 server you run the tests against. Some servers are
  * more standards-compliant than others.
  */
-public class POP3ClientCommandsTest extends TestCase {
+public class POP3ClientCommandsTest {
     POP3Client pop3Client;
 
     String user = POP3Constants.user;
     String emptyUser = POP3Constants.emptyuser;
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
-
-    public POP3ClientCommandsTest(final String name) {
-        super(name);
-    }
 
     private void connect() throws Exception {
         pop3Client.connect(InetAddress.getByName(mailhost));
@@ -66,6 +68,7 @@ public class POP3ClientCommandsTest extends TestCase {
         pop3Client = new POP3Client();
     }
 
+    @Test
     public void testDelete() throws Exception {
         reset();
         connect();
@@ -95,6 +98,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertEquals(numMessages - numDeleted, msg.length);
     }
 
+    @Test
     public void testDeleteWithReset() throws Exception {
         reset();
         connect();
@@ -127,6 +131,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertEquals(numMessages, msg.length);
     }
 
+    @Test
     public void testListMessageOnEmptyMailbox() throws Exception {
         reset();
         connect();
@@ -137,6 +142,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(msg);
     }
 
+    @Test
     public void testListMessageOnFullMailbox() throws Exception {
         reset();
         connect();
@@ -167,6 +173,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(msg);
     }
 
+    @Test
     public void testListMessagesOnEmptyMailbox() throws Exception {
         reset();
         connect();
@@ -181,6 +188,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(msg);
     }
 
+    @Test
     public void testListMessagesOnFullMailbox() throws Exception {
         reset();
         connect();
@@ -202,6 +210,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(msg);
     }
 
+    @Test
     public void testListUniqueIdentifierOnEmptyMailbox() throws Exception {
         reset();
         connect();
@@ -212,6 +221,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(msg);
     }
 
+    @Test
     public void testListUniqueIDOnFullMailbox() throws Exception {
         reset();
         connect();
@@ -241,6 +251,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(msg);
     }
 
+    @Test
     public void testListUniqueIDsOnEmptyMailbox() throws Exception {
         reset();
         connect();
@@ -255,6 +266,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(msg);
     }
 
+    @Test
     public void testListUniqueIDsOnFullMailbox() throws Exception {
         reset();
         connect();
@@ -275,6 +287,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(msg);
     }
 
+    @Test
     public void testNoopCommand() throws Exception {
         reset();
         connect();
@@ -291,6 +304,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertFalse(pop3Client.noop());
     }
 
+    @Test
     public void testResetAndDeleteShouldFails() throws Exception {
         reset();
         connect();
@@ -302,6 +316,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertFalse(pop3Client.deleteMessage(1));
     }
 
+    @Test
     public void testRetrieveMessageOnEmptyMailbox() throws Exception {
         reset();
         connect();
@@ -309,6 +324,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(pop3Client.retrieveMessage(1));
     }
 
+    @Test
     public void testRetrieveMessageOnFullMailbox() throws Exception {
         reset();
         connect();
@@ -348,6 +364,7 @@ public class POP3ClientCommandsTest extends TestCase {
         }
     }
 
+    @Test
     public void testRetrieveMessageShouldFails() throws Exception {
         reset();
         connect();
@@ -367,6 +384,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(pop3Client.retrieveMessage(1));
     }
 
+    @Test
     public void testRetrieveMessageTopOnEmptyMailbox() throws Exception {
         reset();
         connect();
@@ -374,6 +392,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(pop3Client.retrieveMessageTop(1, 10));
     }
 
+    @Test
     public void testRetrieveMessageTopOnFullMailbox() throws Exception {
         reset();
         connect();
@@ -390,6 +409,7 @@ public class POP3ClientCommandsTest extends TestCase {
         }
     }
 
+    @Test
     public void testRetrieveMessageTopShouldFails() throws Exception {
         reset();
         connect();
@@ -409,6 +429,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertNull(pop3Client.retrieveMessageTop(1, 10));
     }
 
+    @Test
     public void testRetrieveOverSizedMessageTopOnFullMailbox() throws Exception {
         reset();
         connect();
@@ -445,6 +466,7 @@ public class POP3ClientCommandsTest extends TestCase {
         assertTrue(actualSize >= reportedSize);
     }
 
+    @Test
     public void testStatus() throws Exception {
         reset();
         connect();

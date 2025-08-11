@@ -16,7 +16,12 @@
  */
 package org.apache.commons.net.tftp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -28,13 +33,13 @@ import java.net.InetAddress;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.tftp.TFTPServer.ServerMode;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the TFTP Server and TFTP Client by creating some FILES in the system temp folder and then uploading and downloading them.
  */
-public class TFTPTest extends TestCase {
+public class TFTPTest {
     private static final int SERVER_PORT = 6902;
     private static TFTPServer tftpS;
     private static final File SERVER_DIR = FileUtils.getTempDirectory();
@@ -81,7 +86,7 @@ public class TFTPTest extends TestCase {
         return FileUtils.contentEquals(a, b);
     }
 
-    @Override
+    @AfterEach
     protected void tearDown() throws Exception {
         testsLeftToRun--;
         if (testsLeftToRun <= 0) {
@@ -92,9 +97,9 @@ public class TFTPTest extends TestCase {
                 file.delete();
             }
         }
-        super.tearDown();
     }
 
+    @Test
     public void testASCIIDownloads() {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
@@ -107,6 +112,7 @@ public class TFTPTest extends TestCase {
         }
     }
 
+    @Test
     public void testASCIIUploads() throws Exception {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
@@ -114,6 +120,7 @@ public class TFTPTest extends TestCase {
         }
     }
 
+    @Test
     public void testDiscardPackets() throws IOException {
         try (TFTP tftp = new TFTP()) {
             assertThrows(NullPointerException.class, tftp::discardPackets);
@@ -132,25 +139,27 @@ public class TFTPTest extends TestCase {
 
             // cleanup old failed runs
             out.delete();
-            assertFalse("Couldn't clear output location", out.exists());
+            assertFalse(out.exists(), "Couldn't clear output location");
 
             try (FileOutputStream output = new FileOutputStream(out)) {
                 tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
             }
 
-            assertTrue("file not created", out.exists());
-            assertTrue("FILES not identical on file " + file, contentEquals(out, file));
+            assertTrue(out.exists(), "file not created");
+            assertTrue(contentEquals(out, file), "FILES not identical on file " + file);
 
             // delete the downloaded file
             out.delete();
         }
     }
 
+    @Test
     public void testGetModeName() {
         assertNotNull(TFTP.getModeName(0));
         assertNotNull(TFTP.getModeName(1));
     }
 
+    @Test
     public void testHugeDownloads() throws Exception {
         // test with the smaller FILES
         for (int i = 5; i < FILES.length; i++) {
@@ -158,12 +167,14 @@ public class TFTPTest extends TestCase {
         }
     }
 
+    @Test
     public void testHugeUploads() throws Exception {
         for (int i = 5; i < FILES.length; i++) {
             testUpload(TFTP.BINARY_MODE, FILES[i]);
         }
     }
 
+    @Test
     public void testSend() throws IOException {
         try (TFTP tftp = new TFTP()) {
             tftp.open();
@@ -171,6 +182,7 @@ public class TFTPTest extends TestCase {
         }
     }
 
+    @Test
     public void testTFTPBinaryDownloads() throws Exception {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
@@ -178,6 +190,7 @@ public class TFTPTest extends TestCase {
         }
     }
 
+    @Test
     public void testTFTPBinaryUploads() throws Exception {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
@@ -185,11 +198,12 @@ public class TFTPTest extends TestCase {
         }
     }
 
+    @Test
     public void testResizeBuffer() {
         try (TFTPClient tftp = new TFTPClient()) {
             final int bufferSize = 1024;
             tftp.resetBuffersToSize(bufferSize);
-            assertEquals("Packet size should be 1028", bufferSize + 4, tftp.getPacketSize());
+            assertEquals(bufferSize + 4, tftp.getPacketSize(), "Packet size should be 1028");
         }
     }
 
@@ -202,7 +216,7 @@ public class TFTPTest extends TestCase {
             final File in = new File(SERVER_DIR, FILE_PREFIX + "upload");
             // cleanup old failed runs
             in.delete();
-            assertFalse("Couldn't clear output location", in.exists());
+            assertFalse(in.exists(), "Couldn't clear output location");
 
             try (FileInputStream fis = new FileInputStream(file)) {
                 tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
@@ -211,8 +225,8 @@ public class TFTPTest extends TestCase {
             // need to give the server a bit of time to receive our last packet, and
             // close out its file buffers, etc.
             Thread.sleep(100);
-            assertTrue("file not created", in.exists());
-            assertTrue("FILES not identical on file " + file, contentEquals(file, in));
+            assertTrue(in.exists(), "file not created");
+            assertTrue(contentEquals(file, in), "FILES not identical on file " + file);
 
             in.delete();
         }

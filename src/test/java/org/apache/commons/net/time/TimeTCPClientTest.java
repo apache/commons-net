@@ -16,14 +16,18 @@
  */
 package org.apache.commons.net.time;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class TimeTCPClientTest extends TestCase {
+public class TimeTCPClientTest {
     private TimeTestSimpleServer server1;
 
     private int _port = 3333; // default test port
@@ -53,6 +57,7 @@ public class TimeTCPClientTest extends TestCase {
     /**
      * Tests the times retrieved via the Time protocol implementation.
      */
+    @Test
     public void testCompareTimes() throws Exception {
         openConnections();
 
@@ -102,6 +107,7 @@ public class TimeTCPClientTest extends TestCase {
     /**
      * Tests the constant basetime used by TimeClient against tha computed from Calendar class.
      */
+    @Test
     public void testInitial() {
         final TimeZone utcZone = TimeZone.getTimeZone("UTC");
         final Calendar calendar = Calendar.getInstance(utcZone);
@@ -109,6 +115,6 @@ public class TimeTCPClientTest extends TestCase {
         calendar.set(Calendar.MILLISECOND, 0);
         final long baseTime = calendar.getTime().getTime() / 1000L;
 
-        assertEquals(baseTime, -TimeTCPClient.SECONDS_1900_TO_1970);
+        assertEquals(-TimeTCPClient.SECONDS_1900_TO_1970, baseTime);
     }
 }
