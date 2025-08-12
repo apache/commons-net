@@ -16,10 +16,17 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.junit.jupiter.api.Test;
 
 public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
 
@@ -36,25 +43,21 @@ public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
             "-rw-r--r--        0       66990    66990 Jul 22  2010 presentation11.jpg", "drwxr-xr-x               folder        0 Jan  4 14:49 Steak",
             "-rwx------        0       12713    12713 Jul  8  2009 Twitter_Avatar.png", };
 
-    public MacOsPeterFTPEntryParserTest(final String name) {
-        super(name);
-    }
-
     /**
      * Method checkPermissions. Verify that the persmissions were properly set.
      *
      * @param f
      */
     private void checkPermissions(final FTPFile f) {
-        assertTrue("Should have user read permission.", f.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should have user write permission.", f.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have user execute permission.", f.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have group read permission.", f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
-        assertFalse("Should NOT have group write permission.", f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have group execute permission.", f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have world read permission.", f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
-        assertFalse("Should NOT have world write permission.", f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have world execute permission.", f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION), "Should have user read permission.");
+        assertTrue(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION), "Should have user write permission.");
+        assertTrue(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION), "Should have user execute permission.");
+        assertTrue(f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION), "Should have group read permission.");
+        assertFalse(f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION), "Should NOT have group write permission.");
+        assertTrue(f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION), "Should have group execute permission.");
+        assertTrue(f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION), "Should have world read permission.");
+        assertFalse(f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION), "Should NOT have world write permission.");
+        assertTrue(f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION), "Should have world execute permission.");
     }
 
     @Override
@@ -73,15 +76,17 @@ public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testDefaultPrecision() {
         testPrecision("-rw-r--r--    78440       49231   127671 Jul 22  2010 Filename with whitespace.jpg", CalendarUnit.DAY_OF_MONTH);
     }
 
     @Override
+    @Test
     public void testParseFieldsOnDirectory() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("drwxr-xr-x               folder        0 Mar  2 15:13 Alias_to_Steak");
-        assertNotNull("Could not parse entry.", f);
-        assertTrue("Should have been a directory.", f.isDirectory());
+        assertNotNull(f, "Could not parse entry.");
+        assertTrue(f.isDirectory(), "Should have been a directory.");
         checkPermissions(f);
         assertEquals(0, f.getHardLinkCount());
         assertNull(f.getUser());
@@ -107,10 +112,11 @@ public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testParseFieldsOnFile() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("-rwxr-xr-x    78440       49231   127671 Jul  2 14:51 Filename with whitespace.jpg");
-        assertNotNull("Could not parse entry.", f);
-        assertTrue("Should have been a file.", f.isFile());
+        assertNotNull(f, "Could not parse entry.");
+        assertTrue(f.isFile(), "Should have been a file.");
         checkPermissions(f);
         assertEquals(0, f.getHardLinkCount());
         assertNull(f.getUser());
@@ -135,6 +141,7 @@ public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testRecentPrecision() {
         testPrecision("-rw-r--r--    78440       49231   127671 Jul 22 14:51 Filename with whitespace.jpg", CalendarUnit.MINUTE);
     }

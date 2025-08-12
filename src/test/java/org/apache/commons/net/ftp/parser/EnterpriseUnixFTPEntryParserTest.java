@@ -16,6 +16,10 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.Instant;
 import java.time.Month;
 import java.time.ZoneId;
@@ -25,6 +29,7 @@ import java.util.TimeZone;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the EnterpriseUnixFTPEntryParser
@@ -52,29 +57,20 @@ public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
             "-C--E-----FTP A QUA1I1      18128       41 Aug 12 13:56 QUADTEST2", "-C--E-----FTP A QUA1I1      18128       41 Apr 1 2014 QUADTEST3" };
 
     /**
-     * Creates a new EnterpriseUnixFTPEntryParserTest object.
-     *
-     * @param name Test name.
-     */
-    public EnterpriseUnixFTPEntryParserTest(final String name) {
-        super(name);
-    }
-
-    /**
      * Method checkPermisions. Verify that the parser does NOT set the permissions.
      *
      * @param dir
      */
     private void checkPermisions(final FTPFile dir) {
-        assertFalse("Owner should not have read permission.", dir.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
-        assertFalse("Owner should not have write permission.", dir.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertFalse("Owner should not have execute permission.", dir.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertFalse("Group should not have read permission.", dir.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
-        assertFalse("Group should not have write permission.", dir.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertFalse("Group should not have execute permission.", dir.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertFalse("World should not have read permission.", dir.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
-        assertFalse("World should not have write permission.", dir.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertFalse("World should not have execute permission.", dir.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertFalse(dir.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION), "Owner should not have read permission.");
+        assertFalse(dir.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION), "Owner should not have write permission.");
+        assertFalse(dir.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION), "Owner should not have execute permission.");
+        assertFalse(dir.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION), "Group should not have read permission.");
+        assertFalse(dir.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION), "Group should not have write permission.");
+        assertFalse(dir.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION), "Group should not have execute permission.");
+        assertFalse(dir.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION), "World should not have read permission.");
+        assertFalse(dir.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION), "World should not have write permission.");
+        assertFalse(dir.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION), "World should not have execute permission.");
     }
 
     /**
@@ -102,6 +98,7 @@ public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testDefaultPrecision() {
         testPrecision("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 2014 QUADTEST", CalendarUnit.DAY_OF_MONTH);
     }
@@ -110,6 +107,7 @@ public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
      * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#testParseFieldsOnDirectory()
      */
     @Override
+    @Test
     public void testParseFieldsOnDirectory() throws Exception {
         // Everything is a File for now.
     }
@@ -118,13 +116,14 @@ public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
      * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#testParseFieldsOnFile()
      */
     @Override
+    @Test
     public void testParseFieldsOnFile() throws Exception {
         // Note: No time zone.
         final FTPFile ftpFile = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
         final Calendar today = Calendar.getInstance();
         int year = today.get(Calendar.YEAR);
 
-        assertTrue("Should be a file.", ftpFile.isFile());
+        assertTrue(ftpFile.isFile(), "Should be a file.");
         assertEquals("QUADTEST", ftpFile.getName());
         assertEquals(5000000000L, ftpFile.getSize());
         assertEquals("QUA1I1", ftpFile.getUser());
@@ -158,6 +157,7 @@ public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testRecentPrecision() {
         testPrecision("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST", CalendarUnit.MINUTE);
     }

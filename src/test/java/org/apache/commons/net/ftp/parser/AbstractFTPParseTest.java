@@ -16,6 +16,11 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
@@ -23,12 +28,12 @@ import java.util.Locale;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  */
-public abstract class AbstractFTPParseTest extends TestCase {
+public abstract class AbstractFTPParseTest {
     // associate Calendar unit ints with a readable string
     // MUST be listed least significant first, as the routine needs to
     // find the previous - less significant - entry
@@ -46,13 +51,6 @@ public abstract class AbstractFTPParseTest extends TestCase {
     private FTPFileEntryParser parser;
 
     protected SimpleDateFormat df;
-
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
-    public AbstractFTPParseTest(final String name) {
-        super(name);
-    }
 
     /**
      * during processing you could hook here to do additional tests
@@ -109,20 +107,20 @@ public abstract class AbstractFTPParseTest extends TestCase {
         return f;
     }
 
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
-        super.setUp();
         parser = getParser();
         df = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy", Locale.US);
     }
 
+    @Test
     public void testBadListing() {
 
         final String[] badsamples = getBadListing();
         for (final String test : badsamples) {
 
             final FTPFile f = parser.parseFTPEntry(test);
-            assertNull("Should have Failed to parse <" + test + ">", nullFileOrNullDate(f));
+            assertNull(nullFileOrNullDate(f), "Should have Failed to parse <" + test + ">");
 
             doAdditionalBadTests(test, f);
         }
@@ -131,13 +129,14 @@ public abstract class AbstractFTPParseTest extends TestCase {
     // Force subclasses to test precision
     public abstract void testDefaultPrecision();
 
+    @Test
     public void testGoodListing() {
 
         final String[] goodsamples = getGoodListing();
         for (final String test : goodsamples) {
 
             final FTPFile f = parser.parseFTPEntry(test);
-            assertNotNull("Failed to parse " + test, f);
+            assertNotNull(f, "Failed to parse " + test);
 
             doAdditionalGoodTests(test, f);
         }
@@ -159,24 +158,24 @@ public abstract class AbstractFTPParseTest extends TestCase {
 
     protected void testPrecision(final String listEntry, final CalendarUnit expectedPrecision) {
         final FTPFile file = getParser().parseFTPEntry(listEntry);
-        assertNotNull("Could not parse " + listEntry, file);
+        assertNotNull(file, "Could not parse " + listEntry);
         final Calendar stamp = file.getTimestamp();
-        assertNotNull("Failed to parse time in " + listEntry, stamp);
+        assertNotNull(stamp, "Failed to parse time in " + listEntry);
         final Instant instant = file.getTimestampInstant();
-        assertNotNull("Failed to parse time in " + listEntry, instant);
+        assertNotNull(instant, "Failed to parse time in " + listEntry);
         final int ordinal = expectedPrecision.ordinal();
         final CalendarUnit[] values = CalendarUnit.values();
         // Check expected unit and all more significant ones are set
         // This is needed for FTPFile.toFormattedString() to work correctly
         for (int i = ordinal; i < values.length; i++) {
             final CalendarUnit unit = values[i];
-            assertTrue("Expected set " + unit + " in " + listEntry, stamp.isSet(unit.unit));
+            assertTrue(stamp.isSet(unit.unit), "Expected set " + unit + " in " + listEntry);
         }
         // Check previous entry (if any) is not set
         // This is also needed for FTPFile.toFormattedString() to work correctly
         if (ordinal > 0) {
             final CalendarUnit prevUnit = values[ordinal - 1];
-            assertFalse("Expected not set " + prevUnit + " in " + listEntry, stamp.isSet(prevUnit.unit));
+            assertFalse(stamp.isSet(prevUnit.unit), "Expected not set " + prevUnit + " in " + listEntry);
         }
     }
 

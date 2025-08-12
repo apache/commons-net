@@ -18,6 +18,7 @@ package org.apache.commons.net.ftp.parser;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.junit.jupiter.api.Test;
 
 /**
  */
@@ -40,10 +41,6 @@ public class MLSxEntryParserTest extends AbstractFTPParseTest {
                                                                                                                            // a file name!
             "  ", // pathname of space
     };
-
-    public MLSxEntryParserTest(final String name) {
-        super(name);
-    }
 
     @Override
     protected String[] getBadListing() {
@@ -72,20 +69,23 @@ public class MLSxEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Override
+    @Test
     public void testDefaultPrecision() {
         testPrecision("Type=dir;Modify=20141022065102;UNIX.mode=0775; source", CalendarUnit.SECOND);
-
     }
 
     @Override
+    @Test
     public void testParseFieldsOnDirectory() throws Exception {
     }
 
     @Override
+    @Test
     public void testParseFieldsOnFile() throws Exception {
     }
 
     @Override
+    @Test
     public void testRecentPrecision() { // borrow this method to test milliseconds
         testPrecision("Type=dir;Modify=20141022065102.999;UNIX.mode=0775; source", CalendarUnit.MILLISECOND);
     }

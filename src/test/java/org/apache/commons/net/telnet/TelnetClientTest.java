@@ -16,6 +16,11 @@
  */
 package org.apache.commons.net.telnet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,12 +28,14 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.time.Duration;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit test class for TelnetClient.s Implements protocol compliance tests
  */
-public class TelnetClientTest extends TestCase implements TelnetNotificationHandler {
+public class TelnetClientTest implements TelnetNotificationHandler {
     /**
      * Handy holder to hold both sides of the connection used in testing for clarity.
      */
@@ -129,7 +136,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * open connections needed for the tests for the test.
      */
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
         final SimpleOptionHandler subnegotiationSizeHandler = new SimpleOptionHandler(99, false, false, true, false) {
             @Override
@@ -141,7 +148,6 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         };
 
         int socket = 0;
-        super.setUp();
         for (int port = 3333; socket < NUM_CONNECTIONS && port < 4000; port++) {
             TelnetTestSimpleServer server = null;
             TelnetClient client = null;
@@ -201,7 +207,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * @throws Exception
      */
-    @Override
+    @AfterEach
     protected void tearDown() throws Exception {
         NOREAD.close();
         ANSI.close();
@@ -213,12 +219,12 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         } catch (final InterruptedException ie) {
             // do nothing
         }
-        super.tearDown();
     }
 
     /*
      * test of AYT functionality
      */
+    @Test
     public void testAYT() throws Exception {
         boolean aytTrueOk = false;
         boolean aytFalseOk = false;
@@ -256,6 +262,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * protocol compliance test in case of option handler removal
      */
+    @Test
     public void testDeleteOptionHandler() throws Exception {
         boolean removeOk = false;
         boolean removeInvalidOk1 = false;
@@ -309,6 +316,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * tests the initial condition of the sessions
      */
+    @Test
     public void testInitial() throws Exception {
         boolean connect1Ok = false;
         boolean connect2Ok = false;
@@ -374,6 +382,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * test of max subnegotiation length
      */
+    @Test
     public void testMaxSubnegotiationLength() throws Exception {
         final byte[] send = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, (byte) 99, (byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5, (byte) 6,
                 (byte) 7, (byte) 8, (byte) 9, (byte) 10, (byte) 11, (byte) 12, (byte) 13, (byte) 14, (byte) 15, (byte) TelnetCommand.IAC,
@@ -417,6 +426,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * test of option negotiation notification
      */
+    @Test
     public void testNotification() throws Exception {
         final byte[] buffread1 = new byte[6];
         final byte[] send1 = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) 15, (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, (byte) 15, };
@@ -468,6 +478,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * protocol compliance test for option negotiation
      */
+    @Test
     public void testOptionNegotiation() throws Exception {
         boolean negotiation1Ok = false;
         final byte[] buffread1 = new byte[6];
@@ -591,6 +602,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * protocol compliance test for option renegotiation
      */
+    @Test
     public void testOptionRenegotiation() throws Exception {
         boolean negotiation1Ok = false;
 
@@ -639,6 +651,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     /*
      * test of setReaderThread
      */
+    @Test
     public void testSetReaderThread() throws Exception {
         boolean negotiation1Ok = false;
         boolean negotiation2Ok = false;
@@ -706,14 +719,15 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
 
         assertFalse(NOREAD.client.getReaderThread());
         assertTrue(STANDARD.client.getReaderThread());
-        assertTrue("Expected readOk to be true, got " + readOk, readOk);
-        assertTrue("Expected negotiation1Ok to be true, got " + negotiation1Ok, negotiation1Ok);
-        assertTrue("Expected negotiation2Ok to be true, got " + negotiation2Ok, negotiation2Ok);
+        assertTrue(readOk, "Expected readOk to be true, got " + readOk);
+        assertTrue(negotiation1Ok, "Expected negotiation1Ok to be true, got " + negotiation1Ok);
+        assertTrue(negotiation2Ok, "Expected negotiation2Ok to be true, got " + negotiation2Ok);
     }
 
     /*
      * test of Spy functionality
      */
+    @Test
     public void testSpy() throws Exception {
         boolean test1spyOk = false;
         boolean test2spyOk = false;

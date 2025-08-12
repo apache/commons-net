@@ -16,15 +16,20 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.junit.jupiter.api.Test;
 
 /**
  */
-
 public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     private static final String[][] badsamples = {
             { "PEP              4019 04/03/18 18:58:16 STMF       einladung.zip", "PEP               422 03/24 14:06:26 *STMF      readme",
@@ -42,17 +47,10 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
                     "----rwxr-x   1 PEP      0           8492 Apr 07 07:13 build.xml", "d---rwxr-x   2 PEP      0          45056 Mar 24 14:06 dir1",
                     "d---rwxr-x   2 PEP      0          45056 Mar 24 14:06 zdir2" } };
 
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
-    public OS400FTPEntryParserTest(final String name) {
-        super(name);
-    }
-
     @Override
     protected void doAdditionalGoodTests(final String test, final FTPFile f) {
         if (test.startsWith("d")) {
-            assertEquals("directory.type", FTPFile.DIRECTORY_TYPE, f.getType());
+            assertEquals(FTPFile.DIRECTORY_TYPE, f.getType(), "directory.type");
         }
     }
 
@@ -81,19 +79,21 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     @Override
+    @Test
     public void testDefaultPrecision() {
         testPrecision("PEP              4019 04/03/18 18:58:16 *STMF      einladung.zip", CalendarUnit.SECOND);
     }
 
+    @Test
     public void testNET573() {
         final FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_AS400);
         conf.setDefaultDateFormatStr("MM/dd/yy HH:mm:ss");
         final FTPFileEntryParser parser = new OS400FTPEntryParser(conf);
 
         final FTPFile f = parser.parseFTPEntry("ZFTPDEV 9069 05/20/15 15:36:52 *STMF /DRV/AUDWRKSHET/AUDWRK0204232015114625.PDF");
-        assertNotNull("Could not parse entry.", f);
-        assertNotNull("Could not parse timestamp.", f.getTimestamp());
-        assertFalse("Should not have been a directory.", f.isDirectory());
+        assertNotNull(f, "Could not parse entry.");
+        assertNotNull(f.getTimestamp(), "Could not parse timestamp.");
+        assertFalse(f.isDirectory(), "Should not have been a directory.");
         assertEquals("ZFTPDEV", f.getUser());
         assertEquals("AUDWRK0204232015114625.PDF", f.getName());
         assertEquals(9069, f.getSize());
@@ -113,10 +113,11 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
      * @see AbstractFTPParseTest#testParseFieldsOnDirectory()
      */
     @Override
+    @Test
     public void testParseFieldsOnDirectory() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
-        assertNotNull("Could not parse entry.", f);
-        assertTrue("Should have been a directory.", f.isDirectory());
+        assertNotNull(f, "Could not parse entry.");
+        assertTrue(f.isDirectory(), "Should have been a directory.");
         assertEquals("PEP", f.getUser());
         assertEquals("dir1", f.getName());
         assertEquals(36864, f.getSize());
@@ -137,10 +138,11 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
      * @see AbstractFTPParseTest#testParseFieldsOnFile()
      */
     @Override
+    @Test
     public void testParseFieldsOnFile() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
-        assertNotNull("Could not parse entry.", f);
-        assertTrue("Should have been a file.", f.isFile());
+        assertNotNull(f, "Could not parse entry.");
+        assertTrue(f.isFile(), "Should have been a file.");
         assertEquals("PEP", f.getUser());
         assertEquals("build.xml", f.getName());
         assertEquals(5000000000L, f.getSize());
@@ -159,14 +161,16 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     /**
      * Test file names with spaces.
      */
+    @Test
     public void testParseFileNameWithSpaces() {
         final FTPFile f = getParser().parseFTPEntry("MYUSER              3 06/12/21 12:00:00 *STMF      file with space.txt");
-        assertNotNull("Could not parse entry.", f);
-        assertTrue("Should have been a file.", f.isFile());
+        assertNotNull(f, "Could not parse entry.");
+        assertTrue(f.isFile(), "Should have been a file.");
         assertEquals("file with space.txt", f.getName());
     }
 
     @Override
+    @Test
     public void testRecentPrecision() {
         testPrecision("----rwxr-x   1 PEP      0           4019 Mar 18 18:58 einladung.zip", CalendarUnit.MINUTE);
     }
