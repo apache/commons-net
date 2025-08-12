@@ -65,6 +65,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Henri Biestro, Gary Gregory">org.apache.commons.net.daytime.DaytimeTCPClientTest now should run inside most VPNs.</action>
       <action type="fix" dev="ggregory" due-to="Jakub Kupczyk">Migrate tests to JUnit5 #358.</action>
+      <action type="fix" dev="ggregory" due-to="Jakub Kupczyk, Gary Gregory">Migrate tests to JUnit5 - final #359.</action> 
       <!-- ADD -->
       <!-- UPDATE -->
     </release>
