@@ -30,6 +30,7 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import org.apache.commons.lang3.time.TimeZones;
 import org.junit.jupiter.api.Test;
 
 public class FTPFileTest {
@@ -37,7 +38,7 @@ public class FTPFileTest {
     @Test
     public void testGetTimestampInstant() {
         final FTPFile file = new FTPFile();
-        final Calendar timestamp = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        final Calendar timestamp = Calendar.getInstance(TimeZones.GMT);
         timestamp.set(2023, Calendar.AUGUST, 4, 23, 40, 55);
         file.setTimestamp(timestamp);
         final Instant timestampInstant = file.getTimestampInstant();
