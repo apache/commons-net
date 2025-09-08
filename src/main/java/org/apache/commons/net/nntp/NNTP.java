@@ -471,6 +471,27 @@ public class NNTP extends SocketClient {
         return sendCommand(NNTPCommand.LIST, command.toString());
     }
 
+    private static void appendDateTimeDistributions(final StringBuilder buffer,
+                                                    final String date,
+                                                    final String time,
+                                                    final boolean GMT,
+                                                    final String distributions) {
+        buffer.append(date);
+        buffer.append(' ');
+        buffer.append(time);
+
+        if (GMT) {
+            buffer.append(' ');
+            buffer.append("GMT");
+        }
+
+        if (distributions != null) {
+            buffer.append(" <");
+            buffer.append(distributions);
+            buffer.append('>');
+        }
+    }
+
     /**
      * A convenience method to send the "NEWGROUPS" command to the server, receive the reply, and return the reply code.
      *
@@ -486,22 +507,7 @@ public class NNTP extends SocketClient {
      */
     public int newgroups(final String date, final String time, final boolean GMT, final String distributions) throws IOException {
         final StringBuilder buffer = new StringBuilder();
-
-        buffer.append(date);
-        buffer.append(' ');
-        buffer.append(time);
-
-        if (GMT) {
-            buffer.append(' ');
-            buffer.append("GMT");
-        }
-
-        if (distributions != null) {
-            buffer.append(" <");
-            buffer.append(distributions);
-            buffer.append('>');
-        }
-
+        appendDateTimeDistributions(buffer, date, time, GMT, distributions);
         return sendCommand(NNTPCommand.NEWGROUPS, buffer.toString());
     }
 
@@ -524,21 +530,7 @@ public class NNTP extends SocketClient {
 
         buffer.append(newsgroups);
         buffer.append(' ');
-        buffer.append(date);
-        buffer.append(' ');
-        buffer.append(time);
-
-        if (GMT) {
-            buffer.append(' ');
-            buffer.append("GMT");
-        }
-
-        if (distributions != null) {
-            buffer.append(" <");
-            buffer.append(distributions);
-            buffer.append('>');
-        }
-
+        appendDateTimeDistributions(buffer, date, time, GMT, distributions);
         return sendCommand(NNTPCommand.NEWNEWS, buffer.toString());
     }
 
