@@ -1819,7 +1819,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @return the name
      * @throws IOException on error
-     * @deprecated use {@link #getSystemType()} instead
+     * @deprecated Use {@link #getSystemType()} instead
      */
     @Deprecated
     public String getSystemName() throws IOException {

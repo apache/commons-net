@@ -22,7 +22,7 @@ package org.apache.commons.net.ftp;
  * names are transcriptions from the code descriptions of RFC 959. For those who think in terms of the actual FTP commands, a set of constants such as
  * {@link #USER USER} are provided where the constant name is the same as the FTP command.
  *
- * @deprecated use {@link FTPCmd} instead
+ * @deprecated Use {@link FTPCmd} instead
  */
 @Deprecated
 public final class FTPCommand {
