@@ -78,6 +78,12 @@ public class SubnetUtilsTest {
             ImmutablePair.of("192.168.0.1/32", 1L));
     // @formatter:on
 
+    private static final List<ImmutablePair<String, String>> VALUE_SETS_NET641 = Arrays.asList(
+            ImmutablePair.of("192.168.1.0/00", "0.0.0.0"),
+            ImmutablePair.of("192.168.1.0/30", "0.0.0.0"),
+            ImmutablePair.of("192.168.1.0/31", "0.0.0.0"),
+            ImmutablePair.of("192.168.1.0/32", "0.0.0.0"));
+
     @Test
     public void testAddresses() {
         final SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
@@ -345,12 +351,12 @@ public class SubnetUtilsTest {
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("0.0.0.0", "0.0.0.1"));
     }
 
-    @Test
-    public void testNET641() {
-        assertFalse(new SubnetUtils("192.168.1.0/00").getInfo().isInRange("0.0.0.0"));
-        assertFalse(new SubnetUtils("192.168.1.0/30").getInfo().isInRange("0.0.0.0"));
-        assertFalse(new SubnetUtils("192.168.1.0/31").getInfo().isInRange("0.0.0.0"));
-        assertFalse(new SubnetUtils("192.168.1.0/32").getInfo().isInRange("0.0.0.0"));
+    @ParameterizedTest
+    @FieldSource("VALUE_SETS_NET641")
+    public void testNET641(final ImmutablePair<String, String> pair) {
+        final String cidrNotation = pair.getKey();
+        final String address = pair.getValue();
+        assertFalse(new SubnetUtils(cidrNotation).getInfo().isInRange(address));
     }
 
     @Test
