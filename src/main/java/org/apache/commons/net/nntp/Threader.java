@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * This is an implementation of a message threading algorithm, as originally devised by Zamie Zawinski.
- * See <a href="http://www.jwz.org/doc/threading.html">http://www.jwz.org/doc/threading.html</a> for details.
+ * See <a href="https://www.jwz.org/doc/threading.html">http://www.jwz.org/doc/threading.html</a> for details.
  * For his Java implementation, see
  * <a href="https://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java">
  * https://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java</a>

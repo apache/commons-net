@@ -471,7 +471,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Parse the path from a CWD reply.
      * <p>
-     * According to <a href="http://www.ietf.org/rfc/rfc959.txt">RFC959</a>, it should be the same as for MKD i.e.
+     * According to <a href="https://www.ietf.org/rfc/rfc959.txt">RFC959</a>, it should be the same as for MKD i.e.
      * {@code 257<space>"<directory-name>"[<space>commentary]} where any double-quotes in {@code <directory-name>} are doubled. Unlike MKD, the commentary is
      * optional.
      * </p>
@@ -1409,7 +1409,7 @@ public class FTPClient extends FTP implements Configurable {
         S&gt; 211 END
      * </pre>
      *
-     * @see <a href="http://www.faqs.org/rfcs/rfc2389.html">http://www.faqs.org/rfcs/rfc2389.html</a>
+     * @see <a href="https://www.faqs.org/rfcs/rfc2389.html">http://www.faqs.org/rfcs/rfc2389.html</a>
      * @return True if successfully completed, false if not.
      * @throws IOException on error
      * @since 2.2

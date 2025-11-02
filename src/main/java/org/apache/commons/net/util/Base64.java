@@ -43,7 +43,7 @@ import java.util.Objects;
  * </p>
  *
  * @deprecated Use {@link java.util.Base64}.
- * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
+ * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 2.2
  */
 @Deprecated
@@ -56,14 +56,14 @@ public class Base64 {
      * The {@value} character limit does not count the trailing CRLF, but counts all other characters, including any equal signs.
      * </p>
      *
-     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 6.8</a>
+     * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 6.8</a>
      */
     static final int CHUNK_SIZE = 76;
 
     /**
      * Chunk separator per RFC 2045 section 2.1.
      *
-     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
+     * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
     static final byte[] CHUNK_SEPARATOR = { '\r', '\n' };
 

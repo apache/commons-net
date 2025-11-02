@@ -74,7 +74,7 @@ public final class NtpUtils {
 
     /**
      * Gets refId as reference clock string (e.g. GPS, WWV, LCL). If string is invalid (non-ASCII character) then returns empty string "". For details refer to
-     * the <A HREF="http://www.eecis.udel.edu/~mills/ntp/html/refclock.html#list">Comprehensive List of Clock Drivers</A>.
+     * the <A href="https://www.eecis.udel.edu/~mills/ntp/html/refclock.html#list">Comprehensive List of Clock Drivers</A>.
      *
      * @param message the message to check
      * @return reference clock string if primary NTP server

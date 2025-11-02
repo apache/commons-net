@@ -528,7 +528,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * Sets the serverLanguageCode property. This property allows user to specify a <a href="http://www.ics.uci.edu/pub/ietf/http/related/iso639.txt">
+     * Sets the serverLanguageCode property. This property allows user to specify a <a href="https://www.ics.uci.edu/pub/ietf/http/related/iso639.txt">
      * two-letter ISO-639 language code</a> that will be used to configure the set of month names used by the file timestamp parser. If neither this nor the
      * {@link #setShortMonthNames(String) shortMonthNames} is specified, parsing will assume English month names, which may or may not be significant, depending
      * on whether the date format(s) specified via {@link #setDefaultDateFormatStr(String) defaultDateFormatStr} and/or {@link #setRecentDateFormatStr(String)

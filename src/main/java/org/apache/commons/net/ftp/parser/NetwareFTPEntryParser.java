@@ -26,7 +26,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * Implements {@link FTPFileEntryParser} and {@link Configurable} for Netware Systems. Note that some proprietary extensions for Novell-specific operations
- * are not supported. See <a href="http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html">
+ * are not supported. See <a href="https://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html">
  * http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html</a> for more details.
  *
  * @see FTPFileEntryParser Usage instructions.
@@ -103,7 +103,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * <li><strong>A</strong> - Access Control; Right to modify trustee assignments and the Inherited Rights Mask.
      * </ul>
      *
-     * See <a href="http://www.novell.com/documentation/nfap10/index.html?page=/documentation/nfap10/nfaubook/data/abxraws.html"> here</a> for more details
+     * See <a href="https://www.novell.com/documentation/nfap10/index.html?page=/documentation/nfap10/nfaubook/data/abxraws.html"> here</a> for more details
      *
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry

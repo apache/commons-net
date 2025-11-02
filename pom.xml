@@ -464,7 +464,7 @@ Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Teln
             <id>dfs</id>
             <email>dfs@apache.org</email>
             <organization>
-                &lt;a href="http://www.savarese.com/"&gt;Savarese Software Research&lt;/a&gt; </organization>
+                &lt;a href="https://www.savarese.com/"&gt;Savarese Software Research&lt;/a&gt; </organization>
         </developer>
         <developer>
             <name>Rory Winston</name>
