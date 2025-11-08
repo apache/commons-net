@@ -42,7 +42,7 @@ import java.net.Socket;
  *     }
  * }
  * </code>
- * <p>NOTE: this is for <B>debugging and testing purposes only</B> and not meant to be run as a reliable server.</p>
+ * <p>NOTE: this is for <strong>debugging and testing purposes only</strong> and not meant to be run as a reliable server.</p>
  * @see org.apache.commons.net.daytime.MockDaytimeTCPServer MockDaytimeTCPServer (for example Daytime Protocol implementation)
  */
 public abstract class MockTcpServer implements Runnable, Closeable {

@@ -30,7 +30,7 @@ import org.apache.commons.io.IOUtils;
  * Listens for TCP socket connections on the time protocol port and writes the local time to socket outputStream as 32-bit integer of seconds since midnight on
  * 1 January 1900 GMT. See <A HREF="ftp://ftp.rfc-editor.org/in-notes/rfc868.txt"> the spec </A> for details.
  * <p>
- * Note this is for <B>debugging purposes only</B> and not meant to be run as a realiable time service.
+ * Note this is for <strong>debugging purposes only</strong> and not meant to be run as a realiable time service.
  */
 public class TimeTestSimpleServer implements Runnable {
 
