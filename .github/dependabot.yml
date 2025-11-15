@@ -18,12 +18,10 @@ updates:
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "friday"
+      interval: "quarterly"
     ignore:
       - dependency-name: "org.slf4j:slf4j-simple"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "friday"
+      interval: "quarterly"
