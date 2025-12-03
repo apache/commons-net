@@ -1867,7 +1867,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Gets the system type from the {@link #FTP_SYSTEM_TYPE} system property, or the server (@link #getSystemType()}, or the {@link #SYSTEM_TYPE_PROPERTIES}
+     * Gets the system type from the {@link #FTP_SYSTEM_TYPE} system property, or the server {@link #getSystemType()}, or the {@link #SYSTEM_TYPE_PROPERTIES}
      * property file.
      *
      * @return The system type obtained from the server.
