@@ -25,7 +25,7 @@ import java.util.stream.StreamSupport;
 /**
  * Performs subnet calculations given a network address and a subnet mask.
  *
- * @see "http://www.faqs.org/rfcs/rfc1519.html"
+ * @see "https://datatracker.ietf.org/doc/html/rfc1519"
  * @since 2.0
  */
 public class SubnetUtils {
