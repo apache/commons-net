@@ -511,7 +511,7 @@ public class FTP extends SocketClient {
      * <li>EPRT |2|1080::8:800:200C:417A|5282|</li>
      * </ul>
      *
-     * @see "http://www.faqs.org/rfcs/rfc2428.html"
+     * @see "https://datatracker.ietf.org/doc/html/rfc2428"
      * @param host The host owning the port.
      * @param port The new port.
      * @return The reply code received from the server.
