@@ -126,6 +126,16 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     }
 
     /**
+     * Gets the default timeout duration that is used when opening a socket.
+     *
+     * @return The default timeout duration that is used when opening a socket.
+     * @since 3.13.0
+     */
+    public Duration getDefaultTimeoutDuration() {
+        return Duration.ofMillis(_timeout_);
+    }
+
+    /**
      * Gets the local address to which the client's socket is bound. If you call this method when the client socket is not open, a NullPointerException is
      * thrown.
      *
