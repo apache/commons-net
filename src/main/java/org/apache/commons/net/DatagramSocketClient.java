@@ -120,7 +120,9 @@ public abstract class DatagramSocketClient implements AutoCloseable {
      * Gets the default timeout in milliseconds that is used when opening a socket.
      *
      * @return The default timeout in milliseconds that is used when opening a socket.
+     * @deprecated Use {@link #getDefaultTimeoutDuration()}.
      */
+    @Deprecated
     public int getDefaultTimeout() {
         return _timeout_;
     }
