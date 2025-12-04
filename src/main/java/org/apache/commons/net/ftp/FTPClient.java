@@ -1409,7 +1409,7 @@ public class FTPClient extends FTP implements Configurable {
         S&gt; 211 END
      * </pre>
      *
-     * @see <a href="https://www.faqs.org/rfcs/rfc2389.html">http://www.faqs.org/rfcs/rfc2389.html</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc2389">RFC 2389</a>
      * @return True if successfully completed, false if not.
      * @throws IOException on error
      * @since 2.2
