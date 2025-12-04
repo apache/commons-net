@@ -224,7 +224,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
                     final TFTPAckPacket ack = (TFTPAckPacket) answer;
                     if (ack.getBlockNumber() != block) {
                         /*
-                         * The origional tftp spec would have called on us to resend the previous data here, however, that causes the SAS Syndrome.
+                         * The original TFTP spec would have called on us to resend the previous data here, however, that causes the SAS Syndrome.
                          * https://datatracker.ietf.org/doc/html/rfc1123 section 4.2.3.1 The modified spec says that we ignore a duplicate ack. If the packet was really
                          * lost, we will time out on receive, and resend the previous data at that point.
                          */
