@@ -225,8 +225,8 @@ public class TFTPServer implements Runnable, AutoCloseable {
                     if (ack.getBlockNumber() != block) {
                         /*
                          * The original TFTP spec would have called on us to resend the previous data here, however, that causes the SAS Syndrome.
-                         * https://datatracker.ietf.org/doc/html/rfc1123 section 4.2.3.1 The modified spec says that we ignore a duplicate ack. If the packet was really
-                         * lost, we will time out on receive, and resend the previous data at that point.
+                         * https://datatracker.ietf.org/doc/html/rfc1123 section 4.2.3.1 The modified spec says that we ignore a duplicate ack. If the packet
+                         * was really lost, we will time out on receive, and resend the previous data at that point.
                          */
                         sendNext = false;
                     } else {
@@ -459,7 +459,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
 
     private PrintStream logError;
     private int maxTimeoutRetries = 3;
-    private int socketTimeout;
+    private Duration socketTimeout;
 
     private Thread serverThread;
 
@@ -627,7 +627,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
      * @return the timeout value
      */
     public int getSocketTimeout() {
-        return socketTimeout;
+        return (int) socketTimeout.toMillis();
     }
 
     /**
@@ -663,7 +663,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
         serverTftp = new TFTP();
 
         // This is the value used in response to each client.
-        socketTimeout = serverTftp.getDefaultTimeout();
+        socketTimeout = serverTftp.getDefaultTimeoutDuration();
 
         // we want the server thread to listen forever.
         serverTftp.setDefaultTimeout(Duration.ZERO);
@@ -766,7 +766,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
         if (timeout < 10) {
             throw new IllegalArgumentException("Invalid Value");
         }
-        socketTimeout = timeout;
+        socketTimeout = Duration.ofMillis(timeout);
     }
 
     /**
