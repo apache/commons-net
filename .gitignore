@@ -6,3 +6,7 @@
 .idea/
 *.iml
 /site-content/
+
+# NetBeans files
+nb-configuration.xml
+nbactions.xml
