@@ -93,14 +93,14 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * <p>
      * Netware file permissions are in the following format: RWCEAFMS, and are explained as follows:
      * <ul>
-     * <li><strong>S</strong> - Supervisor; All rights.
-     * <li><strong>R</strong> - Read; Right to open and read or execute.
-     * <li><strong>W</strong> - Write; Right to open and modify.
-     * <li><strong>C</strong> - Create; Right to create; when assigned to a file, allows a deleted file to be recovered.
-     * <li><strong>E</strong> - Erase; Right to delete.
-     * <li><strong>M</strong> - Modify; Right to rename a file and to change attributes.
-     * <li><strong>F</strong> - File Scan; Right to see directory or file listings.
-     * <li><strong>A</strong> - Access Control; Right to modify trustee assignments and the Inherited Rights Mask.
+     * <li><strong>S</strong> - Supervisor; All rights.</li>
+     * <li><strong>R</strong> - Read; Right to open and read or execute.</li>
+     * <li><strong>W</strong> - Write; Right to open and modify.</li>
+     * <li><strong>C</strong> - Create; Right to create; when assigned to a file, allows a deleted file to be recovered.</li>
+     * <li><strong>E</strong> - Erase; Right to delete.</li>
+     * <li><strong>M</strong> - Modify; Right to rename a file and to change attributes.</li>
+     * <li><strong>F</strong> - File Scan; Right to see directory or file listings.</li>
+     * <li><strong>A</strong> - Access Control; Right to modify trustee assignments and the Inherited Rights Mask.</li>
      * </ul>
      *
      * See <a href="https://www.novell.com/documentation/nfap10/index.html?page=/documentation/nfap10/nfaubook/data/abxraws.html"> here</a> for more details
