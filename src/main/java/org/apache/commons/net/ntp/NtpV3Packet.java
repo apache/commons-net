@@ -225,7 +225,7 @@ public interface NtpV3Packet {
     int getRootDispersion();
 
     /**
-     * Gets the the root dispersion in milliseconds.
+     * Gets the root dispersion in milliseconds.
      *
      * @return the root dispersion in milliseconds.
      */

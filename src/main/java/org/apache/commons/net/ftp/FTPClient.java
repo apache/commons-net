@@ -1002,7 +1002,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Gets the the output stream.
+     * Gets the output stream.
      *
      * @param command the command to send
      * @param remote  the remote file name
