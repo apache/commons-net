@@ -1781,6 +1781,7 @@ public class FTPClient extends FTP implements Configurable {
      * <p>
      * Issue the FTP STAT command to the server.
      * </p>
+     *
      * @return The status information returned by the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or

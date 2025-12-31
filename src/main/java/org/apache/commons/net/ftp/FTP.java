@@ -990,6 +990,7 @@ public class FTP extends SocketClient {
      * command-name     = <any FTP command which allows option setting>
      * command-options  = <format specified by individual FTP command>
      * }</pre>
+     *
      * @param commandNameOptions The OPTS command name and options.
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -1013,6 +1014,7 @@ public class FTP extends SocketClient {
      * command-name     = <any FTP command which allows option setting>
      * command-options  = <format specified by individual FTP command>
      * }</pre>
+     *
      * @param commandName The OPTS command name.
      * @param commandOptions The OPTS command options.
      * @return The reply code received from the server.
@@ -1310,6 +1312,7 @@ public class FTP extends SocketClient {
      * <p>
      * Please note that this has to be set before the connection is established.
      * </p>
+     *
      * @param charset The new character encoding for the control connection.
      * @since 3.12.0
      */
@@ -1323,6 +1326,7 @@ public class FTP extends SocketClient {
      * <p>
      * Please note that this has to be set before the connection is established.
      * </p>
+     *
      * @param encoding The new character encoding for the control connection.
      */
     public void setControlEncoding(final String encoding) {

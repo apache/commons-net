@@ -281,24 +281,28 @@ public final class FTPCommand {
 
     /**
      * Alias for {@value}.
+     *
      * @since 2.0
      */
     public static final int MOD_TIME = MDTM;
 
     /**
      * Alias for {@value}.
+     *
      * @since 2.2
      */
     public static final int FEATURES = FEAT;
 
     /**
      * Alias for {@value}.
+     *
      * @since 2.2
      */
     public static final int GET_MOD_TIME = MDTM;
 
     /**
      * Alias for {@value}.
+     *
      * @since 2.2
      */
     public static final int SET_MOD_TIME = MFMT;

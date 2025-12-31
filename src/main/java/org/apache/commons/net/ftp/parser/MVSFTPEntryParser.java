@@ -439,6 +439,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *     <li>z/OS-MVS Member lists,</li>
      *     <li>Unix file lists.</li>
      * </ul>
+     *
      * @since 2.0
      */
     @Override
