@@ -751,9 +751,9 @@ public class NNTPClient extends NNTP {
     /**
      * @param articleId The unique article identifier of the article to retrieve
      * @param pointer   A parameter through which to return the article's number and unique id
-     * @deprecated 3.0 use {@link #retrieveArticle(String, ArticleInfo)} instead
      * @return A DotTerminatedMessageReader instance from which the article can be read. null if the article does not exist.
      * @throws IOException on error
+     * @deprecated 3.0 use {@link #retrieveArticle(String, ArticleInfo)} instead
      */
     @Deprecated
     public Reader retrieveArticle(final String articleId, final ArticlePointer pointer) throws IOException {

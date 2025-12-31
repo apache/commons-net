@@ -42,9 +42,9 @@ import java.util.Objects;
  * compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
  * </p>
  *
- * @deprecated Use {@link java.util.Base64}.
  * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 2.2
+ * @deprecated Use {@link java.util.Base64}.
  */
 @Deprecated
 public class Base64 {

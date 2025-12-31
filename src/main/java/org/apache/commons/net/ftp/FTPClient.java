@@ -1507,9 +1507,9 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Gets how long to wait for control keep-alive message replies.
      *
-     * @deprecated Use {@link #getControlKeepAliveReplyTimeoutDuration()}.
      * @return wait time in milliseconds.
      * @since 3.0
+     * @deprecated Use {@link #getControlKeepAliveReplyTimeoutDuration()}.
      */
     @Deprecated
     public int getControlKeepAliveReplyTimeout() {
@@ -1532,9 +1532,9 @@ public class FTPClient extends FTP implements Configurable {
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
-     * @deprecated Use {@link #getControlKeepAliveTimeoutDuration()}.
      * @return the number of seconds between keepalive messages.
      * @since 3.0
+     * @deprecated Use {@link #getControlKeepAliveTimeoutDuration()}.
      */
     @Deprecated
     public long getControlKeepAliveTimeout() {
@@ -1579,8 +1579,8 @@ public class FTPClient extends FTP implements Configurable {
      * <li>Number of IOErrors ignored</li>
      * </ul>
      *
-     * @deprecated 3.7 For testing only; may be dropped or changed at any time
      * @return the debug array
+     * @deprecated 3.7 For testing only; may be dropped or changed at any time
      */
     @Deprecated // only for use in testing
     public int[] getCslDebug() {
@@ -2952,10 +2952,10 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Sets the duration to wait for control keep-alive message replies.
      *
-     * @deprecated Use {@link #setControlKeepAliveReplyTimeout(Duration)}.
      * @param timeoutMillis number of milliseconds to wait (defaults to 1,000).
      * @since 3.0
      * @see #setControlKeepAliveTimeout(long)
+     * @deprecated Use {@link #setControlKeepAliveReplyTimeout(Duration)}.
      */
     @Deprecated
     public void setControlKeepAliveReplyTimeout(final int timeoutMillis) {
@@ -2982,10 +2982,10 @@ public class FTPClient extends FTP implements Configurable {
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
-     * @deprecated Use {@link #setControlKeepAliveTimeout(Duration)}.
      * @param controlIdleSeconds the wait in seconds between keepalive messages. Zero (or less) disables.
      * @since 3.0
      * @see #setControlKeepAliveReplyTimeout(int)
+     * @deprecated Use {@link #setControlKeepAliveTimeout(Duration)}.
      */
     @Deprecated
     public void setControlKeepAliveTimeout(final long controlIdleSeconds) {
@@ -3023,8 +3023,8 @@ public class FTPClient extends FTP implements Configurable {
      * <strong>Note:</strong> the timeout will also be applied when calling accept() whilst establishing an active local data connection.
      * </p>
      *
-     * @deprecated Use {@link #setDataTimeout(Duration)}.
      * @param timeoutMillis The default timeout in milliseconds that is used when opening a data connection socket. The value 0 means an infinite timeout.
+     * @deprecated Use {@link #setDataTimeout(Duration)}.
      */
     @Deprecated
     public void setDataTimeout(final int timeoutMillis) {
@@ -3214,8 +3214,8 @@ public class FTPClient extends FTP implements Configurable {
      * The default is true, i.e. site-local replies are replaced.
      * </p>
      *
-     * @deprecated (3.6) use {@link #setPassiveNatWorkaroundStrategy(HostnameResolver)} instead
      * @param enabled true to enable replacing internal IP's in passive mode.
+     * @deprecated (3.6) use {@link #setPassiveNatWorkaroundStrategy(HostnameResolver)} instead
      */
     @Deprecated
     public void setPassiveNatWorkaround(final boolean enabled) {
