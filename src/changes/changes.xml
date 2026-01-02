@@ -69,7 +69,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add DatagramSocketClient.getDefaultTimeoutDuration() and deprecate getDefaultTimeout().</action> 
       <!-- UPDATE -->
-      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 85 to 93 #371, #388, #389.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 85 to 94 #371, #388, #389.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-lang3 from 3.18.0 to 3.19.0.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-io:commons-io from 2.20.0 to 2.21.0.</action>
     </release>
