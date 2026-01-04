@@ -61,6 +61,7 @@ import org.apache.commons.net.util.NetConstants;
  */
 
 public class SMTP extends SocketClient {
+
     /** The default SMTP port (25). */
     public static final int DEFAULT_PORT = 25;
 

@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
  * JUnit test class for TelnetOption
  */
 public class TelnetOptionTest {
+
     /**
      * test of the getOption method.
      */

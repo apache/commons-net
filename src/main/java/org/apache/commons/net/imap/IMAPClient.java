@@ -28,24 +28,34 @@ public class IMAPClient extends IMAP {
      * The message data item names for the FETCH command defined in RFC 3501.
      */
     public enum FETCH_ITEM_NAMES {
+
         /** Macro equivalent to: (FLAGS INTERNALDATE RFC822.SIZE ENVELOPE). */
         ALL,
+
         /** Macro equivalent to: (FLAGS INTERNALDATE RFC822.SIZE). */
         FAST,
+
         /** Macro equivalent to: (FLAGS INTERNALDATE RFC822.SIZE ENVELOPE BODY). */
         FULL,
+
         /** Non-extensible form of BODYSTRUCTURE or the text of a particular body section. */
         BODY,
+
         /** The [MIME-IMB] body structure of the message. */
         BODYSTRUCTURE,
+
         /** The envelope structure of the message. */
         ENVELOPE,
+
         /** The flags that are set for this message. */
         FLAGS,
+
         /** The internal date of the message. */
         INTERNALDATE,
+
         /** A prefix for RFC-822 item names. */
         RFC822,
+
         /** The unique identifier for the message. */
         UID
     }
@@ -54,114 +64,149 @@ public class IMAPClient extends IMAP {
      * The search criteria defined in RFC 3501.
      */
     public enum SEARCH_CRITERIA {
+
         /** All messages in the mailbox. */
         ALL,
+
         /** Messages with the \Answered flag set. */
         ANSWERED,
+
         /**
          * Messages that contain the specified string in the envelope structure's BCC field.
          */
         BCC,
+
         /**
          * Messages whose internal date (disregarding time and time zone) is earlier than the specified date.
          */
         BEFORE,
+
         /**
          * Messages that contain the specified string in the body of the message.
          */
         BODY,
+
         /**
          * Messages that contain the specified string in the envelope structure's CC field.
          */
         CC,
+
         /** Messages with the \Deleted flag set. */
         DELETED,
+
         /** Messages with the \Draft flag set. */
         DRAFT,
+
         /** Messages with the \Flagged flag set. */
         FLAGGED,
+
         /**
          * Messages that contain the specified string in the envelope structure's FROM field.
          */
         FROM,
+
         /**
          * Messages that have a header with the specified field-name (as defined in [RFC-2822]) and that contains the specified string in the text of the header
          * (what comes after the colon). If the string to search is zero-length, this matches all messages that have a header line with the specified field-name
          * regardless of the contents.
          */
         HEADER,
+
         /** Messages with the specified keyword flag set. */
         KEYWORD,
+
         /**
          * Messages with an [RFC-2822] size larger than the specified number of octets.
          */
         LARGER,
+
         /**
          * Messages that have the \Recent flag set but not the \Seen flag. This is functionally equivalent to "(RECENT UNSEEN)".
          */
         NEW,
+
         /** Messages that do not match the specified search key. */
         NOT,
+
         /**
          * Messages that do not have the \Recent flag set. This is functionally equivalent to "NOT RECENT" (as opposed to "NOT NEW").
          */
         OLD,
+
         /**
          * Messages whose internal date (disregarding time and time zone) is within the specified date.
          */
         ON,
+
         /** Messages that match either search key. */
         OR,
+
         /** Messages that have the \Recent flag set. */
         RECENT,
+
         /** Messages that have the \Seen flag set. */
         SEEN,
+
         /**
          * Messages whose [RFC-2822] Date: header (disregarding time and time zone) is earlier than the specified date.
          */
         SENTBEFORE,
+
         /**
          * Messages whose [RFC-2822] Date: header (disregarding time and time zone) is within the specified date.
          */
         SENTON,
+
         /**
          * Messages whose [RFC-2822] Date: header (disregarding time and time zone) is within or later than the specified date.
          */
         SENTSINCE,
+
         /**
          * Messages whose internal date (disregarding time and time zone) is within or later than the specified date.
          */
         SINCE,
+
         /**
          * Messages with an [RFC-2822] size smaller than the specified number of octets.
          */
         SMALLER,
+
         /**
          * Messages that contain the specified string in the envelope structure's SUBJECT field.
          */
         SUBJECT,
+
         /**
          * Messages that contain the specified string in the header or body of the message.
          */
         TEXT,
+
         /**
          * Messages that contain the specified string in the envelope structure's TO field.
          */
         TO,
+
         /**
          * Messages with unique identifiers corresponding to the specified unique identifier set. Sequence set ranges are permitted.
          */
         UID,
+
         /** Messages that do not have the \Answered flag set. */
         UNANSWERED,
+
         /** Messages that do not have the \Deleted flag set. */
         UNDELETED,
+
         /** Messages that do not have the \Draft flag set. */
         UNDRAFT,
+
         /** Messages that do not have the \Flagged flag set. */
         UNFLAGGED,
+
         /** Messages that do not have the specified keyword flag set. */
         UNKEYWORD,
+
         /** Messages that do not have the \Seen flag set. */
         UNSEEN
     }
@@ -172,14 +217,19 @@ public class IMAPClient extends IMAP {
      * The status data items defined in RFC 3501.
      */
     public enum STATUS_DATA_ITEMS {
+
         /** The number of messages in the mailbox. */
         MESSAGES,
+
         /** The number of messages with the \Recent flag set. */
         RECENT,
+
         /** The next unique identifier value of the mailbox. */
         UIDNEXT,
+
         /** The unique identifier validity value of the mailbox. */
         UIDVALIDITY,
+
         /** The number of messages which do not have the \Seen flag set. */
         UNSEEN
     }

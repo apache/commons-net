@@ -37,6 +37,7 @@ import javax.net.SocketFactory;
  * @see SocketClient#setSocketFactory
  */
 public class DefaultSocketFactory extends SocketFactory {
+
     /** The proxy to use when creating new sockets. */
     private final Proxy connProxy;
 

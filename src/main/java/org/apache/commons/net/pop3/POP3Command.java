@@ -22,36 +22,50 @@ package org.apache.commons.net.pop3;
  */
 
 public final class POP3Command {
+
     /** Send user name. */
     public static final int USER = 0;
+
     /** Send password. */
     public static final int PASS = 1;
+
     /** Quit session. */
     public static final int QUIT = 2;
+
     /** Gets status. */
     public static final int STAT = 3;
+
     /** List message(s). */
     public static final int LIST = 4;
+
     /** Retrieve message(s). */
     public static final int RETR = 5;
+
     /** Delete message(s). */
     public static final int DELE = 6;
+
     /** No operation. Used as a session keepalive. */
     public static final int NOOP = 7;
+
     /** Reset session. */
     public static final int RSET = 8;
+
     /** Authorization. */
     public static final int APOP = 9;
+
     /** Retrieve top number lines from message. */
     public static final int TOP = 10;
+
     /** List unique message identifier(s). */
     public static final int UIDL = 11;
+
     /**
      * The capabilities command.
      *
      * @since 3.0
      */
     public static final int CAPA = 12;
+
     /**
      * Authentication
      *

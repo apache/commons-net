@@ -59,6 +59,7 @@ import org.apache.commons.net.io.CRLFLineReader;
  */
 
 public class NNTP extends SocketClient {
+
     /** The default NNTP port. Its value is 119 according to RFC 977. */
     public static final int DEFAULT_PORT = 119;
 

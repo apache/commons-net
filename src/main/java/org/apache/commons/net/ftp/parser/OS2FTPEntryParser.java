@@ -32,6 +32,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     private static final String DEFAULT_DATE_FORMAT = "MM-dd-yy HH:mm"; // 11-09-01 12:30
+
     /**
      * this is the regular expression used by this parser.
      */

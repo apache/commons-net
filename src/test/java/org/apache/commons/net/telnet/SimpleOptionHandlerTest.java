@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
  * JUnit test class for SimpleOptionHandler
  */
 public class SimpleOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
+
     /**
      * setUp for the test.
      */

@@ -51,15 +51,16 @@ class Telnet extends SocketClient {
     /* public */
     static final int DEFAULT_PORT = 23;
 
-    /* TERMINAL-TYPE option (start) */
     /**
-     * Terminal type option
+     * Terminal type option (start).
      */
     protected static final int TERMINAL_TYPE = 24;
+
     /**
      * Send (for subnegotiation)
      */
     protected static final int TERMINAL_TYPE_SEND = 1;
+
     /**
      * Is (for subnegotiation)
      */

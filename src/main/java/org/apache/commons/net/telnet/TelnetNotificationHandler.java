@@ -25,6 +25,7 @@ package org.apache.commons.net.telnet;
  * </p>
  */
 public interface TelnetNotificationHandler {
+
     /**
      * The remote party sent a DO command.
      */

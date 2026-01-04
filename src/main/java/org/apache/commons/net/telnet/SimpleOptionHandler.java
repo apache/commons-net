@@ -21,6 +21,7 @@ package org.apache.commons.net.telnet;
  * Simple option handler that can be used for options that don't require subnegotiation.
  */
 public class SimpleOptionHandler extends TelnetOptionHandler {
+
     /**
      * Constructor for the SimpleOptionHandler. Initial and accept behavior flags are set to false
      *

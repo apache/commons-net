@@ -24,6 +24,7 @@ package org.apache.commons.net.telnet;
  * </p>
  */
 public abstract class TelnetOptionHandler {
+
     /**
      * Option code
      */

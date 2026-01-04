@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Test;
  * JUnit test class for TelnetClient.s Implements protocol compliance tests
  */
 public class TelnetClientTest implements TelnetNotificationHandler {
+
     /**
      * Handy holder to hold both sides of the connection used in testing for clarity.
      */

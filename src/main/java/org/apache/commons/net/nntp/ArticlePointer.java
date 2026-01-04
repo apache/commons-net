@@ -26,8 +26,10 @@ package org.apache.commons.net.nntp;
  */
 @Deprecated
 public final class ArticlePointer {
+
     /** The number of the referenced article. */
     public int articleNumber;
+
     /**
      * The unique id of the referenced article, including the enclosing &lt; and &gt; symbols which are technically not part of the identifier, but are required
      * by all NNTP commands taking an article id as an argument.

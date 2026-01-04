@@ -33,6 +33,7 @@ import org.apache.commons.net.SocketClient;
  */
 
 public final class TimeTCPClient extends SocketClient {
+
     /** The default time port. It is set to 37 according to RFC 868. */
     public static final int DEFAULT_PORT = 37;
 

@@ -41,6 +41,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         /** The standardized (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
 
         PLAIN("PLAIN"),
+
         /** The standardized (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
 
         CRAM_MD5("CRAM-MD5"),

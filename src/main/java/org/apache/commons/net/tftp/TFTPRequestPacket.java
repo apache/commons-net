@@ -43,6 +43,7 @@ import java.util.Map;
  */
 
 public abstract class TFTPRequestPacket extends TFTPPacket {
+
     /**
      * An array containing the string names of the transfer modes and indexed by the transfer mode constants.
      */

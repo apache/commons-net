@@ -36,6 +36,7 @@ import java.net.InetAddress;
  */
 
 public abstract class TFTPPacket {
+
     /**
      * The minimum size of a packet. This is 4 bytes. It is enough to store the opcode and blocknumber or other required data depending on the packet type.
      */

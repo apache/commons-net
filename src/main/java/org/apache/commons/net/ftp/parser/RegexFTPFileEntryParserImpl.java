@@ -32,6 +32,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * </p>
  */
 public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl {
+
     /**
      * Internal pattern the matcher tries to match, representing a file entry
      */

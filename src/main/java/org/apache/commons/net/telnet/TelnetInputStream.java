@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.InterruptedIOException;
 
 final class TelnetInputStream extends BufferedInputStream implements Runnable {
+
     /** End of file has been reached */
     private static final int EOF = -1;
 

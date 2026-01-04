@@ -59,14 +59,18 @@ public class POP3SClient extends POP3Client {
 
     /** The security mode. True - Implicit Mode / False - Explicit Mode. */
     private final boolean isImplicit;
+
     /** The secure socket protocol to be used, like SSL/TLS. */
     private final String protocol;
+
     /** The context object. */
     private SSLContext context;
+
     /**
      * The cipher suites. SSLSockets have a default set of these anyway, so no initialization required.
      */
     private String[] suites;
+
     /** The protocol versions. */
     private String[] protocols // null;
     ; // {"SSLv2", "SSLv3", "TLSv1", "TLSv1.1", "SSLv2Hello"};

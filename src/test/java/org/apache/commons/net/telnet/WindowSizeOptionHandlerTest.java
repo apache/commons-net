@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
  * JUnit test class for TerminalTypeOptionHandler
  */
 public class WindowSizeOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
+
     /**
      * compares two arrays of int
      */

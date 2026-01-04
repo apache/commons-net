@@ -49,16 +49,21 @@ import org.apache.commons.net.util.NetConstants;
  */
 
 public class POP3 extends SocketClient {
+
     /** The default POP3 port. Set to 110 according to RFC 1288. */
     public static final int DEFAULT_PORT = 110;
+
     /**
      * A constant representing the state where the client is not yet connected to a POP3 server.
      */
     public static final int DISCONNECTED_STATE = -1;
+
     /** A constant representing the POP3 authorization state. */
     public static final int AUTHORIZATION_STATE = 0;
+
     /** A constant representing the POP3 transaction state. */
     public static final int TRANSACTION_STATE = 1;
+
     /** A constant representing the POP3 update state. */
     public static final int UPDATE_STATE = 2;
 

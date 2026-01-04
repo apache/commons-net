@@ -351,6 +351,7 @@ public class SubnetUtils {
             builder.append('.');
         }
     }
+
     /**
      * Extracts the components of a dotted decimal address and pack into an integer using a regex match
      */

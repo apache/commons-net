@@ -39,6 +39,7 @@ import org.apache.commons.io.IOUtils;
  * @see DatagramSocketFactory
  */
 public abstract class DatagramSocketClient implements AutoCloseable {
+
     /**
      * The default DatagramSocketFactory shared by all DatagramSocketClient instances.
      */

@@ -2683,7 +2683,6 @@ public class FTPClient extends FTP implements Configurable {
         return false;
     }
 
-    // For server to server transfers
     /**
      * Initiate a server to server file transfer. This method tells the server to which the client is connected to append to a given file on the other server.
      * The other server must have had a {@code remoteRetrieve} issued to it by another FTPClient.

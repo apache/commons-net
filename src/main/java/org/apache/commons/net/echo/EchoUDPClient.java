@@ -34,6 +34,7 @@ import org.apache.commons.net.util.NetConstants;
  */
 
 public final class EchoUDPClient extends DiscardUDPClient {
+
     /** The default echo port. It is set to 7 according to RFC 862. */
     public static final int DEFAULT_PORT = 7;
 

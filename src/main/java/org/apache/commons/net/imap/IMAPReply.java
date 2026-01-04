@@ -27,6 +27,7 @@ import org.apache.commons.net.MalformedServerReplyException;
  * Stores IMAP reply code constants.
  */
 public final class IMAPReply {
+
     /** The reply code indicating success of an operation. */
     public static final int OK = 0;
 

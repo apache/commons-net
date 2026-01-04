@@ -27,6 +27,7 @@ package org.apache.commons.net.telnet;
  * @see org.apache.commons.net.telnet.TelnetClient
  */
 public class TelnetOption {
+
     /** The maximum value an option code can have. This value is 255. */
     public static final int MAX_OPTION_VALUE = 255;
 

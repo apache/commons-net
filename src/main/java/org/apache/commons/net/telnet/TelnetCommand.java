@@ -25,6 +25,7 @@ package org.apache.commons.net.telnet;
  */
 
 public final class TelnetCommand {
+
     /** The maximum value a command code can have. This value is 255. */
     public static final int MAX_COMMAND_VALUE = 255;
 

@@ -31,6 +31,7 @@ public interface FTPTimestampParser {
      * the default default date format.
      */
     String DEFAULT_SDF = UnixFTPEntryParser.DEFAULT_DATE_FORMAT;
+
     /**
      * the default recent date format.
      */

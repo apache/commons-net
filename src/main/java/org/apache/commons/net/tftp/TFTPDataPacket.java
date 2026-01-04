@@ -35,6 +35,7 @@ import java.net.InetAddress;
  */
 
 public final class TFTPDataPacket extends TFTPPacket {
+
     /** The maximum number of bytes in a TFTP data packet (512) */
     public static final int MAX_DATA_LENGTH = 512;
 

@@ -44,6 +44,7 @@ import org.apache.commons.net.finger.FingerClient;
  */
 
 public final class WhoisClient extends FingerClient {
+
     /**
      * The default whois host to query. It is set to whois.internic.net.
      */

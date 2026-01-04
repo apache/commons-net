@@ -60,23 +60,28 @@ import org.apache.commons.net.util.SSLSocketUtils;
  * @since 3.0
  */
 public class SMTPSClient extends SMTPClient {
+
     /** Default secure socket protocol name, like TLS */
     private static final String DEFAULT_PROTOCOL = "TLS";
 
     /** The security mode. True - Implicit Mode / False - Explicit Mode. */
 
     private final boolean isImplicit;
+
     /** The secure socket protocol to be used, like SSL/TLS. */
 
     private final String protocol;
+
     /** The context object. */
 
     private SSLContext context;
+
     /**
      * The cipher suites. SSLSockets have a default set of these anyway, so no initialization required.
      */
 
     private String[] suites;
+
     /** The protocol versions. */
 
     private String[] protocols;

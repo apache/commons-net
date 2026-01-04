@@ -46,6 +46,7 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  */
 
 public class TFTPClient extends TFTP {
+
     /**
      * The default number of times a {@code receive} attempt is allowed to timeout before ending attempts to retry the {@code receive} and failing.
      * The default is 5 timeouts.

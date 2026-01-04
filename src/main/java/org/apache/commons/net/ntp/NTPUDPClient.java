@@ -31,6 +31,7 @@ import org.apache.commons.net.DatagramSocketClient;
  * Network Time Protocol is stateless.
  */
 public final class NTPUDPClient extends DatagramSocketClient {
+
     /** The default NTP port. It is set to 123 according to RFC 1305. */
     public static final int DEFAULT_PORT = 123;
 

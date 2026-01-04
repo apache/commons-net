@@ -24,7 +24,6 @@ public enum IMAPCommand {
     // These enums must either use the same name as the IMAP command
     // or must provide the correct string as the parameter.
 
-    // Commands valid in any state:
     /**
      * Valid in any state.
      */
@@ -40,19 +39,18 @@ public enum IMAPCommand {
      */
     LOGOUT(0),
 
-    // Commands valid in Not Authenticated state
     /**
-     * Valid in Not Authenticated state
+     * Valid in Not Authenticated state.
      */
     STARTTLS(0),
 
     /**
-     * Valid in Not Authenticated state
+     * Valid in Not Authenticated state.
      */
     AUTHENTICATE(1),
 
     /**
-     * Valid in Not Authenticated state
+     * Valid in Not Authenticated state.
      */
     LOGIN(2),
 
@@ -61,7 +59,6 @@ public enum IMAPCommand {
      */
     XOAUTH(1),
 
-    // commands valid in authenticated state
     /**
      * Valid in authenticated state.
      */
@@ -86,22 +83,27 @@ public enum IMAPCommand {
      * Valid in authenticated state.
      */
     RENAME(2),
+
     /**
      * Valid in authenticated state.
      */
     SUBSCRIBE(1),
+
     /**
      * Valid in authenticated state.
      */
     UNSUBSCRIBE(1),
+
     /**
      * Valid in authenticated state.
      */
     LIST(2),
+
     /**
      * Valid in authenticated state.
      */
     LSUB(2),
+
     /**
      * Valid in authenticated state.
      */
@@ -112,7 +114,6 @@ public enum IMAPCommand {
      */
     APPEND(2, 4), // mbox [(flags)] [date-time] literal
 
-    // commands valid in selected state (substate of authenticated)
     /**
      * Valid in selected state (substate of authenticated).
      */

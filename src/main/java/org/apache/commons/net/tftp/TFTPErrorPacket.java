@@ -36,6 +36,7 @@ import java.nio.charset.Charset;
  */
 
 public final class TFTPErrorPacket extends TFTPPacket {
+
     /** The undefined error code according to RFC 783, value 0. */
     public static final int UNDEFINED = 0;
 

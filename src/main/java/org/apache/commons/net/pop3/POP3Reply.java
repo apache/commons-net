@@ -22,6 +22,7 @@ package org.apache.commons.net.pop3;
  */
 
 public final class POP3Reply {
+
     /** The reply code indicating success of an operation. */
     public static final int OK = 0;
 

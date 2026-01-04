@@ -21,6 +21,7 @@ package org.apache.commons.net.telnet;
  * Implements the Telnet echo option RFC 857.
  */
 public class EchoOptionHandler extends TelnetOptionHandler {
+
     /**
      * Constructor for the EchoOptionHandler. Initial and accept behavior flags are set to false
      */

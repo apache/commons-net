@@ -30,6 +30,7 @@ import java.util.EventListener;
  * @see Util
  */
 public interface CopyStreamListener extends EventListener {
+
     /**
      * Accepts a source event after copying a block of bytes from a stream. The CopyStreamEvent will contain the total number of bytes transferred so far and
      * the number of bytes transferred in the last write.

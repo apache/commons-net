@@ -35,11 +35,13 @@ import org.apache.commons.net.util.NetConstants;
  * The IMAP class provides the basic the functionality necessary to implement your own IMAP client.
  */
 public class IMAP extends SocketClient {
+
     /**
      * Implement this interface and register it via {@link #setChunkListener(IMAPChunkListener)} in order to get access to multi-line partial command responses.
      * Useful when processing large FETCH responses.
      */
     public interface IMAPChunkListener {
+
         /**
          * Called when a multi-line partial response has been received.
          *
@@ -53,12 +55,16 @@ public class IMAP extends SocketClient {
      * Enumerates IMAP states.
      */
     public enum IMAPState {
+
         /** A constant representing the state where the client is not yet connected to a server. */
         DISCONNECTED_STATE,
+
         /** A constant representing the "not authenticated" state. */
         NOT_AUTH_STATE,
+
         /** A constant representing the "authenticated" state. */
         AUTH_STATE,
+
         /** A constant representing the "logout" state. */
         LOGOUT_STATE
     }
@@ -66,7 +72,6 @@ public class IMAP extends SocketClient {
     /** The default IMAP port (RFC 3501). */
     public static final int DEFAULT_PORT = 143;
 
-    // RFC 3501, section 5.1.3. It should be "modified UTF-7".
     /**
      * The default control socket encoding.
      */

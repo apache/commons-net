@@ -26,6 +26,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  * @since 1.2
  */
 public interface FTPFileEntryParserFactory {
+
     /**
      * <p>
      * Implementation should be a method that extracts a key from the supplied {@link FTPClientConfig FTPClientConfig} parameter and creates an object
