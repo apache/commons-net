@@ -34,12 +34,10 @@ import org.apache.commons.net.util.NetConstants;
 public final class IOUtil {
 
     public static void readWrite(final InputStream remoteInput, final OutputStream remoteOutput, final InputStream localInput, final OutputStream localOutput) {
-        final Thread reader;
-        final Thread writer;
-
-        reader = new Thread(() -> {
+        final Thread readerThread;
+        final Thread writerThread;
+        readerThread = new Thread(() -> {
             int ch;
-
             try {
                 while (!Thread.interrupted() && (ch = localInput.read()) != NetConstants.EOS) {
                     remoteOutput.write(ch);
@@ -49,8 +47,7 @@ public final class IOUtil {
                 // e.printStackTrace();
             }
         });
-
-        writer = new Thread(() -> {
+        writerThread = new Thread(() -> {
             try {
                 Util.copyStream(remoteInput, localOutput);
             } catch (final IOException e) {
@@ -58,19 +55,15 @@ public final class IOUtil {
                 System.exit(1);
             }
         });
-
-        writer.setPriority(Thread.currentThread().getPriority() + 1);
-
-        writer.start();
-        reader.setDaemon(true);
-        reader.start();
-
+        writerThread.setPriority(Thread.currentThread().getPriority() + 1);
+        writerThread.start();
+        readerThread.setDaemon(true);
+        readerThread.start();
         try {
-            writer.join();
-            reader.interrupt();
+            writerThread.join();
+            readerThread.interrupt();
         } catch (final InterruptedException e) {
-            // Ignored
+            Thread.currentThread().interrupt();
         }
     }
-
 }
