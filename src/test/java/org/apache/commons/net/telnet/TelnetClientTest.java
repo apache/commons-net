@@ -28,6 +28,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.time.Duration;
 
+import org.apache.commons.lang3.ThreadUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -215,11 +216,7 @@ public class TelnetClientTest implements TelnetNotificationHandler {
         OPTIONS.close();
         STANDARD.close();
         SMALL_BUFFER.close();
-        try {
-            Thread.sleep(1000);
-        } catch (final InterruptedException ie) {
-            // do nothing
-        }
+        ThreadUtils.sleepQuietly(Duration.ofMillis(1000));
     }
 
     /*

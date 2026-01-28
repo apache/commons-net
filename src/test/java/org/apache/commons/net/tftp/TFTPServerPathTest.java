@@ -65,6 +65,7 @@ public class TFTPServerPathTest {
                 try {
                     Thread.sleep(500);
                 } catch (final InterruptedException e1) {
+                    Thread.currentThread().interrupt();
                     fail(e);
                 }
                 Files.deleteIfExists(path);

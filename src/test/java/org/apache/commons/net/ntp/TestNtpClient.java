@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.time.Duration;
 
+import org.apache.commons.lang3.ThreadUtils;
 import org.apache.commons.net.examples.ntp.SimpleNTPServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -57,11 +58,7 @@ public class TestNtpClient {
                 break;
             }
             // if not running then sleep 2 seconds and try again
-            try {
-                Thread.sleep(2000);
-            } catch (final InterruptedException e) {
-                // ignore
-            }
+            ThreadUtils.sleepQuietly(Duration.ofMillis(2000));
         }
         assertTrue(running);
     }

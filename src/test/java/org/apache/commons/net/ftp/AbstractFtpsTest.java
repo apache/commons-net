@@ -29,6 +29,7 @@ import java.time.Duration;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.NullOutputStream;
+import org.apache.commons.lang3.ThreadUtils;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
@@ -177,13 +178,9 @@ public abstract class AbstractFtpsTest {
         assertClientCode(client);
         assertEquals(SocketPort, client.getRemotePort());
         //
-        try {
-            // HACK: Without this sleep, the user command sometimes does not reach the ftpserver
-            // This only seems to affect GitHub builds, and only Java 11+
-            Thread.sleep(200); // 100 seems to be not always enough
-        } catch (final InterruptedException ignore) {
-            // ignore
-        }
+        // HACK: Without this sleep, the user command sometimes does not reach the ftpserver
+        // This only seems to affect GitHub builds, and only Java 11+
+        ThreadUtils.sleepQuietly(Duration.ofMillis(200));
         assertTrue(client.login("test", "test"));
         assertClientCode(client);
         //

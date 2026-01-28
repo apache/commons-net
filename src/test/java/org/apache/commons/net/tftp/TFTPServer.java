@@ -593,7 +593,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
         try {
             serverThread.join();
         } catch (final InterruptedException e) {
-            // we've done the best we could, return
+            Thread.currentThread().interrupt();
         }
     }
 
