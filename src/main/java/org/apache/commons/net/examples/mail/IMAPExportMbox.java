@@ -394,7 +394,7 @@ public final class IMAPExportMbox {
                 try {
                     Thread.sleep(retryWaitSecs * 1000);
                 } catch (final InterruptedException e) {
-                    // ignored
+                    Thread.currentThread().interrupt();
                 }
             }
 
