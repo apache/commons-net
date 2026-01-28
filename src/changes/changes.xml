@@ -67,6 +67,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Jakub Kupczyk, Gary Gregory">Migrate tests to JUnit5 #358, #359.</action> 
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix malformed Javadoc comments.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">IMAPExportMbox now restores the current thread's interrupt flag when catching InterruptedException.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">IOUtil.readWrite() now restores the current thread's interrupt flag when catching InterruptedException.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add DatagramSocketClient.getDefaultTimeoutDuration() and deprecate getDefaultTimeout().</action> 
       <!-- UPDATE -->
