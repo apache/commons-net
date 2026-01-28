@@ -149,6 +149,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
                 try {
                     queue.wait();
                 } catch (final InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     throw e;
                 }
             }
@@ -197,6 +198,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
                             queue.wait();
                             readIsWaiting = false;
                         } catch (final InterruptedException e) {
+                            Thread.currentThread().interrupt();
                             throw new InterruptedIOException("Fatal thread interruption during read.");
                         }
                     } else {
@@ -218,7 +220,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
                                     try {
                                         queue.wait(100);
                                     } catch (final InterruptedException interrupted) {
-                                        // Ignored
+                                        Thread.currentThread().interrupt();
                                     }
                                 }
                                 return EOF;
@@ -229,6 +231,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
                                     processChar(ch);
                                 }
                             } catch (final InterruptedException e) {
+                                Thread.currentThread().interrupt();
                                 if (isClosed) {
                                     return EOF;
                                 }
@@ -508,6 +511,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
                         try {
                             queue.wait(100);
                         } catch (final InterruptedException interrupted) {
+                            Thread.currentThread().interrupt();
                             if (isClosed) {
                                 break _outerLoop;
                             }
@@ -529,6 +533,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
                 try {
                     notify = processChar(ch);
                 } catch (final InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     if (isClosed) {
                         break _outerLoop;
                     }
