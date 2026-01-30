@@ -199,8 +199,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                     final FTPTimestampParserImpl jaParser = new FTPTimestampParserImpl();
                     jaParser.configure(new FTPClientConfig(FTPClientConfig.SYST_UNIX, DEFAULT_DATE_FORMAT_CN, DEFAULT_RECENT_DATE_FORMAT_CN));
                     file.setTimestamp(jaParser.parseTimestamp(datestr));
-                }
-                else {
+                } else {
                     file.setTimestamp(super.parseTimestamp(datestr));
                 }
             } catch (final ParseException e) {
