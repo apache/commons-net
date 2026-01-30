@@ -47,8 +47,10 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     private static final String JA_YEAR = "\u5e74";
 
     private static final String DEFAULT_DATE_FORMAT_JA = "M'" + JA_MONTH + "' d'" + JA_DAY + "' yyyy'" + JA_YEAR + "'"; // 6月 3日 2003年
+    private static final String DEFAULT_DATE_FORMAT_CN = "M'" + JA_MONTH + "' d yyyy"; // 6月 3 2003
 
     private static final String DEFAULT_RECENT_DATE_FORMAT_JA = "M'" + JA_MONTH + "' d'" + JA_DAY + "' HH:mm"; // 8月 17日 20:10
+    private static final String DEFAULT_RECENT_DATE_FORMAT_CN = "M'" + JA_MONTH + "' d HH:mm"; // 8月 17 20:10
 
     private static final Pattern TOTAL_PATTERN = Pattern.compile("^total \\d+$");
 
@@ -100,7 +102,9 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             + "(" + "(?:\\d+[-/]\\d+[-/]\\d+)" + // yyyy-mm-dd
             "|(?:\\S{3}\\s+\\d{1,2})" + // MMM [d]d
             "|(?:\\d{1,2}\\s+\\S{3})" + // [d]d MMM
-            "|(?:\\d{1,2}" + JA_MONTH + "\\s+\\d{1,2}" + JA_DAY + ")" + ")"
+            "|(?:\\d{1,2}" + JA_MONTH + "\\s+\\d{1,2}" + JA_DAY + ")" +
+            "|(?:\\d{1,2}" + JA_MONTH + "\\s+\\d{1,2})"
+            + ")"
             + "\\s+" // separator
             /*
              * year (for non-recent standard format) - yyyy or time (for numeric or recent standard format) [h]h:mm or Japanese year - yyyyXX
@@ -187,9 +191,13 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 name = name.replaceFirst("^\\s+", "");
             }
             try {
-                if (group(19).contains(JA_MONTH)) { // special processing for Japanese format
+                if (group(19).contains(JA_MONTH) && group(19).contains(JA_DAY)) { // special processing for Japanese format
                     final FTPTimestampParserImpl jaParser = new FTPTimestampParserImpl();
                     jaParser.configure(new FTPClientConfig(FTPClientConfig.SYST_UNIX, DEFAULT_DATE_FORMAT_JA, DEFAULT_RECENT_DATE_FORMAT_JA));
+                    file.setTimestamp(jaParser.parseTimestamp(datestr));
+                } else if (group(19).contains(JA_MONTH) && !group(19).contains(JA_DAY)) {
+                    final FTPTimestampParserImpl jaParser = new FTPTimestampParserImpl();
+                    jaParser.configure(new FTPClientConfig(FTPClientConfig.SYST_UNIX, DEFAULT_DATE_FORMAT_CN, DEFAULT_RECENT_DATE_FORMAT_CN));
                     file.setTimestamp(jaParser.parseTimestamp(datestr));
                 } else {
                     file.setTimestamp(super.parseTimestamp(datestr));
