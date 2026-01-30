@@ -816,11 +816,7 @@ public class FTPSClient extends FTPClient {
                     return null;
                 }
 
-                if (getRestartOffset() > 0 && !restart(getRestartOffset())) {
-                    return null;
-                }
-
-                if (!FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
+                if (getRestartOffset() > 0 && !restart(getRestartOffset()) || !FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
                     return null;
                 }
 
@@ -857,11 +853,8 @@ public class FTPSClient extends FTPClient {
             if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
                 _parseExtendedPassiveModeReply(_replyLines.get(0));
             } else {
-                if (isInet6Address) {
-                    return null; // Must use EPSV for IPV6
-                }
                 // If EPSV failed on IPV4, revert to PASV
-                if (pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
+                if (isInet6Address || pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
                     return null;
                 }
                 _parsePassiveModeReply(_replyLines.get(0));
@@ -897,12 +890,7 @@ public class FTPSClient extends FTPClient {
                 sslSocket = context.getSocketFactory().createSocket(socket, getPassiveHost(), getPassivePort(), true);
             }
 
-            if (getRestartOffset() > 0 && !restart(getRestartOffset())) {
-                closeSockets(socket, sslSocket);
-                return null;
-            }
-
-            if (!FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
+            if (getRestartOffset() > 0 && !restart(getRestartOffset()) || !FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
                 closeSockets(socket, sslSocket);
                 return null;
             }

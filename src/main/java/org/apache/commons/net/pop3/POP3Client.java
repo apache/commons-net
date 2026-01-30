@@ -150,10 +150,7 @@ public class POP3Client extends POP3 {
      * @throws IOException If a network I/O error occurs in the process of sending the list command.
      */
     public POP3MessageInfo listMessage(final int messageId) throws IOException {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.LIST, Integer.toString(messageId)) != POP3Reply.OK) {
+        if (getState() != TRANSACTION_STATE || sendCommand(POP3Command.LIST, Integer.toString(messageId)) != POP3Reply.OK) {
             return null;
         }
         return parseStatus(lastReplyLine.substring(3));
@@ -169,10 +166,7 @@ public class POP3Client extends POP3 {
      * @throws IOException If a network I/O error occurs in the process of sending the list command.
      */
     public POP3MessageInfo[] listMessages() throws IOException {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.LIST) != POP3Reply.OK) {
+        if (getState() != TRANSACTION_STATE || sendCommand(POP3Command.LIST) != POP3Reply.OK) {
             return null;
         }
         getAdditionalReply();
@@ -199,10 +193,7 @@ public class POP3Client extends POP3 {
      * @throws IOException If a network I/O error occurs in the process of sending the list unique identifier command.
      */
     public POP3MessageInfo listUniqueIdentifier(final int messageId) throws IOException {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.UIDL, Integer.toString(messageId)) != POP3Reply.OK) {
+        if (getState() != TRANSACTION_STATE || sendCommand(POP3Command.UIDL, Integer.toString(messageId)) != POP3Reply.OK) {
             return null;
         }
         return parseUID(lastReplyLine.substring(3));
@@ -218,10 +209,7 @@ public class POP3Client extends POP3 {
      * @throws IOException If a network I/O error occurs in the process of sending the list unique identifier command.
      */
     public POP3MessageInfo[] listUniqueIdentifiers() throws IOException {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.UIDL) != POP3Reply.OK) {
+        if (getState() != TRANSACTION_STATE || sendCommand(POP3Command.UIDL) != POP3Reply.OK) {
             return null;
         }
         getAdditionalReply();
@@ -248,20 +236,11 @@ public class POP3Client extends POP3 {
      * @throws IOException If a network I/O error occurs in the process of logging in.
      */
     public boolean login(final String user, final String password) throws IOException {
-        if (getState() != AUTHORIZATION_STATE) {
+        if (getState() != AUTHORIZATION_STATE || sendCommand(POP3Command.USER, user) != POP3Reply.OK
+                || sendCommand(POP3Command.PASS, password) != POP3Reply.OK) {
             return false;
         }
-
-        if (sendCommand(POP3Command.USER, user) != POP3Reply.OK) {
-            return false;
-        }
-
-        if (sendCommand(POP3Command.PASS, password) != POP3Reply.OK) {
-            return false;
-        }
-
         setState(TRANSACTION_STATE);
-
         return true;
     }
 
@@ -291,16 +270,13 @@ public class POP3Client extends POP3 {
         final StringBuilder buffer;
         final StringBuilder digestBuffer;
         final MessageDigest md5;
-
         if (getState() != AUTHORIZATION_STATE) {
             return false;
         }
-
         md5 = MessageDigest.getInstance("MD5");
         timestamp += secret;
         digest = md5.digest(timestamp.getBytes(getCharset()));
         digestBuffer = new StringBuilder(128);
-
         for (i = 0; i < digest.length; i++) {
             final int digit = digest[i] & 0xff;
             if (digit <= 15) { // Add leading zero if necessary (NET-351)
@@ -308,18 +284,14 @@ public class POP3Client extends POP3 {
             }
             digestBuffer.append(Integer.toHexString(digit));
         }
-
         buffer = new StringBuilder(256);
         buffer.append(user);
         buffer.append(' ');
         buffer.append(digestBuffer.toString());
-
         if (sendCommand(POP3Command.APOP, buffer.toString()) != POP3Reply.OK) {
             return false;
         }
-
         setState(TRANSACTION_STATE);
-
         return true;
     }
 
@@ -384,13 +356,9 @@ public class POP3Client extends POP3 {
      * @throws IOException If a network I/O error occurs in the process of sending the retrieve message command.
      */
     public Reader retrieveMessage(final int messageId) throws IOException {
-        if (getState() != TRANSACTION_STATE) {
+        if (getState() != TRANSACTION_STATE || sendCommand(POP3Command.RETR, Integer.toString(messageId)) != POP3Reply.OK) {
             return null;
         }
-        if (sendCommand(POP3Command.RETR, Integer.toString(messageId)) != POP3Reply.OK) {
-            return null;
-        }
-
         return new DotTerminatedMessageReader(reader);
     }
 
@@ -412,13 +380,10 @@ public class POP3Client extends POP3 {
      * @throws IOException If a network I/O error occurs in the process of sending the top command.
      */
     public Reader retrieveMessageTop(final int messageId, final int numLines) throws IOException {
-        if (numLines < 0 || getState() != TRANSACTION_STATE) {
+        if (numLines < 0 || getState() != TRANSACTION_STATE
+                || sendCommand(POP3Command.TOP, Integer.toString(messageId) + " " + Integer.toString(numLines)) != POP3Reply.OK) {
             return null;
         }
-        if (sendCommand(POP3Command.TOP, Integer.toString(messageId) + " " + Integer.toString(numLines)) != POP3Reply.OK) {
-            return null;
-        }
-
         return new DotTerminatedMessageReader(reader);
     }
 
@@ -432,10 +397,7 @@ public class POP3Client extends POP3 {
      * @throws IOException If a network I/O error occurs in the process of sending the status command.
      */
     public POP3MessageInfo status() throws IOException {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.STAT) != POP3Reply.OK) {
+        if (getState() != TRANSACTION_STATE || sendCommand(POP3Command.STAT) != POP3Reply.OK) {
             return null;
         }
         return parseStatus(lastReplyLine.substring(3));

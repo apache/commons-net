@@ -133,11 +133,8 @@ public class FTPHTTPClient extends FTPClient {
             _parseExtendedPassiveModeReply(_replyLines.get(0));
             passiveHost = tunnelHost;
         } else {
-            if (isInet6Address) {
-                return null; // Must use EPSV for IPV6
-            }
             // If EPSV failed on IPV4, revert to PASV
-            if (pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
+            if (isInet6Address || pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
                 return null;
             }
             _parsePassiveModeReply(_replyLines.get(0));
@@ -148,12 +145,7 @@ public class FTPHTTPClient extends FTPClient {
         final InputStream is = socket.getInputStream();
         final OutputStream os = socket.getOutputStream();
         tunnelHandshake(passiveHost, getPassivePort(), is, os);
-        if (getRestartOffset() > 0 && !restart(getRestartOffset())) {
-            socket.close();
-            return null;
-        }
-
-        if (!FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
+        if (getRestartOffset() > 0 && !restart(getRestartOffset()) || !FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
             socket.close();
             return null;
         }

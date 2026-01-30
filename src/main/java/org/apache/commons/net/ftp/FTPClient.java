@@ -732,10 +732,7 @@ public class FTPClient extends FTP implements Configurable {
                 } else if (!FTPReply.isPositiveCompletion(port(getReportHostAddress(), server.getLocalPort()))) {
                     return null;
                 }
-                if (restartOffset > 0 && !restart(restartOffset)) {
-                    return null;
-                }
-                if (!FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
+                if (restartOffset > 0 && !restart(restartOffset) || !FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
                     return null;
                 }
                 // For now, let's just use the data timeout value for waiting for
@@ -770,11 +767,8 @@ public class FTPClient extends FTP implements Configurable {
             if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
                 _parseExtendedPassiveModeReply(_replyLines.get(0));
             } else {
-                if (isInet6Address) {
-                    return null; // Must use EPSV for IPV6
-                }
                 // If EPSV failed on IPV4, revert to PASV
-                if (pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
+                if (isInet6Address || pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
                     return null;
                 }
                 _parsePassiveModeReply(_replyLines.get(0));
@@ -797,11 +791,7 @@ public class FTPClient extends FTP implements Configurable {
                 socket.setSoTimeout(soTimeoutMillis);
             }
             socket.connect(new InetSocketAddress(passiveHost, passivePort), connectTimeout);
-            if (restartOffset > 0 && !restart(restartOffset)) {
-                socket.close();
-                return null;
-            }
-            if (!FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
+            if (restartOffset > 0 && !restart(restartOffset) || !FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
                 socket.close();
                 return null;
             }

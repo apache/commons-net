@@ -334,10 +334,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 mustScanForPathSeparator = false;
                 type = FTPFile.FILE_TYPE;
 
-                if (isNullOrEmpty(name)) {
-                    return null;
-                }
-                if (!(isNullOrEmpty(fileSize) && isNullOrEmpty(datestr))) {
+                if (isNullOrEmpty(name) || !(isNullOrEmpty(fileSize) && isNullOrEmpty(datestr))) {
                     return null;
                 }
 

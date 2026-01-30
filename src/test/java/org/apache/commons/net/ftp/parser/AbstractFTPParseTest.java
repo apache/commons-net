@@ -98,10 +98,7 @@ public abstract class AbstractFTPParseTest {
      * @return null if f is null or the date is null
      */
     protected FTPFile nullFileOrNullDate(final FTPFile f) {
-        if (f == null) {
-            return null;
-        }
-        if (f.getTimestamp() == null) {
+        if (f == null || f.getTimestamp() == null) {
             return null;
         }
         return f;

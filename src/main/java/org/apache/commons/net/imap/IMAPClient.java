@@ -450,11 +450,7 @@ public class IMAPClient extends IMAP {
      * @throws IOException If a network I/O error occurs in the process of logging in.
      */
     public boolean login(final String user, final String password) throws IOException {
-        if (getState() != IMAP.IMAPState.NOT_AUTH_STATE) {
-            return false;
-        }
-
-        if (!doCommand(IMAPCommand.LOGIN, user + " " + password)) {
+        if (getState() != IMAP.IMAPState.NOT_AUTH_STATE || !doCommand(IMAPCommand.LOGIN, user + " " + password)) {
             return false;
         }
 

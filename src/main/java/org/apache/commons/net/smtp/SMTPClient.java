@@ -346,10 +346,7 @@ public class SMTPClient extends SMTP {
      * @throws IOException                   If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
     public boolean sendSimpleMessage(final String sender, final String recipient, final String message) throws IOException {
-        if (!setSender(sender)) {
-            return false;
-        }
-        if (!addRecipient(recipient)) {
+        if (!setSender(sender) || !addRecipient(recipient)) {
             return false;
         }
         return sendShortMessageData(message);
