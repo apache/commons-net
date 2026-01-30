@@ -224,6 +224,16 @@ public class TFTP extends DatagramSocketClient {
     }
 
     /**
+     * Gets the buffer size of the buffered used by {@link #bufferedSend(TFTPPacket)} and {@link #bufferedReceive}.
+     *
+     * @return current buffer size
+     * @since 3.12.0
+     */
+    public int getPacketSize() {
+        return packetSize;
+    }
+
+    /**
      * Receives a TFTPPacket.
      *
      * @return The TFTPPacket received.
@@ -244,6 +254,25 @@ public class TFTP extends DatagramSocketClient {
         final TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(packet);
         trace("<", newTFTPPacket);
         return newTFTPPacket;
+    }
+
+    /**
+     * Sets the size of the buffers used to receive and send packets.
+     * This method can be used to increase the size of the buffer to support `blksize`.
+     * For which valid values range between "8" and "65464" octets (RFC-2348).
+     * This only refers to the number of data octets, it does not include the four octets of TFTP header.
+     *
+     * @param packetSize The size of the data octets not including 4 octets for the header.
+     * @since 3.12.0
+     */
+    public final void resetBuffersToSize(final int packetSize) {
+        // the packet size should be between 8 - 65464 (inclusively) then we add 4 for the header
+        this.packetSize = Math.min(Math.max(packetSize, 8), 65464) + HEADER_SIZE;
+        // if the buffers are already initialized reinitialize
+        if (buffersInitialized) {
+            endBufferedOps();
+            beginBufferedOps();
+        }
     }
 
     /**
@@ -268,34 +297,5 @@ public class TFTP extends DatagramSocketClient {
      * @since 3.6
      */
     protected void trace(final String direction, final TFTPPacket packet) {
-    }
-
-    /**
-     * Sets the size of the buffers used to receive and send packets.
-     * This method can be used to increase the size of the buffer to support `blksize`.
-     * For which valid values range between "8" and "65464" octets (RFC-2348).
-     * This only refers to the number of data octets, it does not include the four octets of TFTP header.
-     *
-     * @param packetSize The size of the data octets not including 4 octets for the header.
-     * @since 3.12.0
-     */
-    public final void resetBuffersToSize(final int packetSize) {
-        // the packet size should be between 8 - 65464 (inclusively) then we add 4 for the header
-        this.packetSize = Math.min(Math.max(packetSize, 8), 65464) + HEADER_SIZE;
-        // if the buffers are already initialized reinitialize
-        if (buffersInitialized) {
-            endBufferedOps();
-            beginBufferedOps();
-        }
-    }
-
-    /**
-     * Gets the buffer size of the buffered used by {@link #bufferedSend(TFTPPacket)} and {@link #bufferedReceive}.
-     *
-     * @return current buffer size
-     * @since 3.12.0
-     */
-    public int getPacketSize() {
-        return packetSize;
     }
 }

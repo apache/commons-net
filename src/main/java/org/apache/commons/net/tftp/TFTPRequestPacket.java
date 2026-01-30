@@ -192,6 +192,22 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         return options;
     }
 
+    private void handleOptions(final byte[] data, final int fileLength, final int modeLength) {
+        int index = fileLength + modeLength + 2;
+        for (final Map.Entry<String, String> entry : options.entrySet()) {
+            data[index] = 0;
+            final String key = entry.getKey();
+            final String value = entry.getValue();
+
+            System.arraycopy(key.getBytes(StandardCharsets.US_ASCII), 0, data, ++index, key.length());
+            index += key.length();
+            data[index++] = 0;
+
+            System.arraycopy(value.getBytes(StandardCharsets.US_ASCII), 0, data, index, value.length());
+            index += value.length();
+        }
+    }
+
     /**
      * Creates a UDP datagram containing all the TFTP request packet data in the proper format. This is a method exposed to the programmer in case he wants to
      * implement his own TFTP client instead of using the {@link org.apache.commons.net.tftp.TFTPClient} class. Under normal circumstances, you should not have
@@ -256,21 +272,5 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         datagram.setLength(fileLength + modeLength + 3);
 
         return datagram;
-    }
-
-    private void handleOptions(final byte[] data, final int fileLength, final int modeLength) {
-        int index = fileLength + modeLength + 2;
-        for (final Map.Entry<String, String> entry : options.entrySet()) {
-            data[index] = 0;
-            final String key = entry.getKey();
-            final String value = entry.getValue();
-
-            System.arraycopy(key.getBytes(StandardCharsets.US_ASCII), 0, data, ++index, key.length());
-            index += key.length();
-            data[index++] = 0;
-
-            System.arraycopy(value.getBytes(StandardCharsets.US_ASCII), 0, data, index, value.length());
-            index += value.length();
-        }
     }
 }

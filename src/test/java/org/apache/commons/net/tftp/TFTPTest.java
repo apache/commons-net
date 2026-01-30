@@ -175,6 +175,15 @@ public class TFTPTest {
     }
 
     @Test
+    public void testResizeBuffer() {
+        try (TFTPClient tftp = new TFTPClient()) {
+            final int bufferSize = 1024;
+            tftp.resetBuffersToSize(bufferSize);
+            assertEquals(bufferSize + 4, tftp.getPacketSize(), "Packet size should be 1028");
+        }
+    }
+
+    @Test
     public void testSend() throws IOException {
         try (TFTP tftp = new TFTP()) {
             tftp.open();
@@ -195,15 +204,6 @@ public class TFTPTest {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
             testUpload(TFTP.BINARY_MODE, FILES[i]);
-        }
-    }
-
-    @Test
-    public void testResizeBuffer() {
-        try (TFTPClient tftp = new TFTPClient()) {
-            final int bufferSize = 1024;
-            tftp.resetBuffersToSize(bufferSize);
-            assertEquals(bufferSize + 4, tftp.getPacketSize(), "Packet size should be 1028");
         }
     }
 

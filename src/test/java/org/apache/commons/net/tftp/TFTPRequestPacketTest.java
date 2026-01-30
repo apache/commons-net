@@ -36,6 +36,29 @@ import org.junit.jupiter.api.Test;
  */
 class TFTPRequestPacketTest {
 
+    private static DatagramPacket getDatagramPacket() throws UnknownHostException {
+        final ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        byteStream.write(0);
+        byteStream.write(1);
+
+        try {
+            byteStream.write("fileName".getBytes(StandardCharsets.US_ASCII));
+            byteStream.write(0);
+            byteStream.write("octet".getBytes(StandardCharsets.US_ASCII));
+            byteStream.write(0);
+
+            byteStream.write("blksize".getBytes(StandardCharsets.US_ASCII));
+            byteStream.write(0);
+            byteStream.write("1024".getBytes(StandardCharsets.US_ASCII));
+            byteStream.write(0);
+        } catch (final IOException e) {
+            throw new RuntimeException("Error creating TFTP request packet", e);
+        }
+
+        final byte[] data = byteStream.toByteArray();
+        return new DatagramPacket(data, data.length, InetAddress.getLocalHost(), 0);
+    }
+
     @Test
     public void testGetOptions() throws UnknownHostException, TFTPPacketException {
         final DatagramPacket datagramPacket = getDatagramPacket();
@@ -66,28 +89,5 @@ class TFTPRequestPacketTest {
         assertEquals(datagramPacket.getAddress(), newDatagram2.getAddress());
         assertEquals(datagramPacket.getPort(), newDatagram2.getPort());
         assertArrayEquals(datagramPacket.getData(), data);
-    }
-
-    private static DatagramPacket getDatagramPacket() throws UnknownHostException {
-        final ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        byteStream.write(0);
-        byteStream.write(1);
-
-        try {
-            byteStream.write("fileName".getBytes(StandardCharsets.US_ASCII));
-            byteStream.write(0);
-            byteStream.write("octet".getBytes(StandardCharsets.US_ASCII));
-            byteStream.write(0);
-
-            byteStream.write("blksize".getBytes(StandardCharsets.US_ASCII));
-            byteStream.write(0);
-            byteStream.write("1024".getBytes(StandardCharsets.US_ASCII));
-            byteStream.write(0);
-        } catch (final IOException e) {
-            throw new RuntimeException("Error creating TFTP request packet", e);
-        }
-
-        final byte[] data = byteStream.toByteArray();
-        return new DatagramPacket(data, data.length, InetAddress.getLocalHost(), 0);
     }
 }

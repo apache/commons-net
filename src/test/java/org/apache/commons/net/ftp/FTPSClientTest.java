@@ -51,13 +51,13 @@ public class FTPSClientTest extends AbstractFtpsTest {
 
     private static final String SERVER_JKS_RES = "org/apache/commons/net/ftpsserver/ftpserver.jks";
 
+    private static Stream<Boolean> endpointCheckingEnabledSource() {
+        return Stream.of(Boolean.FALSE, Boolean.TRUE);
+    }
+
     @BeforeAll
     public static void setupServer() throws Exception {
         setupServer(IMPLICIT, USER_PROPS_RES, SERVER_JKS_RES, "target/test-classes/org/apache/commons/net/test-data");
-    }
-
-    private static Stream<Boolean> endpointCheckingEnabledSource() {
-        return Stream.of(Boolean.FALSE, Boolean.TRUE);
     }
 
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")

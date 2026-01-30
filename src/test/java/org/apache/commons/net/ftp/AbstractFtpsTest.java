@@ -74,10 +74,6 @@ public abstract class AbstractFtpsTest {
         return System.getProperty("test.basedir", defaultHome);
     }
 
-    public void setEndpointCheckingEnabled(final boolean value) {
-        this.endpointCheckingEnabled = value;
-    }
-
     /**
      * Creates and starts an embedded Apache MINA FTP Server.
      *
@@ -206,5 +202,9 @@ public abstract class AbstractFtpsTest {
         } finally {
             client.disconnect();
         }
+    }
+
+    public void setEndpointCheckingEnabled(final boolean value) {
+        this.endpointCheckingEnabled = value;
     }
 }

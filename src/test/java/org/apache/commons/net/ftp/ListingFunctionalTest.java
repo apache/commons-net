@@ -40,15 +40,6 @@ import org.junit.jupiter.params.provider.MethodSource;
  * A functional test suite for checking that site listings work.
  */
 public class ListingFunctionalTest {
-    // Offsets within testData below
-    static final int HOSTNAME = 0;
-    static final int VALID_PARSERKEY = 1;
-    static final int INVALID_PARSERKEY = 2;
-    static final int INVALID_PATH = 3;
-    static final int VALID_FILENAME = 4;
-    static final int VALID_PATH = 5;
-    static final int PATH_PWD = 6; // response to PWD
-
     public static final class TestCase {
         private final String hostName;
         private final String invalidParserKey;
@@ -73,6 +64,15 @@ public class ListingFunctionalTest {
             return validParserKey + " @ " + hostName;
         }
     }
+    // Offsets within testData below
+    static final int HOSTNAME = 0;
+    static final int VALID_PARSERKEY = 1;
+    static final int INVALID_PARSERKEY = 2;
+    static final int INVALID_PATH = 3;
+    static final int VALID_FILENAME = 4;
+    static final int VALID_PATH = 5;
+
+    static final int PATH_PWD = 6; // response to PWD
 
     private static Stream<TestCase> testCases() {
         final String[][] testData = { { "ftp.ibiblio.org", "unix", "vms", "HA!", "javaio.jar", "pub/languages/java/javafaq", "/pub/languages/java/javafaq", },
