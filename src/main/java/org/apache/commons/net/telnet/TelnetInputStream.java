@@ -199,7 +199,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable {
                             readIsWaiting = false;
                         } catch (final InterruptedException e) {
                             Thread.currentThread().interrupt();
-                            throw new InterruptedIOException("Fatal thread interruption during read.");
+                            final InterruptedIOException interruptedIoException = new InterruptedIOException("Fatal thread interruption during read.");
+                            interruptedIoException.initCause(e);
+                            throw interruptedIoException;
                         }
                     } else {
                         // alreadyread = false;
