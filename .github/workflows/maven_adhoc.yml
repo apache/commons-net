@@ -25,6 +25,7 @@ jobs:
     timeout-minutes: 7
     continue-on-error: true
     strategy:
+      max-parallel: 20
       matrix:
         tag: [ HEAD, rel/commons-net-3.10.0, rel/commons-net-3.9.0 ]
     runs-on: ubuntu-latest
