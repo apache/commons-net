@@ -208,7 +208,7 @@ The <action> type attribute can be add,update,fix,remove.
         Delegate host resolution to Socket.connect() #138.
       </action>
       <action type="fix" dev="ggregory" due-to="Martin Wiesner, Gary Gregory, sebbASF">
-        Fixes many grammar issues and typos in JavaDoc and code comments #141.
+        Fixes many grammar issues and typos in Javadoc and code comments #141.
       </action>
       <action type="fix" dev="ggregory" due-to="Martin Wiesner, Gary Gregory">
         Remove redundant (null) initializations and other clean ups #155.
