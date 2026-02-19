@@ -513,10 +513,11 @@ public class SubnetUtilsTest {
 
     @Test
     public void testToString() {
-        final SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
-        assertDoesNotThrow(() -> utils.toString());
-        final SubnetInfo info = utils.getInfo();
-        assertDoesNotThrow(() -> info.toString());
+        final String cidrNotation = "192.168.0.1/29";
+        final SubnetUtils utils = new SubnetUtils(cidrNotation);
+        assertTrue(utils.toString().contains(cidrNotation));
+        assertTrue(utils.getInfo().toString().contains(cidrNotation));
+        assertEquals(utils.toString(), utils.getInfo().toString());
     }
 
     @Test
