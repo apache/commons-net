@@ -117,18 +117,25 @@ public class SubnetUtils6Test {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/64");
         final SubnetInfo info = utils.getInfo();
 
-        assertTrue(info.getCidrSignature().contains("/64"));
-        assertTrue(info.getCidrSignature().contains("2001:db8"));
+        assertEquals("2001:db8:0:0:0:0:0:1/64", info.getCidrSignature());
     }
 
     @Test
     public void testInvalidCidr() {
+        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6(null));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1"));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1/"));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1/129"));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1/-1"));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1/abc"));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("not-an-address/64"));
+    }
+
+    @Test
+    public void testInvalidTwoArgConstructor() {
+        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1", 129));
+        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1", -1));
+        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("not-an-address", 64));
     }
 
     @Test
@@ -156,16 +163,30 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testIsInRangeWithBigInteger() {
+    public void testIsInRangeWithInvalidString() {
+        final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
+        final SubnetInfo info = utils.getInfo();
+
+        assertThrows(IllegalArgumentException.class, () -> info.isInRange("not-an-address"));
+        assertThrows(IllegalArgumentException.class, () -> info.isInRange("192.168.1.1"));
+    }
+
+    @Test
+    public void testIsInRangeWithBigInteger() throws UnknownHostException {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
         final SubnetInfo info = utils.getInfo();
 
         // Test with null
         assertFalse(info.isInRange((BigInteger) null));
+
+        final BigInteger inRange = new BigInteger(1, InetAddress.getByName("2001:db8::1").getAddress());
+        assertTrue(info.isInRange(inRange));
+        final BigInteger outOfRange = new BigInteger(1, InetAddress.getByName("2001:db9::1").getAddress());
+        assertFalse(info.isInRange(outOfRange));
     }
 
     @Test
-    public void testIsInRangeWithByteArray() {
+    public void testIsInRangeWithByteArray() throws UnknownHostException {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
         final SubnetInfo info = utils.getInfo();
 
@@ -176,6 +197,9 @@ public class SubnetUtils6Test {
         assertFalse(info.isInRange(new byte[4]));
         assertFalse(info.isInRange(new byte[15]));
         assertFalse(info.isInRange(new byte[17]));
+
+        assertTrue(info.isInRange(InetAddress.getByName("2001:db8::1").getAddress()));
+        assertFalse(info.isInRange(InetAddress.getByName("2001:db9::1").getAddress()));
     }
 
     @Test
@@ -217,12 +241,25 @@ public class SubnetUtils6Test {
     @Test
     public void testToString() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/64");
+        final SubnetInfo info = utils.getInfo();
         final String str = utils.toString();
 
         assertNotNull(str);
         assertTrue(str.contains("CIDR Signature"));
         assertTrue(str.contains("Network"));
+        assertTrue(str.contains("First address"));
+        assertTrue(str.contains("Last address"));
         assertTrue(str.contains("Address Count"));
+
+        // note: The CIDR signature from toString can be fed back into the constructor
+        final String cidr = info.getCidrSignature();
+        final SubnetUtils6 roundTrip = new SubnetUtils6(cidr);
+        final SubnetInfo roundTripInfo = roundTrip.getInfo();
+        assertEquals(info.getPrefixLength(), roundTripInfo.getPrefixLength());
+        assertEquals(info.getNetworkAddress(), roundTripInfo.getNetworkAddress());
+        assertEquals(info.getHighAddress(), roundTripInfo.getHighAddress());
+        assertEquals(info.getAddressCount(), roundTripInfo.getAddressCount());
+        assertEquals(info.getCidrSignature(), roundTripInfo.getCidrSignature());
     }
 
     @Test
@@ -255,5 +292,120 @@ public class SubnetUtils6Test {
         // getLowAddress returns the network address (same as getNetworkAddress)
         assertEquals(info.getNetworkAddress(), info.getLowAddress());
         assertEquals("2001:db8:0:0:0:0:0:100", info.getLowAddress());
+    }
+
+    // All examples below are from https://datatracker.ietf.org/doc/html/rfc5952 to verify properly
+    /**
+     * RFC 5952 Section 1: all representations of the same address must parse identically.
+     */
+    @Test
+    public void testRfc5952Section1EquivalentRepresentations() {
+        assertEquivalentSubnets(
+                "2001:db8:0:0:1:0:0:1/128",
+                "2001:0db8:0:0:1:0:0:1/128",
+                "2001:db8::1:0:0:1/128",
+                "2001:db8::0:1:0:0:1/128",
+                "2001:0db8::1:0:0:1/128",
+                "2001:db8:0:0:1::1/128",
+                "2001:db8:0000:0:1::1/128",
+                "2001:DB8:0:0:1::1/128"
+        );
+    }
+
+    /**
+     * RFC 5952 Section 2.1: leading zeros in each 16-bit group must not affect parsing.
+     */
+    @Test
+    public void testRfc5952Section21LeadingZeros() {
+        assertEquivalentSubnets(
+                "2001:db8:aaaa:bbbb:cccc:dddd:eeee:0001/128",
+                "2001:db8:aaaa:bbbb:cccc:dddd:eeee:001/128",
+                "2001:db8:aaaa:bbbb:cccc:dddd:eeee:01/128",
+                "2001:db8:aaaa:bbbb:cccc:dddd:eeee:1/128"
+        );
+    }
+
+    /**
+     * RFC 5952 Section 2.2:  various :: compression positions must resolve to the same address.
+     */
+    @Test
+    public void testRfc5952Section22ZeroCompression() {
+        assertEquivalentSubnets(
+                "2001:db8:0:0:0:0:0:1/128",
+                "2001:db8:0:0:0::1/128",
+                "2001:db8:0:0::1/128",
+                "2001:db8:0::1/128",
+                "2001:db8::1/128"
+        );
+    }
+
+    /**
+     * RFC 5952 Section 2.3:  uppercase, lowercase, and mixed-case hex digits must parse identically.
+     */
+    @Test
+    public void testRfc5952Section23CaseInsensitivity() {
+        assertEquivalentSubnets(
+                "2001:db8:aaaa:bbbb:cccc:dddd:eeee:aaaa/128",
+                "2001:db8:aaaa:bbbb:cccc:dddd:eeee:AAAA/128",
+                "2001:db8:aaaa:bbbb:cccc:dddd:eeee:AaAa/128",
+                "2001:DB8:AAAA:BBBB:CCCC:DDDD:EEEE:AAAA/128"
+        );
+    }
+
+    /**
+     * RFC 5952 Section 4.1:  canonical form suppresses leading zeros.
+     * Verifies that {@code 2001:0db8::0001} and {@code 2001:db8::1} produce the same output.
+     */
+    @Test
+    public void testRfc5952Section41CanonicalLeadingZeros() {
+        final SubnetInfo a = new SubnetUtils6("2001:0db8::0001/128").getInfo();
+        final SubnetInfo b = new SubnetUtils6("2001:db8::1/128").getInfo();
+        assertEquals(a.getAddress(), b.getAddress());
+    }
+
+    /**
+     * RFC 5952 Section 4.2.1: :: must compress the longest possible run.
+     * Both forms represent the same address.
+     */
+    @Test
+    public void testRfc5952Section421MaximumShortening() {
+        final SubnetInfo a = new SubnetUtils6("2001:db8::0:1/128").getInfo();
+        final SubnetInfo b = new SubnetUtils6("2001:db8::1/128").getInfo();
+        assertEquals(a.getAddress(), b.getAddress());
+    }
+
+    /**
+     * RFC 5952 Section 4.2.3:  when two zero runs of equal length exist, the first must be compressed.
+     * Both input forms must parse to the same address.
+     */
+    @Test
+    public void testRfc5952Section423FirstLongestRunCompressed() {
+        assertEquivalentSubnets(
+                "2001:db8:0:0:1:0:0:1/128",
+                "2001:db8::1:0:0:1/128",
+                "2001:db8:0:0:1::1/128"
+        );
+    }
+
+    private static void assertEquivalentSubnets(final String... cidrs) {
+        final SubnetInfo reference = new SubnetUtils6(cidrs[0]).getInfo();
+        for (int i = 1; i < cidrs.length; i++) {
+            final SubnetInfo other = new SubnetUtils6(cidrs[i]).getInfo();
+            assertEquals(reference.getNetworkAddress(), other.getNetworkAddress(),
+                cidrs[0] + " vs " + cidrs[i] + " network");
+            assertEquals(reference.getHighAddress(), other.getHighAddress(),
+                cidrs[0] + " vs " + cidrs[i] + " high");
+            assertEquals(reference.getAddress(), other.getAddress(),
+                cidrs[0] + " vs " + cidrs[i] + " address");
+        }
+    }
+
+    @Test
+    public void testRfc5952Section5SpecialAddresses() {
+        final SubnetInfo loopback = new SubnetUtils6("::1/128").getInfo();
+        assertEquals("0:0:0:0:0:0:0:1", loopback.getAddress());
+
+        final SubnetInfo unspecified = new SubnetUtils6("::/128").getInfo();
+        assertEquals("0:0:0:0:0:0:0:0", unspecified.getAddress());
     }
 }

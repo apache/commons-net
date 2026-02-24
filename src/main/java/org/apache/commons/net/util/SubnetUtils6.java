@@ -24,10 +24,13 @@ import java.net.UnknownHostException;
 /**
  * Performs subnet calculations given an IPv6 network address and a prefix length.
  * <p>
- * This is the IPv6 equivalent of {@link SubnetUtils}.
+ * This is the IPv6 equivalent of {@link SubnetUtils}. Addresses are parsed and formatted
+ * using {@link InetAddress}, which accepts the text representations described in
+ * <a href="https://datatracker.ietf.org/doc/html/rfc5952">RFC 5952</a>.
  * </p>
  *
  * @see SubnetUtils
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc5952">RFC 5952 - A Recommendation for IPv6 Address Text Representation</a>
  * @since 3.13
  */
 public class SubnetUtils6 {
@@ -156,6 +159,11 @@ public class SubnetUtils6 {
             return isInRange(toBytes(addr));
         }
 
+        /**
+         * Returns a summary of this subnet for debugging.
+         *
+         * @return a multi-line debug string summarizing this subnet.
+         */
         @Override
         public String toString() {
             final StringBuilder buf = new StringBuilder();
@@ -174,13 +182,11 @@ public class SubnetUtils6 {
     private static final BigInteger MAX_VALUE = TWO.pow(NBITS).subtract(BigInteger.ONE);
 
     /**
-     * Formats a BigInteger as an IPv6 address string.
-     * <p>
-     * Uses the canonical format with :: compression for the longest run of zeros.
-     * </p>
+     * Formats a BigInteger as an IPv6 address string using {@link InetAddress#getHostAddress()}.
      *
      * @param addr the address as a BigInteger.
      * @return the formatted IPv6 address string.
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc5952">RFC 5952</a>
      */
     private static String format(final BigInteger addr) {
         final byte[] bytes = toByteArray16(addr);
@@ -309,6 +315,16 @@ public class SubnetUtils6 {
         return new SubnetInfo();
     }
 
+    /**
+     * Returns summary of this subnet for debugging.
+     * <p>
+     * Delegates to {@link SubnetInfo#toString()}. This is a diagnostic format and is not suitable for parsing.
+     * Use {@link SubnetInfo#getCidrSignature()} to obtain a string that can be fed back into
+     * {@link #SubnetUtils6(String)}.
+     * </p>
+     *
+     * @return a multi-line debug string summarizing this subnet.
+     */
     @Override
     public String toString() {
         return getInfo().toString();
