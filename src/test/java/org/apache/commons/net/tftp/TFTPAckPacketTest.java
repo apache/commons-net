@@ -27,15 +27,15 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link TFTPAckPacket}.
  */
-public class TFTPAckPacketTest {
+class TFTPAckPacketTest {
 
     @Test
-    public void testNewDatagram() throws UnknownHostException {
+    void testNewDatagram() throws UnknownHostException {
         assertNotNull(new TFTPAckPacket(InetAddress.getLocalHost(), 0, 0).newDatagram());
     }
 
     @Test
-    public void testToString() throws UnknownHostException {
+    void testToString() throws UnknownHostException {
         assertNotNull(new TFTPAckPacket(InetAddress.getLocalHost(), 0, 0).toString());
     }
 }

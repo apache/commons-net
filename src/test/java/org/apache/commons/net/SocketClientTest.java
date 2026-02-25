@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 /**
  * A simple test class for SocketClient settings.
  */
-public class SocketClientTest {
+class SocketClientTest {
     private static final String PROXY_HOST = "127.0.0.1";
     private static final int PROXY_PORT = 1080;
 
@@ -42,7 +42,7 @@ public class SocketClientTest {
     private static final int REMOTE_PORT = 21;
 
     @Test
-    public void testConnectResolved() {
+    void testConnectResolved() {
         final SocketClient socketClient = new FTPClient();
 
         assertThrows(IOException.class, () -> socketClient.connect(LOCALHOST_ADDRESS, REMOTE_PORT));
@@ -53,7 +53,7 @@ public class SocketClientTest {
     }
 
     @Test
-    public void testConnectUnresolved() {
+    void testConnectUnresolved() {
         final SocketClient socketClient = new FTPClient();
 
         assertThrows(UnknownHostException.class, () -> socketClient.connect(UNRESOLVED_HOST, REMOTE_PORT, null, -1));
@@ -67,7 +67,7 @@ public class SocketClientTest {
      * A simple test to verify that the Proxy is being set.
      */
     @Test
-    public void testProxySettings() {
+    void testProxySettings() {
         final SocketClient socketClient = new FTPClient();
         assertNull(socketClient.getProxy());
         final Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT));

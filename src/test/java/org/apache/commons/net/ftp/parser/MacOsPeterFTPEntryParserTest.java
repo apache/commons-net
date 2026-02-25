@@ -28,7 +28,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 import org.junit.jupiter.api.Test;
 
-public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
+class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "drwxr-xr-x    123       folder        0 Jan  4 14:49 Steak", };
 
@@ -77,13 +77,13 @@ public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testDefaultPrecision() {
+    void testDefaultPrecision() {
         testPrecision("-rw-r--r--    78440       49231   127671 Jul 22  2010 Filename with whitespace.jpg", CalendarUnit.DAY_OF_MONTH);
     }
 
     @Override
     @Test
-    public void testParseFieldsOnDirectory() throws Exception {
+    void testParseFieldsOnDirectory() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("drwxr-xr-x               folder        0 Mar  2 15:13 Alias_to_Steak");
         assertNotNull(f, "Could not parse entry.");
         assertTrue(f.isDirectory(), "Should have been a directory.");
@@ -113,7 +113,7 @@ public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testParseFieldsOnFile() throws Exception {
+    void testParseFieldsOnFile() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("-rwxr-xr-x    78440       49231   127671 Jul  2 14:51 Filename with whitespace.jpg");
         assertNotNull(f, "Could not parse entry.");
         assertTrue(f.isFile(), "Should have been a file.");
@@ -142,7 +142,7 @@ public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testRecentPrecision() {
+    void testRecentPrecision() {
         testPrecision("-rw-r--r--    78440       49231   127671 Jul 22 14:51 Filename with whitespace.jpg", CalendarUnit.MINUTE);
     }
 

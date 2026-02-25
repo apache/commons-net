@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test suite addapted to new MVSFTPEntryParser.java.
  */
-public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
+class MVSFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] goodsamplesDatasetList = {
             /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
@@ -125,7 +125,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testDefaultPrecision() {
+    void testDefaultPrecision() {
         // TODO Not sure what dates are parsed
     }
 
@@ -138,7 +138,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
      */
     @Override
     @Test
-    public void testGoodListing() {
+    void testGoodListing() {
         final String[] goodsamples = getGoodListing();
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
@@ -151,7 +151,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Test
-    public void testJesLevel1Listing() {
+    void testJesLevel1Listing() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.JES_LEVEL_1_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.JES_LEVEL_1_LIST_REGEX);
@@ -163,7 +163,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Test
-    public void testJesLevel2Listing() {
+    void testJesLevel2Listing() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.JES_LEVEL_2_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.JES_LEVEL_2_LIST_REGEX);
@@ -175,7 +175,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Test
-    public void testMemberListing() {
+    void testMemberListing() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.MEMBER_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.MEMBER_LIST_REGEX);
@@ -188,7 +188,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testParseFieldsOnDirectory() throws Exception {
+    void testParseFieldsOnDirectory() throws Exception {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.FILE_LIST_REGEX);
@@ -212,7 +212,7 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
      */
     @Override
     @Test
-    public void testParseFieldsOnFile() throws Exception {
+    void testParseFieldsOnFile() throws Exception {
         FTPFile file;
 
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
@@ -245,12 +245,12 @@ public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testRecentPrecision() {
+    void testRecentPrecision() {
         // TODO Auto-generated method stub
     }
 
     @Test
-    public void testUnixListings() {
+    void testUnixListings() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         final List<String> list = new ArrayList<>();
         Collections.addAll(list, goodsamplesUnixList);

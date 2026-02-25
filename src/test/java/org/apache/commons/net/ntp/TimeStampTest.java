@@ -30,14 +30,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class that validates assertions for the basic TimeStamp operations and comparisons.
  */
-public class TimeStampTest {
+class TimeStampTest {
 
     private static final String TIME1 = "c1a9ae1c.cf6ac48d"; // Tue, Dec 17 2002 14:07:24.810 UTC
     private static final String TIME2 = "c1a9ae1c.cf6ac48f"; // Tue, Dec 17 2002 14:07:24.810 UTC
     private static final String TIME3 = "c1a9ae1d.cf6ac48e"; // Tue, Dec 17 2002 14:07:25.810 UTC
 
     @Test
-    public void testCompare() {
+    void testCompare() {
 
         final TimeStamp ts1 = new TimeStamp(TIME1); // Tue, Dec 17 2002 14:07:24.810 UTC
         final TimeStamp ts2 = new TimeStamp(TIME1);
@@ -69,7 +69,7 @@ public class TimeStampTest {
     }
 
     @Test
-    public void testDateConversion() {
+    void testDateConversion() {
         // convert current date to NtpTimeStamp then compare Java date
         // computed from NTP timestamp with original Java date.
         final Calendar refCal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
@@ -81,7 +81,7 @@ public class TimeStampTest {
     }
 
     @Test
-    public void testNotSame() {
+    void testNotSame() {
         final TimeStamp time = TimeStamp.getCurrentTime();
         Object other = Integer.valueOf(0);
         if (time.equals(other)) {
@@ -94,7 +94,7 @@ public class TimeStampTest {
     }
 
     @Test
-    public void testUTCString() {
+    void testUTCString() {
         final TimeStamp ts1 = new TimeStamp(TIME1); // Tue, Dec 17 2002 14:07:24.810 UTC
         final String actual = ts1.toUTCString();
         assertEquals("Tue, Dec 17 2002 14:07:24.810 UTC", actual);

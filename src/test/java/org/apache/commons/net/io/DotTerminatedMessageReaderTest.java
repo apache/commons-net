@@ -24,7 +24,7 @@ import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
 
-public class DotTerminatedMessageReaderTest {
+class DotTerminatedMessageReaderTest {
 
     private static final String CRLF = "\r\n";
     private static final String DOT = ".";
@@ -34,7 +34,7 @@ public class DotTerminatedMessageReaderTest {
     private final char[] buf = new char[64];
 
     @Test
-    public void testDoubleCrBeforeDot() throws IOException {
+    void testDoubleCrBeforeDot() throws IOException {
         final String test = "Hello World!\r" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -47,7 +47,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testEmbeddedDot1() throws IOException {
+    void testEmbeddedDot1() throws IOException {
         final String test = "Hello . World!" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -60,7 +60,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testEmbeddedDot2() throws IOException {
+    void testEmbeddedDot2() throws IOException {
         final String test = "Hello .. World!" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -73,7 +73,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testEmbeddedDot3() throws IOException {
+    void testEmbeddedDot3() throws IOException {
         final String test = "Hello World." + CRLF + "more" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -86,7 +86,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testEmbeddedDot4() throws IOException {
+    void testEmbeddedDot4() throws IOException {
         final String test = "Hello World\r.\nmore" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -99,7 +99,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testEmbeddedNewlines() throws IOException {
+    void testEmbeddedNewlines() throws IOException {
         final String test = "Hello" + CRLF + "World\nA\rB" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -112,7 +112,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testLeadingDot() throws IOException {
+    void testLeadingDot() throws IOException {
         final String test = "Hello World!" + CRLF + "..text" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -125,7 +125,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testReadLine1() throws Exception {
+    void testReadLine1() throws Exception {
         final String test = "Hello World" + CRLF + "more" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -140,7 +140,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testReadLine2() throws Exception {
+    void testReadLine2() throws Exception {
         final String test = "Hello World\r.\nmore" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -155,7 +155,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testReadSimpleStringCrLfLineEnding() throws IOException {
+    void testReadSimpleStringCrLfLineEnding() throws IOException {
         final String test = "Hello World!" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -168,7 +168,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testReadSimpleStringLfLineEnding() throws IOException {
+    void testReadSimpleStringLfLineEnding() throws IOException {
         final String test = "Hello World!" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 
@@ -181,7 +181,7 @@ public class DotTerminatedMessageReaderTest {
     }
 
     @Test
-    public void testSingleDotWithTrailingText() throws IOException {
+    void testSingleDotWithTrailingText() throws IOException {
         final String test = "Hello World!" + CRLF + ".text" + EOM;
         reader = new DotTerminatedMessageReader(new StringReader(test));
 

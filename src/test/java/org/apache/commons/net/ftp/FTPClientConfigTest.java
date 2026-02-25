@@ -29,7 +29,7 @@ import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
-public class FTPClientConfigTest {
+class FTPClientConfigTest {
 
     private static final String A = "A";
 
@@ -49,7 +49,7 @@ public class FTPClientConfigTest {
      * Class under test for void FTPClientConfig(String)
      */
     @Test
-    public void testFTPClientConfigString() {
+    void testFTPClientConfigString() {
         final FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_VMS);
         assertEquals(FTPClientConfig.SYST_VMS, config.getServerSystemKey());
         assertNull(config.getDefaultDateFormatStr());
@@ -63,7 +63,7 @@ public class FTPClientConfigTest {
      * Class under test for void FTPClientConfig(String, String, String, String, String, String)
      */
     @Test
-    public void testFTPClientConfigStringStringStringStringStringString() {
+    void testFTPClientConfigStringStringStringStringStringString() {
         final FTPClientConfig conf = new FTPClientConfig(A, B, C, D, E, F);
 
         assertEquals("A", conf.getServerSystemKey());
@@ -75,7 +75,7 @@ public class FTPClientConfigTest {
     }
 
     @Test
-    public void testGetDateFormatSymbols() {
+    void testGetDateFormatSymbols() {
 
         assertThrows(IllegalArgumentException.class, () -> FTPClientConfig.getDateFormatSymbols(badDelim), "bad delimiter");
         assertThrows(IllegalArgumentException.class, () -> FTPClientConfig.getDateFormatSymbols(tooLong), "more than 12 months");
@@ -109,11 +109,11 @@ public class FTPClientConfigTest {
     }
 
     @Test
-    public void testGetServerLanguageCode() {
+    void testGetServerLanguageCode() {
     }
 
     @Test
-    public void testLookupDateFormatSymbols() {
+    void testLookupDateFormatSymbols() {
         DateFormatSymbols dfs1 = null;
         DateFormatSymbols dfs2 = null;
         DateFormatSymbols dfs3 = null;
@@ -171,7 +171,7 @@ public class FTPClientConfigTest {
     }
 
     @Test
-    public void testSetShortMonthNames() {
+    void testSetShortMonthNames() {
     }
 
 }

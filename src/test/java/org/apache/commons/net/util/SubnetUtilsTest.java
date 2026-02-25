@@ -42,7 +42,7 @@ import org.junit.jupiter.params.provider.FieldSource;
  * Tests {@link SubnetUtils}.
  */
 @SuppressWarnings("deprecation") // deliberate use of deprecated methods
-public class SubnetUtilsTest {
+class SubnetUtilsTest {
 
     /**
      * Fixture values includes counting the host.
@@ -79,7 +79,7 @@ public class SubnetUtilsTest {
     // @formatter:on
 
     @Test
-    public void testAddresses() {
+    void testAddresses() {
         final SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
         final SubnetInfo info = utils.getInfo();
         assertTrue(info.isInRange("192.168.0.1"));
@@ -102,7 +102,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testAddressIllegalArgument() {
+    void testAddressIllegalArgument() {
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("bad"));
     }
 
@@ -110,7 +110,7 @@ public class SubnetUtilsTest {
      * Test using the inclusiveHostCount flag, which includes the network and broadcast addresses in host counts
      */
     @Test
-    public void testCidrAddresses() {
+    void testCidrAddresses() {
         SubnetUtils utils = new SubnetUtils("192.168.0.1/8");
         utils.setInclusiveHostCount(true);
         SubnetInfo info = utils.getInfo();
@@ -276,7 +276,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testInvalidMasks() {
+    void testInvalidMasks() {
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("192.168.0.1/"));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("192.168.0.1/33"));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils("192.168.0.1/111"));
@@ -284,7 +284,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testNET428_31() {
+    void testNET428_31() {
         final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/31");
         assertEquals(0, subnetUtils.getInfo().getAddressCount());
         final String[] address = subnetUtils.getInfo().getAllAddresses();
@@ -293,7 +293,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testNET428_32() {
+    void testNET428_32() {
         final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/32");
         assertEquals(0, subnetUtils.getInfo().getAddressCount());
         final String[] address = subnetUtils.getInfo().getAllAddresses();
@@ -302,7 +302,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testNET520() {
+    void testNET520() {
         final SubnetUtils utils = new SubnetUtils("0.0.0.0/0");
         utils.setInclusiveHostCount(true);
         final SubnetInfo info = utils.getInfo();
@@ -314,7 +314,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testNET521() {
+    void testNET521() {
         SubnetUtils utils;
         SubnetInfo info;
 
@@ -337,7 +337,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testNET624() {
+    void testNET624() {
         assertDoesNotThrow(() -> new SubnetUtils("0.0.0.0/0"));
         assertDoesNotThrow(() -> new SubnetUtils("0.0.0.0", "0.0.0.0"));
         assertDoesNotThrow(() -> new SubnetUtils("0.0.0.0", "128.0.0.0"));
@@ -346,7 +346,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testNET641() {
+    void testNET641() {
         assertFalse(new SubnetUtils("192.168.1.0/00").getInfo().isInRange("0.0.0.0"));
         assertFalse(new SubnetUtils("192.168.1.0/30").getInfo().isInRange("0.0.0.0"));
         assertFalse(new SubnetUtils("192.168.1.0/31").getInfo().isInRange("0.0.0.0"));
@@ -354,7 +354,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testNET675() {
+    void testNET675() {
         final SubnetUtils utils = new SubnetUtils("192.168.0.15/32");
         utils.setInclusiveHostCount(true);
         final SubnetInfo info = utils.getInfo();
@@ -362,7 +362,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testNET679() {
+    void testNET679() {
         final SubnetUtils utils = new SubnetUtils("10.213.160.0/16");
         utils.setInclusiveHostCount(true);
         final SubnetInfo info = utils.getInfo();
@@ -371,13 +371,13 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testNext() {
+    void testNext() {
         final SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
         assertEquals("192.168.0.2", utils.getNext().getInfo().getAddress());
     }
 
     @Test
-    public void testParseSimpleNetmask() {
+    void testParseSimpleNetmask() {
         final String address = "192.168.0.1";
         final String[] masks = { "255.0.0.0", "255.255.0.0", "255.255.255.0", "255.255.255.248" };
         final String[] bcastAddresses = { "192.255.255.255", "192.168.255.255", "192.168.0.255", "192.168.0.7" };
@@ -405,7 +405,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testParseSimpleNetmaskExclusive() {
+    void testParseSimpleNetmaskExclusive() {
         final String address = "192.168.15.7";
         final String[] masks = { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
         final String[] bcast = { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
@@ -430,7 +430,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testParseSimpleNetmaskInclusive() {
+    void testParseSimpleNetmaskInclusive() {
         final String address = "192.168.15.7";
         final String[] masks = { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
         final String[] bcast = { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
@@ -454,13 +454,13 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testPrevious() {
+    void testPrevious() {
         final SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
         assertEquals("192.168.0.0", utils.getPrevious().getInfo().getAddress());
     }
 
     @Test
-    public void testSubnetAddressIterable() {
+    void testSubnetAddressIterable() {
         testSubnetAddressIterable("192.168.1.0/24", 254);
     }
 
@@ -476,7 +476,7 @@ public class SubnetUtilsTest {
 
     @ParameterizedTest
     @FieldSource("CIDR_SIZES")
-    public void testSubnetAddressIterableCount(final ImmutablePair<String, Long> pair) {
+    void testSubnetAddressIterableCount(final ImmutablePair<String, Long> pair) {
         final String cidrNotation = pair.getKey();
         final long max = pair.getValue();
         final SubnetUtils subnetUtils = new SubnetUtils(cidrNotation);
@@ -486,7 +486,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testSubnetAddressStream() {
+    void testSubnetAddressStream() {
         testSubnetAddressStream("192.168.1.0/24", 254);
     }
 
@@ -502,7 +502,7 @@ public class SubnetUtilsTest {
 
     @ParameterizedTest
     @FieldSource("CIDR_SIZES")
-    public void testSubnetAddressStreamCount(final ImmutablePair<String, Long> pair) {
+    void testSubnetAddressStreamCount(final ImmutablePair<String, Long> pair) {
         final String cidrNotation = pair.getKey();
         final long max = pair.getValue();
         final SubnetUtils subnetUtils = new SubnetUtils(cidrNotation);
@@ -512,7 +512,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         final String cidrNotation = "192.168.0.1/29";
         final SubnetUtils utils = new SubnetUtils(cidrNotation);
         assertTrue(utils.toString().contains(cidrNotation));
@@ -521,7 +521,7 @@ public class SubnetUtilsTest {
     }
 
     @Test
-    public void testZeroAddressAndCidr() {
+    void testZeroAddressAndCidr() {
         testSubnetAddressStream("0.0.0.0/0", 0);
     }
 }

@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the getters on {@link FTPSClient}.
  */
-public class FTPSClientGettersTest {
+class FTPSClientGettersTest {
 
     @Test
-    public void testGetters() {
+    void testGetters() {
         final FTPSClient testClient = new FTPSClient("SSL", true);
         assertTrue(testClient.isImplicit());
         assertEquals("SSL", testClient.getProtocol());

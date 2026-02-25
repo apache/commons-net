@@ -31,10 +31,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class TestTimeInfo {
+class TestTimeInfo {
 
     @Test
-    public void testAddress() throws UnknownHostException {
+    void testAddress() throws UnknownHostException {
         final NtpV3Packet packet = new NtpV3Impl();
         final TimeInfo info = new TimeInfo(packet, System.currentTimeMillis());
         assertNull(info.getAddress());
@@ -43,7 +43,7 @@ public class TestTimeInfo {
     }
 
     @Test
-    public void testComputeDetails() {
+    void testComputeDetails() {
         // if (origTime > returnTime) // assert destTime >= origTime
         final NtpV3Packet packet = new NtpV3Impl();
         final long returnTimeMillis = System.currentTimeMillis();
@@ -77,7 +77,7 @@ public class TestTimeInfo {
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         final NtpV3Packet packet = new NtpV3Impl();
         final long returnTime = System.currentTimeMillis();
         final TimeInfo info = new TimeInfo(packet, returnTime);
@@ -94,13 +94,13 @@ public class TestTimeInfo {
     }
 
     @Test
-    public void testException() {
+    void testException() {
         final NtpV3Packet packet = null;
         assertThrows(IllegalArgumentException.class, () -> new TimeInfo(packet, 1L));
     }
 
     @Test
-    public void testNotEquals() {
+    void testNotEquals() {
         final NtpV3Packet packet = new NtpV3Impl();
         final long returnTime = System.currentTimeMillis();
         final TimeInfo info = new TimeInfo(packet, returnTime);
@@ -127,7 +127,7 @@ public class TestTimeInfo {
     }
 
     @Test
-    public void testZeroTime() {
+    void testZeroTime() {
         final NtpV3Packet packet = new NtpV3Impl();
         final TimeInfo info = new TimeInfo(packet, 0);
         info.computeDetails();

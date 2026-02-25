@@ -29,20 +29,20 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link DiscardTCPClient}.
  */
-public class DiscardTCPClientTest {
+class DiscardTCPClientTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(DiscardTCPClient::new);
     }
 
     @Test
-    public void testDefaultPort() {
+    void testDefaultPort() {
         assertEquals(DiscardTCPClient.DEFAULT_PORT, new DiscardTCPClient().getDefaultPort());
     }
 
     @Test
-    public void testGetOutputStream() throws IOException {
+    void testGetOutputStream() throws IOException {
         try (OutputStream outputStream = new DiscardTCPClient().getOutputStream()) {
             assertNull(outputStream);
         }

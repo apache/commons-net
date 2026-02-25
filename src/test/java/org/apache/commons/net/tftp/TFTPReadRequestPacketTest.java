@@ -27,10 +27,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link TFTPReadRequestPacket}.
  */
-public class TFTPReadRequestPacketTest {
+class TFTPReadRequestPacketTest {
 
     @Test
-    public void testToString() throws UnknownHostException {
+    void testToString() throws UnknownHostException {
         assertNotNull(new TFTPReadRequestPacket(InetAddress.getLocalHost(), 0, "", 0).toString());
     }
 

@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  *
  * Requires a Java-compatible SOCK proxy server on 127.0.0.1:9050 and access to ftp.gnu.org.
  */
-public class SocketClientFunctionalTest {
+class SocketClientFunctionalTest {
     private static final String PROXY_HOST = "127.0.0.1";
     private static final int PROXY_PORT = 9050;
     private static final String DEST_HOST = "ftp.gnu.org";
@@ -43,7 +43,7 @@ public class SocketClientFunctionalTest {
      * @throws Exception in case of connection errors
      */
     @Test
-    public void testProxySettings() throws Exception {
+    void testProxySettings() throws Exception {
         // NOTE: HTTP Proxies seem to be invalid for raw sockets
         final Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT));
         sc.setProxy(proxy);

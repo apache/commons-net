@@ -49,7 +49,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class FTPClientTransferModeTest {
+class FTPClientTransferModeTest {
 
     private static final class FtpServerAndPort {
 
@@ -133,7 +133,7 @@ public class FTPClientTransferModeTest {
 
     @ParameterizedTest
     @ValueSource(ints = {FTP.DEFLATE_TRANSFER_MODE})
-    public void testRetrievingFiles(final int transferMode) throws Exception {
+    void testRetrievingFiles(final int transferMode) throws Exception {
         new File(DEFAULT_HOME).mkdirs();
         final String filename = "test_download.txt";
         final String fileContent = "Created at " + Instant.now();
@@ -160,7 +160,7 @@ public class FTPClientTransferModeTest {
 
     @ParameterizedTest
     @ValueSource(ints = {FTP.DEFLATE_TRANSFER_MODE})
-    public void testStoringFiles(final int transferMode) throws Exception {
+    void testStoringFiles(final int transferMode) throws Exception {
         runWithFTPserver((port, user, password) -> {
             final FTPClient client = new FTPClient();
             try {

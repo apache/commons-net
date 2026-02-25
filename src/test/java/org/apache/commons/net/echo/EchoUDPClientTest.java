@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link EchoUDPClient}.
  */
-public class EchoUDPClientTest {
+class EchoUDPClientTest {
 
     @Test
-    public void testRecieve() {
+    void testRecieve() {
         try (EchoUDPClient client = new EchoUDPClient()) {
             // Not connected
             assertThrows(NullPointerException.class, () -> client.receive(new byte[0]));
@@ -38,7 +38,7 @@ public class EchoUDPClientTest {
     }
 
     @Test
-    public void testSend() {
+    void testSend() {
         try (EchoUDPClient client = new EchoUDPClient()) {
             // Not connected
             assertThrows(NullPointerException.class, () -> client.send(new byte[0], InetAddress.getLocalHost()));

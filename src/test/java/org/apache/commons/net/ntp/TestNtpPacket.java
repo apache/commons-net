@@ -26,7 +26,7 @@ import java.net.DatagramPacket;
 
 import org.junit.jupiter.api.Test;
 
-public class TestNtpPacket {
+class TestNtpPacket {
 
     // pre-canned NTP packet
     // [version:3, mode:4, poll:4, refId=0x81531472, precision:-17, delay:100, dispersion(ms):51.605224609375,
@@ -43,7 +43,7 @@ public class TestNtpPacket {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         final NtpV3Packet message = new NtpV3Impl();
         message.setLeapIndicator(0); // byte 0 [bit numbers 7-6]
         message.setVersion(NtpV3Packet.VERSION_3); // byte 0 [bit numbers 5-4]
@@ -85,7 +85,7 @@ public class TestNtpPacket {
     }
 
     @Test
-    public void testCreateAndSetByte0() {
+    void testCreateAndSetByte0() {
         // LI + VN + Mode all part of first byte -- make sure set order does not matter
         final NtpV3Packet message = new NtpV3Impl();
 
@@ -139,14 +139,14 @@ public class TestNtpPacket {
     }
 
     @Test
-    public void testCreateFromBadPacket() {
+    void testCreateFromBadPacket() {
         final NtpV3Packet message = new NtpV3Impl();
         final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length - 4); // drop 4-bytes from packet
         assertThrows(IllegalArgumentException.class, () -> message.setDatagramPacket(dp));
     }
 
     @Test
-    public void testCreateFromBytes() {
+    void testCreateFromBytes() {
         final NtpV3Packet message = new NtpV3Impl();
         final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
         message.setDatagramPacket(dp);
@@ -154,13 +154,13 @@ public class TestNtpPacket {
     }
 
     @Test
-    public void testCreateFromNullPacket() {
+    void testCreateFromNullPacket() {
         final NtpV3Packet message = new NtpV3Impl();
         assertThrows(IllegalArgumentException.class, () -> message.setDatagramPacket(null));
     }
 
     @Test
-    public void testCreateNtpV4() {
+    void testCreateNtpV4() {
         final NtpV3Packet message = new NtpV3Impl();
         message.setVersion(NtpV3Packet.VERSION_4);
         message.setStratum(3);
@@ -179,7 +179,7 @@ public class TestNtpPacket {
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         final NtpV3Packet message1 = new NtpV3Impl();
         final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
         message1.setDatagramPacket(dp);

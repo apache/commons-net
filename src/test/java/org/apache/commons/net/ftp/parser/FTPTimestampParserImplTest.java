@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the FTPTimestampParser class.
  */
-public class FTPTimestampParserImplTest {
+class FTPTimestampParserImplTest {
 
     private static final int TWO_HOURS_OF_MILLISECONDS = 2 * 60 * 60 * 1000;
 
@@ -101,7 +101,7 @@ public class FTPTimestampParserImplTest {
 
     // Test leap year if current year is a leap year
     @Test
-    public void testFeb29IfLeapYear() throws Exception {
+    void testFeb29IfLeapYear() throws Exception {
         final GregorianCalendar now = new GregorianCalendar();
         final int thisYear = now.get(Calendar.YEAR);
         final GregorianCalendar target = new GregorianCalendar(thisYear, Calendar.FEBRUARY, 29);
@@ -114,14 +114,14 @@ public class FTPTimestampParserImplTest {
 
     // Test Feb 29 for a known leap year
     @Test
-    public void testFeb29LeapYear() throws Exception {
+    void testFeb29LeapYear() throws Exception {
         final int year = 2000; // Use same year for current and short date
         final GregorianCalendar now = new GregorianCalendar(year, Calendar.APRIL, 1, 12, 0);
         checkShortParse("Feb 29th 2000", now, new GregorianCalendar(year, Calendar.FEBRUARY, 29));
     }
 
     @Test
-    public void testFeb29LeapYear2() throws Exception {
+    void testFeb29LeapYear2() throws Exception {
         final int year = 2000; // Use same year for current and short date
         final GregorianCalendar now = new GregorianCalendar(year, Calendar.MARCH, 1, 12, 0);
         checkShortParse("Feb 29th 2000", now, new GregorianCalendar(year, Calendar.FEBRUARY, 29));
@@ -129,7 +129,7 @@ public class FTPTimestampParserImplTest {
 
     // same date feb 29
     @Test
-    public void testFeb29LeapYear3() throws Exception {
+    void testFeb29LeapYear3() throws Exception {
         final int year = 2000; // Use same year for current and short date
         final GregorianCalendar now = new GregorianCalendar(year, Calendar.FEBRUARY, 29, 12, 0);
         checkShortParse("Feb 29th 2000", now, new GregorianCalendar(year, Calendar.FEBRUARY, 29));
@@ -137,7 +137,7 @@ public class FTPTimestampParserImplTest {
 
     // future dated Feb 29
     @Test
-    public void testFeb29LeapYear4() throws Exception {
+    void testFeb29LeapYear4() throws Exception {
         final int year = 2000; // Use same year for current and short date
         final GregorianCalendar now = new GregorianCalendar(year, Calendar.FEBRUARY, 28, 12, 0);
         // Must allow lenient future date here
@@ -146,7 +146,7 @@ public class FTPTimestampParserImplTest {
 
     // Test Feb 29 for a known non-leap year - should fail
     @Test
-    public void testFeb29NonLeapYear() {
+    void testFeb29NonLeapYear() {
         final GregorianCalendar server = new GregorianCalendar(1999, Calendar.APRIL, 1, 12, 0);
         // Note: we use a known leap year for the target date to avoid rounding up
         final GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY, 29);
@@ -156,7 +156,7 @@ public class FTPTimestampParserImplTest {
     }
 
     @Test
-    public void testNET444() throws Exception {
+    void testNET444() throws Exception {
         final FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
         parser.setLenientFutureDates(true);
         final SimpleDateFormat sdf = new SimpleDateFormat(parser.getRecentDateFormatString());
@@ -180,7 +180,7 @@ public class FTPTimestampParserImplTest {
     // This test currently fails, because we assume that short dates are +-6months when parsing Feb 29
     @Test
     @Disabled
-    public void testNET446() throws Exception {
+    void testNET446() throws Exception {
         final GregorianCalendar server = new GregorianCalendar(2001, Calendar.JANUARY, 1, 12, 0);
         // Note: we use a known leap year for the target date to avoid rounding up
         final GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY, 29);
@@ -203,14 +203,14 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
      */
     @Test
     @Disabled
-    public void testNet710() throws ParseException {
+    void testNet710() throws ParseException {
         final Calendar serverTime = Calendar.getInstance(TimeZone.getTimeZone("EDT"), Locale.US);
         serverTime.set(2022, Calendar.MARCH, 16, 14, 0);
         new FTPTimestampParserImpl().parseTimestamp("Mar 13 02:33", serverTime);
     }
 
     @Test
-    public void testParseDec31Lenient() throws Exception {
+    void testParseDec31Lenient() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2007, Calendar.DECEMBER, 30, 12, 0);
         checkShortParse("2007-12-30", now, now); // should always work
         final GregorianCalendar target = (GregorianCalendar) now.clone();
@@ -219,7 +219,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParseJan01() throws Exception {
+    void testParseJan01() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2007, Calendar.JANUARY, 1, 12, 0);
         checkShortParse("2007-01-01", now, now); // should always work
         final GregorianCalendar target = new GregorianCalendar(2006, Calendar.DECEMBER, 31, 12, 0);
@@ -228,7 +228,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParseJan01Lenient() throws Exception {
+    void testParseJan01Lenient() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2007, Calendar.DECEMBER, 31, 12, 0);
         checkShortParse("2007-12-31", now, now); // should always work
         final GregorianCalendar target = (GregorianCalendar) now.clone();
@@ -237,7 +237,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParser() throws ParseException {
+    void testParser() throws ParseException {
         // This test requires an English Locale
         final Locale locale = Locale.getDefault();
         try {
@@ -272,7 +272,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParseShortFutureDates1() throws Exception {
+    void testParseShortFutureDates1() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2001, Calendar.MAY, 30, 12, 0);
         checkShortParse("2001-5-30", now, now); // should always work
         final GregorianCalendar target = (GregorianCalendar) now.clone();
@@ -291,7 +291,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParseShortFutureDates2() throws Exception {
+    void testParseShortFutureDates2() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2004, Calendar.AUGUST, 1, 12, 0);
         checkShortParse("2004-8-1", now, now); // should always work
         final GregorianCalendar target = (GregorianCalendar) now.clone();
@@ -310,7 +310,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParseShortPastDates1() throws Exception {
+    void testParseShortPastDates1() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2001, Calendar.MAY, 30, 12, 0);
         checkShortParse("2001-5-30", now, now); // should always work
         final GregorianCalendar target = (GregorianCalendar) now.clone();
@@ -323,7 +323,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParseShortPastDates2() throws Exception {
+    void testParseShortPastDates2() throws Exception {
         final GregorianCalendar now = new GregorianCalendar(2004, Calendar.AUGUST, 1, 12, 0);
         checkShortParse("2004-8-1", now, now); // should always work
         final GregorianCalendar target = (GregorianCalendar) now.clone();
@@ -336,7 +336,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParseTimestamp() {
+    void testParseTimestamp() {
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR_OF_DAY, 1);
         cal.set(Calendar.SECOND, 0);
@@ -356,7 +356,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParseTimestampAcrossTimeZones() {
+    void testParseTimestampAcrossTimeZones() {
         final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
@@ -413,7 +413,7 @@ java.text.ParseException: Timestamp 'Mar 13 02:33' could not be parsed using a s
     }
 
     @Test
-    public void testParseTimestampWithSlop() {
+    void testParseTimestampWithSlop() {
         final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);

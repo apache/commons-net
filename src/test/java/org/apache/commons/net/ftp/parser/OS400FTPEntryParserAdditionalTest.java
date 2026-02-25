@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  */
-public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFramework {
+class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFramework {
     private static final String[][] badsamples = { { "QPGMR          135168 04/03/18 13:18:19 *FILE", "QPGMR          135168    03/24 13:18:19 *FILE",
             "QPGMR          135168 04/03/18 30:06:29 *FILE", "QPGMR                 04/03/18 13:18:19 *FILE      RPGUNITC1.FILE",
             "QPGMR          135168    03/24 13:18:19 *FILE      RPGUNITC1.FILE", "QPGMR          135168 04/03/18 30:06:29 *FILE      RPGUNITC1.FILE",
@@ -64,13 +64,13 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
 
     @Override
     @Test
-    public void testDefaultPrecision() {
+    void testDefaultPrecision() {
         // Done in other class
     }
 
     @Override
     @Test
-    public void testParseFieldsOnDirectory() throws Exception {
+    void testParseFieldsOnDirectory() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
         assertNotNull(f, "Could not parse entry.");
         assertTrue(f.isDirectory(), "Should have been a directory.");
@@ -92,7 +92,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
 
     @Override
     @Test
-    public void testParseFieldsOnFile() throws Exception {
+    void testParseFieldsOnFile() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
         assertNotNull(f, "Could not parse entry.");
         assertTrue(f.isFile(), "Should have been a file.");
@@ -113,7 +113,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
 
     @Override
     @Test
-    public void testRecentPrecision() {
+    void testRecentPrecision() {
         // Done in other class
     }
 }

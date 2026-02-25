@@ -29,20 +29,20 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link CharGenTCPClient}.
  */
-public class CharGenTCPClientTest {
+class CharGenTCPClientTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(CharGenTCPClient::new);
     }
 
     @Test
-    public void testDefaultPort() {
+    void testDefaultPort() {
         assertEquals(CharGenTCPClient.DEFAULT_PORT, new CharGenTCPClient().getDefaultPort());
     }
 
     @Test
-    public void testGetInputStream() throws IOException {
+    void testGetInputStream() throws IOException {
         try (InputStream inputStream = new CharGenTCPClient().getInputStream()) {
             assertNull(inputStream);
         }

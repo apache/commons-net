@@ -30,38 +30,38 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link RExecClient}.
  */
-public class RExecClientTest {
+class RExecClientTest {
 
     private RExecClient newClient() {
         return new RExecClient();
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(RExecClient::new);
     }
 
     @Test
-    public void testDefaultPort() {
+    void testDefaultPort() {
         assertEquals(RExecClient.DEFAULT_PORT, newClient().getDefaultPort());
     }
 
     @Test
-    public void testGetErrorStream() throws IOException {
+    void testGetErrorStream() throws IOException {
         try (InputStream inputStream = newClient().getErrorStream()) {
             assertNull(inputStream);
         }
     }
 
     @Test
-    public void testGetInputStream() throws IOException {
+    void testGetInputStream() throws IOException {
         try (InputStream inputStream = newClient().getInputStream()) {
             assertNull(inputStream);
         }
     }
 
     @Test
-    public void testGetOutputStream() throws IOException {
+    void testGetOutputStream() throws IOException {
         try (OutputStream outputStream = newClient().getOutputStream()) {
             assertNull(outputStream);
         }

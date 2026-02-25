@@ -60,7 +60,7 @@ class TFTPRequestPacketTest {
     }
 
     @Test
-    public void testGetOptions() throws UnknownHostException, TFTPPacketException {
+    void testGetOptions() throws UnknownHostException, TFTPPacketException {
         final DatagramPacket datagramPacket = getDatagramPacket();
         final TFTPReadRequestPacket requestPacket = new TFTPReadRequestPacket(datagramPacket);
         assertNotNull(requestPacket.toString());
@@ -70,7 +70,7 @@ class TFTPRequestPacketTest {
     }
 
     @Test
-    public void testNewDatagram() throws TFTPPacketException, UnknownHostException {
+    void testNewDatagram() throws TFTPPacketException, UnknownHostException {
         final DatagramPacket datagramPacket = getDatagramPacket();
 
         final TFTPReadRequestPacket requestPacket = new TFTPReadRequestPacket(datagramPacket);

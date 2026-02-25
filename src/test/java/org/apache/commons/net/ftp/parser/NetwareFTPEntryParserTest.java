@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  */
-public class NetwareFTPEntryParserTest extends AbstractFTPParseTest {
+class NetwareFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "a [-----F--] SCION_SYS                         512 Apr 13 23:52 SYS",
             "d [----AF--]          0                        512 10-04-2001 _ADMIN" };
@@ -56,13 +56,13 @@ public class NetwareFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testDefaultPrecision() {
+    void testDefaultPrecision() {
         testPrecision("d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites", CalendarUnit.DAY_OF_MONTH);
     }
 
     @Override
     @Test
-    public void testParseFieldsOnDirectory() throws Exception {
+    void testParseFieldsOnDirectory() throws Exception {
         final String reply = "d [-W---F--] testUser                        512 Apr 13 23:12 testFile";
         final FTPFile f = getParser().parseFTPEntry(reply);
 
@@ -87,7 +87,7 @@ public class NetwareFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testParseFieldsOnFile() throws Exception {
+    void testParseFieldsOnFile() throws Exception {
         final String reply = "- [R-CEAFMS] rwinston                        19968 Mar 12 15:20 Document name with spaces.doc";
 
         final FTPFile f = getParser().parseFTPEntry(reply);
@@ -104,7 +104,7 @@ public class NetwareFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testRecentPrecision() {
+    void testRecentPrecision() {
         testPrecision("- [RWCEAFMS] rwinston                        19968 Mar 12 15:20 Executive Summary.doc", CalendarUnit.MINUTE);
     }
 

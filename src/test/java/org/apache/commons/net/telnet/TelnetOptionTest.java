@@ -25,13 +25,13 @@ import org.junit.jupiter.api.Test;
 /**
  * JUnit test class for TelnetOption
  */
-public class TelnetOptionTest {
+class TelnetOptionTest {
 
     /**
      * test of the getOption method.
      */
     @Test
-    public void testGetOption() {
+    void testGetOption() {
         assertEquals("BINARY", TelnetOption.getOption(0));
         assertEquals("UNASSIGNED", TelnetOption.getOption(91));
         assertEquals("Extended-Options-List", TelnetOption.getOption(255));
@@ -41,7 +41,7 @@ public class TelnetOptionTest {
      * test of the isValidOption method.
      */
     @Test
-    public void testisValidOption() {
+    void testisValidOption() {
         assertTrue(TelnetOption.isValidOption(0));
         assertTrue(TelnetOption.isValidOption(91));
         assertTrue(TelnetOption.isValidOption(255));

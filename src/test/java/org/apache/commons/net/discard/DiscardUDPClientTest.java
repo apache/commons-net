@@ -27,16 +27,16 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link DiscardUDPClient}.
  */
-public class DiscardUDPClientTest {
+class DiscardUDPClientTest {
 
     @SuppressWarnings("resource")
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(DiscardUDPClient::new);
     }
 
     @Test
-    public void testSend() {
+    void testSend() {
         try (DiscardUDPClient client = new DiscardUDPClient()) {
             // Not connected
             assertThrows(NullPointerException.class, () -> client.send(new byte[0], InetAddress.getLocalHost()));

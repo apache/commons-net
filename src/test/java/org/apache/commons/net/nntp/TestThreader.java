@@ -27,20 +27,20 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the Threader
  */
-public class TestThreader {
+class TestThreader {
 
     private static final Threadable[] EMPTY_THREADABLE_ARRAY = {};
 
     @SuppressWarnings("deprecation") // test of deprecated method
     @Test
-    public void testEmptyArray() { // NET-539
+    void testEmptyArray() { // NET-539
         final Threader t = new Threader();
         final Threadable[] messages = EMPTY_THREADABLE_ARRAY;
         assertNull(t.thread(messages));
     }
 
     @Test
-    public void testEmptyIterable() { // NET-539
+    void testEmptyIterable() { // NET-539
         final Threader t = new Threader();
         final Threadable[] messages = EMPTY_THREADABLE_ARRAY;
         final Iterable<Threadable> asList = Arrays.asList(messages);
@@ -48,7 +48,7 @@ public class TestThreader {
     }
 
     @Test
-    public void testEmptyList() { // NET-539
+    void testEmptyList() { // NET-539
         final Threader t = new Threader();
         final Threadable[] messages = EMPTY_THREADABLE_ARRAY;
         final List<Threadable> asList = Arrays.asList(messages);
@@ -57,21 +57,21 @@ public class TestThreader {
 
     @Test
     @SuppressWarnings("deprecation") // test of deprecated method
-    public void testNullArray() { // NET-539
+    void testNullArray() { // NET-539
         final Threader t = new Threader();
         final Threadable[] messages = null;
         assertNull(t.thread(messages));
     }
 
     @Test
-    public void testNullIterable() {
+    void testNullIterable() {
         final Threader t = new Threader();
         final Iterable<Threadable> messages = null;
         assertNull(t.thread(messages));
     }
 
     @Test
-    public void testNullList() {
+    void testNullList() {
         final Threader t = new Threader();
         final List<Threadable> messages = null;
         assertNull(t.thread(messages));

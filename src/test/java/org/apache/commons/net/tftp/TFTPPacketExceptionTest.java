@@ -25,10 +25,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link TFTPPacketException}.
  */
-public class TFTPPacketExceptionTest {
+class TFTPPacketExceptionTest {
 
     @Test
-    public void testContructor() {
+    void testContructor() {
         assertNull(new TFTPPacketException().getMessage());
         assertEquals("A", new TFTPPacketException("A").getMessage());
     }

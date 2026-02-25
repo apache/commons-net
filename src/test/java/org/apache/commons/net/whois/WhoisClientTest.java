@@ -27,20 +27,20 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link WhoisClient}.
  */
-public class WhoisClientTest {
+class WhoisClientTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(WhoisClient::new);
     }
 
     @Test
-    public void testDefaultPort() {
+    void testDefaultPort() {
         assertEquals(WhoisClient.DEFAULT_PORT, new WhoisClient().getDefaultPort());
     }
 
     @Test
-    public void testDisconnect() throws IOException {
+    void testDisconnect() throws IOException {
         new WhoisClient().disconnect();
     }
 

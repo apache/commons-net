@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class IMAPTest {
+class IMAPTest {
 
     private static Stream<String> mailboxNamesToBeQuoted() {
         return Stream.of(
@@ -51,7 +51,7 @@ public class IMAPTest {
     }
 
     @Test
-    public void testCheckGenerator() {
+    void testCheckGenerator() {
         // This test assumes:
         // - 26 letters in the generator alphabet
         // - the generator uses a fixed size tag
@@ -76,7 +76,7 @@ public class IMAPTest {
     }
 
     @Test
-    public void testConstructDefaultIMAP() {
+    void testConstructDefaultIMAP() {
         final IMAP imap = new IMAP();
         assertEquals(IMAP.DEFAULT_PORT, imap.getDefaultPort());
         assertEquals(IMAP.IMAPState.DISCONNECTED_STATE, imap.getState());
@@ -84,18 +84,18 @@ public class IMAPTest {
     }
 
     @Test
-    public void testQuoteMailboxNameNullInput() {
+    void testQuoteMailboxNameNullInput() {
         assertNull(IMAP.quoteMailboxName(null));
     }
 
     @Test
-    public void testQuoteMailboxNoQuotingIfNoSpacePresent() {
+    void testQuoteMailboxNoQuotingIfNoSpacePresent() {
         final String stringToQuote = "Foobar\"";
         assertEquals(stringToQuote, IMAP.quoteMailboxName(stringToQuote));
     }
 
     @Test
-    public void testTrueChunkListener() {
+    void testTrueChunkListener() {
         assertTrue(IMAP.TRUE_CHUNK_LISTENER.chunkReceived(new IMAP()));
     }
 

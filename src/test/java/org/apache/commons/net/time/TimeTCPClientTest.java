@@ -27,7 +27,7 @@ import java.util.TimeZone;
 
 import org.junit.jupiter.api.Test;
 
-public class TimeTCPClientTest {
+class TimeTCPClientTest {
     private TimeTestSimpleServer server1;
 
     private int _port = 3333; // default test port
@@ -58,7 +58,7 @@ public class TimeTCPClientTest {
      * Tests the times retrieved via the Time protocol implementation.
      */
     @Test
-    public void testCompareTimes() throws Exception {
+    void testCompareTimes() throws Exception {
         openConnections();
 
         final long time;
@@ -108,7 +108,7 @@ public class TimeTCPClientTest {
      * Tests the constant basetime used by TimeClient against tha computed from Calendar class.
      */
     @Test
-    public void testInitial() {
+    void testInitial() {
         final TimeZone utcZone = TimeZone.getTimeZone("UTC");
         final Calendar calendar = Calendar.getInstance(utcZone);
         calendar.set(1900, Calendar.JANUARY, 1, 0, 0, 0);

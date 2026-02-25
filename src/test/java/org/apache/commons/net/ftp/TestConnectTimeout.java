@@ -30,10 +30,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the socket connect timeout functionality
  */
-public class TestConnectTimeout {
+class TestConnectTimeout {
 
     @Test
-    public void testConnectTimeout() throws SocketException, IOException {
+    void testConnectTimeout() throws SocketException, IOException {
         final FTPClient client = new FTPClient();
         client.setConnectTimeout(1000);
 

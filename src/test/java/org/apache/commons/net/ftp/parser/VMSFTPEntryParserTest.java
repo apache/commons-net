@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  */
-public class VMSFTPEntryParserTest extends AbstractFTPParseTest {
+class VMSFTPEntryParserTest extends AbstractFTPParseTest {
     private static final String[] BAD_SAMPLES = {
 
             "1-JUN.LIS;2              9/9           JUN-2-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",
@@ -143,13 +143,13 @@ public class VMSFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testDefaultPrecision() {
+    void testDefaultPrecision() {
         testPrecision("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RD,,)", CalendarUnit.SECOND);
     }
 
     @Override
     @Test
-    public void testParseFieldsOnDirectory() throws Exception {
+    void testParseFieldsOnDirectory() throws Exception {
 
         FTPFile dir = getParser().parseFTPEntry("DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
         assertTrue(dir.isDirectory(), "Should be a directory.");
@@ -172,7 +172,7 @@ public class VMSFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testParseFieldsOnFile() throws Exception {
+    void testParseFieldsOnFile() throws Exception {
         FTPFile file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RW,R)");
         assertTrue(file.isFile(), "Should be a file.");
         assertEquals("1-JUN.LIS", file.getName());
@@ -194,12 +194,12 @@ public class VMSFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testRecentPrecision() {
+    void testRecentPrecision() {
         // Not used
     }
 
     @Test
-    public void testWholeListParse() throws IOException {
+    void testWholeListParse() throws IOException {
         final VMSFTPEntryParser parser = new VMSFTPEntryParser();
         parser.configure(null);
         final FTPListParseEngine engine = new FTPListParseEngine(parser);
@@ -214,7 +214,7 @@ public class VMSFTPEntryParserTest extends AbstractFTPParseTest {
     }
 
     @Test
-    public void testWholeListParseWithVersioning() throws IOException {
+    void testWholeListParseWithVersioning() throws IOException {
 
         final VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
         parser.configure(null);

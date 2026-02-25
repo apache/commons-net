@@ -33,7 +33,7 @@ public abstract class AbstractTelnetOptionHandlerTest {
     /**
      * test of the constructors. The derived class may add test of the option code.
      */
-    public void testConstructors() {
+    void testConstructors() {
         // add test of the option code
         assertFalse(opthand1.getInitLocal());
         assertFalse(opthand1.getInitRemote());
@@ -55,7 +55,7 @@ public abstract class AbstractTelnetOptionHandlerTest {
      * test of setDo/getDo
      */
     @Test
-    public void testDo() {
+    void testDo() {
         opthand2.setDo(true);
         opthand3.setDo(false);
 
@@ -68,7 +68,7 @@ public abstract class AbstractTelnetOptionHandlerTest {
      * test of setWill/getWill
      */
     @Test
-    public void testWill() {
+    void testWill() {
         opthand2.setWill(true);
         opthand3.setWill(false);
 

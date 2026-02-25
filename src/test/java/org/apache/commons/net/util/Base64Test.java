@@ -36,7 +36,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({ "deprecation" })
-public class Base64Test {
+class Base64Test {
 
     private static String toString(final byte[] encodedData) {
         return encodedData != null ? new String(encodedData, StandardCharsets.UTF_8) : null;
@@ -78,20 +78,20 @@ public class Base64Test {
     }
 
     @Test
-    public void testBase64() {
+    void testBase64() {
         final Base64 b64 = new Base64();
         assertFalse(b64.isUrlSafe());
     }
 
     @Test
-    public void testBase64Boolean() {
+    void testBase64Boolean() {
         final Base64 b64 = new Base64(true);
         assertTrue(b64.isUrlSafe());
         assertArrayEquals(new byte[] {}, b64.getLineSeparator());
     }
 
     @Test
-    public void testBase64Int() {
+    void testBase64Int() {
         Base64 b64;
         b64 = new Base64(8);
         assertFalse(b64.isUrlSafe());
@@ -101,7 +101,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testBase64IntByteArray() {
+    void testBase64IntByteArray() {
         final Base64 b64;
         b64 = new Base64(8, new byte[] {});
         assertFalse(b64.isUrlSafe());
@@ -121,7 +121,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testBase64IntByteArrayBoolean() {
+    void testBase64IntByteArrayBoolean() {
         Base64 b64;
         b64 = new Base64(8, new byte[] {}, false);
         assertFalse(b64.isUrlSafe());
@@ -131,34 +131,34 @@ public class Base64Test {
     }
 
     @Test
-    public void testDecodeBase64ByteArray() {
+    void testDecodeBase64ByteArray() {
         checkDecoders("light w", new byte[] { 'b', 'G', 'l', 'n', 'a', 'H', 'Q', 'g', 'd', 'w', '=', '=' });
     }
 
     @Test
-    public void testDecodeBase64String() {
+    void testDecodeBase64String() {
         checkDecoders("light w", "bGlnaHQgdw==");
     }
 
     @Test
-    public void testDecodeByteArray() {
+    void testDecodeByteArray() {
         checkDecoders("foobar", new byte[] { 'Z', 'm', '9', 'v', 'Y', 'm', 'F', 'y' });
     }
 
     @Test
-    public void testDecodeByteArrayEmpty() {
+    void testDecodeByteArrayEmpty() {
         checkDecoders("", new byte[] {});
         checkDecoders(null, (byte[]) null);
 
     }
 
     @Test
-    public void testDecodeByteArrayNull() {
+    void testDecodeByteArrayNull() {
         assertNull(new Base64().decode((byte[]) null));
     }
 
     @Test
-    public void testDecodeInteger() {
+    void testDecodeInteger() {
         testDecodeInteger(BigInteger.ONE);
         testDecodeInteger(BigInteger.TEN);
         testDecodeInteger(BigInteger.ZERO);
@@ -169,18 +169,18 @@ public class Base64Test {
     }
 
     @Test
-    public void testDecodeNullString() {
+    void testDecodeNullString() {
         final Base64 base64 = new Base64();
         assertThrows(NullPointerException.class, () -> base64.decode((String) null));
     }
 
     @Test
-    public void testDecodeString() {
+    void testDecodeString() {
         checkDecoders("Hello World!", "SGVsbG8gV29ybGQh");
     }
 
     @Test
-    public void testEncodeBase64ByteArrayBoolean() {
+    void testEncodeBase64ByteArrayBoolean() {
         final byte[] binaryData = { '1', '2', '3' };
         final byte[] urlUnsafeData = "<<???>>".getBytes();
         final byte[] urlUnsafeDataChunky = "<<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>><<???>>".getBytes();
@@ -230,7 +230,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64ByteArrayBooleanBoolean() {
+    void testEncodeBase64ByteArrayBooleanBoolean() {
         final byte[] binaryData = { '1', '2', '3' };
         byte[] encoded;
         encoded = Base64.encodeBase64(binaryData, false, false);
@@ -248,7 +248,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64ByteArrayBooleanBooleanInt() {
+    void testEncodeBase64ByteArrayBooleanBooleanInt() {
         final byte[] binaryData = { '1', '2', '3' };
         byte[] encoded;
         encoded = Base64.encodeBase64(binaryData, false, false);
@@ -268,7 +268,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64ByteArrayEdges() {
+    void testEncodeBase64ByteArrayEdges() {
         final byte[] binaryData = null;
         assertArrayEquals(binaryData, Base64.encodeBase64(binaryData));
         final byte[] binaryData2 = {};
@@ -276,7 +276,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64Chunked() {
+    void testEncodeBase64Chunked() {
         byte[] bytesToEncode = { 'f', 'o', 'o', 'b', 'a', 'r' };
         byte[] encodedData = Base64.encodeBase64Chunked(bytesToEncode);
         assertEquals("Zm9vYmFy\r\n", toString(encodedData));
@@ -294,7 +294,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64StringByteArray() {
+    void testEncodeBase64StringByteArray() {
         String stringToEncode = "Many hands make light work.";
         String encodedData = Base64.encodeBase64String(stringToEncode.getBytes());
         assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu\r\n", encodedData);
@@ -312,7 +312,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64StringByteArrayBoolean() {
+    void testEncodeBase64StringByteArrayBoolean() {
         final byte[] bytesToEncode = "light work.".getBytes();
         final String chunkedResult = Base64.encodeBase64String(bytesToEncode, true);
         assertEquals("bGlnaHQgd29yay4=\r\n", chunkedResult);
@@ -321,7 +321,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64StringUnChunked() {
+    void testEncodeBase64StringUnChunked() {
         byte[] bytesToEncode = "Many hands make light work.".getBytes();
         String encodedData = Base64.encodeBase64StringUnChunked(bytesToEncode);
         assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", encodedData);
@@ -337,7 +337,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64URLSafe() {
+    void testEncodeBase64URLSafe() {
         byte[] bytesToEncode = "Many hands make light work.".getBytes();
         byte[] encodedData = Base64.encodeBase64URLSafe(bytesToEncode);
         assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", toString(encodedData));
@@ -365,7 +365,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeBase64URLSafeString() {
+    void testEncodeBase64URLSafeString() {
         byte[] bytesToEncode = "Many hands make light work.".getBytes();
         String encodedData = Base64.encodeBase64URLSafeString(bytesToEncode);
         assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", encodedData);
@@ -382,26 +382,26 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeByteArray() {
+    void testEncodeByteArray() {
         final Base64 base64 = new Base64();
         final byte[] bytesToEncode = { 'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r' };
         assertEquals("bGlnaHQgd29y\r\n", new String(base64.encode(bytesToEncode), StandardCharsets.UTF_8));
     }
 
     @Test
-    public void testEncodeByteArrayEmpty() {
+    void testEncodeByteArrayEmpty() {
         assertNull(new Base64().encode((byte[]) null));
         final byte[] empty = {};
         assertSame(empty, new Base64().encode(empty));
     }
 
     @Test
-    public void testEncodeByteArrayNull() {
+    void testEncodeByteArrayNull() {
         assertNull(new Base64().encode((byte[]) null));
     }
 
     @Test
-    public void testEncodeInteger() {
+    void testEncodeInteger() {
         testEncodeInteger(BigInteger.ONE);
         testEncodeInteger(BigInteger.TEN);
         testEncodeInteger(BigInteger.ZERO);
@@ -414,20 +414,20 @@ public class Base64Test {
     }
 
     @Test
-    public void testEncodeToString() {
+    void testEncodeToString() {
         final Base64 base64 = new Base64();
         final byte[] bytesToEncode = { 'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r' };
         assertEquals("bGlnaHQgd29y\r\n", base64.encodeToString(bytesToEncode));
     }
 
     @Test
-    public void testIsArrayByteBase64() {
+    void testIsArrayByteBase64() {
         assertTrue(Base64.isArrayByteBase64(new byte[] { 'b', ' ' }));
         assertFalse(Base64.isArrayByteBase64(new byte[] { '?' }));
     }
 
     @Test
-    public void testIsBase64() {
+    void testIsBase64() {
         assertTrue(Base64.isBase64((byte) '='));
         assertTrue(Base64.isBase64((byte) 'b'));
         assertFalse(Base64.isBase64((byte) ' '));

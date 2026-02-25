@@ -23,7 +23,7 @@ import java.io.OutputStream;
  * Simple stream responder. Waits for strings on an input stream and answers sending corresponfing strings on an output stream. The reader runs in a separate
  * thread.
  */
-public class TelnetTestResponder implements Runnable {
+class TelnetTestResponder implements Runnable {
     InputStream in;
     OutputStream out;
     String inputs[];

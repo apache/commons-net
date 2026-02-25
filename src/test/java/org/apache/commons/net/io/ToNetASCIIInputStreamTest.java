@@ -26,7 +26,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
-public class ToNetASCIIInputStreamTest {
+class ToNetASCIIInputStreamTest {
 
     private void byteTest(final boolean byByte, final String input, final String expect) throws IOException {
         final byte[] data = input.getBytes(StandardCharsets.US_ASCII);
@@ -66,7 +66,7 @@ public class ToNetASCIIInputStreamTest {
     }
 
     @Test
-    public void testToNetASCIIInputStream_single_bytes() throws Exception {
+    void testToNetASCIIInputStream_single_bytes() throws Exception {
         byteTest(true, "", "");
         byteTest(true, "\r", "\r");
         byteTest(true, "\n", "\r\n");
@@ -79,7 +79,7 @@ public class ToNetASCIIInputStreamTest {
     }
 
     @Test
-    public void testToNetASCIIInputStream1() throws Exception {
+    void testToNetASCIIInputStream1() throws Exception {
         byteTest(false, "", "");
         byteTest(false, "\r", "\r");
         byteTest(false, "a", "a");

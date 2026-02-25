@@ -28,7 +28,7 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 import org.junit.jupiter.api.Test;
 
-public class DefaultFTPFileEntryParserFactoryTest {
+class DefaultFTPFileEntryParserFactoryTest {
     private void checkParserClass(final FTPFileEntryParserFactory fact, final String key, final Class<?> expected) {
         final FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);
         final FTPFileEntryParser parser = fact.createFileEntryParser(config);
@@ -37,7 +37,7 @@ public class DefaultFTPFileEntryParserFactoryTest {
     }
 
     @Test
-    public void testDefaultParserFactory() {
+    void testDefaultParserFactory() {
         final DefaultFTPFileEntryParserFactory factory = new DefaultFTPFileEntryParserFactory();
 
         FTPFileEntryParser parser = factory.createFileEntryParser("unix");
@@ -124,7 +124,7 @@ public class DefaultFTPFileEntryParserFactoryTest {
     }
 
     @Test
-    public void testDefaultParserFactoryConfig() throws Exception {
+    void testDefaultParserFactoryConfig() throws Exception {
         final DefaultFTPFileEntryParserFactory factory = new DefaultFTPFileEntryParserFactory();
 
         assertThrows(NullPointerException.class, () -> factory.createFileEntryParser((FTPClientConfig) null));

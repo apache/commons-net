@@ -39,7 +39,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * A functional test suite for checking that site listings work.
  */
-public class ListingFunctionalTest {
+class ListingFunctionalTest {
     public static final class TestCase {
         private final String hostName;
         private final String invalidParserKey;
@@ -148,7 +148,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testInitiateListParsing(final TestCase testCase) throws IOException {
+    void testInitiateListParsing(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         client.changeWorkingDirectory(testCase.validPath);
         final FTPListParseEngine engine = client.initiateListParsing();
@@ -161,7 +161,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testInitiateListParsingWithPath(final TestCase testCase) throws IOException {
+    void testInitiateListParsingWithPath(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final FTPListParseEngine engine = client.initiateListParsing(testCase.validParserKey, testCase.validPath);
         final List<FTPFile> files = Arrays.asList(engine.getNext(25));
@@ -173,7 +173,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testInitiateListParsingWithPathAndAutodetection(final TestCase testCase) throws IOException {
+    void testInitiateListParsingWithPathAndAutodetection(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final FTPListParseEngine engine = client.initiateListParsing(testCase.validPath);
         final List<FTPFile> files = Arrays.asList(engine.getNext(25));
@@ -185,7 +185,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testInitiateListParsingWithPathAndAutodetectionButEmpty(final TestCase testCase) throws IOException {
+    void testInitiateListParsingWithPathAndAutodetectionButEmpty(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final FTPListParseEngine engine = client.initiateListParsing(testCase.invalidPath);
         assertFalse(engine.hasNext());
@@ -196,7 +196,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testInitiateListParsingWithPathAndIncorrectParser(final TestCase testCase) throws IOException {
+    void testInitiateListParsingWithPathAndIncorrectParser(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final FTPListParseEngine engine = client.initiateListParsing(testCase.invalidParserKey, testCase.invalidPath);
         assertFalse(engine.hasNext());
@@ -207,7 +207,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testListFiles(final TestCase testCase) throws IOException {
+    void testListFiles(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final FTPClientConfig config = new FTPClientConfig(testCase.validParserKey);
         client.configure(config);
@@ -217,7 +217,7 @@ public class ListingFunctionalTest {
 
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testListFilesWithAutodection(final TestCase testCase) throws IOException {
+    void testListFilesWithAutodection(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         client.changeWorkingDirectory(testCase.validPath);
         final List<FTPFile> files = Arrays.asList(client.listFiles());
@@ -229,7 +229,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testListFilesWithIncorrectParser(final TestCase testCase) throws IOException {
+    void testListFilesWithIncorrectParser(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final FTPClientConfig config = new FTPClientConfig(testCase.invalidParserKey);
         client.configure(config);
@@ -244,7 +244,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testListFilesWithPathAndAutodectionButEmpty(final TestCase testCase) throws IOException {
+    void testListFilesWithPathAndAutodectionButEmpty(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final FTPFile[] files = client.listFiles(testCase.invalidPath);
         assertEquals(0, files.length);
@@ -255,7 +255,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testListFilesWithPathAndAutodetection(final TestCase testCase) throws IOException {
+    void testListFilesWithPathAndAutodetection(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final List<FTPFile> files = Arrays.asList(client.listFiles(testCase.validPath));
         assertTrue(findByName(files, testCase.validFilename), files.toString());
@@ -266,7 +266,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testListNames(final TestCase testCase) throws IOException {
+    void testListNames(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         client.changeWorkingDirectory(testCase.validPath);
         final String[] names = client.listNames();
@@ -280,7 +280,7 @@ public class ListingFunctionalTest {
      */
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testListNamesWithPath(final TestCase testCase) throws IOException {
+    void testListNamesWithPath(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final String[] listNames = client.listNames(testCase.validPath);
         assertNotNull(listNames, "listNames not null");
@@ -290,7 +290,7 @@ public class ListingFunctionalTest {
 
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testListNamesWithPathButEmpty(final TestCase testCase) throws IOException {
+    void testListNamesWithPathButEmpty(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         final String[] names = client.listNames(testCase.invalidPath);
         assertTrue(ArrayUtils.isEmpty(names));
@@ -298,7 +298,7 @@ public class ListingFunctionalTest {
 
     @ParameterizedTest(name = "hostname={0}")
     @MethodSource("testCases")
-    public void testPrintWorkingDirectory(final TestCase testCase) throws IOException {
+    void testPrintWorkingDirectory(final TestCase testCase) throws IOException {
         client = createFTPClient(testCase.hostName);
         client.changeWorkingDirectory(testCase.validPath);
         final String pwd = client.printWorkingDirectory();

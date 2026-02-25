@@ -29,14 +29,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link ListenerList}.
  */
-public class ListenerListTest {
+class ListenerListTest {
 
     static class EventListenerImpl implements EventListener {
         // empty
     }
 
     @Test
-    public void testAdd() {
+    void testAdd() {
         final EventListenerImpl eventListenerImpl = new EventListenerImpl();
         final ListenerList listenerList = new ListenerList();
         listenerList.addListener(eventListenerImpl);
@@ -44,12 +44,12 @@ public class ListenerListTest {
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertEquals(0, new ListenerList().getListenerCount());
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final EventListenerImpl eventListenerImpl = new EventListenerImpl();
         final ListenerList listenerList = new ListenerList();
         listenerList.addListener(eventListenerImpl);
@@ -58,7 +58,7 @@ public class ListenerListTest {
         assertSame(eventListenerImpl, iterator.next());
     }
     @Test
-    public void testRemove() {
+    void testRemove() {
         final EventListenerImpl eventListenerImpl = new EventListenerImpl();
         final ListenerList listenerList = new ListenerList();
         listenerList.addListener(eventListenerImpl);

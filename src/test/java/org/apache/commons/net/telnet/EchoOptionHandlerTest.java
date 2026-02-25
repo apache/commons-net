@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 /**
  * JUnit test class for EchoOptionHandler
  */
-public class EchoOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
+class EchoOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
 
     /**
      * setUp for the test.
@@ -41,7 +41,7 @@ public class EchoOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
      * test of server-driven subnegotiation. Checks that no subnegotiation is made.
      */
     @Test
-    public void testAnswerSubnegotiation() {
+    void testAnswerSubnegotiation() {
         final int[] subn = { TelnetCommand.IAC, TelnetCommand.SB, TelnetOption.ECHO, 1, TelnetCommand.IAC, TelnetCommand.SE, };
 
         final int[] resp1 = opthand1.answerSubnegotiation(subn, subn.length);
@@ -54,7 +54,7 @@ public class EchoOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
      */
     @Override
     @Test
-    public void testConstructors() {
+    void testConstructors() {
         assertEquals(TelnetOption.ECHO, opthand1.getOptionCode());
         super.testConstructors();
     }
@@ -63,7 +63,7 @@ public class EchoOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
      * test of client-driven subnegotiation. Checks that no subnegotiation is made.
      */
     @Test
-    public void testStartSubnegotiation() {
+    void testStartSubnegotiation() {
         final int[] resp1 = opthand1.startSubnegotiationLocal();
         final int[] resp2 = opthand1.startSubnegotiationRemote();
 

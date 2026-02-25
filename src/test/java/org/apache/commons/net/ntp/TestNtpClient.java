@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * JUnit test class for NtpClient using SimpleNTPServer
  */
-public class TestNtpClient {
+class TestNtpClient {
 
     private static SimpleNTPServer server;
 
@@ -73,7 +73,7 @@ public class TestNtpClient {
     }
 
     @Test
-    public void testGetTime() throws IOException {
+    void testGetTime() throws IOException {
         final long currentTimeMillis = System.currentTimeMillis();
         final NTPUDPClient client = new NTPUDPClient();
         // timeout if response takes longer than 2 seconds

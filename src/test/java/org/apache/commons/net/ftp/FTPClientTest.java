@@ -32,7 +32,7 @@ import java.net.InetAddress;
 import org.apache.commons.net.ftp.parser.UnixFTPEntryParser;
 import org.junit.jupiter.api.Test;
 
-public class FTPClientTest {
+class FTPClientTest {
 
     private static final class LocalClient extends FTPClient {
 
@@ -86,61 +86,61 @@ public class FTPClientTest {
             "/", };
 
     @Test
-    public void testCopyStreamListener() {
+    void testCopyStreamListener() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertNull(client.getCopyStreamListener());
     }
 
     @Test
-    public void testGetActivePort() {
+    void testGetActivePort() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertEquals(0, client.getActivePort());
     }
 
     @Test
-    public void testGetAutodetectUTF8() {
+    void testGetAutodetectUTF8() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertFalse(client.getAutodetectUTF8());
     }
 
     @Test
-    public void testGetBufferSize() {
+    void testGetBufferSize() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertEquals(0, client.getBufferSize());
     }
 
     @Test
-    public void testGetControlKeepAliveReplyTimeout() {
+    void testGetControlKeepAliveReplyTimeout() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertEquals(1_000, client.getControlKeepAliveReplyTimeout());
     }
 
     @Test
-    public void testGetControlKeepAliveTimeout() {
+    void testGetControlKeepAliveTimeout() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertEquals(0, client.getControlKeepAliveTimeout());
     }
 
     @Test
-    public void testGetCslDebug() {
+    void testGetCslDebug() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertNull(client.getCslDebug());
     }
 
     @Test
-    public void testGetPassiveLocalIPAddress() {
+    void testGetPassiveLocalIPAddress() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertNull(client.getPassiveLocalIPAddress());
     }
 
     @Test
-    public void testGetPassivePort() {
+    void testGetPassivePort() {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         assertEquals(-1, client.getPassivePort());
     }
 
     @Test
-    public void testLoadResourceProperties() {
+    void testLoadResourceProperties() {
         assertNull(FTPClient.loadResourceProperties(null));
         assertNull(FTPClient.loadResourceProperties("this/does/not/exist.properties"));
         assertNull(FTPClient.loadResourceProperties("/this/does/not/exist.properties"));
@@ -151,14 +151,14 @@ public class FTPClientTest {
     }
 
     @Test
-    public void testParseClient() {
+    void testParseClient() {
         for (int i = 0; i < TESTS.length; i += 2) {
             assertEquals(TESTS[i + 1], FTPClient.parsePathname(TESTS[i]), "Failed to parse");
         }
     }
 
     @Test
-    public void testParsePassiveModeReplyForLocalAddressWithNatWorkaround() throws Exception {
+    void testParsePassiveModeReplyForLocalAddressWithNatWorkaround() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         client.setIpAddressFromPasvResponse(true);
         client._parsePassiveModeReply("227 Entering Passive Mode (172,16,204,138,192,22).");
@@ -170,7 +170,7 @@ public class FTPClientTest {
 
     @SuppressWarnings("deprecation") // testing deprecated code
     @Test
-    public void testParsePassiveModeReplyForLocalAddressWithNatWorkaroundDisabled() throws Exception {
+    void testParsePassiveModeReplyForLocalAddressWithNatWorkaroundDisabled() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         client.setPassiveNatWorkaround(false);
         client.setIpAddressFromPasvResponse(true);
@@ -182,7 +182,7 @@ public class FTPClientTest {
     }
 
     @Test
-    public void testParsePassiveModeReplyForLocalAddressWithoutNatWorkaroundStrategy() throws Exception {
+    void testParsePassiveModeReplyForLocalAddressWithoutNatWorkaroundStrategy() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         client.setPassiveNatWorkaroundStrategy(null);
         client.setIpAddressFromPasvResponse(true);
@@ -194,7 +194,7 @@ public class FTPClientTest {
     }
 
     @Test
-    public void testParsePassiveModeReplyForLocalAddressWithSimpleNatWorkaroundStrategy() throws Exception {
+    void testParsePassiveModeReplyForLocalAddressWithSimpleNatWorkaroundStrategy() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         client.setPassiveNatWorkaroundStrategy(hostname -> "4.4.4.4");
         client.setIpAddressFromPasvResponse(true);
@@ -206,7 +206,7 @@ public class FTPClientTest {
     }
 
     @Test
-    public void testParsePassiveModeReplyForNonLocalAddressWithNatWorkaround() throws Exception {
+    void testParsePassiveModeReplyForNonLocalAddressWithNatWorkaround() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         client.setIpAddressFromPasvResponse(true);
         client._parsePassiveModeReply("227 Entering Passive Mode (8,8,4,4,192,22).");
@@ -218,7 +218,7 @@ public class FTPClientTest {
 
     @SuppressWarnings("deprecation") // testing deprecated code
     @Test
-    public void testParsePassiveModeReplyForNonLocalAddressWithNatWorkaroundDisabled() throws Exception {
+    void testParsePassiveModeReplyForNonLocalAddressWithNatWorkaroundDisabled() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         client.setPassiveNatWorkaround(false);
         client.setIpAddressFromPasvResponse(true);
@@ -230,7 +230,7 @@ public class FTPClientTest {
     }
 
     @Test
-    public void testParsePassiveModeReplyForNonLocalAddressWithoutNatWorkaroundStrategy() throws Exception {
+    void testParsePassiveModeReplyForNonLocalAddressWithoutNatWorkaroundStrategy() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         client.setPassiveNatWorkaroundStrategy(null);
         client.setIpAddressFromPasvResponse(true);
@@ -242,7 +242,7 @@ public class FTPClientTest {
     }
 
     @Test
-    public void testParserCachingNullKey() throws Exception {
+    void testParserCachingNullKey() throws Exception {
         final LocalClient client = new LocalClient();
         client.setSystemType(FTPClientConfig.SYST_UNIX);
         assertNull(client.getEntryParser());
@@ -257,7 +257,7 @@ public class FTPClientTest {
     }
 
     @Test
-    public void testParserCachingWithKey() throws Exception {
+    void testParserCachingWithKey() throws Exception {
         final FTPClient client = new FTPClient();
         assertNull(client.getEntryParser());
         client.createParser(FTPClientConfig.SYST_UNIX);
@@ -275,7 +275,7 @@ public class FTPClientTest {
     }
 
     @Test
-    public void testUnparseableFiles() throws Exception {
+    void testUnparseableFiles() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write("-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox".getBytes());
         baos.write(new byte[] { '\r', '\n' });

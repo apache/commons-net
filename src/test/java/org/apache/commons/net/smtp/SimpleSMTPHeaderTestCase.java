@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link SimpleSMTPHeader}.
  */
-public class SimpleSMTPHeaderTestCase {
+class SimpleSMTPHeaderTestCase {
 
     private Date beforeDate;
 
@@ -80,14 +80,14 @@ public class SimpleSMTPHeaderTestCase {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         // Note that the DotTerminatedMessageWriter converts LF to CRLF
         final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", "Test email");
         assertEquals("From: from@here.invalid\nTo: to@there.invalid\nSubject: Test email\n\n", checkDate(header.toString()));
     }
 
     @Test
-    public void testToStringAddHeader() {
+    void testToStringAddHeader() {
         final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
         assertNotNull(header);
         header.addHeaderField("X-Header1", "value 1");
@@ -97,7 +97,7 @@ public class SimpleSMTPHeaderTestCase {
     }
 
     @Test
-    public void testToStringAddHeaderDate() {
+    void testToStringAddHeaderDate() {
         final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
         assertNotNull(header);
         header.addHeaderField("Date", "dummy date");
@@ -106,12 +106,12 @@ public class SimpleSMTPHeaderTestCase {
     }
 
     @Test
-    public void testToStringNoFrom() {
+    void testToStringNoFrom() {
         assertThrows(IllegalArgumentException.class, () -> new SimpleSMTPHeader(null, null, null));
     }
 
     @Test
-    public void testToStringNoSubject() {
+    void testToStringNoSubject() {
         final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", null);
         assertNotNull(header);
         // Note that the DotTerminatedMessageWriter converts LF to CRLF
@@ -119,7 +119,7 @@ public class SimpleSMTPHeaderTestCase {
     }
 
     @Test
-    public void testToStringNoTo() {
+    void testToStringNoTo() {
         final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
         assertNotNull(header);
         // Note that the DotTerminatedMessageWriter converts LF to CRLF

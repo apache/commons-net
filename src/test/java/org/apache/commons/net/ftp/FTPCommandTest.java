@@ -19,11 +19,11 @@ package org.apache.commons.net.ftp;
 
 import org.junit.jupiter.api.Test;
 
-public class FTPCommandTest {
+class FTPCommandTest {
 
     @SuppressWarnings("deprecation") // test of deprecated code
     @Test
-    public void testArray() {
+    void testArray() {
         FTPCommand.checkArray();
     }
 

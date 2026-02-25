@@ -29,24 +29,24 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link RCommandClient}.
  */
-public class RCommandClientTest {
+class RCommandClientTest {
 
     private RCommandClient newClient() {
         return new RCommandClient();
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(RCommandClient::new);
     }
 
     @Test
-    public void testDefaultPort() {
+    void testDefaultPort() {
         assertEquals(RCommandClient.DEFAULT_PORT, newClient().getDefaultPort());
     }
 
     @Test
-    public void testGetInputStream() throws IOException {
+    void testGetInputStream() throws IOException {
         try (InputStream inputStream = newClient().getInputStream()) {
             assertNull(inputStream);
         }

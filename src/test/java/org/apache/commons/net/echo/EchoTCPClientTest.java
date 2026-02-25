@@ -28,15 +28,15 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link EchoTCPClient}.
  */
-public class EchoTCPClientTest {
+class EchoTCPClientTest {
 
     @Test
-    public void testDefaultPort() {
+    void testDefaultPort() {
         assertEquals(EchoTCPClient.DEFAULT_PORT, new EchoTCPClient().getDefaultPort());
     }
 
     @Test
-    public void testDetInputStream() throws IOException {
+    void testDetInputStream() throws IOException {
         try (InputStream inputStream = new EchoTCPClient().getInputStream()) {
             assertNull(inputStream);
         }

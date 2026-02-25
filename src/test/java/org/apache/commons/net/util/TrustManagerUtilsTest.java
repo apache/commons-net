@@ -29,26 +29,26 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link TrustManagerUtils}.
  */
-public class TrustManagerUtilsTest {
+class TrustManagerUtilsTest {
 
     @Test
-    public void testGetAcceptAllTrustManager() {
+    void testGetAcceptAllTrustManager() {
         assertNotNull(TrustManagerUtils.getAcceptAllTrustManager());
     }
 
     @Test
-    public void testGetDefaultTrustManager() throws KeyStoreException, GeneralSecurityException {
+    void testGetDefaultTrustManager() throws KeyStoreException, GeneralSecurityException {
         assertNotNull(TrustManagerUtils.getDefaultTrustManager(KeyStore.getInstance(KeyStore.getDefaultType())));
     }
 
     @Test
-    public void testGetValidateServerCertificateTrustManager() {
+    void testGetValidateServerCertificateTrustManager() {
         assertNotNull(TrustManagerUtils.getValidateServerCertificateTrustManager());
     }
 
     @SuppressWarnings("deprecation")
     @Test
-    public void testToConstructor() {
+    void testToConstructor() {
         assertDoesNotThrow(TrustManagerUtils::new);
     }
 

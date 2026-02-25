@@ -32,7 +32,7 @@ import org.apache.commons.io.IOUtils;
  * <p>
  * Note this is for <strong>debugging purposes only</strong> and not meant to be run as a realiable time service.
  */
-public class TimeTestSimpleServer implements Runnable {
+class TimeTestSimpleServer implements Runnable {
 
     /**
      * baseline time 1900-01-01T00:00:00 UTC

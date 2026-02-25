@@ -24,7 +24,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 import org.junit.jupiter.api.Test;
 
-public class OS2FTPEntryParserTest extends AbstractFTPParseTest {
+class OS2FTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "                 DIR   12-30-97   12:32  jbrekke", "     0    rsa    DIR   11-25-97   09:42  junk",
             "     0           dir   05-12-97   16:44  LANGUAGE", "     0           DIR   13-05-97   25:49  MPTN",
@@ -59,14 +59,14 @@ public class OS2FTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testDefaultPrecision() {
+    void testDefaultPrecision() {
         testPrecision("     0           DIR   05-12-97   16:44  PSFONTS", CalendarUnit.MINUTE);
         testPrecision("     0           DIR   05-19-2000 12:56  local", CalendarUnit.MINUTE);
     }
 
     @Override
     @Test
-    public void testParseFieldsOnDirectory() throws Exception {
+    void testParseFieldsOnDirectory() throws Exception {
         final FTPFile dir = getParser().parseFTPEntry("     0           DIR   11-28-97   09:42  PC");
         assertNotNull(dir, "Could not parse entry.");
         assertTrue(dir.isDirectory(), "Should have been a directory.");
@@ -77,7 +77,7 @@ public class OS2FTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testParseFieldsOnFile() throws Exception {
+    void testParseFieldsOnFile() throws Exception {
         final FTPFile file = getParser().parseFTPEntry("5000000000      A          11-17-98   16:07  POPUPLOG.OS2");
         assertNotNull(file, "Could not parse entry.");
         assertTrue(file.isFile(), "Should have been a file.");
@@ -88,7 +88,7 @@ public class OS2FTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testRecentPrecision() {
+    void testRecentPrecision() {
         // Not needed
     }
 }

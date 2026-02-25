@@ -28,25 +28,25 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link FingerClient}.
  */
-public class FingerClientTest {
+class FingerClientTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(FingerClient::new);
     }
 
     @Test
-    public void testDefaultPort() {
+    void testDefaultPort() {
         assertEquals(FingerClient.DEFAULT_PORT, new FingerClient().getDefaultPort());
     }
 
     @Test
-    public void testDisconnect() throws IOException {
+    void testDisconnect() throws IOException {
         new FingerClient().disconnect();
     }
 
     @Test
-    public void testGetInputStream() {
+    void testGetInputStream() {
         final FingerClient fingerClient = new FingerClient();
         // Not connected throws NullPointerException
         assertThrows(NullPointerException.class, () -> fingerClient.getInputStream(false));
@@ -58,7 +58,7 @@ public class FingerClientTest {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         final FingerClient fingerClient = new FingerClient();
         // Not connected throws NullPointerException
         assertThrows(NullPointerException.class, () -> fingerClient.query(false));

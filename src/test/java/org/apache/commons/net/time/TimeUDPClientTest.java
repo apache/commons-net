@@ -27,17 +27,17 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link TimeUDPClient}.
  */
-public class TimeUDPClientTest {
+class TimeUDPClientTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         try (TimeUDPClient client = new TimeUDPClient()) {
             // empty
         }
     }
 
     @Test
-    public void testGetDate() {
+    void testGetDate() {
         try (TimeUDPClient client = new TimeUDPClient()) {
             // Not connected failures
             assertThrows(NullPointerException.class, () -> client.getDate(InetAddress.getLocalHost()));
@@ -46,7 +46,7 @@ public class TimeUDPClientTest {
     }
 
     @Test
-    public void testGetTime() {
+    void testGetTime() {
         try (TimeUDPClient client = new TimeUDPClient()) {
             // Not connected failures
             assertThrows(NullPointerException.class, () -> client.getTime(InetAddress.getLocalHost()));
@@ -55,7 +55,7 @@ public class TimeUDPClientTest {
     }
 
     @Test
-    public void testToTime() {
+    void testToTime() {
         final byte[] timeData = new byte[4];
         assertEquals(0, TimeUDPClient.toTime(timeData));
     }

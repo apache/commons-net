@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  */
-public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
+class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     private static final String[][] badsamples = {
             { "PEP              4019 04/03/18 18:58:16 STMF       einladung.zip", "PEP               422 03/24 14:06:26 *STMF      readme",
                     "PEP              6409 04/03/24 30:06:29 *STMF      build.xml", "PEP USR         36864 04/03/24 14:06:34 *DIR       dir1/",
@@ -80,12 +80,12 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
 
     @Override
     @Test
-    public void testDefaultPrecision() {
+    void testDefaultPrecision() {
         testPrecision("PEP              4019 04/03/18 18:58:16 *STMF      einladung.zip", CalendarUnit.SECOND);
     }
 
     @Test
-    public void testNET573() {
+    void testNET573() {
         final FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_AS400);
         conf.setDefaultDateFormatStr("MM/dd/yy HH:mm:ss");
         final FTPFileEntryParser parser = new OS400FTPEntryParser(conf);
@@ -114,7 +114,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
      */
     @Override
     @Test
-    public void testParseFieldsOnDirectory() throws Exception {
+    void testParseFieldsOnDirectory() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
         assertNotNull(f, "Could not parse entry.");
         assertTrue(f.isDirectory(), "Should have been a directory.");
@@ -139,7 +139,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
      */
     @Override
     @Test
-    public void testParseFieldsOnFile() throws Exception {
+    void testParseFieldsOnFile() throws Exception {
         final FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
         assertNotNull(f, "Could not parse entry.");
         assertTrue(f.isFile(), "Should have been a file.");
@@ -162,7 +162,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
      * Test file names with spaces.
      */
     @Test
-    public void testParseFileNameWithSpaces() {
+    void testParseFileNameWithSpaces() {
         final FTPFile f = getParser().parseFTPEntry("MYUSER              3 06/12/21 12:00:00 *STMF      file with space.txt");
         assertNotNull(f, "Could not parse entry.");
         assertTrue(f.isFile(), "Should have been a file.");
@@ -171,7 +171,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
 
     @Override
     @Test
-    public void testRecentPrecision() {
+    void testRecentPrecision() {
         testPrecision("----rwxr-x   1 PEP      0           4019 Mar 18 18:58 einladung.zip", CalendarUnit.MINUTE);
     }
 

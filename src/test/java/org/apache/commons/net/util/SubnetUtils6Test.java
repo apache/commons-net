@@ -33,12 +33,12 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link SubnetUtils6}.
  */
-public class SubnetUtils6Test {
+class SubnetUtils6Test {
 
     private static final BigInteger TWO = BigInteger.valueOf(2);
 
     @Test
-    public void testBasicCidr64() {
+    void testBasicCidr64() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/64");
         final SubnetInfo info = utils.getInfo();
 
@@ -51,7 +51,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testBasicCidr128() {
+    void testBasicCidr128() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/128");
         final SubnetInfo info = utils.getInfo();
 
@@ -62,7 +62,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testCidr0() {
+    void testCidr0() {
         final SubnetUtils6 utils = new SubnetUtils6("::/0");
         final SubnetInfo info = utils.getInfo();
 
@@ -73,7 +73,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testCidr48() {
+    void testCidr48() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8:abcd::/48");
         final SubnetInfo info = utils.getInfo();
 
@@ -83,7 +83,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testCompressedAddress() {
+    void testCompressedAddress() {
         final SubnetUtils6 utils = new SubnetUtils6("fe80::1/10");
         final SubnetInfo info = utils.getInfo();
 
@@ -95,7 +95,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testConstructorWithSeparateArgs() {
+    void testConstructorWithSeparateArgs() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1", 64);
         final SubnetInfo info = utils.getInfo();
 
@@ -104,7 +104,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testFullAddress() {
+    void testFullAddress() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:0db8:0000:0000:0000:0000:0000:0001/64");
         final SubnetInfo info = utils.getInfo();
 
@@ -113,7 +113,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testGetCidrSignature() {
+    void testGetCidrSignature() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/64");
         final SubnetInfo info = utils.getInfo();
 
@@ -121,7 +121,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testInvalidCidr() {
+    void testInvalidCidr() {
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6(null));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1"));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1/"));
@@ -132,20 +132,20 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testInvalidTwoArgConstructor() {
+    void testInvalidTwoArgConstructor() {
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1", 129));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1", -1));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("not-an-address", 64));
     }
 
     @Test
-    public void testInvalidIPv4Address() {
+    void testInvalidIPv4Address() {
         // IPv4 addresses should be rejected
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("192.168.1.1/24"));
     }
 
     @Test
-    public void testIsInRange() {
+    void testIsInRange() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
         final SubnetInfo info = utils.getInfo();
 
@@ -163,7 +163,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testIsInRangeWithInvalidString() {
+    void testIsInRangeWithInvalidString() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
         final SubnetInfo info = utils.getInfo();
 
@@ -172,7 +172,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testIsInRangeWithBigInteger() throws UnknownHostException {
+    void testIsInRangeWithBigInteger() throws UnknownHostException {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
         final SubnetInfo info = utils.getInfo();
 
@@ -186,7 +186,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testIsInRangeWithByteArray() throws UnknownHostException {
+    void testIsInRangeWithByteArray() throws UnknownHostException {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
         final SubnetInfo info = utils.getInfo();
 
@@ -203,7 +203,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testIsInRangeWithInet6Address() throws UnknownHostException {
+    void testIsInRangeWithInet6Address() throws UnknownHostException {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
         final SubnetInfo info = utils.getInfo();
 
@@ -219,7 +219,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testLinkLocalAddress() {
+    void testLinkLocalAddress() {
         final SubnetUtils6 utils = new SubnetUtils6("fe80::/10");
         final SubnetInfo info = utils.getInfo();
 
@@ -229,7 +229,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testLoopbackAddress() {
+    void testLoopbackAddress() {
         final SubnetUtils6 utils = new SubnetUtils6("::1/128");
         final SubnetInfo info = utils.getInfo();
 
@@ -239,7 +239,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/64");
         final SubnetInfo info = utils.getInfo();
         final String str = utils.toString();
@@ -263,7 +263,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testUniqueLocalAddress() {
+    void testUniqueLocalAddress() {
         // ULA range is fc00::/7
         final SubnetUtils6 utils = new SubnetUtils6("fd00::/8");
         final SubnetInfo info = utils.getInfo();
@@ -274,7 +274,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testHighBitAddress() {
+    void testHighBitAddress() {
         final SubnetUtils6 utils = new SubnetUtils6("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128");
         final SubnetInfo info = utils.getInfo();
 
@@ -285,7 +285,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testGetLowAddress() {
+    void testGetLowAddress() {
         final SubnetUtils6 utils = new SubnetUtils6("2001:db8::100/120");
         final SubnetInfo info = utils.getInfo();
 
@@ -299,7 +299,7 @@ public class SubnetUtils6Test {
      * RFC 5952 Section 1: all representations of the same address must parse identically.
      */
     @Test
-    public void testRfc5952Section1EquivalentRepresentations() {
+    void testRfc5952Section1EquivalentRepresentations() {
         assertEquivalentSubnets(
                 "2001:db8:0:0:1:0:0:1/128",
                 "2001:0db8:0:0:1:0:0:1/128",
@@ -316,7 +316,7 @@ public class SubnetUtils6Test {
      * RFC 5952 Section 2.1: leading zeros in each 16-bit group must not affect parsing.
      */
     @Test
-    public void testRfc5952Section21LeadingZeros() {
+    void testRfc5952Section21LeadingZeros() {
         assertEquivalentSubnets(
                 "2001:db8:aaaa:bbbb:cccc:dddd:eeee:0001/128",
                 "2001:db8:aaaa:bbbb:cccc:dddd:eeee:001/128",
@@ -329,7 +329,7 @@ public class SubnetUtils6Test {
      * RFC 5952 Section 2.2:  various :: compression positions must resolve to the same address.
      */
     @Test
-    public void testRfc5952Section22ZeroCompression() {
+    void testRfc5952Section22ZeroCompression() {
         assertEquivalentSubnets(
                 "2001:db8:0:0:0:0:0:1/128",
                 "2001:db8:0:0:0::1/128",
@@ -343,7 +343,7 @@ public class SubnetUtils6Test {
      * RFC 5952 Section 2.3:  uppercase, lowercase, and mixed-case hex digits must parse identically.
      */
     @Test
-    public void testRfc5952Section23CaseInsensitivity() {
+    void testRfc5952Section23CaseInsensitivity() {
         assertEquivalentSubnets(
                 "2001:db8:aaaa:bbbb:cccc:dddd:eeee:aaaa/128",
                 "2001:db8:aaaa:bbbb:cccc:dddd:eeee:AAAA/128",
@@ -357,7 +357,7 @@ public class SubnetUtils6Test {
      * Verifies that {@code 2001:0db8::0001} and {@code 2001:db8::1} produce the same output.
      */
     @Test
-    public void testRfc5952Section41CanonicalLeadingZeros() {
+    void testRfc5952Section41CanonicalLeadingZeros() {
         final SubnetInfo a = new SubnetUtils6("2001:0db8::0001/128").getInfo();
         final SubnetInfo b = new SubnetUtils6("2001:db8::1/128").getInfo();
         assertEquals(a.getAddress(), b.getAddress());
@@ -368,7 +368,7 @@ public class SubnetUtils6Test {
      * Both forms represent the same address.
      */
     @Test
-    public void testRfc5952Section421MaximumShortening() {
+    void testRfc5952Section421MaximumShortening() {
         final SubnetInfo a = new SubnetUtils6("2001:db8::0:1/128").getInfo();
         final SubnetInfo b = new SubnetUtils6("2001:db8::1/128").getInfo();
         assertEquals(a.getAddress(), b.getAddress());
@@ -379,7 +379,7 @@ public class SubnetUtils6Test {
      * Both input forms must parse to the same address.
      */
     @Test
-    public void testRfc5952Section423FirstLongestRunCompressed() {
+    void testRfc5952Section423FirstLongestRunCompressed() {
         assertEquivalentSubnets(
                 "2001:db8:0:0:1:0:0:1/128",
                 "2001:db8::1:0:0:1/128",
@@ -401,7 +401,7 @@ public class SubnetUtils6Test {
     }
 
     @Test
-    public void testRfc5952Section5SpecialAddresses() {
+    void testRfc5952Section5SpecialAddresses() {
         final SubnetInfo loopback = new SubnetUtils6("::1/128").getInfo();
         assertEquals("0:0:0:0:0:0:0:1", loopback.getAddress());
 

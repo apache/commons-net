@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  * The tests were originally run on a default installation of James. Your mileage may vary based on the POP3 server you run the tests against. Some servers are
  * more standards-compliant than others.
  */
-public class POP3ConstructorTest {
+class POP3ConstructorTest {
     String user = POP3Constants.user;
     String emptyUser = POP3Constants.emptyuser;
     String password = POP3Constants.password;
@@ -44,7 +44,7 @@ public class POP3ConstructorTest {
      * test will have to be updated.
      */
     @Test
-    public void testConstants() {
+    void testConstants() {
         // From POP3
         assertEquals(110, POP3.DEFAULT_PORT);
         assertEquals(-1, POP3.DISCONNECTED_STATE);
@@ -68,7 +68,7 @@ public class POP3ConstructorTest {
     }
 
     @Test
-    public void testPOP3ClientStateTransition() throws Exception {
+    void testPOP3ClientStateTransition() throws Exception {
         final POP3Client pop = new POP3Client();
 
         // Initial state
@@ -141,7 +141,7 @@ public class POP3ConstructorTest {
     }
 
     @Test
-    public void testPOP3DefaultConstructor() {
+    void testPOP3DefaultConstructor() {
         final POP3 pop = new POP3();
 
         assertEquals(110, pop.getDefaultPort());

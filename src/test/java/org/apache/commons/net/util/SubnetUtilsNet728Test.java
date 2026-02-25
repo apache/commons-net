@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests https://issues.apache.org/jira/browse/NET-728
  */
-public class SubnetUtilsNet728Test {
+class SubnetUtilsNet728Test {
 
     private static final String CIDR_SUFFIX_30 = "30";
     private static final String CIDR_SUFFIX_32 = "32";

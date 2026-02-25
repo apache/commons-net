@@ -35,7 +35,7 @@ import org.apache.commons.net.io.CopyStreamListener;
 import org.apache.commons.net.io.Util;
 import org.junit.jupiter.api.Test;
 
-public class UtilTest {
+class UtilTest {
 
     static class CSL implements CopyStreamListener {
 
@@ -103,13 +103,13 @@ public class UtilTest {
     private final OutputStream dst = new ByteArrayOutputStream();
 
     @Test
-    public void testcloseQuietly() {
+    void testcloseQuietly() {
         Util.closeQuietly((Closeable) null);
         Util.closeQuietly((Socket) null);
     }
 
     @Test
-    public void testNET550_Reader() throws Exception {
+    void testNET550_Reader() throws Exception {
         final char[] buff = { 'a', 'b', 'c', 'd' }; // must be multiple of 2
         final int bufflen = buff.length;
         { // Check buffer size 1 processes in chunks of 1
@@ -145,7 +145,7 @@ public class UtilTest {
     }
 
     @Test
-    public void testNET550_Stream() throws Exception {
+    void testNET550_Stream() throws Exception {
         final byte[] buff = { 'a', 'b', 'c', 'd' }; // must be multiple of 2
         final int bufflen = buff.length;
         { // Check buffer size 1 processes in chunks of 1
@@ -181,42 +181,42 @@ public class UtilTest {
     }
 
     @Test
-    public void testReader_1() throws Exception {
+    void testReader_1() throws Exception {
         final long streamSize = 0;
         final int bufferSize = -1;
         Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
-    public void testReader0() throws Exception {
+    void testReader0() throws Exception {
         final long streamSize = 0;
         final int bufferSize = 0;
         Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
-    public void testReader1() throws Exception {
+    void testReader1() throws Exception {
         final long streamSize = 0;
         final int bufferSize = 1;
         Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
-    public void testStream_1() throws Exception {
+    void testStream_1() throws Exception {
         final long streamSize = 0;
         final int bufferSize = -1;
         Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
-    public void testStream0() throws Exception {
+    void testStream0() throws Exception {
         final long streamSize = 0;
         final int bufferSize = 0;
         Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
-    public void testStream1() throws Exception {
+    void testStream1() throws Exception {
         final long streamSize = 0;
         final int bufferSize = 1;
         Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1, 1, streamSize));

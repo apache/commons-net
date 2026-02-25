@@ -27,10 +27,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link DaytimeUDPClient}.
  */
-public class DaytimeUDPClientTest {
+class DaytimeUDPClientTest {
 
     @Test
-    public void testClose() {
+    void testClose() {
         try (DaytimeUDPClient client = new DaytimeUDPClient()) {
             // empty
         }
@@ -38,12 +38,12 @@ public class DaytimeUDPClientTest {
 
     @SuppressWarnings("resource")
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(DaytimeUDPClient::new);
     }
 
     @Test
-    public void testGetTime() {
+    void testGetTime() {
         try (DaytimeUDPClient client = new DaytimeUDPClient()) {
             // Not connected
             assertThrows(NullPointerException.class, () -> client.getTime(InetAddress.getLocalHost()));

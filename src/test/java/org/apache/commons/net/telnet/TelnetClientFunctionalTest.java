@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 /**
  * JUnit functional test for TelnetClient. Connects to the weather forecast service rainmaker.wunderground.com and asks for Los Angeles forecast.
  */
-public class TelnetClientFunctionalTest {
+class TelnetClientFunctionalTest {
     protected TelnetClient tc1;
 
     /**
@@ -42,7 +42,7 @@ public class TelnetClientFunctionalTest {
      * Do the functional test: - connect to the weather service - press return on the first menu - send LAX on the second menu - send X to exit
      */
     @Test
-    public void testFunctionalTest() throws Exception {
+    void testFunctionalTest() throws Exception {
         boolean testresult = false;
         tc1.connect("rainmaker.wunderground.com", 3000);
 

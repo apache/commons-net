@@ -111,7 +111,7 @@ public abstract class AbstractFTPParseTest {
     }
 
     @Test
-    public void testBadListing() {
+    void testBadListing() {
 
         final String[] badsamples = getBadListing();
         for (final String test : badsamples) {
@@ -124,10 +124,10 @@ public abstract class AbstractFTPParseTest {
     }
 
     // Force subclasses to test precision
-    public abstract void testDefaultPrecision();
+    abstract void testDefaultPrecision();
 
     @Test
-    public void testGoodListing() {
+    void testGoodListing() {
 
         final String[] goodsamples = getGoodListing();
         for (final String test : goodsamples) {
@@ -144,14 +144,14 @@ public abstract class AbstractFTPParseTest {
      *
      * @throws Exception on error
      */
-    public abstract void testParseFieldsOnDirectory() throws Exception;
+    abstract void testParseFieldsOnDirectory() throws Exception;
 
     /**
      * Method testParseFieldsOnFile. Provide a test to show that fields on a file entry are parsed correctly.
      *
      * @throws Exception on error
      */
-    public abstract void testParseFieldsOnFile() throws Exception;
+    abstract void testParseFieldsOnFile() throws Exception;
 
     protected void testPrecision(final String listEntry, final CalendarUnit expectedPrecision) {
         final FTPFile file = getParser().parseFTPEntry(listEntry);
@@ -176,5 +176,5 @@ public abstract class AbstractFTPParseTest {
         }
     }
 
-    public abstract void testRecentPrecision();
+    abstract void testRecentPrecision();
 }

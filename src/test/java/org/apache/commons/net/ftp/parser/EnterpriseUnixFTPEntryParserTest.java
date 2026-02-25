@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the EnterpriseUnixFTPEntryParser
  */
-public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
+class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] BADSAMPLES = { "zrwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox",
             "dxrwr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc", "drwxr-xr-x   2 root     root         4096 Jam  4 00:03 zziplib",
@@ -99,7 +99,7 @@ public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testDefaultPrecision() {
+    void testDefaultPrecision() {
         testPrecision("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 2014 QUADTEST", CalendarUnit.DAY_OF_MONTH);
     }
 
@@ -108,7 +108,7 @@ public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
      */
     @Override
     @Test
-    public void testParseFieldsOnDirectory() throws Exception {
+    void testParseFieldsOnDirectory() throws Exception {
         // Everything is a File for now.
     }
 
@@ -117,7 +117,7 @@ public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
      */
     @Override
     @Test
-    public void testParseFieldsOnFile() throws Exception {
+    void testParseFieldsOnFile() throws Exception {
         // Note: No time zone.
         final FTPFile ftpFile = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
         final Calendar today = Calendar.getInstance();
@@ -158,7 +158,7 @@ public class EnterpriseUnixFTPEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testRecentPrecision() {
+    void testRecentPrecision() {
         testPrecision("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST", CalendarUnit.MINUTE);
     }
 }

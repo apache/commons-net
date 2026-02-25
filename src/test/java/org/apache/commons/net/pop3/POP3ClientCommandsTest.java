@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
  * The tests were originally run on a default installation of James. Your mileage may vary based on the POP3 server you run the tests against. Some servers are
  * more standards-compliant than others.
  */
-public class POP3ClientCommandsTest {
+class POP3ClientCommandsTest {
     POP3Client pop3Client;
 
     String user = POP3Constants.user;
@@ -69,7 +69,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
+    void testDelete() throws Exception {
         reset();
         connect();
         login();
@@ -99,7 +99,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testDeleteWithReset() throws Exception {
+    void testDeleteWithReset() throws Exception {
         reset();
         connect();
         login();
@@ -132,7 +132,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testListMessageOnEmptyMailbox() throws Exception {
+    void testListMessageOnEmptyMailbox() throws Exception {
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
@@ -143,7 +143,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testListMessageOnFullMailbox() throws Exception {
+    void testListMessageOnFullMailbox() throws Exception {
         reset();
         connect();
         login();
@@ -174,7 +174,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testListMessagesOnEmptyMailbox() throws Exception {
+    void testListMessagesOnEmptyMailbox() throws Exception {
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
@@ -189,7 +189,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testListMessagesOnFullMailbox() throws Exception {
+    void testListMessagesOnFullMailbox() throws Exception {
         reset();
         connect();
         login();
@@ -211,7 +211,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testListUniqueIdentifierOnEmptyMailbox() throws Exception {
+    void testListUniqueIdentifierOnEmptyMailbox() throws Exception {
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
@@ -222,7 +222,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testListUniqueIDOnFullMailbox() throws Exception {
+    void testListUniqueIDOnFullMailbox() throws Exception {
         reset();
         connect();
         login();
@@ -252,7 +252,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testListUniqueIDsOnEmptyMailbox() throws Exception {
+    void testListUniqueIDsOnEmptyMailbox() throws Exception {
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
@@ -267,7 +267,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testListUniqueIDsOnFullMailbox() throws Exception {
+    void testListUniqueIDsOnFullMailbox() throws Exception {
         reset();
         connect();
         login();
@@ -288,7 +288,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testNoopCommand() throws Exception {
+    void testNoopCommand() throws Exception {
         reset();
         connect();
 
@@ -305,7 +305,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testResetAndDeleteShouldFails() throws Exception {
+    void testResetAndDeleteShouldFails() throws Exception {
         reset();
         connect();
         login();
@@ -317,7 +317,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testRetrieveMessageOnEmptyMailbox() throws Exception {
+    void testRetrieveMessageOnEmptyMailbox() throws Exception {
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
@@ -325,7 +325,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testRetrieveMessageOnFullMailbox() throws Exception {
+    void testRetrieveMessageOnFullMailbox() throws Exception {
         reset();
         connect();
         login();
@@ -365,7 +365,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testRetrieveMessageShouldFails() throws Exception {
+    void testRetrieveMessageShouldFails() throws Exception {
         reset();
         connect();
         login();
@@ -385,7 +385,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testRetrieveMessageTopOnEmptyMailbox() throws Exception {
+    void testRetrieveMessageTopOnEmptyMailbox() throws Exception {
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
@@ -393,7 +393,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testRetrieveMessageTopOnFullMailbox() throws Exception {
+    void testRetrieveMessageTopOnFullMailbox() throws Exception {
         reset();
         connect();
         login();
@@ -410,7 +410,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testRetrieveMessageTopShouldFails() throws Exception {
+    void testRetrieveMessageTopShouldFails() throws Exception {
         reset();
         connect();
         login();
@@ -430,7 +430,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testRetrieveOverSizedMessageTopOnFullMailbox() throws Exception {
+    void testRetrieveOverSizedMessageTopOnFullMailbox() throws Exception {
         reset();
         connect();
         login();
@@ -467,7 +467,7 @@ public class POP3ClientCommandsTest {
     }
 
     @Test
-    public void testStatus() throws Exception {
+    void testStatus() throws Exception {
         reset();
         connect();
 

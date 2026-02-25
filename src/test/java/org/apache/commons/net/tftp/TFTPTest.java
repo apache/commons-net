@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the TFTP Server and TFTP Client by creating some FILES in the system temp folder and then uploading and downloading them.
  */
-public class TFTPTest {
+class TFTPTest {
     private static final int SERVER_PORT = 6902;
     private static TFTPServer tftpS;
     private static final File SERVER_DIR = FileUtils.getTempDirectory();
@@ -100,7 +100,7 @@ public class TFTPTest {
     }
 
     @Test
-    public void testASCIIDownloads() {
+    void testASCIIDownloads() {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
             try {
@@ -113,7 +113,7 @@ public class TFTPTest {
     }
 
     @Test
-    public void testASCIIUploads() throws Exception {
+    void testASCIIUploads() throws Exception {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
             testUpload(TFTP.ASCII_MODE, FILES[i]);
@@ -121,7 +121,7 @@ public class TFTPTest {
     }
 
     @Test
-    public void testDiscardPackets() throws IOException {
+    void testDiscardPackets() throws IOException {
         try (TFTP tftp = new TFTP()) {
             assertThrows(NullPointerException.class, tftp::discardPackets);
             tftp.open();
@@ -154,13 +154,13 @@ public class TFTPTest {
     }
 
     @Test
-    public void testGetModeName() {
+    void testGetModeName() {
         assertNotNull(TFTP.getModeName(0));
         assertNotNull(TFTP.getModeName(1));
     }
 
     @Test
-    public void testHugeDownloads() throws Exception {
+    void testHugeDownloads() throws Exception {
         // test with the smaller FILES
         for (int i = 5; i < FILES.length; i++) {
             testDownload(TFTP.BINARY_MODE, FILES[i]);
@@ -168,14 +168,14 @@ public class TFTPTest {
     }
 
     @Test
-    public void testHugeUploads() throws Exception {
+    void testHugeUploads() throws Exception {
         for (int i = 5; i < FILES.length; i++) {
             testUpload(TFTP.BINARY_MODE, FILES[i]);
         }
     }
 
     @Test
-    public void testResizeBuffer() {
+    void testResizeBuffer() {
         try (TFTPClient tftp = new TFTPClient()) {
             final int bufferSize = 1024;
             tftp.resetBuffersToSize(bufferSize);
@@ -184,7 +184,7 @@ public class TFTPTest {
     }
 
     @Test
-    public void testSend() throws IOException {
+    void testSend() throws IOException {
         try (TFTP tftp = new TFTP()) {
             tftp.open();
             tftp.send(new TFTPDataPacket(InetAddress.getLocalHost(), tftp.getLocalPort(), 0, new byte[10]));
@@ -192,7 +192,7 @@ public class TFTPTest {
     }
 
     @Test
-    public void testTFTPBinaryDownloads() throws Exception {
+    void testTFTPBinaryDownloads() throws Exception {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
             testDownload(TFTP.BINARY_MODE, FILES[i]);
@@ -200,7 +200,7 @@ public class TFTPTest {
     }
 
     @Test
-    public void testTFTPBinaryUploads() throws Exception {
+    void testTFTPBinaryUploads() throws Exception {
         // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
             testUpload(TFTP.BINARY_MODE, FILES[i]);

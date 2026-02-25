@@ -27,16 +27,16 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link CharGenUDPClient}.
  */
-public class CharGenUDPClientTest {
+class CharGenUDPClientTest {
 
     @SuppressWarnings("resource")
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(CharGenUDPClient::new);
     }
 
     @Test
-    public void testReceiver() {
+    void testReceiver() {
         try (CharGenUDPClient client = new CharGenUDPClient()) {
             // Not connected
             assertThrows(NullPointerException.class, client::receive);
@@ -44,7 +44,7 @@ public class CharGenUDPClientTest {
     }
 
     @Test
-    public void testSend() {
+    void testSend() {
         try (CharGenUDPClient client = new CharGenUDPClient()) {
             // Not connected
             assertThrows(NullPointerException.class, () -> client.send(InetAddress.getLocalHost()));

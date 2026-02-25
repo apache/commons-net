@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
  * zone. Depending on the local machine's position relative to GMT and the time of day, the browsers may decide that a timestamp would be in the future if given
  * the current year, so they assume the year to be last year. This illustrates the value of FTPClientConfig's time zone functionality.
  */
-public class FTPClientConfigFunctionalTest {
+class FTPClientConfigFunctionalTest {
 
     private final FTPClient ftpClient = new FTPClient();
     private FTPClientConfig ftpClientConfig;
@@ -90,7 +90,7 @@ public class FTPClientConfigFunctionalTest {
     }
 
     @Test
-    public void testTimeZoneFunctionality() throws Exception {
+    void testTimeZoneFunctionality() throws Exception {
         final java.util.Date nowDate = new java.util.Date();
         final Instant nowInstant = nowDate.toInstant();
         final FTPFile[] files = ftpClient.listFiles();

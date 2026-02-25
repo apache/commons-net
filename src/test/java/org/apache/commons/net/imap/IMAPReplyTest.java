@@ -31,7 +31,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class IMAPReplyTest {
+class IMAPReplyTest {
 
     private static Stream<String> invalidLiteralCommands() {
         return Stream.of(
@@ -73,19 +73,19 @@ public class IMAPReplyTest {
     }
 
     @Test
-    public void testGetReplyCodeBadLine() throws IOException {
+    void testGetReplyCodeBadLine() throws IOException {
         final String badLine = "A044 BAD No such command as \"FOOBAR\"";
         assertEquals(IMAPReply.BAD, IMAPReply.getReplyCode(badLine));
     }
 
     @Test
-    public void testGetReplyCodeContinuationLine() throws IOException {
+    void testGetReplyCodeContinuationLine() throws IOException {
         final String continuationLine = "+ Ready for additional command text";
         assertEquals(IMAPReply.CONT, IMAPReply.getReplyCode(continuationLine));
     }
 
     @Test
-    public void testGetReplyCodeMalformedLine() {
+    void testGetReplyCodeMalformedLine() {
         final String malformedTaggedLine = "A064 FOO-BAR 0";
         final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class,
                 () -> IMAPReply.getReplyCode(malformedTaggedLine));
@@ -93,13 +93,13 @@ public class IMAPReplyTest {
     }
 
     @Test
-    public void testGetReplyCodeNoLine() throws IOException {
+    void testGetReplyCodeNoLine() throws IOException {
         final String noLine = "A223 NO COPY failed: disk is full";
         assertEquals(IMAPReply.NO, IMAPReply.getReplyCode(noLine));
     }
 
     @Test
-    public void testGetReplyCodeOkLine() throws IOException {
+    void testGetReplyCodeOkLine() throws IOException {
         assertEquals(IMAPReply.OK, IMAPReply.getReplyCode("A001 OK LOGIN completed"));
         assertEquals(IMAPReply.OK, IMAPReply.getReplyCode("AAAA OK [CAPABILITY IMAP4rev1 SASL-IR LOGIN-REFERRALS ID ENABLE IDLE SORT"
                 + " SORT=DISPLAY THREAD=REFERENCES THREAD=REFS THREAD=ORDEREDSUBJECT" + " MULTIAPPEND URL-PARTIAL CATENATE UNSELECT CHILDREN NAMESPACE UIDPLUS"
@@ -114,19 +114,19 @@ public class IMAPReplyTest {
     }
 
     @Test
-    public void testGetUntaggedReplyCodeBadLine() throws IOException {
+    void testGetUntaggedReplyCodeBadLine() throws IOException {
         final String badLine = "* BAD Empty command line";
         assertEquals(IMAPReply.BAD, IMAPReply.getUntaggedReplyCode(badLine));
     }
 
     @Test
-    public void testGetUntaggedReplyCodeContinuationLine() throws IOException {
+    void testGetUntaggedReplyCodeContinuationLine() throws IOException {
         final String continuationLine = "+ Ready for additional command text";
         assertEquals(IMAPReply.CONT, IMAPReply.getUntaggedReplyCode(continuationLine));
     }
 
     @Test
-    public void testGetUntaggedReplyCodeMalformedLine() {
+    void testGetUntaggedReplyCodeMalformedLine() {
         // invalid experimental comm response (missing X prefix)
         final String malformedUntaggedLine = "* FOO-BAR hello-world";
         final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class,
@@ -135,13 +135,13 @@ public class IMAPReplyTest {
     }
 
     @Test
-    public void testGetUntaggedReplyCodeNoLine() throws IOException {
+    void testGetUntaggedReplyCodeNoLine() throws IOException {
         final String noLine = "* NO Disk is 98% full, please delete unnecessary data";
         assertEquals(IMAPReply.NO, IMAPReply.getUntaggedReplyCode(noLine));
     }
 
     @Test
-    public void testGetUntaggedReplyCodeOkLine() throws IOException {
+    void testGetUntaggedReplyCodeOkLine() throws IOException {
         assertEquals(IMAPReply.OK, IMAPReply.getUntaggedReplyCode("* OK Salvage successful, no data lost"));
         assertEquals(IMAPReply.OK,
                 IMAPReply.getUntaggedReplyCode("* OK The Microsoft Exchange IMAP4 service is ready. [xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]"));
@@ -150,49 +150,49 @@ public class IMAPReplyTest {
     }
 
     @Test
-    public void testIsContinuationReplyCode() {
+    void testIsContinuationReplyCode() {
         final int replyCode = 3;
         assertTrue(IMAPReply.isContinuation(replyCode));
     }
 
     @Test
-    public void testIsContinuationReplyCodeInvalidCode() {
+    void testIsContinuationReplyCodeInvalidCode() {
         final int invalidContinuationReplyCode = 1;
         assertFalse(IMAPReply.isContinuation(invalidContinuationReplyCode));
     }
 
     @Test
-    public void testIsContinuationReplyLine() {
+    void testIsContinuationReplyLine() {
         final String replyLine = "+FLAGS completed";
         assertTrue(IMAPReply.isContinuation(replyLine));
     }
 
     @Test
-    public void testIsContinuationReplyLineInvalidLine() {
+    void testIsContinuationReplyLineInvalidLine() {
         final String invalidContinuationReplyLine = "* 22 EXPUNGE";
         assertFalse(IMAPReply.isContinuation(invalidContinuationReplyLine));
     }
 
     @Test
-    public void testIsSuccessReplyCode() {
+    void testIsSuccessReplyCode() {
         final int successfulReplyCode = 0;
         assertTrue(IMAPReply.isSuccess(successfulReplyCode));
     }
 
     @Test
-    public void testIsSuccessReplyCodeUnsuccessfulCode() {
+    void testIsSuccessReplyCodeUnsuccessfulCode() {
         final int unsuccessfulReplyCode = 2;
         assertFalse(IMAPReply.isSuccess(unsuccessfulReplyCode));
     }
 
     @Test
-    public void testIsUntaggedReplyLine() {
+    void testIsUntaggedReplyLine() {
         final String replyLine = "* 18 EXISTS";
         assertTrue(IMAPReply.isUntagged(replyLine));
     }
 
     @Test
-    public void testIsUntaggedReplyLineInvalidLine() {
+    void testIsUntaggedReplyLineInvalidLine() {
         final String taggedLine = "a001 OK LOGOUT completed";
         assertFalse(IMAPReply.isUntagged(taggedLine));
     }

@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  *
  * The original system presenting this issue was an AIX system - see bug #27437 for details.
  */
-public class FTPConfigEntryParserTest {
+class FTPConfigEntryParserTest {
 
     private final SimpleDateFormat df = new SimpleDateFormat();
 
@@ -42,7 +42,7 @@ public class FTPConfigEntryParserTest {
      * This is a new format reported on the mailing lists. Parsing this kind of entry necessitated changing the regex in the parser.
      */
     @Test
-    public void testParseEntryWithSymlink() {
+    void testParseEntryWithSymlink() {
 
         final FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
         config.setDefaultDateFormatStr("yyyy-MM-dd HH:mm");
@@ -88,7 +88,7 @@ public class FTPConfigEntryParserTest {
     }
 
     @Test
-    public void testParseFieldsOnAIX() {
+    void testParseFieldsOnAIX() {
 
         // Set a date format for this server type
         final FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);

@@ -45,7 +45,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * This test does the above programmatically.
  * </p>
  */
-public class FTPSClientTest extends AbstractFtpsTest {
+class FTPSClientTest extends AbstractFtpsTest {
 
     private static final String USER_PROPS_RES = "org/apache/commons/net/ftpsserver/users.properties";
 
@@ -63,7 +63,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testHasFeature(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testHasFeature(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testHasFeature");
         loginClient().disconnect();
@@ -84,7 +84,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testListFilesPathNameEmpty(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testListFilesPathNameEmpty(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testListFilesPathNameEmpty");
         testListFiles("");
@@ -94,7 +94,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testListFilesPathNameJunk(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testListFilesPathNameJunk(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testListFilesPathNameJunk");
         testListFiles("   Junk   ");
@@ -104,7 +104,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testListFilesPathNameNull(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testListFilesPathNameNull(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testListFilesPathNameNull");
         testListFiles(null);
@@ -114,7 +114,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testListFilesPathNameRoot(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testListFilesPathNameRoot(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testListFilesPathNameRoot");
         testListFiles("/");
@@ -124,7 +124,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testMdtmCalendar(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testMdtmCalendar(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testMdtmCalendar");
         testMdtmCalendar("/file.txt");
@@ -148,7 +148,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testMdtmFile(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testMdtmFile(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testMdtmFile");
         testMdtmFile("/file.txt");
@@ -172,7 +172,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testMdtmInstant(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testMdtmInstant(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testMdtmInstant");
         testMdtmInstant("/file.txt");
@@ -196,7 +196,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testOpenClose(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testOpenClose(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testOpenClose");
         final FTPSClient ftpsClient = loginClient();
@@ -212,7 +212,7 @@ public class FTPSClientTest extends AbstractFtpsTest {
     @ParameterizedTest(name = "endpointCheckingEnabled={0}")
     @MethodSource("endpointCheckingEnabledSource")
     @Timeout(TEST_TIMEOUT)
-    public void testRetrieveFilePathNameRoot(final boolean endpointCheckingEnabled) throws SocketException, IOException {
+    void testRetrieveFilePathNameRoot(final boolean endpointCheckingEnabled) throws SocketException, IOException {
         setEndpointCheckingEnabled(endpointCheckingEnabled);
         trace(">>testRetrieveFilePathNameRoot");
         retrieveFile("/file.txt");

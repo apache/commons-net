@@ -32,7 +32,7 @@ import java.util.jar.JarFile;
 
 import org.junit.jupiter.api.Test;
 
-public class MainTest {
+class MainTest {
 
     private static boolean hasMainMethod(String name) {
         name = name.replace(".class", "");
@@ -109,7 +109,7 @@ public class MainTest {
     }
 
     @Test
-    public void testCheckExamplesPropertiesIsComplete() throws Exception {
+    void testCheckExamplesPropertiesIsComplete() throws Exception {
         final Properties cp = scanClasses();
         final Properties fp = new Properties();
         try (InputStream inputStream = this.getClass().getResourceAsStream("examples.properties")) {

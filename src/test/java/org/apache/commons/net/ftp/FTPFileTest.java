@@ -33,10 +33,10 @@ import java.util.TimeZone;
 import org.apache.commons.lang3.time.TimeZones;
 import org.junit.jupiter.api.Test;
 
-public class FTPFileTest {
+class FTPFileTest {
 
     @Test
-    public void testGetTimestampInstant() {
+    void testGetTimestampInstant() {
         final FTPFile file = new FTPFile();
         final Calendar timestamp = Calendar.getInstance(TimeZones.GMT);
         timestamp.set(2023, Calendar.AUGUST, 4, 23, 40, 55);
@@ -53,93 +53,93 @@ public class FTPFileTest {
     }
 
     @Test
-    public void testGetTimestampInstantNullCalendar() {
+    void testGetTimestampInstantNullCalendar() {
         final FTPFile file = new FTPFile();
         assertNull(file.getTimestampInstant());
     }
 
     @Test
-    public void testHasPermissionFalse() {
+    void testHasPermissionFalse() {
         final FTPFile file = new FTPFile();
         file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, false);
         assertFalse(file.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
     }
 
     @Test
-    public void testHasPermissionInvalidFile() {
+    void testHasPermissionInvalidFile() {
         final FTPFile invalidFile = new FTPFile("LIST");
         assertFalse(invalidFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
     }
 
     @Test
-    public void testHasPermissionTrue() {
+    void testHasPermissionTrue() {
         final FTPFile file = new FTPFile();
         file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
         assertTrue(file.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
     }
 
     @Test
-    public void testIsDirectory() {
+    void testIsDirectory() {
         final FTPFile file = new FTPFile();
         file.setType(FTPFile.DIRECTORY_TYPE);
         assertTrue(file.isDirectory());
     }
 
     @Test
-    public void testIsFile() {
+    void testIsFile() {
         final FTPFile file = new FTPFile();
         file.setType(FTPFile.FILE_TYPE);
         assertTrue(file.isFile());
     }
 
     @Test
-    public void testIsSymbolicLink() {
+    void testIsSymbolicLink() {
         final FTPFile file = new FTPFile();
         file.setType(FTPFile.SYMBOLIC_LINK_TYPE);
         assertTrue(file.isSymbolicLink());
     }
 
     @Test
-    public void testIsUnknown() {
+    void testIsUnknown() {
         final FTPFile file = new FTPFile();
         assertTrue(file.isUnknown());
     }
 
     @Test
-    public void testToFormattedStringDirectoryType() {
+    void testToFormattedStringDirectoryType() {
         final FTPFile file = new FTPFile();
         file.setType(FTPFile.DIRECTORY_TYPE);
         assertTrue(file.toFormattedString().startsWith("d"));
     }
 
     @Test
-    public void testToFormattedStringFileType() {
+    void testToFormattedStringFileType() {
         final FTPFile file = new FTPFile();
         file.setType(FTPFile.FILE_TYPE);
         assertTrue(file.toFormattedString().startsWith("-"));
     }
 
     @Test
-    public void testToFormattedStringInvalidFile() {
+    void testToFormattedStringInvalidFile() {
         final FTPFile invalidFile = new FTPFile("LIST");
         assertEquals("[Invalid: could not parse file entry]", invalidFile.toFormattedString());
     }
 
     @Test
-    public void testToFormattedStringSymbolicLinkType() {
+    void testToFormattedStringSymbolicLinkType() {
         final FTPFile file = new FTPFile();
         file.setType(FTPFile.SYMBOLIC_LINK_TYPE);
         assertTrue(file.toFormattedString().startsWith("l"));
     }
 
     @Test
-    public void testToFormattedStringUnknownType() {
+    void testToFormattedStringUnknownType() {
         final FTPFile file = new FTPFile();
         assertTrue(file.toFormattedString().startsWith("?"));
     }
 
     @Test
-    public void testToFormattedStringWithTimezone() {
+    void testToFormattedStringWithTimezone() {
         final FTPFile file = new FTPFile();
         file.setType(FTPFile.FILE_TYPE);
         file.setSize(32767);
@@ -164,14 +164,14 @@ public class FTPFileTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         final FTPFile file = new FTPFile();
         file.setRawListing("LIST");
         assertEquals(file.getRawListing(), file.toString());
     }
 
     @Test
-    public void testToStringDefault() {
+    void testToStringDefault() {
         final FTPFile file = new FTPFile();
         assertNull(file.toString());
     }

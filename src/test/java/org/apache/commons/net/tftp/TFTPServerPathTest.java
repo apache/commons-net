@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  * Basic tests to ensure that the TFTP Server is honoring its read/write mode, and preventing files from being read or written from outside of the assigned
  * roots.
  */
-public class TFTPServerPathTest {
+class TFTPServerPathTest {
 
     private static final int SERVER_PORT = 6901;
     private static final String FILE_PREFIX = "TFTPServerPathTest_";
@@ -108,7 +108,7 @@ public class TFTPServerPathTest {
     }
 
     @Test
-    public void testReadOnly() throws IOException {
+    void testReadOnly() throws IOException {
         // Start a read-only server
         tftpServer = startTftpServer(ServerMode.GET_ONLY);
         final String serverAddress = "localhost";
@@ -139,7 +139,7 @@ public class TFTPServerPathTest {
     }
 
     @Test
-    public void testWriteOnly() throws IOException {
+    void testWriteOnly() throws IOException {
         // Start a write-only server
         tftpServer = startTftpServer(ServerMode.PUT_ONLY);
         final String serverAddress = "localhost";
@@ -165,7 +165,7 @@ public class TFTPServerPathTest {
     }
 
     @Test
-    public void testWriteOutsideHome() throws IOException {
+    void testWriteOutsideHome() throws IOException {
         // Start a read/write server
         tftpServer = startTftpServer(ServerMode.GET_AND_PUT);
         final String serverAddress = "localhost";
@@ -182,7 +182,7 @@ public class TFTPServerPathTest {
     }
 
     @Test
-    public void testWriteVerifyContents() throws IOException {
+    void testWriteVerifyContents() throws IOException {
         // Start a write-only server
         tftpServer = startTftpServer(ServerMode.GET_AND_PUT);
         final String serverAddress = "localhost";

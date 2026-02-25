@@ -29,24 +29,24 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link RLoginClient}.
  */
-public class RLoginClientTest {
+class RLoginClientTest {
 
     private RLoginClient newClient() {
         return new RLoginClient();
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertDoesNotThrow(RLoginClient::new);
     }
 
     @Test
-    public void testDefaultPort() {
+    void testDefaultPort() {
         assertEquals(RLoginClient.DEFAULT_PORT, newClient().getDefaultPort());
     }
 
     @Test
-    public void testGetInputStream() throws IOException {
+    void testGetInputStream() throws IOException {
         try (InputStream inputStream = newClient().getInputStream()) {
             assertNull(inputStream);
         }

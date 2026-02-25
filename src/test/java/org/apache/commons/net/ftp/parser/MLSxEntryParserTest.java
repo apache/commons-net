@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  */
-public class MLSxEntryParserTest extends AbstractFTPParseTest {
+class MLSxEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "Type=cdir;Modify=20141022065101;UNIX.mode=0775;/no/space", // no space between facts and name
             "Type=cdir;Modify=20141022065103;UNIX.mode=0775;", // no name or space
@@ -70,23 +70,23 @@ public class MLSxEntryParserTest extends AbstractFTPParseTest {
 
     @Override
     @Test
-    public void testDefaultPrecision() {
+    void testDefaultPrecision() {
         testPrecision("Type=dir;Modify=20141022065102;UNIX.mode=0775; source", CalendarUnit.SECOND);
     }
 
     @Override
     @Test
-    public void testParseFieldsOnDirectory() throws Exception {
+    void testParseFieldsOnDirectory() throws Exception {
     }
 
     @Override
     @Test
-    public void testParseFieldsOnFile() throws Exception {
+    void testParseFieldsOnFile() throws Exception {
     }
 
     @Override
     @Test
-    public void testRecentPrecision() { // borrow this method to test milliseconds
+    void testRecentPrecision() { // borrow this method to test milliseconds
         testPrecision("Type=dir;Modify=20141022065102.999;UNIX.mode=0775; source", CalendarUnit.MILLISECOND);
     }
 }

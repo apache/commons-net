@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
  * The tests were originally run on a default installation of James. Your mileage may vary based on the POP3 server you run the tests against. Some servers are
  * more standards-compliant than others.
  */
-public class POP3ClientTest {
+class POP3ClientTest {
     POP3Client p;
 
     String user = POP3Constants.user;
@@ -66,7 +66,7 @@ public class POP3ClientTest {
     }
 
     @Test
-    public void testInvalidLoginWithBadName() throws Exception {
+    void testInvalidLoginWithBadName() throws Exception {
         reset();
         connect();
 
@@ -75,7 +75,7 @@ public class POP3ClientTest {
     }
 
     @Test
-    public void testInvalidLoginWithBadPassword() throws Exception {
+    void testInvalidLoginWithBadPassword() throws Exception {
         reset();
         connect();
 
@@ -87,7 +87,7 @@ public class POP3ClientTest {
      * Test to try to run the login method from the disconnected, transaction and update states
      */
     @Test
-    public void testLoginFromWrongState() throws Exception {
+    void testLoginFromWrongState() throws Exception {
         reset();
 
         // Not currently connected, not in authorization state
@@ -108,7 +108,7 @@ public class POP3ClientTest {
     }
 
     @Test
-    public void testLogoutFromAllStates() throws Exception {
+    void testLogoutFromAllStates() throws Exception {
         // From 'transaction' state
         reset();
         connect();
@@ -128,7 +128,7 @@ public class POP3ClientTest {
      * Simple test to logon to a valid server using a valid user name and password.
      */
     @Test
-    public void testValidLoginWithNameAndPassword() throws Exception {
+    void testValidLoginWithNameAndPassword() throws Exception {
         reset();
         connect();
 

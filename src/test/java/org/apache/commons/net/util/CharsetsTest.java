@@ -27,21 +27,21 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Charsets}.
  */
-public class CharsetsTest {
+class CharsetsTest {
 
     @Test
-    public void testToCharset() {
+    void testToCharset() {
         assertEquals(StandardCharsets.UTF_8, Charsets.toCharset(StandardCharsets.UTF_8.name()));
     }
 
     @Test
-    public void testToCharsetDefault() {
+    void testToCharsetDefault() {
         assertEquals(StandardCharsets.UTF_8, Charsets.toCharset(null, StandardCharsets.UTF_8.name()));
     }
 
     @SuppressWarnings("deprecation")
     @Test
-    public void testToConstructor() {
+    void testToConstructor() {
         assertDoesNotThrow(Charsets::new);
     }
 }

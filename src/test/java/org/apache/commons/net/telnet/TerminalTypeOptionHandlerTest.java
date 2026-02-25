@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
+class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
     /*
      * compares two arrays of int
      */
@@ -52,7 +52,7 @@ public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTe
      * test of client-driven subnegotiation. Checks that the terminal type is sent
      */
     @Test
-    public void testAnswerSubnegotiation() {
+    void testAnswerSubnegotiation() {
         final int[] subn = { TelnetOption.TERMINAL_TYPE, 1 };
 
         final int[] expected1 = { TelnetOption.TERMINAL_TYPE, 0, 'V', 'T', '1', '0', '0' };
@@ -68,7 +68,7 @@ public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTe
 
     @Override
     @Test
-    public void testConstructors() {
+    void testConstructors() {
         assertEquals(TelnetOption.TERMINAL_TYPE, opthand1.getOptionCode());
         super.testConstructors();
     }
@@ -77,7 +77,7 @@ public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTe
      * test of client-driven subnegotiation. Checks that no subnegotiation is made.
      */
     @Test
-    public void testStartSubnegotiation() {
+    void testStartSubnegotiation() {
 
         final int[] resp1 = opthand1.startSubnegotiationLocal();
         final int[] resp2 = opthand1.startSubnegotiationRemote();
