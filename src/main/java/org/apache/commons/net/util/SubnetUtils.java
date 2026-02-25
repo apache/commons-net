@@ -25,7 +25,7 @@ import java.util.stream.StreamSupport;
 /**
  * Performs subnet calculations given a network address and a subnet mask.
  *
- * @see "https://datatracker.ietf.org/doc/html/rfc1519"
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc1519">Classless Inter-Domain Routing (CIDR): an Address Assignment and Aggregation Strategy</a>
  * @since 2.0
  */
 public class SubnetUtils {
