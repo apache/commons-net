@@ -31,7 +31,7 @@ import java.net.UnknownHostException;
  *
  * @see SubnetUtils
  * @see <a href="https://datatracker.ietf.org/doc/html/rfc5952">RFC 5952 - A Recommendation for IPv6 Address Text Representation</a>
- * @since 3.13
+ * @since 3.13.0
  */
 public class SubnetUtils6 {
 
@@ -316,7 +316,7 @@ public class SubnetUtils6 {
     }
 
     /**
-     * Returns summary of this subnet for debugging.
+     * Returns a summary of this subnet for debugging.
      * <p>
      * Delegates to {@link SubnetInfo#toString()}. This is a diagnostic format and is not suitable for parsing.
      * Use {@link SubnetInfo#getCidrSignature()} to obtain a string that can be fed back into
