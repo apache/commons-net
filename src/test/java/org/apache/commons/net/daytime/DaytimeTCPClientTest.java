@@ -40,7 +40,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class DaytimeTCPClientTest {
 
-    private static MockDaytimeTCPServer mockDaytimeTCPServer;
+    private static MockDaytimeTCPServer mockDaytimeTCPServer; //NOPMD
 
     @AfterAll
     public static void afterAll() throws IOException {

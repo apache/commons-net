@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
  */
 class TestNtpClient {
 
-    private static SimpleNTPServer server;
+    private static SimpleNTPServer server; //NOPMD test code
 
     @BeforeAll
     public static void oneTimeSetUp() throws IOException {

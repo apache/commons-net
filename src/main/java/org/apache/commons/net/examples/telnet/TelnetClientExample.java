@@ -41,7 +41,7 @@ import org.apache.commons.net.telnet.TerminalTypeOptionHandler;
  * see the result. Type OPT to see a report of the state of the first 25 options.
  */
 public class TelnetClientExample implements Runnable, TelnetNotificationHandler {
-    private static TelnetClient tc;
+    private static TelnetClient tc; //NOPMD example code
 
     /**
      * Main for the TelnetClientExample.

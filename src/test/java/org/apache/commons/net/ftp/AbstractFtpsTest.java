@@ -57,8 +57,8 @@ import org.apache.ftpserver.usermanager.impl.BaseUser;
  */
 public abstract class AbstractFtpsTest {
 
-    private static int SocketPort;
-    private static FtpServer EmbeddedFtpServer;
+    private static int SocketPort; //NOPMD test code
+    private static FtpServer EmbeddedFtpServer; //NOPMD test code
     protected static final boolean IMPLICIT = false;
     protected static final long TEST_TIMEOUT = 10000; // individual test timeout
     private static final boolean TRACE_CALLS = Boolean.parseBoolean(System.getenv("TRACE_CALLS"));

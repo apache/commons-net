@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
  */
 class TFTPTest {
     private static final int SERVER_PORT = 6902;
-    private static TFTPServer tftpS;
+    private static TFTPServer tftpS; //NOPMD test code
     private static final File SERVER_DIR = FileUtils.getTempDirectory();
     private static final String FILE_PREFIX = "tftp-";
     private static final File[] FILES = new File[8];
