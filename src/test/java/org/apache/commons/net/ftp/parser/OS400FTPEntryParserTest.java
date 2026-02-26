@@ -19,13 +19,20 @@ package org.apache.commons.net.ftp.parser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.apache.commons.net.ftp.FTPListParseEngine;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -82,6 +89,26 @@ class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     @Test
     void testDefaultPrecision() {
         testPrecision("PEP              4019 04/03/18 18:58:16 *STMF      einladung.zip", CalendarUnit.SECOND);
+    }
+
+    /**
+     * Tries to reproduce a fuzzing failure.
+     */
+    @Test
+    void testFuzz() throws IOException {
+        final byte[] allBytes = Files.readAllBytes(
+                Paths.get("src/main/resources/org/apache/commons/net/fuzzer/clusterfuzz-testcase-minimized-OS400FTPEntryParserFuzzer-4734635798495232"));
+        final OS400FTPEntryParser parser = new OS400FTPEntryParser();
+        parser.configure(null);
+        final FTPListParseEngine engine = new FTPListParseEngine(parser);
+        // FTPListParseEngine
+        engine.readServerList(new ByteArrayInputStream(allBytes), null); // use default encoding
+        final FTPFile[] files = engine.getFiles();
+        assertEquals(0, files.length);
+        // OS400FTPEntryParser
+        final String string = new String(allBytes, StandardCharsets.UTF_8);
+        assertTrue(parser.matches(string));
+        assertNull(parser.parseFTPEntry(string));
     }
 
     @Test
