@@ -25,11 +25,18 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * <pre>
+ * OS400 (IBM i) FTP entry parser.
+ *
+ * <p>
+ * Below are examples of the format of FTP entries on an IBM i.
+ * </p>
+ *
+ * <strong>
  * Example *FILE/*MEM FTP entries, when the current
  * working directory is a file of file system QSYS:
- * ------------------------------------------------
+ * </strong>
  *
+ * <pre>
  * $ cwd /qsys.lib/rpgunit.lib/rpgunitc1.file
  *   250-NAMEFMT set to 1.
  *   250 "/QSYS.LIB/RPGUNIT.LIB/RPGUNITC1.FILE" is current directory.
@@ -42,11 +49,13 @@ import org.apache.commons.net.ftp.FTPFile;
  *   QPGMR                                   *MEM       RUCMDHLP.MBR
  *   QPGMR                                   *MEM       RUCRTTST.MBR
  *   250 List completed.
+ * </pre>
  *
- *
+ * <strong>
  * Example *FILE entry of an OS/400 save file:
- * ---------------------------------------------------
+ * </strong>
  *
+ * <pre>
  * $ cwd /qsys.lib/rpgunit.lib
  *   250 "/QSYS.LIB/RPGUNIT.LIB" is current library.
  * $ dir rpgunit.file
@@ -54,12 +63,14 @@ import org.apache.commons.net.ftp.FTPFile;
  *   125 List started.
  *   QPGMR        16347136 29.06.13 15:45:09 *FILE      RPGUNIT.SAVF
  *   250 List completed.
+ * </pre>
  *
- *
+ * <strong>
  * Example *STMF/*DIR FTP entries, when the
  * current working directory is in file system "root":
- * ---------------------------------------------------
+ * </strong>
  *
+ * <pre>
  * $ cwd /home/raddatz
  *   250 "/home/raddatz" is current directory.
  * $ dir test*
@@ -71,11 +82,13 @@ import org.apache.commons.net.ftp.FTPFile;
  *   RADDATZ          8192 04.07.13 09:04:14 *DIR       testDir1/
  *   RADDATZ          8192 04.07.13 09:04:17 *DIR       testDir2/
  *   250 List completed.
+ * </pre>
  *
- *
+ * <strong>
  * Example 1, using ANT to list specific members of a file:
- * --------------------------------------------------------
+ * </strong>
  *
+ * <pre>
  *      &lt;echo/&gt;
  *      &lt;echo&gt;Listing members of a file:&lt;/echo&gt;
  *
@@ -93,21 +106,24 @@ import org.apache.commons.net.ftp.FTPFile;
  *              &lt;include name="run*.mbr" /&gt;
  *          &lt;/fileset&gt;
  *      &lt;/ftp&gt;
+ * </pre>
  *
- * Output:
- * -------
+ * <strong>Output:</strong>
  *
+ * <pre>
  *   [echo] Listing members of a file:
  *    [ftp] listing files
  *    [ftp] listing RUN.MBR
  *    [ftp] listing RUNNER.MBR
  *    [ftp] listing RUNNERBND.MBR
  *    [ftp] 3 files listed
+ * </pre>
  *
- *
+ * <strong>
  * Example 2, using ANT to list specific members of all files of a library:
- * ------------------------------------------------------------------------
+ * </strong>
  *
+ * <pre>
  *      &lt;echo/&gt;
  *      &lt;echo&gt;Listing members of all files of a library:&lt;/echo&gt;
  *
@@ -125,10 +141,11 @@ import org.apache.commons.net.ftp.FTPFile;
  *              &lt;include name="**\run*.mbr" /&gt;
  *          &lt;/fileset&gt;
  *      &lt;/ftp&gt;
+ * </pre>
  *
- * Output:
- * -------
+ * <strong>Output:</strong>
  *
+ * <pre>
  *   [echo] Listing members of all files of a library:
  *    [ftp] listing files
  *    [ftp] listing RPGUNIT1.FILE\RUN.MBR
@@ -138,11 +155,13 @@ import org.apache.commons.net.ftp.FTPFile;
  *    [ftp] listing RPGUNITY1.FILE\RUNNER.MBR
  *    [ftp] listing RPGUNITY1.FILE\RUNNERBND.MBR
  *    [ftp] 6 files listed
+ * </pre>
  *
- *
+ * <strong>
  * Example 3, using ANT to download specific members of a file:
- * ------------------------------------------------------------
+ * </strong>
  *
+ * <pre>
  *      &lt;echo/&gt;
  *      &lt;echo&gt;Downloading members of a file:&lt;/echo&gt;
  *
@@ -159,21 +178,24 @@ import org.apache.commons.net.ftp.FTPFile;
  *              &lt;include name="run*.mbr" /&gt;
  *          &lt;/fileset&gt;
  *      &lt;/ftp&gt;
+ * </pre>
  *
- * Output:
- * -------
+ * <strong>Output:</strong>
  *
+ * <pre>
  *   [echo] Downloading members of a file:
  *    [ftp] getting files
  *    [ftp] transferring RUN.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-file\RUN.MBR
  *    [ftp] transferring RUNNER.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-file\RUNNER.MBR
  *    [ftp] transferring RUNNERBND.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-file\RUNNERBND.MBR
  *    [ftp] 3 files retrieved
+ * </pre>
  *
- *
+ * <strong>
  * Example 4, using ANT to download specific members of all files of a library:
- * ----------------------------------------------------------------------------
+ * </strong>
  *
+ * <pre>
  *      &lt;echo/&gt;
  *      &lt;echo&gt;Downloading members of all files of a library:&lt;/echo&gt;
  *
@@ -190,10 +212,11 @@ import org.apache.commons.net.ftp.FTPFile;
  *              &lt;include name="**\run*.mbr" /&gt;
  *          &lt;/fileset&gt;
  *      &lt;/ftp&gt;
+ * </pre>
  *
- * Output:
- * -------
+ * <strong>Output:</strong>
  *
+ * <pre>
  *   [echo] Downloading members of all files of a library:
  *    [ftp] getting files
  *    [ftp] transferring RPGUNIT1.FILE\RUN.MBR to C:\work\rdp_080\space\ANT - FTP\i5-downloads\RPGUNIT1.FILE\RUN.MBR
@@ -203,11 +226,13 @@ import org.apache.commons.net.ftp.FTPFile;
  *    [ftp] transferring RPGUNITY1.FILE\RUNNER.MBR to C:\work\rdp_080\space\ANT - FTP\i5-downloads\RPGUNITY1.FILE\RUNNER.MBR
  *    [ftp] transferring RPGUNITY1.FILE\RUNNERBND.MBR to C:\work\rdp_080\space\ANT - FTP\i5-downloads\RPGUNITY1.FILE\RUNNERBND.MBR
  *    [ftp] 6 files retrieved
+ * </pre>
  *
- *
+ * <strong>
  * Example 5, using ANT to download a save file of a library:
- * ----------------------------------------------------------
+ * </strong>
  *
+ * <pre>
  *      &lt;ftp action="get"
  *           server="${ftp.server}"
  *           userid="${ftp.user}"
@@ -221,14 +246,15 @@ import org.apache.commons.net.ftp.FTPFile;
  *            &lt;include name="RPGUNIT.SAVF" /&gt;
  *        &lt;/fileset&gt;
  *      &lt;/ftp&gt;
+ * </pre>
  *
- * Output:
- * -------
+ * <strong>Output:</strong>
+ *
+ * <pre>
  *   [echo] Downloading save file:
  *    [ftp] getting files
  *    [ftp] transferring RPGUNIT.SAVF to C:\workspaces\rdp_080\workspace\net-Test\i5-downloads-lib\RPGUNIT.SAVF
  *    [ftp] 1 files retrieved
- *
  * </pre>
  */
 public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
