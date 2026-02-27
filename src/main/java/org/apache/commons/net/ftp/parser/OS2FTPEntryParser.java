@@ -25,7 +25,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * Implements of {@link FTPFileEntryParser} and {@link Configurable} for OS/2 Systems.
+ * Implements {@link FTPFileEntryParser} and {@link Configurable} for OS/2 Systems.
  *
  * @see FTPFileEntryParser Usage instructions.
  */
