@@ -37,17 +37,17 @@ class SubnetUtils6Test {
 
     private static final BigInteger TWO = BigInteger.valueOf(2);
 
-    @Test
-    void testBasicCidr64() {
-        final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/64");
-        final SubnetInfo info = utils.getInfo();
-
-        assertEquals(64, info.getPrefixLength());
-        assertEquals("2001:db8:0:0:0:0:0:1", info.getAddress());
-        assertEquals("2001:db8:0:0:0:0:0:0", info.getNetworkAddress());
-        assertEquals("2001:db8:0:0:ffff:ffff:ffff:ffff", info.getHighAddress());
-        // 2^64 addresses
-        assertEquals(TWO.pow(64), info.getAddressCount());
+    private static void assertEquivalentSubnets(final String... cidrs) {
+        final SubnetInfo reference = new SubnetUtils6(cidrs[0]).getInfo();
+        for (int i = 1; i < cidrs.length; i++) {
+            final SubnetInfo other = new SubnetUtils6(cidrs[i]).getInfo();
+            assertEquals(reference.getNetworkAddress(), other.getNetworkAddress(),
+                cidrs[0] + " vs " + cidrs[i] + " network");
+            assertEquals(reference.getHighAddress(), other.getHighAddress(),
+                cidrs[0] + " vs " + cidrs[i] + " high");
+            assertEquals(reference.getAddress(), other.getAddress(),
+                cidrs[0] + " vs " + cidrs[i] + " address");
+        }
     }
 
     @Test
@@ -59,6 +59,19 @@ class SubnetUtils6Test {
         assertEquals("2001:db8:0:0:0:0:0:1", info.getNetworkAddress());
         assertEquals("2001:db8:0:0:0:0:0:1", info.getHighAddress());
         assertEquals(BigInteger.ONE, info.getAddressCount());
+    }
+
+    @Test
+    void testBasicCidr64() {
+        final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/64");
+        final SubnetInfo info = utils.getInfo();
+
+        assertEquals(64, info.getPrefixLength());
+        assertEquals("2001:db8:0:0:0:0:0:1", info.getAddress());
+        assertEquals("2001:db8:0:0:0:0:0:0", info.getNetworkAddress());
+        assertEquals("2001:db8:0:0:ffff:ffff:ffff:ffff", info.getHighAddress());
+        // 2^64 addresses
+        assertEquals(TWO.pow(64), info.getAddressCount());
     }
 
     @Test
@@ -121,6 +134,27 @@ class SubnetUtils6Test {
     }
 
     @Test
+    void testGetLowAddress() {
+        final SubnetUtils6 utils = new SubnetUtils6("2001:db8::100/120");
+        final SubnetInfo info = utils.getInfo();
+
+        // getLowAddress returns the network address (same as getNetworkAddress)
+        assertEquals(info.getNetworkAddress(), info.getLowAddress());
+        assertEquals("2001:db8:0:0:0:0:0:100", info.getLowAddress());
+    }
+
+    @Test
+    void testHighBitAddress() {
+        final SubnetUtils6 utils = new SubnetUtils6("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128");
+        final SubnetInfo info = utils.getInfo();
+
+        assertEquals("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", info.getAddress());
+        assertEquals("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", info.getNetworkAddress());
+        assertEquals("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", info.getHighAddress());
+        assertEquals(BigInteger.ONE, info.getAddressCount());
+    }
+
+    @Test
     void testInvalidCidr() {
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6(null));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1"));
@@ -132,16 +166,16 @@ class SubnetUtils6Test {
     }
 
     @Test
+    void testInvalidIPv4Address() {
+        // IPv4 addresses should be rejected
+        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("192.168.1.1/24"));
+    }
+
+    @Test
     void testInvalidTwoArgConstructor() {
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1", 129));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1", -1));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("not-an-address", 64));
-    }
-
-    @Test
-    void testInvalidIPv4Address() {
-        // IPv4 addresses should be rejected
-        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("192.168.1.1/24"));
     }
 
     @Test
@@ -160,15 +194,6 @@ class SubnetUtils6Test {
         assertFalse(info.isInRange("2001:db7::1"));
         assertFalse(info.isInRange("2002:db8::1"));
         assertFalse(info.isInRange("::1"));
-    }
-
-    @Test
-    void testIsInRangeWithInvalidString() {
-        final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
-        final SubnetInfo info = utils.getInfo();
-
-        assertThrows(IllegalArgumentException.class, () -> info.isInRange("not-an-address"));
-        assertThrows(IllegalArgumentException.class, () -> info.isInRange("192.168.1.1"));
     }
 
     @Test
@@ -219,6 +244,15 @@ class SubnetUtils6Test {
     }
 
     @Test
+    void testIsInRangeWithInvalidString() {
+        final SubnetUtils6 utils = new SubnetUtils6("2001:db8::/32");
+        final SubnetInfo info = utils.getInfo();
+
+        assertThrows(IllegalArgumentException.class, () -> info.isInRange("not-an-address"));
+        assertThrows(IllegalArgumentException.class, () -> info.isInRange("192.168.1.1"));
+    }
+
+    @Test
     void testLinkLocalAddress() {
         final SubnetUtils6 utils = new SubnetUtils6("fe80::/10");
         final SubnetInfo info = utils.getInfo();
@@ -236,62 +270,6 @@ class SubnetUtils6Test {
         assertEquals(128, info.getPrefixLength());
         assertTrue(info.isInRange("::1"));
         assertFalse(info.isInRange("::2"));
-    }
-
-    @Test
-    void testToString() {
-        final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/64");
-        final SubnetInfo info = utils.getInfo();
-        final String str = utils.toString();
-
-        assertNotNull(str);
-        assertTrue(str.contains("CIDR Signature"));
-        assertTrue(str.contains("Network"));
-        assertTrue(str.contains("First address"));
-        assertTrue(str.contains("Last address"));
-        assertTrue(str.contains("Address Count"));
-
-        // note: The CIDR signature from toString can be fed back into the constructor
-        final String cidr = info.getCidrSignature();
-        final SubnetUtils6 roundTrip = new SubnetUtils6(cidr);
-        final SubnetInfo roundTripInfo = roundTrip.getInfo();
-        assertEquals(info.getPrefixLength(), roundTripInfo.getPrefixLength());
-        assertEquals(info.getNetworkAddress(), roundTripInfo.getNetworkAddress());
-        assertEquals(info.getHighAddress(), roundTripInfo.getHighAddress());
-        assertEquals(info.getAddressCount(), roundTripInfo.getAddressCount());
-        assertEquals(info.getCidrSignature(), roundTripInfo.getCidrSignature());
-    }
-
-    @Test
-    void testUniqueLocalAddress() {
-        // ULA range is fc00::/7
-        final SubnetUtils6 utils = new SubnetUtils6("fd00::/8");
-        final SubnetInfo info = utils.getInfo();
-
-        assertTrue(info.isInRange("fd00::1"));
-        assertTrue(info.isInRange("fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
-        assertFalse(info.isInRange("fc00::1")); // fc00::/8 is different from fd00::/8
-    }
-
-    @Test
-    void testHighBitAddress() {
-        final SubnetUtils6 utils = new SubnetUtils6("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128");
-        final SubnetInfo info = utils.getInfo();
-
-        assertEquals("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", info.getAddress());
-        assertEquals("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", info.getNetworkAddress());
-        assertEquals("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", info.getHighAddress());
-        assertEquals(BigInteger.ONE, info.getAddressCount());
-    }
-
-    @Test
-    void testGetLowAddress() {
-        final SubnetUtils6 utils = new SubnetUtils6("2001:db8::100/120");
-        final SubnetInfo info = utils.getInfo();
-
-        // getLowAddress returns the network address (same as getNetworkAddress)
-        assertEquals(info.getNetworkAddress(), info.getLowAddress());
-        assertEquals("2001:db8:0:0:0:0:0:100", info.getLowAddress());
     }
 
     // All examples below are from https://datatracker.ietf.org/doc/html/rfc5952 to verify properly
@@ -387,19 +365,6 @@ class SubnetUtils6Test {
         );
     }
 
-    private static void assertEquivalentSubnets(final String... cidrs) {
-        final SubnetInfo reference = new SubnetUtils6(cidrs[0]).getInfo();
-        for (int i = 1; i < cidrs.length; i++) {
-            final SubnetInfo other = new SubnetUtils6(cidrs[i]).getInfo();
-            assertEquals(reference.getNetworkAddress(), other.getNetworkAddress(),
-                cidrs[0] + " vs " + cidrs[i] + " network");
-            assertEquals(reference.getHighAddress(), other.getHighAddress(),
-                cidrs[0] + " vs " + cidrs[i] + " high");
-            assertEquals(reference.getAddress(), other.getAddress(),
-                cidrs[0] + " vs " + cidrs[i] + " address");
-        }
-    }
-
     @Test
     void testRfc5952Section5SpecialAddresses() {
         final SubnetInfo loopback = new SubnetUtils6("::1/128").getInfo();
@@ -407,5 +372,40 @@ class SubnetUtils6Test {
 
         final SubnetInfo unspecified = new SubnetUtils6("::/128").getInfo();
         assertEquals("0:0:0:0:0:0:0:0", unspecified.getAddress());
+    }
+
+    @Test
+    void testToString() {
+        final SubnetUtils6 utils = new SubnetUtils6("2001:db8::1/64");
+        final SubnetInfo info = utils.getInfo();
+        final String str = utils.toString();
+
+        assertNotNull(str);
+        assertTrue(str.contains("CIDR Signature"));
+        assertTrue(str.contains("Network"));
+        assertTrue(str.contains("First address"));
+        assertTrue(str.contains("Last address"));
+        assertTrue(str.contains("Address Count"));
+
+        // note: The CIDR signature from toString can be fed back into the constructor
+        final String cidr = info.getCidrSignature();
+        final SubnetUtils6 roundTrip = new SubnetUtils6(cidr);
+        final SubnetInfo roundTripInfo = roundTrip.getInfo();
+        assertEquals(info.getPrefixLength(), roundTripInfo.getPrefixLength());
+        assertEquals(info.getNetworkAddress(), roundTripInfo.getNetworkAddress());
+        assertEquals(info.getHighAddress(), roundTripInfo.getHighAddress());
+        assertEquals(info.getAddressCount(), roundTripInfo.getAddressCount());
+        assertEquals(info.getCidrSignature(), roundTripInfo.getCidrSignature());
+    }
+
+    @Test
+    void testUniqueLocalAddress() {
+        // ULA range is fc00::/7
+        final SubnetUtils6 utils = new SubnetUtils6("fd00::/8");
+        final SubnetInfo info = utils.getInfo();
+
+        assertTrue(info.isInRange("fd00::1"));
+        assertTrue(info.isInRange("fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
+        assertFalse(info.isInRange("fc00::1")); // fc00::/8 is different from fd00::/8
     }
 }
