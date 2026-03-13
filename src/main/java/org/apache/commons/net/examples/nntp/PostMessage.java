@@ -27,8 +27,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.examples.PrintCommandListeners;
-import org.apache.commons.net.io.Util;
 import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NNTPReply;
 import org.apache.commons.net.nntp.SimpleNNTPHeader;
@@ -147,7 +147,7 @@ public final class PostMessage {
 
                 if (writer != null) {
                     writer.write(header.toString());
-                    Util.copyReader(fileReader, writer);
+                    IOUtils.copyLarge(fileReader, writer);
                     writer.close();
                     client.completePendingCommand();
                 }

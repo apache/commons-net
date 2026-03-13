@@ -80,7 +80,9 @@ public final class Util {
      * @param dest   where to copy to
      * @return number of bytes copied
      * @throws CopyStreamException on error
+     * @deprecated Use {@link IOUtils#copy(Reader, Writer)}.
      */
+    @Deprecated
     public static long copyReader(final Reader source, final Writer dest) throws CopyStreamException {
         return copyReader(source, dest, DEFAULT_COPY_BUFFER_SIZE);
     }

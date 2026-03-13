@@ -29,7 +29,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.io.DotTerminatedMessageReader;
 import org.apache.commons.net.io.DotTerminatedMessageWriter;
-import org.apache.commons.net.io.Util;
 import org.apache.commons.net.util.NetConstants;
 
 /**
@@ -412,7 +411,7 @@ public class NNTPClient extends NNTP {
         }
 
         try (StringWriter help = new StringWriter(); BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
-            Util.copyReader(reader, help);
+            IOUtils.copyLarge(reader, help);
             return help.toString();
         }
     }

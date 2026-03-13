@@ -30,7 +30,6 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.examples.PrintCommandListeners;
-import org.apache.commons.net.io.Util;
 import org.apache.commons.net.smtp.SMTPClient;
 import org.apache.commons.net.smtp.SMTPReply;
 import org.apache.commons.net.smtp.SimpleSMTPHeader;
@@ -132,7 +131,7 @@ public final class SMTPMail {
 
             if (writer != null) {
                 writer.write(header.toString());
-                Util.copyReader(fileReader, writer);
+                IOUtils.copyLarge(fileReader, writer);
                 writer.close();
                 client.completePendingCommand();
             }
