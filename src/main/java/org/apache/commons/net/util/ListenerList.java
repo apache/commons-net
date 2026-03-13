@@ -51,7 +51,9 @@ public class ListenerList<T extends EventListener> implements Serializable, Iter
      * @param listener A listener.
      */
     public void addListener(final T listener) {
-        listeners.add(listener);
+        if (listener != null) {
+            listeners.add(listener);
+        }
     }
 
     /**

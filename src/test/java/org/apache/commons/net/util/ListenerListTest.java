@@ -38,20 +38,21 @@ class ListenerListTest {
     @Test
     void testAdd() {
         final EventListenerImpl eventListenerImpl = new EventListenerImpl();
-        final ListenerList listenerList = new ListenerList();
+        final ListenerList<EventListener> listenerList = new ListenerList<>();
+        listenerList.addListener(null);
         listenerList.addListener(eventListenerImpl);
         assertEquals(1, listenerList.getListenerCount());
     }
 
     @Test
     void testConstructor() {
-        assertEquals(0, new ListenerList().getListenerCount());
+        assertEquals(0, new ListenerList<>().getListenerCount());
     }
 
     @Test
     void testIterator() {
         final EventListenerImpl eventListenerImpl = new EventListenerImpl();
-        final ListenerList listenerList = new ListenerList();
+        final ListenerList<EventListener> listenerList = new ListenerList<>();
         listenerList.addListener(eventListenerImpl);
         final Iterator<EventListener> iterator = listenerList.iterator();
         assertTrue(iterator.hasNext());
@@ -60,9 +61,10 @@ class ListenerListTest {
     @Test
     void testRemove() {
         final EventListenerImpl eventListenerImpl = new EventListenerImpl();
-        final ListenerList listenerList = new ListenerList();
+        final ListenerList<EventListener> listenerList = new ListenerList<>();
         listenerList.addListener(eventListenerImpl);
         assertEquals(1, listenerList.getListenerCount());
+        listenerList.removeListener(null);
         listenerList.removeListener(eventListenerImpl);
         assertEquals(0, listenerList.getListenerCount());
         listenerList.iterator();
