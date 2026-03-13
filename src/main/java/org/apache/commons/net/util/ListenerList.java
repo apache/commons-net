@@ -27,7 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * A list of event listeners.
  *
- * @param <T> the type of elements returned by the iterator
+ * @param <T> the type of elements tracked by this list.
  */
 public class ListenerList<T extends EventListener> implements Serializable, Iterable<T> {
 
