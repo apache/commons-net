@@ -34,7 +34,7 @@ public class CopyStreamAdapter implements CopyStreamListener {
     private final ListenerList<CopyStreamListener> listeners;
 
     /**
-     * Creates a new copyStreamAdapter.
+     * Creates a new CopyStreamListener.
      */
     public CopyStreamAdapter() {
         listeners = new ListenerList<>();
