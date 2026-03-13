@@ -99,7 +99,9 @@ public class ListenerList<T extends EventListener> implements Serializable, Iter
      * @param listener listener to be removed from this list, if present.
      */
     public void removeListener(final T listener) {
-        listeners.remove(listener);
+        if (listener != null) {
+            listeners.remove(listener);
+        }
     }
 
     /**
