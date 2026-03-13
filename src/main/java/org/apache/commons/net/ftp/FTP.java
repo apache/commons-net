@@ -327,7 +327,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP ABOR command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code ABOR} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -340,7 +340,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP ACCT command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code ACCT} command to the server, receive the reply, and return the reply code.
      *
      * @param account The account name to access.
      * @return The reply code received from the server.
@@ -354,7 +354,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP ALLO command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code ALLO} command to the server, receive the reply, and return the reply code.
      *
      * @param bytes The number of bytes to allocate.
      * @return The reply code received from the server.
@@ -368,7 +368,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP ALLO command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code ALLO} command to the server, receive the reply, and return the reply code.
      *
      * @param bytes      The number of bytes to allocate.
      * @param recordSize The size of a record.
@@ -383,7 +383,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP ALLO command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code ALLO} command to the server, receive the reply, and return the reply code.
      *
      * @param bytes The number of bytes to allocate.
      * @return The reply code received from the server.
@@ -397,7 +397,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP ALLO command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code ALLO} command to the server, receive the reply, and return the reply code.
      *
      * @param bytes      The number of bytes to allocate.
      * @param recordSize The size of a record.
@@ -412,9 +412,9 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP APPE command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
-     * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
-     * for you.
+     * Sends the FTP {@code APPE} command to the server, receive the reply, and return the reply code. Remember, it is up to you to
+     * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
+     * level details for you.
      *
      * @param path The path to use for the file when stored at the remote end of the transfer.
      * @return The reply code received from the server.
@@ -438,7 +438,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP CDUP command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code CDUP} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -458,7 +458,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP CWD command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code CWD} command to the server, receive the reply, and return the reply code.
      *
      * @param directory The new working directory.
      * @return The reply code received from the server.
@@ -472,7 +472,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP DELE command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code DELE} command to the server, receive the reply, and return the reply code.
      *
      * @param path The path to delete.
      * @return The reply code received from the server.
@@ -502,7 +502,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP EPRT command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code EPRT} command to the server, receive the reply, and return the reply code.
      * <p>
      * Examples:
      * </p>
@@ -544,8 +544,8 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP EPSV command to the server, receive the reply, and return the reply code. Remember, it's up to you to interpret the
-     * reply string containing the host/port information.
+     * Sends the FTP {@code EPSV} command to the server, receive the reply, and return the reply code. Remember, it's up to you to
+     * interpret the reply string containing the host/port information.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -559,7 +559,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP FEAT command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code FEAT} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received by the server
      * @throws IOException If an I/O error occurs while either sending the command or receiving the server reply.
@@ -712,7 +712,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP HELP command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code HELP} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -725,7 +725,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP HELP command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code HELP} command to the server, receive the reply, and return the reply code.
      *
      * @param command The command name on which to request help.
      * @return The reply code received from the server.
@@ -772,9 +772,9 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP LIST command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
-     * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
-     * for you.
+     * Sends the FTP {@code LIST} command to the server, receive the reply, and return the reply code. Remember, it is up to you to
+     * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
+     * level details for you.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -787,9 +787,9 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP LIST command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
-     * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
-     * for you.
+     * Sends the FTP {@code LIST} command to the server, receive the reply, and return the reply code. Remember, it is up to you to
+     * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
+     * level details for you.
      *
      * @param path The path to list, may be {@code null} in which case the command is sent with no parameters
      * @return The reply code received from the server.
@@ -815,7 +815,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP MFMT command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code MFMT} command to the server, receive the reply, and return the reply code.
      *
      * @param path The path for which mtime is to be changed
      * @param timeval  Timestamp in {@code yyyyMMDDhhmmss} format
@@ -832,7 +832,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP MKD command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code MKD} command to the server, receive the reply, and return the reply code.
      *
      * @param path The path of the new directory to create.
      * @return The reply code received from the server.
@@ -846,9 +846,9 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP MLSD command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
-     * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
-     * for you.
+     * Sends the FTP {@code MLSD} command to the server, receive the reply, and return the reply code. Remember, it is up to you to
+     * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
+     * level details for you.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -862,9 +862,9 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP MLSD command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
-     * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
-     * for you.
+     * Sends the FTP {@code MLSD} command to the server, receive the reply, and return the reply code. Remember, it is up to you to
+     * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
+     * level details for you.
      *
      * @param path the path to report on
      * @return The reply code received from the server, may be {@code null} in which case the command is sent with no parameters
@@ -879,9 +879,9 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP MLST command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
-     * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
-     * for you.
+     * Sends the FTP {@code MLST} command to the server, receive the reply, and return the reply code. Remember, it is up to you to
+     * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
+     * level details for you.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -895,9 +895,9 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP MLST command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
-     * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
-     * for you.
+     * Sends the FTP {@code MLST} command to the server, receive the reply, and return the reply code. Remember, it is up to you to
+     * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
+     * level details for you.
      *
      * @param path the path to report on
      * @return The reply code received from the server, may be {@code null} in which case the command is sent with no parameters
@@ -912,7 +912,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP MODE command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code MODE} command to the server, receive the reply, and return the reply code.
      *
      * @param mode The transfer mode to use (one of the {@code TRANSFER_MODE} constants).
      * @return The reply code received from the server.
@@ -935,9 +935,9 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP NLST command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
-     * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
-     * for you.
+     * Sends the FTP {@code NLST} command to the server, receive the reply, and return the reply code. Remember, it is up to you to
+     * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
+     * level details for you.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -950,9 +950,9 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP NLST command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
-     * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
-     * for you.
+     * Sends the FTP {@code NLST} command to the server, receive the reply, and return the reply code. Remember, it is up to you to
+     * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
+     * level details for you.
      *
      * @param path The path to list, may be {@code null} in which case the command is sent with no parameters
      * @return The reply code received from the server.
@@ -966,7 +966,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP NOOP command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code NOOP} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -979,7 +979,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP OPTS command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code OPTS} command to the server, receive the reply, and return the reply code.
      * <p>
      * FTP request Syntax:
      * </p>
@@ -1003,7 +1003,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP OPTS command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code OPTS} command to the server, receive the reply, and return the reply code.
      * <p>
      * FTP request Syntax:
      * </p>
@@ -1028,7 +1028,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP PASS command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code PASS} command to the server, receive the reply, and return the reply code.
      *
      * @param password The plain text password of the user being logged into.
      * @return The reply code received from the server.
@@ -1042,7 +1042,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP PASV command to the server, receive the reply, and return the reply code. Remember, it's up to you to interpret the
+     * Sends the FTP {@code PASV} command to the server, receive the reply, and return the reply code. Remember, it's up to you to interpret the
      * reply string containing the host/port information.
      *
      * @return The reply code received from the server.
@@ -1056,7 +1056,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP PORT command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code PORT} command to the server, receive the reply, and return the reply code.
      *
      * @param host The host owning the port.
      * @param port The new port.
@@ -1079,7 +1079,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP PWD command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code PWD} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -1092,7 +1092,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP QUIT command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code QUIT} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -1105,7 +1105,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP REIN command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code REIN} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -1118,7 +1118,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP REST command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code REST} command to the server, receive the reply, and return the reply code.
      *
      * @param marker The marker at which to restart a transfer.
      * @return The reply code received from the server.
@@ -1132,7 +1132,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP RETR command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
+     * Sends the FTP {@code RETR} command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
      * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
      * for you.
      *
@@ -1148,7 +1148,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP RMD command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code RMD} command to the server, receive the reply, and return the reply code.
      *
      * @param path The path of the directory to remove.
      * @return The reply code received from the server.
@@ -1162,7 +1162,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP RNFR command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code RNFR} command to the server, receive the reply, and return the reply code.
      *
      * @param path The path to rename from.
      * @return The reply code received from the server.
@@ -1177,7 +1177,7 @@ public class FTP extends SocketClient {
 
 
     /**
-     * A convenience method to send the FTP RNTO command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code RNTO} command to the server, receive the reply, and return the reply code.
      *
      * @param path The path to rename to
      * @return The reply code received from the server.
@@ -1360,7 +1360,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP SITE command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code SITE} command to the server, receive the reply, and return the reply code.
      *
      * @param parameters The site parameters to send.
      * @return The reply code received from the server.
@@ -1374,7 +1374,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP SIZE command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code SIZE} command to the server, receive the reply, and return the reply code.
      *
      * @param parameters The site parameters to send.
      * @return The reply code received from the server.
@@ -1389,7 +1389,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP SMNT command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code SMNT} command to the server, receive the reply, and return the reply code.
      *
      * @param dir The directory name.
      * @return The reply code received from the server.
@@ -1403,7 +1403,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP STAT command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code STAT} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -1416,7 +1416,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP STAT command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code STAT} command to the server, receive the reply, and return the reply code.
      *
      * @param path A path to list.
      * @return The reply code received from the server.
@@ -1430,7 +1430,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP STOR command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
+     * Sends the FTP {@code STOR} command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
      * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
      * for you.
      *
@@ -1446,7 +1446,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP STOU command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
+     * Sends the FTP {@code STOU} command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
      * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
      * for you.
      *
@@ -1461,7 +1461,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP STOU command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
+     * Sends the FTP {@code STOU} command to the server, receive the reply, and return the reply code. Remember, it is up to you to manage the
      * data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low level details
      * for you.
      *
@@ -1482,7 +1482,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP STRU command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code STRU} command to the server, receive the reply, and return the reply code.
      *
      * @param structure The structure of the file (one of the {@code _STRUCTURE} constants).
      * @return The reply code received from the server.
@@ -1496,7 +1496,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP SYST command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code SYST} command to the server, receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -1509,7 +1509,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP TYPE command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code TYPE} command to the server, receive the reply, and return the reply code.
      *
      * @param fileType The type of the file (one of the {@code FILE_TYPE} constants).
      * @return The reply code received from the server.
@@ -1523,7 +1523,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP TYPE command for text files to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code TYPE} command for text files to the server, receive the reply, and return the reply code.
      *
      * @param fileType         The type of the file (one of the {@code FILE_TYPE} constants).
      * @param formatOrByteSize The format of the file (one of the {@code _FORMAT} constants). In the case of {@code LOCAL_FILE_TYPE}, the byte size.
@@ -1546,7 +1546,7 @@ public class FTP extends SocketClient {
     }
 
     /**
-     * A convenience method to send the FTP USER command to the server, receive the reply, and return the reply code.
+     * Sends the FTP {@code USER} command to the server, receive the reply, and return the reply code.
      *
      * @param user The user to login under.
      * @return The reply code received from the server.
