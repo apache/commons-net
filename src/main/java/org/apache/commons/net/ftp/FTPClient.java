@@ -963,18 +963,18 @@ public class FTPClient extends FTP implements Configurable {
         if (socket == null) {
             return false;
         }
-        final OutputStream output;
-        if (fileType == ASCII_FILE_TYPE) {
-            output = new ToNetASCIIOutputStream(getBufferedOutputStream(socket.getOutputStream()));
-        } else {
-            output = getBufferedOutputStream(socket.getOutputStream());
-        }
+        OutputStream output = null;
         CSL csl = null;
-        if (DurationUtils.isPositive(controlKeepAliveTimeout)) {
-            csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
-        }
-        // Treat everything else as binary for now
         try {
+            if (fileType == ASCII_FILE_TYPE) {
+                output = new ToNetASCIIOutputStream(getBufferedOutputStream(socket.getOutputStream()));
+            } else {
+                output = getBufferedOutputStream(socket.getOutputStream());
+            }
+            if (DurationUtils.isPositive(controlKeepAliveTimeout)) {
+                csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
+            }
+            // Treat everything else as binary for now
             Util.copyStream(local, output, getBufferSize(), CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl), false);
             output.close(); // ensure the file is fully written
             socket.close(); // done writing the file
