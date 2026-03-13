@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.net.io.Util;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.util.NetConstants;
 
 /**
@@ -48,7 +48,7 @@ public final class IOUtil {
         });
         writerThread = new Thread(() -> {
             try {
-                Util.copyStream(remoteInput, localOutput);
+                IOUtils.copyLarge(remoteInput, localOutput);
             } catch (final IOException e) {
                 e.printStackTrace();
                 System.exit(1);
