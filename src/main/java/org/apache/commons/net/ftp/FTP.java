@@ -663,7 +663,7 @@ public class FTP extends SocketClient {
             fireReplyReceived(_replyCode, getReplyString());
         }
         if (_replyCode == FTPReply.SERVICE_NOT_AVAILABLE) {
-            throw new FTPConnectionClosedException("FTP response 421 received.  Server closed connection.");
+            throw new FTPConnectionClosedException("FTP response 421 received. Server closed connection.");
         }
         return _replyCode;
     }
@@ -922,7 +922,6 @@ public class FTP extends SocketClient {
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int mode(final int mode) throws IOException {
-
         return sendCommand(FTPCmd.MODE, modeStringAt(mode));
     }
 
