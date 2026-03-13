@@ -30,7 +30,6 @@ import org.apache.commons.net.util.NetConstants;
  * stdin) and writes the data to a remote output destination. The writer thread reads from a remote input source and writes to a local output destination. The
  * threads terminate when the remote input source closes.
  */
-
 public final class IOUtil {
 
     public static void readWrite(final InputStream remoteInput, final OutputStream remoteOutput, final InputStream localInput, final OutputStream localOutput) {
