@@ -25,7 +25,6 @@ import org.apache.commons.net.util.ListenerList;
  * listeners. The static copyStream() methods invoke the bytesTransfered(long, int) of a CopyStreamListener for performance reasons and also because multiple
  * listeners cannot be registered given that the methods are static.
  *
- *
  * @see CopyStreamEvent
  * @see CopyStreamListener
  * @see Util
