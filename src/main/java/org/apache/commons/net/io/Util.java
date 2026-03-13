@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ProxyOutputStream;
-import org.apache.commons.net.util.NetConstants;
+import org.apache.commons.io.output.ProxyWriter;
 
 /**
  * The Util class cannot be instantiated and stores short static convenience methods that are often quite useful.
@@ -110,6 +110,7 @@ public final class Util {
      * <p>
      * The contents of the Reader are read until its end is reached, but neither the source nor the destination are closed. You must do this yourself outside
      * the method call. The number of characters read/written is returned.
+     * </p>
      *
      * @param source     The source Reader.
      * @param dest       The destination writer.
@@ -125,40 +126,19 @@ public final class Util {
      */
     public static long copyReader(final Reader source, final Writer dest, final int bufferSize, final long streamSize, final CopyStreamListener listener)
             throws CopyStreamException {
-        int numChars;
-        long total = 0;
-        final char[] buffer = new char[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
-
+        final AtomicLong total = new AtomicLong();
         try {
-            while ((numChars = source.read(buffer)) != NetConstants.EOS) {
-                // Technically, some read(char[]) methods may return 0, and we cannot
-                // accept that as an indication of EOF.
-                if (numChars == 0) {
-                    final int singleChar = source.read();
-                    if (singleChar < 0) {
-                        break;
-                    }
-                    dest.write(singleChar);
+            return IOUtils.copyLarge(source, listener == null ? dest : new ProxyWriter(dest) {
+
+                @Override
+                protected void afterWrite(int n) throws IOException {
                     dest.flush();
-                    ++total;
-                    if (listener != null) {
-                        listener.bytesTransferred(total, 1, streamSize);
-                    }
-                    continue;
+                    listener.bytesTransferred(total.addAndGet(n), n, streamSize);
                 }
-
-                dest.write(buffer, 0, numChars);
-                dest.flush();
-                total += numChars;
-                if (listener != null) {
-                    listener.bytesTransferred(total, numChars, streamSize);
-                }
-            }
-        } catch (final IOException e) {
-            throw new CopyStreamException("IOException caught while copying.", total, e);
+            }, new char[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE]);
+        } catch (IOException e) {
+            throw new CopyStreamException("IOException caught while copying.", total.get(), e);
         }
-
-        return total;
     }
 
     /**

@@ -75,6 +75,8 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">ListenerList.removeListener(T) now ignores null input to avoid a NullPointerException.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">ListenerList.addListener(T) now ignores null input.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix typo in FTPConnectionClosedException message from FTP.getReply(boolean).</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Reimplement Util.copyReader() with IOUtils.copyLarge().</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Reimplement Util.copyStream() with IOUtils.copyLarge().</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add DatagramSocketClient.getDefaultTimeoutDuration() and deprecate getDefaultTimeout().</action>
       <action type="add" dev="ggregory" due-to="Maros Orsak, Gary Gregory" issue="NET-741">Add subnet IPv6 handling with SubnetUtils6 #391.</action>
