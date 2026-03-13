@@ -372,7 +372,7 @@ public abstract class SocketClient {
      *
      * @return the charset.
      * @since 3.3
-     * @deprecated Since the code now requires Java 1.6 as a minimum
+     * @deprecated Since the code now requires Java 1.6 as a minimum.
      */
     @Deprecated
     public String getCharsetName() {
@@ -382,7 +382,7 @@ public abstract class SocketClient {
     /**
      * Subclasses can override this if they need to provide their own instance field for backwards compatibility.
      *
-     * @return the CommandSupport instance, may be {@code null}
+     * @return the CommandSupport instance, may be {@code null}.
      * @since 3.0
      */
     protected ProtocolCommandSupport getCommandSupport() {
@@ -392,7 +392,7 @@ public abstract class SocketClient {
     /**
      * Gets the underlying socket connection timeout.
      *
-     * @return timeout (in ms)
+     * @return timeout in milliseconds.
      * @since 2.0
      */
     public int getConnectTimeout() {
@@ -421,8 +421,8 @@ public abstract class SocketClient {
      * Gets the current value of the SO_KEEPALIVE flag on the currently opened socket. Delegates to {@link Socket#getKeepAlive()}
      *
      * @return True if SO_KEEPALIVE is enabled.
-     * @throws SocketException      if there is a problem with the socket
-     * @throws NullPointerException if the socket is not currently open
+     * @throws SocketException      if there is a problem with the socket.
+     * @throws NullPointerException if the socket is not currently open.
      * @since 2.2
      */
     public boolean getKeepAlive() throws SocketException {
@@ -433,7 +433,7 @@ public abstract class SocketClient {
      * Gets the local address to which the client's socket is bound. Delegates to {@link Socket#getLocalAddress()}
      *
      * @return The local address to which the client's socket is bound.
-     * @throws NullPointerException if the socket is not currently open
+     * @throws NullPointerException if the socket is not currently open.
      */
     public InetAddress getLocalAddress() {
         return _socket_.getLocalAddress();
@@ -443,7 +443,7 @@ public abstract class SocketClient {
      * Gets the port number of the open socket on the local host used for the connection. Delegates to {@link Socket#getLocalPort()}
      *
      * @return The port number of the open socket on the local host used for the connection.
-     * @throws NullPointerException if the socket is not currently open
+     * @throws NullPointerException if the socket is not currently open.
      */
     public int getLocalPort() {
         return _socket_.getLocalPort();
@@ -459,9 +459,9 @@ public abstract class SocketClient {
     }
 
     /**
-     * Gets the current receivedBuffer size
+     * Gets the current receivedBuffer size.
      *
-     * @return the size, or -1 if not initialized
+     * @return the size, or -1 if not initialized.
      * @since 3.0
      */
     protected int getReceiveBufferSize() {
@@ -471,8 +471,8 @@ public abstract class SocketClient {
     /**
      * Gets the address to which the socket is connected.
      *
-     * @return The remote address to which the client is connected. Delegates to {@link Socket#getInetAddress()}
-     * @throws NullPointerException if the socket is not currently open
+     * @return The remote address to which the client is connected. Delegates to {@link Socket#getInetAddress()}.
+     * @throws NullPointerException if the socket is not currently open.
      */
     public InetAddress getRemoteAddress() {
         return _socket_.getInetAddress();
@@ -492,16 +492,16 @@ public abstract class SocketClient {
      * Gets the port number of the remote host to which the client is connected. Delegates to {@link Socket#getPort()}
      *
      * @return The port number of the remote host to which the client is connected.
-     * @throws NullPointerException if the socket is not currently open
+     * @throws NullPointerException if the socket is not currently open.
      */
     public int getRemotePort() {
         return _socket_.getPort();
     }
 
     /**
-     * Gets the current sendBuffer size
+     * Gets the current sendBuffer size.
      *
-     * @return the size, or -1 if not initialized
+     * @return the size, or -1 if not initialized.
      * @since 3.0
      */
     protected int getSendBufferSize() {
@@ -509,9 +509,9 @@ public abstract class SocketClient {
     }
 
     /**
-     * Gets the underlying {@link ServerSocketFactory}
+     * Gets the underlying {@link ServerSocketFactory}.
      *
-     * @return The server socket factory
+     * @return The server socket factory.
      * @since 2.2
      */
     public ServerSocketFactory getServerSocketFactory() {
@@ -523,7 +523,7 @@ public abstract class SocketClient {
      *
      * @return The current SO_LINGER timeout. If SO_LINGER is disabled returns -1.
      * @throws SocketException      If the operation fails.
-     * @throws NullPointerException if the socket is not currently open
+     * @throws NullPointerException if the socket is not currently open.
      */
     public int getSoLinger() throws SocketException {
         return _socket_.getSoLinger();
@@ -534,7 +534,7 @@ public abstract class SocketClient {
      *
      * @return The timeout in milliseconds of the currently opened socket.
      * @throws SocketException      If the operation fails.
-     * @throws NullPointerException if the socket is not currently open
+     * @throws NullPointerException if the socket is not currently open.
      */
     public int getSoTimeout() throws SocketException {
         return _socket_.getSoTimeout();
@@ -545,7 +545,7 @@ public abstract class SocketClient {
      *
      * @return True if Nagle's algorithm is enabled on the currently opened socket, false otherwise.
      * @throws SocketException      If the operation fails.
-     * @throws NullPointerException if the socket is not currently open
+     * @throws NullPointerException if the socket is not currently open.
      */
     public boolean getTcpNoDelay() throws SocketException {
         return _socket_.getTcpNoDelay();
@@ -555,7 +555,7 @@ public abstract class SocketClient {
      * Tests the socket to test if it is available for use. Note that the only sure test is to use it, but these checks may help in some cases.
      *
      * @see <a href="https://issues.apache.org/jira/browse/NET-350">NET-350</a>
-     * @return {@code true} if the socket appears to be available for use
+     * @return {@code true} if the socket appears to be available for use.
      * @since 3.0
      */
     @SuppressWarnings("resource")
@@ -587,7 +587,7 @@ public abstract class SocketClient {
     /**
      * Tests whether the client is currently connected to a server.
      *
-     * Delegates to {@link Socket#isConnected()}
+     * Delegates to {@link Socket#isConnected()}.
      *
      * @return True if the client is currently connected to a server, false otherwise.
      */
@@ -595,7 +595,6 @@ public abstract class SocketClient {
         if (_socket_ == null) {
             return false;
         }
-
         return _socket_.isConnected();
     }
 
@@ -622,7 +621,7 @@ public abstract class SocketClient {
     /**
      * Sets the connection timeout in milliseconds, which will be passed to the {@link Socket} object's connect() method.
      *
-     * @param connectTimeout The connection timeout to use (in ms)
+     * @param connectTimeout The connection timeout to use (in milliseconds)
      * @since 2.0
      */
     public void setConnectTimeout(final int connectTimeout) {
@@ -655,9 +654,9 @@ public abstract class SocketClient {
      * From the Javadocs, the default keepalive time is 2 hours (although this is implementation dependent). It looks as though the Windows WSA sockets
      * implementation allows a specific keepalive value to be set, although this seems not to be the case on other systems.
      *
-     * @param keepAlive If true, keepAlive is turned on
-     * @throws SocketException      if there is a problem with the socket
-     * @throws NullPointerException if the socket is not currently open
+     * @param keepAlive If true, keepAlive is turned on.
+     * @throws SocketException      if there is a problem with the socket.
+     * @throws NullPointerException if the socket is not currently open.
      * @since 2.2
      */
     public void setKeepAlive(final boolean keepAlive) throws SocketException {
@@ -679,7 +678,7 @@ public abstract class SocketClient {
      * Sets the underlying socket receive buffer size.
      *
      * @param size The size of the buffer in bytes.
-     * @throws SocketException never (but subclasses may wish to do so)
+     * @throws SocketException never (but subclasses may wish to do so).
      * @since 2.0
      */
     @SuppressWarnings("unused") // subclasses may throw SocketException
@@ -691,7 +690,7 @@ public abstract class SocketClient {
      * Sets the underlying socket send buffer size.
      *
      * @param size The size of the buffer in bytes.
-     * @throws SocketException never thrown, but subclasses might want to do so
+     * @throws SocketException never thrown, but subclasses might want to do so.
      * @since 2.0
      */
     @SuppressWarnings("unused") // subclasses may throw SocketException
@@ -744,6 +743,7 @@ public abstract class SocketClient {
      * Sets the timeout in milliseconds of a currently open connection. Only call this method after a connection has been opened by {@link #connect connect()}.
      * <p>
      * To set the initial timeout, use {@link #setDefaultTimeout(int)} instead.
+     * </p>
      *
      * @param timeout The timeout in milliseconds to use for the currently open socket connection.
      * @throws SocketException      If the operation fails.
@@ -758,7 +758,7 @@ public abstract class SocketClient {
      *
      * @param on True if Nagle's algorithm is to be enabled, false if not.
      * @throws SocketException      If the operation fails.
-     * @throws NullPointerException if the socket is not currently open
+     * @throws NullPointerException if the socket is not currently open.
      */
     public void setTcpNoDelay(final boolean on) throws SocketException {
         _socket_.setTcpNoDelay(on);
@@ -769,7 +769,7 @@ public abstract class SocketClient {
      * doing a quick security check when a client needs to accept a connection from a server, such as an FTP data connection or a BSD R command standard error
      * stream.
      *
-     * @param socket the item to check against
+     * @param socket the item to check against.
      * @return True if the remote hosts are the same, false if not.
      */
     public boolean verifyRemote(final Socket socket) {
