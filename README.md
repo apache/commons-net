@@ -45,7 +45,7 @@ Apache Commons Net
 
 [![Java CI](https://github.com/apache/commons-net/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-net/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/commons-net/commons-net?label=Maven%20Central)](https://search.maven.org/artifact/commons-net/commons-net)
-[![Javadocs](https://javadoc.io/badge/commons-net/commons-net/3.12.0.svg)](https://javadoc.io/doc/commons-net/commons-net/3.12.0)
+[![Javadocs](https://javadoc.io/badge/commons-net/commons-net/3.13.0.svg)](https://javadoc.io/doc/commons-net/commons-net/3.13.0)
 [![CodeQL](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-net/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-net)
 
@@ -69,7 +69,7 @@ Alternatively, you can pull it from the central Maven repositories:
 <dependency>
   <groupId>commons-net</groupId>
   <artifactId>commons-net</artifactId>
-  <version>3.12.0</version>
+  <version>3.13.0</version>
 </dependency>
 ```
 
@@ -90,7 +90,7 @@ There are some guidelines which will make applying PRs easier for us:
 + Respect the existing code style for each file.
 + Create minimal diffs - disable on save actions like reformat source code or organize imports. If you feel the source code should be reformatted create a separate PR for this change.
 + Provide JUnit tests for your changes and make sure your changes don't break any existing tests by running `mvn`.
-+ Before you pushing a PR, run `mvn` (by itself), this runs the default goal, which contains all build checks.
++ Before you push a PR, run `mvn` (without arguments). This runs the default goal which contains all build checks.
 + To see the code coverage report, regardless of coverage failures, run `mvn clean site -Dcommons.jacoco.haltOnFailure=false -Pjacoco`
 
 If you plan to contribute on a regular basis, please consider filing a [contributor license agreement](https://www.apache.org/licenses/#clas).
@@ -112,7 +112,6 @@ Additional Resources
 + [Apache Commons Homepage](https://commons.apache.org/)
 + [Apache Issue Tracker (JIRA)](https://issues.apache.org/jira/browse/NET)
 + [Apache Commons Slack Channel](https://the-asf.slack.com/archives/C60NVB8AD)
-+ [Apache Commons Twitter Account](https://twitter.com/ApacheCommons)
 
 Apache Commons Components
 -------------------------

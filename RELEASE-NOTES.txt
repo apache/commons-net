@@ -1,3 +1,64 @@
+Apache Commons Net 3.13.0 Release Notes
+---------------------------------------
+
+The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.13.0.
+
+Apache Commons Net library contains a collection of network utilities and protocol implementations.
+Supported protocols include Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, and Whois.
+
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+For complete information on Apache Commons Net, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Net website:
+
+https://commons.apache.org/proper/commons-net/
+
+Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
+
+
+New features
+------------
+
+o           Add DatagramSocketClient.getDefaultTimeoutDuration() and deprecate getDefaultTimeout(). Thanks to Gary Gregory.
+o NET-741:  Add subnet IPv6 handling with SubnetUtils6 #391. Thanks to Maros Orsak, Gary Gregory.
+
+Fixed Bugs
+----------
+
+o           DaytimeTCPClientTest now should now pass inside most VPNs. Thanks to Henri Biestro, Gary Gregory.
+o           Migrate tests to JUnit5 #358, #359. Thanks to Jakub Kupczyk, Gary Gregory.
+o           Fix malformed Javadoc comments. Thanks to Gary Gregory.
+o           IMAPExportMbox now restores the current thread's interrupt flag when catching InterruptedException. Thanks to Gary Gregory.
+o           IOUtil.readWrite() now restores the current thread's interrupt flag when catching InterruptedException. Thanks to Gary Gregory.
+o           TelnetInputStream now restores the current thread's interrupt flag when catching InterruptedException. Thanks to Gary Gregory.
+o NET-740:  FTP fails to parse listings for Linux vsftpd in Chinese or Japanese #393. Thanks to Jianwei Guo, Gary Gregory.
+o           TelnetInputStream.read() doesn't preserve the original InterruptedException as the cause of its InterruptedIOException. Thanks to Gary Gregory.
+o           FTPClient._storeFile(String, String, InputStream) doesn't always close it's internal socket when an exception is thrown early in processing. Thanks to Gary Gregory.
+o           ListenerList.removeListener(T) now ignores null input to avoid a NullPointerException. Thanks to Gary Gregory.
+o           ListenerList.addListener(T) now ignores null input. Thanks to Gary Gregory.
+o           Fix typo in FTPConnectionClosedException message from FTP.getReply(boolean). Thanks to Gary Gregory.
+o           Reimplement Util.copyReader() with IOUtils.copyLarge(). Thanks to Gary Gregory.
+o           Reimplement Util.copyStream() with IOUtils.copyLarge(). Thanks to Gary Gregory.
+o           Reimplement Util.copyStream() with IOUtils.copyLarge(). Thanks to Gary Gregory.
+o           Deprecate Util.copyReader(Reader, Writer) in favor of IOUtils.copyLarge(Reader, Writer). Thanks to Gary Gregory.
+
+Changes
+-------
+
+o           Bump org.apache.commons:commons-parent from 85 to 97 #371, #388, #389. Thanks to Gary Gregory, Dependabot.
+o           Bump org.apache.commons:commons-lang3 from 3.18.0 to 3.19.0. Thanks to Gary Gregory, Dependabot.
+o           Bump commons-io:commons-io from 2.20.0 to 2.21.0. Thanks to Gary Gregory.
+o           Bump Util.DEFAULT_COPY_BUFFER_SIZE from 1 KiB to 8 KiB. Thanks to Gary Gregory.
+
+
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes.html
+
+Enjoy!
+-Apache Commons Net team
+
+-----------------------------------------------------------------------------
+
 Apache Commons Net 3.12.0 Release Notes
 ---------------------------------------
 
