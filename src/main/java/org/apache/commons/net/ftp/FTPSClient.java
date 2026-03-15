@@ -185,7 +185,7 @@ public class FTPSClient extends FTPClient {
      * {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
      *
      * @param isImplicit The security mode(Implicit/Explicit).
-     * @param context    A pre-configured SSL Context
+     * @param context A pre-configured SSL Context
      */
     public FTPSClient(final boolean isImplicit, final SSLContext context) {
         this(DEFAULT_PROTOCOL, isImplicit);
@@ -214,7 +214,7 @@ public class FTPSClient extends FTPClient {
      * Constructor for FTPSClient allowing specification of protocol and security mode. If isImplicit is true, the port is set to {@link #DEFAULT_FTPS_PORT}
      * i.e. 990. The default TrustManager is set from {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
      *
-     * @param protocol   the protocol
+     * @param protocol the protocol
      * @param isImplicit The security mode(Implicit/Explicit).
      */
     public FTPSClient(final String protocol, final boolean isImplicit) {
@@ -251,9 +251,9 @@ public class FTPSClient extends FTPClient {
      * Returns a socket of the data connection. Wrapped as an {@link SSLSocket}, which carries out handshake processing.
      *
      * @param command The int representation of the FTP command to send.
-     * @param arg     The arguments to the FTP command. If this parameter is set to null, then the command is sent with no arguments.
+     * @param arg The arguments to the FTP command. If this parameter is set to null, then the command is sent with no arguments.
      * @return corresponding to the established data connection. Null is returned if an FTP protocol error is reported at any point during the establishment and
-     *         initialization of the connection.
+     * initialization of the connection.
      * @throws IOException If there is any problem with the connection.
      * @see FTPClient#_openDataConnection_(int, String)
      * @deprecated (3.3) Use {@link FTPClient#_openDataConnection_(FTPCmd, String)} instead
@@ -270,9 +270,9 @@ public class FTPSClient extends FTPClient {
      * Returns a socket of the data connection. Wrapped as an {@link SSLSocket}, which carries out handshake processing.
      *
      * @param command The textual representation of the FTP command to send.
-     * @param arg     The arguments to the FTP command. If this parameter is set to null, then the command is sent with no arguments.
+     * @param arg The arguments to the FTP command. If this parameter is set to null, then the command is sent with no arguments.
      * @return corresponding to the established data connection. Null is returned if an FTP protocol error is reported at any point during the establishment and
-     *         initialization of the connection.
+     * initialization of the connection.
      * @throws IOException If there is any problem with the connection.
      * @see FTPClient#_openDataConnection_(int, String)
      * @since 3.2
@@ -280,7 +280,6 @@ public class FTPSClient extends FTPClient {
     @Override
     protected Socket _openDataConnection_(final String command, final String arg) throws IOException {
         final Socket socket = openDataSecureConnection(command, arg);
-        _prepareDataSocket_(socket);
         if (socket instanceof SSLSocket) {
             final SSLSocket sslSocket = (SSLSocket) socket;
 
@@ -392,7 +391,7 @@ public class FTPSClient extends FTPClient {
      * Sends the AUTH command.
      *
      * @throws SSLException If the server reply code equals neither "234" nor "334".
-     * @throws IOException  If an I/O error occurs while either sending the command.
+     * @throws IOException If an I/O error occurs while either sending the command.
      */
     protected void execAUTH() throws SSLException, IOException {
         final int replyCode = sendCommand(CMD_AUTH, auth);
@@ -490,7 +489,7 @@ public class FTPSClient extends FTPClient {
      *
      * @param pbsz Protection Buffer Size.
      * @throws SSLException If the server reply code does not equal "200".
-     * @throws IOException  If an I/O error occurs while sending the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      * @see #parsePBSZ(long)
      */
     public void execPBSZ(final long pbsz) throws SSLException, IOException {
@@ -516,7 +515,7 @@ public class FTPSClient extends FTPClient {
      *
      * @param prot Data Channel Protection Level, if {@code null}, use {@link #DEFAULT_PROT}.
      * @throws SSLException If the server reply code does not equal {@code 200}.
-     * @throws IOException  If an I/O error occurs while sending the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      */
     public void execPROT(String prot) throws SSLException, IOException {
         if (prot == null) {
@@ -542,7 +541,7 @@ public class FTPSClient extends FTPClient {
      * Extract the data from a reply with a prefix, e.g. PBSZ=1234 => 1234
      *
      * @param prefix the prefix to find
-     * @param reply  where to find the prefix
+     * @param reply where to find the prefix
      * @return the remainder of the string after the prefix, or null if the prefix was not present.
      */
     private String extractPrefixedData(final String prefix, final String reply) {
@@ -781,9 +780,9 @@ public class FTPSClient extends FTPClient {
      * mode connections also cause a local PORT command to be issued.
      *
      * @param command The text representation of the FTP command to send.
-     * @param arg     The arguments to the FTP command. If this parameter is set to null, then the command is sent with no argument.
+     * @param arg The arguments to the FTP command. If this parameter is set to null, then the command is sent with no argument.
      * @return A Socket corresponding to the established data connection. Null is returned if an FTP protocol error is reported at any point during the
-     *         establishment and initialization of the connection.
+     * establishment and initialization of the connection.
      * @throws IOException If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @since 3.1
      */
@@ -829,6 +828,8 @@ public class FTPSClient extends FTPClient {
                 }
                 socket = server.accept();
 
+                _prepareDataSocket_(socket);
+
                 // Ensure the timeout is set before any commands are issued on the new socket
                 if (soTimeoutMillis >= 0) {
                     socket.setSoTimeout(soTimeoutMillis);
@@ -865,6 +866,8 @@ public class FTPSClient extends FTPClient {
             } else {
                 socket = _socketFactory_.createSocket();
             }
+
+            _prepareDataSocket_(socket);
 
             if (getReceiveDataSocketBufferSize() > 0) {
                 socket.setReceiveBufferSize(getReceiveDataSocketBufferSize());
@@ -928,7 +931,7 @@ public class FTPSClient extends FTPClient {
      *
      * @param pbsz Protection Buffer Size.
      * @throws SSLException If the server reply code does not equal "200".
-     * @throws IOException  If an I/O error occurs while sending the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      * @return the negotiated value.
      * @see #execPBSZ(long)
      * @since 3.0
@@ -954,7 +957,7 @@ public class FTPSClient extends FTPClient {
      *
      * @param command The FTP command.
      * @return server reply.
-     * @throws IOException  If an I/O error occurs while sending the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      * @throws SSLException if a CCC command fails
      * @see org.apache.commons.net.ftp.FTP#sendCommand(String)
      */
@@ -1120,4 +1123,3 @@ public class FTPSClient extends FTPClient {
         }
     }
 }
-
