@@ -1119,5 +1119,14 @@ public class FTPSClient extends FTPClient {
             throw new SSLHandshakeException("Hostname doesn't match certificate");
         }
     }
+
+    @Override
+    protected String resolveExtendedPassiveModeHost() {
+        if (_socket_ instanceof SSLSocket) {
+            return ((SSLSocket) _socket_).getSession().getPeerHost();
+        } else {
+            return super.resolveExtendedPassiveModeHost();
+        }
+    }
 }
 
