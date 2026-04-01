@@ -342,7 +342,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * Constructor which allows setting of the format string member fields
+     * Constructs a new instance to set the format string member fields.
      *
      * @param systemKey            key representing system type of the server being connected to. See {@link #getServerSystemKey() serverSystemKey}
      * @param defaultDateFormatStr See {@link #setDefaultDateFormatStr(String) defaultDateFormatStr}
@@ -356,7 +356,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * Constructor which allows setting of most member fields
+     * Constructs a new instance to set most member fields.
      *
      * @param systemKey            key representing system type of the server being connected to. See {@link #getServerSystemKey() serverSystemKey}
      * @param defaultDateFormatStr See {@link #setDefaultDateFormatStr(String) defaultDateFormatStr}
@@ -376,7 +376,7 @@ public class FTPClientConfig {
     }
 
     /**
-     * Constructor which allows setting of all member fields
+     * Constructs a new instance to set all member fields.
      *
      * @param systemKey              key representing system type of the server being connected to. See {@link #getServerSystemKey() serverSystemKey}
      * @param defaultDateFormatStr   See {@link #setDefaultDateFormatStr(String) defaultDateFormatStr}
