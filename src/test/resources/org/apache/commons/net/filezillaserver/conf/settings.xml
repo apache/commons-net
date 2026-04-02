@@ -1,0 +1,202 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<filezilla xmlns:fz="https://filezilla-project.org" xmlns="https://filezilla-project.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" fz:product_flavour="standard" fz:product_version="1.9.4">
+	<!--The server's locale. By default, the one defined by the appropriate environment variables is used.-->
+	<locale></locale>
+	<!--Logging options.-->
+	<logger>
+		<!--The name of the log file. If empty, the log goes to stderr.-->
+		<name></name>
+		<!--The maximum number of files to be used for the log rotation. Default is 0, meaning no rotation happens.-->
+		<max_amount_of_rotated_files>1</max_amount_of_rotated_files>
+		<!--The maximum size each log file can reach before being closed and a new one being opened. Only meaningful if max_amount_of_rotated_files > 0.-->
+		<max_file_size>9223372036854775807</max_file_size>
+		<!--Which types of logs must be enabled. Defaults to error|status|reply|command . See <libfilezilla/logger.hpp> for the values of the various types.-->
+		<enabled_types>15</enabled_types>
+		<!--Criteria used to rotate files. Currently: size-based (0) or daily rotation (1).-->
+		<rotation_type>0</rotation_type>
+		<!--Include headers for each line of logging (date&time and possibly others). Set it to false if you have your own way of tagging log lines. Default is true.-->
+		<include_headers>false</include_headers>
+		<!--Append the date of the log file to its name when rotating, before any suffix the name might have.-->
+		<date_in_name>false</date_in_name>
+	</logger>
+	<!--Settings common to all file transfer protocols-->
+	<all_protocols>
+		<!--Autobanner options-->
+		<autobanner>
+			<!--The duration, in milliseconds, of the IP ban.-->
+			<ban_duration>300000</ban_duration>
+			<!--The duration, in milliseconds, during which the number of failed login attempts is monitored.-->
+			<login_failure_time_window>0</login_failure_time_window>
+			<!--The number of login attempts that are allowed to fail, within the time window specified by the parameter [login_failures_time_window]. The value 0 disables this mechanism.-->
+			<login_failure_time_window>0</login_failure_time_window>
+		</autobanner>
+		<!--Performance options.-->
+		<performance>
+			<!--Number of threads to distribute sessions to.-->
+			<number_of_session_threads>0</number_of_session_threads>
+			<!--Size of receving data socket buffer. Numbers < 0 mean use system defaults. Defaults to -1.-->
+			<receive_buffer_size>-1</receive_buffer_size>
+			<!--Size of sending data socket buffer. Numbers < 0 mean use system defaults. Defaults to -1.-->
+			<send_buffer_size>-1</send_buffer_size>
+		</performance>
+		<!--Timeout options.-->
+		<timeouts>
+			<!--Login timeout (fz::duration)-->
+			<login_timeout>60000</login_timeout>
+			<!--Activity timeout (fz::duration).-->
+			<activity_timeout>3600000</activity_timeout>
+		</timeouts>
+	</all_protocols>
+	<!--FTP Server options-->
+	<ftp_server>
+		<!--List of addresses and ports the FTP server will listen on.-->
+		<listener>
+			<address>0.0.0.0</address>
+			<port>21</port>
+			<tls_mode>2</tls_mode>
+		</listener>
+		<listener>
+			<address>::</address>
+			<port>21</port>
+			<tls_mode>2</tls_mode>
+		</listener>
+		<!--Session-related options.-->
+		<session>
+			<!--PASV settings-->
+			<pasv>
+				<!--IPV4 IP or name host that overrides the local address when PASV is used. Leave empty to not perform the override-->
+				<host_override></host_override>
+				<!--If set to true, then the host is not overriden for local connections.-->
+				<do_not_override_host_if_peer_is_local>true</do_not_override_host_if_peer_is_local>
+				<!--Port range to be used for PASV connections-->
+				<port_range>
+					<!--Minimum value for the port range to be used for PASV connections-->
+					<min>49152</min>
+					<!--Maximum value for the port range to be used for PASV connections-->
+					<max>49160</max>
+				</port_range>
+			</pasv>
+			<!--TLS certificate data.-->
+			<tls min_protocol_version="2" index="6">
+				<!--The private key-->
+				<key type="blob" base64="false">
+					<!--The data of a key or certificates chain in PEM or DER format-->-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIHrmnc8p/0SjT2aZEK2h9hoO0CHadEF8PMt36MhOkv+woAoGCCqGSM49
+AwEHoUQDQgAEhy4e3BORejV3n4lg1I+NeS4zQKhxk7/M9a/8Z5VWC7PJVWtb+Zjq
+J6PQLO9FMgYE0bP4UKkRb0CaGYvwExvX6A==
+-----END EC PRIVATE KEY-----
+</key>
+				<!--The certificates chain-->
+				<certs type="blob" base64="false">
+					<!--The data of a key or certificates chain in PEM or DER format-->-----BEGIN CERTIFICATE-----
+MIIBSjCB8KADAgECAhTRYlWUGps1ZPgAQ/XJXOtLyxQ0pDAKBggqhkjOPQQDAjAU
+MRIwEAYDVQQDEwlsb2NhbGhvc3QwHhcNMjUwMTMxMTAzMzE1WhcNMjYwMjAxMTAz
+ODE1WjAUMRIwEAYDVQQDEwlsb2NhbGhvc3QwWTATBgcqhkjOPQIBBggqhkjOPQMB
+BwNCAASHLh7cE5F6NXefiWDUj415LjNAqHGTv8z1r/xnlVYLs8lVa1v5mOono9As
+70UyBgTRs/hQqRFvQJoZi/ATG9fooyAwHjAOBgNVHQ8BAf8EBAMCBaAwDAYDVR0T
+AQH/BAIwADAKBggqhkjOPQQDAgNJADBGAiEA02yK+o42pFyVjDHRKQUiN8zK9hEc
+cTlFYCefw0CrT34CIQC0S07ZLWDSXLLQEMHRfmFVeHRIYP51XxOK+6BWvehE5Q==
+-----END CERTIFICATE-----
+</certs>
+				<!--Password to decrypt/access the private key-->
+				<key_password></key_password>
+				<!--The source of this key/certs pair-->
+				<source index="1" />
+			</tls>
+		</session>
+		<!--Additional welcome message.-->
+		<welcome_message has_version="true"></welcome_message>
+	</ftp_server>
+	<!--WebUI options-->
+	<webui>
+		<!--Expiration timeout for the access token-->
+		<access_timeout>300000</access_timeout>
+		<!--Expiration timeout for the refresh token-->
+		<refresh_timeout>1296000000</refresh_timeout>
+		<!--HTTP keepalive timeout-->
+		<http_keepalive_timeout>15000</http_keepalive_timeout>
+		<!--HTTP activity timeout-->
+		<http_activity_timeout>30000</http_activity_timeout>
+		<!--List of addresses and ports the FTP server will listen on.-->
+		<!--TLS certificate cata-->
+		<tls min_protocol_version="2" index="0" />
+	</webui>
+	<!--Administration options.-->
+	<admin>
+		<local_port>14148</local_port>
+		<enable_local_ipv6>true</enable_local_ipv6>
+		<listener>
+			<address>0.0.0.0</address>
+			<port>14148</port>
+			<use_tls>true</use_tls>
+		</listener>
+		<listener>
+			<address>::</address>
+			<port>14148</port>
+			<use_tls>true</use_tls>
+		</listener>
+		<password index="1">
+			<hash>IVUV2eYKYKRFW2rZX0AEJWuZPp5BeNKX+YEXI8susmo</hash>
+			<salt>1b92/rHKRi3Q8utZI8gugyUNKKHFRfdqo9ySdpEu0bs</salt>
+			<iterations>100000</iterations>
+		</password>
+		<tls min_protocol_version="3" index="6">
+			<!--The private key-->
+			<key type="blob" base64="false">
+				<!--The data of a key or certificates chain in PEM or DER format-->-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIAaSQdoEL4PbTqzb4KY3ZOF71mSIrBdFWZx7m9ra4FIDoAoGCCqGSM49
+AwEHoUQDQgAES9fGv8Yp05XUU483Xxnc17VuE7VsHXFd2vdi2NyhMRNLZowT8qlS
+ANnG7LFfhTmcS+vJ7pavBPYV9HdKUfy0og==
+-----END EC PRIVATE KEY-----</key>
+			<!--The certificates chain-->
+			<certs type="blob" base64="false">
+				<!--The data of a key or certificates chain in PEM or DER format-->-----BEGIN CERTIFICATE-----
+MIIBiDCCAS6gAwIBAgIUoF7wXnXF9PXDHwqZVLPjWedGhUYwCgYIKoZIzj0EAwIw
+MzExMC8GA1UEAxMoZmlsZXppbGxhLXNlcnZlciBzZWxmIHNpZ25lZCBjZXJ0aWZp
+Y2F0ZTAeFw0yNTAxMTcwOTAyNTVaFw0yNjAxMTgwOTA3NTVaMDMxMTAvBgNVBAMT
+KGZpbGV6aWxsYS1zZXJ2ZXIgc2VsZiBzaWduZWQgY2VydGlmaWNhdGUwWTATBgcq
+hkjOPQIBBggqhkjOPQMBBwNCAARL18a/xinTldRTjzdfGdzXtW4TtWwdcV3a92LY
+3KExE0tmjBPyqVIA2cbssV+FOZxL68nulq8E9hX0d0pR/LSioyAwHjAOBgNVHQ8B
+Af8EBAMCBaAwDAYDVR0TAQH/BAIwADAKBggqhkjOPQQDAgNIADBFAiEA6wDLKiIC
+ko0Plie8tYfIsH32JcOnU0Uw0F1ssGQYSOkCIGBe0G7hUEWOZW9X0DEs7E5BGchP
+gAdv9Rivb4uwoBi+
+-----END CERTIFICATE-----</certs>
+			<!--Password to decrypt/access the private key-->
+			<key_password></key_password>
+			<!--The source of this key/certs pair-->
+			<source index="1" />
+		</tls>
+	</admin>
+	<!--ACME (Let's Encrypt® and the like) settings.-->
+	<acme>
+		<account_id></account_id>
+		<how_to_serve_challenges index="0" />
+	</acme>
+	<!--Update checker options.-->
+	<update_checker>
+		<allowed_type>0</allowed_type>
+		<frequency>604800000</frequency>
+		<callback_path></callback_path>
+	</update_checker>
+	<!--PKCS#11 options.-->
+	<pkcs11>
+		<!--The list of PKCS#11 providers to be loaded. If empty, the default system config will be used.-->
+	</pkcs11>
+</filezilla>
