@@ -74,7 +74,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * <li>w the file is writable</li>
      * <li>x the file is executable</li>
      * <li>- the indicated permission is not granted</li>
-     * <li>L mandatory locking occurs</li> during access (the set-group-ID bit is on and the group execution bit is off)</li>
+     * <li>L mandatory locking occurs during access (the set-group-ID bit is on and the group execution bit is off)</li>
      * <li>s the set-user-ID or set-group-ID bit is on, and the corresponding user or group execution bit is also on
      * <li>S undefined bit-state (the set-user-ID bit is on and the user execution bit is off)</li>
      * <li>t the 1000 (octal) bit, or sticky bit, is on [see chmod(1)], and execution is on</li>
