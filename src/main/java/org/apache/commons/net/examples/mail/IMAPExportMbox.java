@@ -332,7 +332,7 @@ public final class IMAPExportMbox {
         } else {
             final Path mboxPath = Paths.get(file);
             if (Files.exists(mboxPath) && Files.size(mboxPath) > 0) {
-                throw new IOException("mailbox file: " + mboxPath + " already exists and is non-empty!");
+                throw new IOException("mailbox file: " + mboxPath + " already exists and is non-empty.");
             }
             System.out.println("Creating file " + mboxPath);
             mboxListener = new MboxListener(Files.newBufferedWriter(mboxPath, Charset.defaultCharset(), StandardOpenOption.CREATE), eol, printHash, printMarker,
