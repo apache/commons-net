@@ -133,12 +133,12 @@ public final class Util {
             return IOUtils.copyLarge(source, listener == null ? dest : new ProxyWriter(dest) {
 
                 @Override
-                protected void afterWrite(int n) throws IOException {
+                protected void afterWrite(final int n) throws IOException {
                     dest.flush();
                     listener.bytesTransferred(total.addAndGet(n), n, streamSize);
                 }
             }, new char[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE]);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new CopyStreamException("IOException caught while copying.", total.get(), e);
         }
     }
@@ -227,7 +227,7 @@ public final class Util {
             return IOUtils.copyLarge(source, listener == null ? dest : new ProxyOutputStream(dest) {
 
                 @Override
-                protected void afterWrite(int n) throws IOException {
+                protected void afterWrite(final int n) throws IOException {
                     if (flush) {
                         dest.flush();
                     }
@@ -235,7 +235,7 @@ public final class Util {
                 }
 
             }, new byte[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE]);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new CopyStreamException("IOException caught while copying.", total.get(), e);
         }
     }
