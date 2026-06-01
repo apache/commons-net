@@ -43,10 +43,17 @@ package org.apache.commons.net.nntp;
  */
 
 public class SimpleNNTPHeader {
+    private static String validate(final String value) {
+        if (value != null && (value.indexOf('\r') >= 0 || value.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Header value cannot contain CR or LF characters");
+        }
+        return value;
+    }
     private final String subject;
     private final String from;
     private final StringBuilder newsgroups;
     private final StringBuilder headerFields;
+
     private int newsgroupCount;
 
     /**
@@ -61,13 +68,6 @@ public class SimpleNNTPHeader {
         this.newsgroups = new StringBuilder();
         this.headerFields = new StringBuilder();
         this.newsgroupCount = 0;
-    }
-
-    private static String validate(final String value) {
-        if (value != null && (value.indexOf('\r') >= 0 || value.indexOf('\n') >= 0)) {
-            throw new IllegalArgumentException("Header value cannot contain CR or LF characters");
-        }
-        return value;
     }
 
     /**

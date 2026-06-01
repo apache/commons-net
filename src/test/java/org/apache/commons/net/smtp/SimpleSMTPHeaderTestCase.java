@@ -80,6 +80,28 @@ class SimpleSMTPHeaderTestCase {
     }
 
     @Test
+    void testRejectCarriageReturnInConstructor() {
+        assertThrows(IllegalArgumentException.class, () -> new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", "Subject\rInjected: header"));
+    }
+
+    @Test
+    void testRejectLineFeedInAddCC() {
+        final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
+        assertThrows(IllegalArgumentException.class, () -> header.addCC("cc@there.invalid\nBcc: victim@there.invalid"));
+    }
+
+    @Test
+    void testRejectLineFeedInAddHeaderField() {
+        final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
+        assertThrows(IllegalArgumentException.class, () -> header.addHeaderField("X-Header1", "value 1\nX-Injected: value 2"));
+    }
+
+    @Test
+    void testRejectLineFeedInConstructor() {
+        assertThrows(IllegalArgumentException.class, () -> new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", "Subject\nInjected: header"));
+    }
+
+    @Test
     void testToString() {
         // Note that the DotTerminatedMessageWriter converts LF to CRLF
         final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", "Test email");
@@ -103,28 +125,6 @@ class SimpleSMTPHeaderTestCase {
         header.addHeaderField("Date", "dummy date");
         // does not replace the Date field
         assertEquals("Date: dummy date\nFrom: from@here.invalid\n\n", header.toString());
-    }
-
-    @Test
-    void testRejectCarriageReturnInConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", "Subject\rInjected: header"));
-    }
-
-    @Test
-    void testRejectLineFeedInAddCC() {
-        final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
-        assertThrows(IllegalArgumentException.class, () -> header.addCC("cc@there.invalid\nBcc: victim@there.invalid"));
-    }
-
-    @Test
-    void testRejectLineFeedInAddHeaderField() {
-        final SimpleSMTPHeader header = new SimpleSMTPHeader("from@here.invalid", null, null);
-        assertThrows(IllegalArgumentException.class, () -> header.addHeaderField("X-Header1", "value 1\nX-Injected: value 2"));
-    }
-
-    @Test
-    void testRejectLineFeedInConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> new SimpleSMTPHeader("from@here.invalid", "to@there.invalid", "Subject\nInjected: header"));
     }
 
     @Test

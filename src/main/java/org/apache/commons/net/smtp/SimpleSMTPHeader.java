@@ -48,11 +48,18 @@ import java.util.Locale;
  */
 
 public class SimpleSMTPHeader {
+    private static String validate(final String value) {
+        if (value != null && (value.indexOf('\r') >= 0 || value.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Header value cannot contain CR or LF characters");
+        }
+        return value;
+    }
     private final String subject;
     private final String from;
     private final String to;
     private final StringBuffer headerFields;
     private boolean hasHeaderDate;
+
     private StringBuffer cc;
 
     /**
@@ -71,13 +78,6 @@ public class SimpleSMTPHeader {
         this.subject = validate(subject);
         this.headerFields = new StringBuffer();
         this.cc = null;
-    }
-
-    private static String validate(final String value) {
-        if (value != null && (value.indexOf('\r') >= 0 || value.indexOf('\n') >= 0)) {
-            throw new IllegalArgumentException("Header value cannot contain CR or LF characters");
-        }
-        return value;
     }
 
     /**
