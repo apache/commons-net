@@ -66,11 +66,18 @@ public class SimpleSMTPHeader {
         if (from == null) {
             throw new IllegalArgumentException("From cannot be null");
         }
-        this.to = to;
-        this.from = from;
-        this.subject = subject;
+        this.to = validate(to);
+        this.from = validate(from);
+        this.subject = validate(subject);
         this.headerFields = new StringBuffer();
         this.cc = null;
+    }
+
+    private static String validate(final String value) {
+        if (value != null && (value.indexOf('\r') >= 0 || value.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Header value cannot contain CR or LF characters");
+        }
+        return value;
     }
 
     /**
@@ -79,6 +86,7 @@ public class SimpleSMTPHeader {
      * @param address The email address to add to the CC list.
      */
     public void addCC(final String address) {
+        validate(address);
         if (cc == null) {
             cc = new StringBuffer();
         } else {
@@ -101,6 +109,8 @@ public class SimpleSMTPHeader {
      * @param value       The value of the added header field.
      */
     public void addHeaderField(final String headerField, final String value) {
+        validate(headerField);
+        validate(value);
         if (!hasHeaderDate && "Date".equals(headerField)) {
             hasHeaderDate = true;
         }

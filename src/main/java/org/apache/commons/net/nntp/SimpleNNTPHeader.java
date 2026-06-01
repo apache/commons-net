@@ -56,11 +56,18 @@ public class SimpleNNTPHeader {
      * @param subject The value of the {@code Subject:} header field. This should be the subject of the article.
      */
     public SimpleNNTPHeader(final String from, final String subject) {
-        this.from = from;
-        this.subject = subject;
+        this.from = validate(from);
+        this.subject = validate(subject);
         this.newsgroups = new StringBuilder();
         this.headerFields = new StringBuilder();
         this.newsgroupCount = 0;
+    }
+
+    private static String validate(final String value) {
+        if (value != null && (value.indexOf('\r') >= 0 || value.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Header value cannot contain CR or LF characters");
+        }
+        return value;
     }
 
     /**
@@ -76,6 +83,8 @@ public class SimpleNNTPHeader {
      * @param value       The value of the added header field.
      */
     public void addHeaderField(final String headerField, final String value) {
+        validate(headerField);
+        validate(value);
         headerFields.append(headerField);
         headerFields.append(": ");
         headerFields.append(value);
@@ -88,6 +97,7 @@ public class SimpleNNTPHeader {
      * @param newsgroup The newsgroup to add to the article's newsgroup distribution list.
      */
     public void addNewsgroup(final String newsgroup) {
+        validate(newsgroup);
         if (newsgroupCount++ > 0) {
             newsgroups.append(',');
         }
