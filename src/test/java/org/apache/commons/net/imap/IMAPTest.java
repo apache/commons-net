@@ -19,6 +19,7 @@ package org.apache.commons.net.imap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.stream.Stream;
@@ -86,6 +87,16 @@ class IMAPTest {
     @Test
     void testQuoteMailboxNameNullInput() {
         assertNull(IMAP.quoteMailboxName(null));
+    }
+
+    @Test
+    void testQuoteMailboxNameRejectsLineFeed() {
+        assertThrows(IllegalArgumentException.class, () -> IMAP.quoteMailboxName("INBOX\nA001 DELETE Sent"));
+    }
+
+    @Test
+    void testQuoteMailboxNameRejectsCarriageReturn() {
+        assertThrows(IllegalArgumentException.class, () -> IMAP.quoteMailboxName("INBOX\r\nA001 DELETE Sent"));
     }
 
     @Test
