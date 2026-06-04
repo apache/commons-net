@@ -427,6 +427,13 @@ public class FTP extends SocketClient {
         return sendCommand(FTPCmd.APPE, path);
     }
 
+    private static void checkCRLF(final String command, final String args) {
+        if (command != null && (command.indexOf('\r') >= 0 || command.indexOf('\n') >= 0)
+                || args != null && (args.indexOf('\r') >= 0 || args.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
+        }
+    }
+
     private String buildMessage(final String command, final String args) {
         final StringBuilder builder = new StringBuilder(command);
         if (args != null) {
@@ -1296,6 +1303,7 @@ public class FTP extends SocketClient {
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int sendCommand(final String command, final String args) throws IOException {
+        checkCRLF(command, args);
         if (_controlOutput_ == null) {
             throw new IOException("Connection is not open");
         }
