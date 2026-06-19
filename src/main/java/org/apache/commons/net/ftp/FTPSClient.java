@@ -1120,21 +1120,14 @@ public class FTPSClient extends FTPClient {
         }
     }
 
-    @Override
-    protected String resolveExtendedPassiveModeHost() {
-        if (_socket_ instanceof SSLSocket) {
-            return ((SSLSocket) _socket_).getSession().getPeerHost();
-        } else {
-            return super.resolveExtendedPassiveModeHost();
-        }
-    }
     /**
-     * Resolves the host for extended passive mode using the TLS session peer host,
-     * enabling TLS session reuse between the control and data connections.
+     * Resolves the host for extended passive mode using the TLS session peer host, enabling TLS session reuse between the control and data connections.
      *
+     * @return the passive host from the SSL session, or the default if not an SSL connection.
      * @since 3.14.0
-     * @return the passive host from the SSL session, or the default if not an SSL connection
      */
     @Override
     protected String resolveExtendedPassiveModeHost() {
-
+        return _socket_ instanceof SSLSocket ? ((SSLSocket) _socket_).getSession().getPeerHost() : super.resolveExtendedPassiveModeHost();
+    }
+}
