@@ -45,7 +45,9 @@ public final class DotTerminatedMessageWriter extends Writer {
     public DotTerminatedMessageWriter(final Writer output) {
         super(output);
         this.output = output;
-        this.state = NOTHING_SPECIAL_STATE;
+        // The message starts at the beginning of a line, so a leading dot on the
+        // first line must be doubled just like on any other line.
+        this.state = LAST_WAS_NL_STATE;
     }
 
     /**
