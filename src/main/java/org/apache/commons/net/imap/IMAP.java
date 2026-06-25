@@ -106,6 +106,9 @@ public class IMAP extends SocketClient {
         if (input == null) { // Don't throw NPE here
             return null;
         }
+        if (input.indexOf('\r') >= 0 || input.indexOf('\n') >= 0) {
+            throw new IllegalArgumentException("Mailbox name cannot contain CR or LF characters");
+        }
         if (input.isEmpty()) {
             return "\"\""; // return the string ""
         }
