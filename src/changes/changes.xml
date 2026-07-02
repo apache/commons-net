@@ -65,6 +65,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Javid Khan, Gary Gregory">Reject CR/LF in SimpleSMTPHeader and SimpleNNTPHeader fields #397.</action>
       <action type="fix" dev="sebb" due-to="Javid Khan">Reject CR/LF in IMAP quoteMailboxName (#399).</action>
+      <action type="fix" dev="ggregory" due-to="Javid Khan, Gary Gregory">Reject CR/LF in FTP, POP3, NNTP and SMTP command senders (#400).</action>
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 97 to 102.</action>
