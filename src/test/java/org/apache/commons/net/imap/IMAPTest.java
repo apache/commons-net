@@ -90,13 +90,13 @@ class IMAPTest {
     }
 
     @Test
-    void testQuoteMailboxNameRejectsLineFeed() {
-        assertThrows(IllegalArgumentException.class, () -> IMAP.quoteMailboxName("INBOX\nA001 DELETE Sent"));
+    void testQuoteMailboxNameRejectsCarriageReturn() {
+        assertThrows(IllegalArgumentException.class, () -> IMAP.quoteMailboxName("INBOX\r\nA001 DELETE Sent"));
     }
 
     @Test
-    void testQuoteMailboxNameRejectsCarriageReturn() {
-        assertThrows(IllegalArgumentException.class, () -> IMAP.quoteMailboxName("INBOX\r\nA001 DELETE Sent"));
+    void testQuoteMailboxNameRejectsLineFeed() {
+        assertThrows(IllegalArgumentException.class, () -> IMAP.quoteMailboxName("INBOX\nA001 DELETE Sent"));
     }
 
     @Test

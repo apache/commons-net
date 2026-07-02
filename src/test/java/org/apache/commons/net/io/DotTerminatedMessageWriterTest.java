@@ -26,14 +26,6 @@ import org.junit.jupiter.api.Test;
 
 class DotTerminatedMessageWriterTest {
 
-    private String write(final String message) throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (DotTerminatedMessageWriter writer = new DotTerminatedMessageWriter(sw)) {
-            writer.write(message);
-        }
-        return sw.toString();
-    }
-
     @Test
     void testDoubleLeadingDotOnFirstLine() throws IOException {
         // A leading dot on the first line must be doubled, otherwise it is
@@ -43,14 +35,22 @@ class DotTerminatedMessageWriterTest {
     }
 
     @Test
+    void testDoubleLeadingDotOnLaterLine() throws IOException {
+        assertEquals("a\r\n..b\r\n.\r\n", write("a\r\n.b"));
+    }
+
+    @Test
     void testFirstLineDotCannotTerminateEarly() throws IOException {
         // "." CR LF as the first line would otherwise end the message and let the
         // following text be read as protocol commands.
         assertEquals("..\r\nINJECT\r\n.\r\n", write(".\r\nINJECT"));
     }
 
-    @Test
-    void testDoubleLeadingDotOnLaterLine() throws IOException {
-        assertEquals("a\r\n..b\r\n.\r\n", write("a\r\n.b"));
+    private String write(final String message) throws IOException {
+        final StringWriter sw = new StringWriter();
+        try (DotTerminatedMessageWriter writer = new DotTerminatedMessageWriter(sw)) {
+            writer.write(message);
+        }
+        return sw.toString();
     }
 }

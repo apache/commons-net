@@ -191,6 +191,13 @@ public class FTP extends SocketClient {
 
     private static final String MODES = "AEILNTCFRPSBCZ";
 
+    private static void checkCRLF(final String command, final String args) {
+        if (command != null && (command.indexOf('\r') >= 0 || command.indexOf('\n') >= 0)
+                || args != null && (args.indexOf('\r') >= 0 || args.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
+        }
+    }
+
     /**
      * The last FTP reply code.
      */
@@ -425,13 +432,6 @@ public class FTP extends SocketClient {
      */
     public int appe(final String path) throws IOException {
         return sendCommand(FTPCmd.APPE, path);
-    }
-
-    private static void checkCRLF(final String command, final String args) {
-        if (command != null && (command.indexOf('\r') >= 0 || command.indexOf('\n') >= 0)
-                || args != null && (args.indexOf('\r') >= 0 || args.indexOf('\n') >= 0)) {
-            throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
-        }
     }
 
     private String buildMessage(final String command, final String args) {
