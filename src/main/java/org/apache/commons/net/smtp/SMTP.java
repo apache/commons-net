@@ -517,6 +517,10 @@ public class SMTP extends SocketClient {
      * @throws IOException
      */
     private int sendCommand(final String command, final String args, final boolean includeSpace) throws IOException {
+        if (command != null && (command.indexOf('\r') >= 0 || command.indexOf('\n') >= 0)
+                || args != null && (args.indexOf('\r') >= 0 || args.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
+        }
         final StringBuilder builder = new StringBuilder(command);
         if (args != null) {
             if (includeSpace) {

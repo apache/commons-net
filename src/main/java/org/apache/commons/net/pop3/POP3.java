@@ -277,6 +277,10 @@ public class POP3 extends SocketClient {
      * @throws IOException on error
      */
     public int sendCommand(final String command, final String args) throws IOException {
+        if (command != null && (command.indexOf('\r') >= 0 || command.indexOf('\n') >= 0)
+                || args != null && (args.indexOf('\r') >= 0 || args.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
+        }
         if (writer == null) {
             throw new IllegalStateException("Socket is not connected");
         }

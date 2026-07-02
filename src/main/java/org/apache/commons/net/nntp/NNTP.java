@@ -641,6 +641,10 @@ public class NNTP extends SocketClient {
      * @throws IOException                   If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int sendCommand(final String command, final String args) throws IOException {
+        if (command != null && (command.indexOf('\r') >= 0 || command.indexOf('\n') >= 0)
+                || args != null && (args.indexOf('\r') >= 0 || args.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
+        }
         final StringBuilder builder = new StringBuilder(command);
         if (args != null) {
             builder.append(' ');
