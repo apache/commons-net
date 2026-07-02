@@ -1119,5 +1119,16 @@ public class FTPSClient extends FTPClient {
             throw new SSLHandshakeException("Hostname doesn't match certificate");
         }
     }
-}
 
+    /**
+     * Resolves the host for extended passive mode using the TLS session peer host,
+     * enabling TLS session reuse between the control and data connections.
+     *
+     * @return the passive host from the SSL session, or the default if not an SSL connection
+     * @since 3.14.0
+     */
+    @Override
+    protected String resolveExtendedPassiveModeHost() {
+        return _socket_ instanceof SSLSocket ? ((SSLSocket) _socket_).getSession().getPeerHost() : super.resolveExtendedPassiveModeHost();
+    }
+}
