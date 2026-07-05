@@ -72,10 +72,10 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
         if (timestampParser instanceof Configurable) {
             final FTPClientConfig defaultCfg = getDefaultConfiguration();
             if (config != null) {
-                if (null == config.getDefaultDateFormatStr()) {
+                if (config.getDefaultDateFormatStr() == null) {
                     config.setDefaultDateFormatStr(defaultCfg.getDefaultDateFormatStr());
                 }
-                if (null == config.getRecentDateFormatStr()) {
+                if (config.getRecentDateFormatStr() == null) {
                     config.setRecentDateFormatStr(defaultCfg.getRecentDateFormatStr());
                 }
                 ((Configurable) timestampParser).configure(config);

@@ -176,7 +176,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 // intentionally do nothing
             }
 
-            if (null == endtoken) {
+            if (endtoken == null) {
                 file.setName(name);
             } else {
                 // oddball cases like symbolic links, file names
