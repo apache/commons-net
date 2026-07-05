@@ -119,11 +119,14 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
         if (JAVA_QUALIFIED_NAME_PATTERN.matcher(key).matches()) {
             try {
                 final Class<?> parserClass = Class.forName(key);
+                // Check the type before constructing, so a key resolving to some unrelated class
+                // (e.g. one taken from an untrusted SYST reply) is not instantiated for its side effects.
+                if (!FTPFileEntryParser.class.isAssignableFrom(parserClass)) {
+                    throw new ParserInitializationException(
+                            parserClass.getName() + " does not implement the interface " + FTPFileEntryParser.class.getCanonicalName());
+                }
                 try {
                     parser = (FTPFileEntryParser) parserClass.getConstructor().newInstance();
-                } catch (final ClassCastException e) {
-                    throw new ParserInitializationException(
-                            parserClass.getName() + " does not implement the interface " + FTPFileEntryParser.class.getCanonicalName(), e);
                 } catch (final Exception | LinkageError e) {
                     throw new ParserInitializationException("Error initializing parser", e);
                 }

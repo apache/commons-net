@@ -29,6 +29,16 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 import org.junit.jupiter.api.Test;
 
 class DefaultFTPFileEntryParserFactoryTest {
+
+    /** A non-parser class whose constructor records that it was invoked. */
+    public static final class ConstructorProbe {
+        static boolean instantiated;
+
+        public ConstructorProbe() {
+            instantiated = true;
+        }
+    }
+
     private void checkParserClass(final FTPFileEntryParserFactory fact, final String key, final Class<?> expected) {
         final FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);
         final FTPFileEntryParser parser = fact.createFileEntryParser(config);
@@ -104,7 +114,7 @@ class DefaultFTPFileEntryParserFactoryTest {
             factory.createFileEntryParser("org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory");
             fail("Exception should have been thrown. \"DefaultFTPFileEntryParserFactory\" does not implement FTPFileEntryParser");
         } catch (final ParserInitializationException pie) {
-            assertTrue(pie.getCause() instanceof ClassCastException);
+            assertTrue(pie.getMessage().contains("does not implement the interface"), pie.getMessage());
         }
 
         try {
@@ -112,7 +122,7 @@ class DefaultFTPFileEntryParserFactoryTest {
             factory.createFileEntryParser("org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory");
             fail("ParserInitializationException should have been thrown.");
         } catch (final ParserInitializationException pie) {
-            assertTrue(pie.getCause() instanceof ReflectiveOperationException, pie.getCause().toString());
+            assertTrue(pie.getMessage().contains("does not implement the interface"), pie.getMessage());
         }
         try {
             // Class exists, but is abstract
@@ -151,5 +161,14 @@ class DefaultFTPFileEntryParserFactoryTest {
 
         // Note: exact matching via config is the only way to generate NTFTPEntryParser and OS400FTPEntryParser
         // using DefaultFTPFileEntryParserFactory
+    }
+
+    @Test
+    void testNonParserClassIsNotInstantiated() {
+        final DefaultFTPFileEntryParserFactory factory = new DefaultFTPFileEntryParserFactory();
+        ConstructorProbe.instantiated = false;
+        // A qualified class name can arrive from the server's SYST reply during auto-detection.
+        assertThrows(ParserInitializationException.class, () -> factory.createFileEntryParser(ConstructorProbe.class.getName()));
+        assertFalse(ConstructorProbe.instantiated, "a class that is not an FTPFileEntryParser must not be instantiated");
     }
 }
