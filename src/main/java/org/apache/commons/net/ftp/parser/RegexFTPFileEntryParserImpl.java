@@ -145,7 +145,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
         if (_matcher_.matches()) {
             result = _matcher_.toMatchResult();
         }
-        return null != result;
+        return result != null;
     }
 
     /**

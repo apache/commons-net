@@ -91,7 +91,7 @@ class UnixFTPEntryParserTest extends AbstractFTPParseTest {
     @Override
     protected void doAdditionalGoodTests(final String test, final FTPFile f) {
         final String link = f.getLink();
-        if (null != link) {
+        if (link != null) {
             final int linklen = link.length();
             if (linklen > 0) {
                 assertEquals(link, test.substring(test.length() - linklen));

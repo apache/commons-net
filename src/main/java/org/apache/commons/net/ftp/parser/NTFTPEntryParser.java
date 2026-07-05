@@ -118,7 +118,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 f.setSize(0);
             } else {
                 f.setType(FTPFile.FILE_TYPE);
-                if (null != size) {
+                if (size != null) {
                     f.setSize(Long.parseLong(size));
                 }
             }
