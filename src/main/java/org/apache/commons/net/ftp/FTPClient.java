@@ -1223,7 +1223,7 @@ public class FTPClient extends FTP implements Configurable {
         // time a file listing is generated.
         // Note: we don't check against a null parserKey (NET-544)
         if (entryParser == null || parserKey != null && !entryParserKey.equals(parserKey)) {
-            if (null != parserKey) {
+            if (parserKey != null) {
                 // if a parser key was supplied in the parameters,
                 // use that to create the parser
                 entryParser = parserFactory.createFileEntryParser(parserKey);
