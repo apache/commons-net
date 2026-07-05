@@ -30,12 +30,17 @@ import org.junit.jupiter.api.Test;
 
 class DefaultFTPFileEntryParserFactoryTest {
 
-    /** A non-parser class whose constructor records that it was invoked. */
+    /** Set from {@link ConstructorProbe}'s static initialiser; kept here so reading it does not initialise the probe. */
+    static boolean probeInitialized;
+
+    /** A non-parser class whose static initialiser records that the class was initialised. */
     public static final class ConstructorProbe {
-        static boolean instantiated;
+        static {
+            probeInitialized = true;
+        }
 
         public ConstructorProbe() {
-            instantiated = true;
+            // empty
         }
     }
 
@@ -166,9 +171,10 @@ class DefaultFTPFileEntryParserFactoryTest {
     @Test
     void testNonParserClassIsNotInstantiated() {
         final DefaultFTPFileEntryParserFactory factory = new DefaultFTPFileEntryParserFactory();
-        ConstructorProbe.instantiated = false;
+        probeInitialized = false;
         // A qualified class name can arrive from the server's SYST reply during auto-detection.
+        // Referencing the .class literal does not initialise the probe, so probeInitialized stays false unless the factory triggers it.
         assertThrows(ParserInitializationException.class, () -> factory.createFileEntryParser(ConstructorProbe.class.getName()));
-        assertFalse(ConstructorProbe.instantiated, "a class that is not an FTPFileEntryParser must not be instantiated");
+        assertFalse(probeInitialized, "a class that is not an FTPFileEntryParser must not be loaded with initialisation");
     }
 }

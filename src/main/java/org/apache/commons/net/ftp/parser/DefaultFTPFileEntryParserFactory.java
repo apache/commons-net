@@ -118,9 +118,9 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
         // Is the key a possible class name?
         if (JAVA_QUALIFIED_NAME_PATTERN.matcher(key).matches()) {
             try {
-                final Class<?> parserClass = Class.forName(key);
-                // Check the type before constructing, so a key resolving to some unrelated class
-                // (e.g. one taken from an untrusted SYST reply) is not instantiated for its side effects.
+                // Load without initialising, so an unrelated class (e.g. one taken from an untrusted SYST reply)
+                // does not run its static initialiser before the type is checked.
+                final Class<?> parserClass = Class.forName(key, false, getClass().getClassLoader());
                 if (!FTPFileEntryParser.class.isAssignableFrom(parserClass)) {
                     throw new ParserInitializationException(
                             parserClass.getName() + " does not implement the interface " + FTPFileEntryParser.class.getCanonicalName());
