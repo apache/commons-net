@@ -51,8 +51,8 @@ public class FTPHTTPClient extends FTPClient {
     /**
      * Create an instance using the UTF-8 encoding, with no proxy credentials.
      *
-     * @param proxyHost the hostname to use
-     * @param proxyPort the port to use
+     * @param proxyHost The hostname to use
+     * @param proxyPort The port to use
      */
     public FTPHTTPClient(final String proxyHost, final int proxyPort) {
         this(proxyHost, proxyPort, null, null);
@@ -61,9 +61,9 @@ public class FTPHTTPClient extends FTPClient {
     /**
      * Create an instance using the specified encoding, with no proxy credentials.
      *
-     * @param proxyHost the hostname to use
-     * @param proxyPort the port to use
-     * @param encoding  the encoding to use
+     * @param proxyHost The hostname to use
+     * @param proxyPort The port to use
+     * @param encoding  The encoding to use
      */
     public FTPHTTPClient(final String proxyHost, final int proxyPort, final Charset encoding) {
         this(proxyHost, proxyPort, null, null, encoding);
@@ -72,10 +72,10 @@ public class FTPHTTPClient extends FTPClient {
     /**
      * Create an instance using the UTF-8 encoding
      *
-     * @param proxyHost the hostname to use
-     * @param proxyPort the port to use
-     * @param proxyUser the user name for the proxy
-     * @param proxyPass the password for the proxy
+     * @param proxyHost The hostname to use
+     * @param proxyPort The port to use
+     * @param proxyUser The user name for the proxy
+     * @param proxyPass The password for the proxy
      */
     public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass) {
         this(proxyHost, proxyPort, proxyUser, proxyPass, StandardCharsets.UTF_8);
@@ -84,11 +84,11 @@ public class FTPHTTPClient extends FTPClient {
     /**
      * Create an instance with the specified encoding
      *
-     * @param proxyHost the hostname to use
-     * @param proxyPort the port to use
-     * @param proxyUser the user name for the proxy
-     * @param proxyPass the password for the proxy
-     * @param encoding  the encoding to use
+     * @param proxyHost The hostname to use
+     * @param proxyPort The port to use
+     * @param proxyUser The user name for the proxy
+     * @param proxyPass The password for the proxy
+     * @param encoding  The encoding to use
      */
     public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass, final Charset encoding) {
         this.proxyHost = proxyHost;

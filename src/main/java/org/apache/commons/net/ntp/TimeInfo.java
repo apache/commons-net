@@ -103,7 +103,7 @@ public class TimeInfo {
     /**
      * Add comment (error/warning) to list of comments associated with processing of NTP parameters. If comment list not create then one will be created.
      *
-     * @param comment the comment
+     * @param comment The comment
      */
     public void addComment(final String comment) {
         if (comments == null) {
@@ -214,7 +214,7 @@ public class TimeInfo {
      * Compares this object against the specified object. The result is {@code true} if and only if the argument is not {@code null} and is a
      * {@code TimeStamp} object that contains the same values as this object.
      *
-     * @param obj the object to compare with.
+     * @param obj The object to compare with.
      * @return {@code true} if the objects are the same; {@code false} otherwise.
      * @since 3.4
      */

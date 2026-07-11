@@ -126,7 +126,7 @@ public final class TFTPAckPacket extends TFTPPacket {
     /**
      * Sets the block number of the acknowledgement.
      *
-     * @param blockNumber the number to set
+     * @param blockNumber The number to set
      */
     public void setBlockNumber(final int blockNumber) {
         this.blockNumber = blockNumber;

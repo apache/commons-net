@@ -74,7 +74,7 @@ public abstract class SocketClient {
     /**
      * Gets the IP address string of the given Socket in textual presentation.
      *
-     * @param socket the socket to query.
+     * @param socket The socket to query.
      * @return  the raw IP address in a string format.
      * @since 3.12.0
      */
@@ -338,8 +338,8 @@ public abstract class SocketClient {
     /**
      * If there are any listeners, send them the command details.
      *
-     * @param command the command name
-     * @param message the complete message, including command name
+     * @param command The command name
+     * @param message The complete message, including command name
      * @since 3.0
      */
     protected void fireCommandSent(final String command, final String message) {
@@ -349,8 +349,8 @@ public abstract class SocketClient {
     /**
      * If there are any listeners, send them the reply details.
      *
-     * @param replyCode the code extracted from the reply
-     * @param reply     the full reply text
+     * @param replyCode The code extracted from the reply
+     * @param reply     The full reply text
      * @since 3.0
      */
     protected void fireReplyReceived(final int replyCode, final String reply) {
@@ -611,7 +611,7 @@ public abstract class SocketClient {
     /**
      * Sets the charset.
      *
-     * @param charset the charset.
+     * @param charset The charset.
      * @since 3.3
      */
     public void setCharset(final Charset charset) {
@@ -666,7 +666,7 @@ public abstract class SocketClient {
     /**
      * Sets the proxy for use with all the connections. The proxy is used for connections established after the call to this method.
      *
-     * @param proxy the new proxy for connections.
+     * @param proxy The new proxy for connections.
      * @since 3.2
      */
     public void setProxy(final Proxy proxy) {
@@ -769,7 +769,7 @@ public abstract class SocketClient {
      * doing a quick security check when a client needs to accept a connection from a server, such as an FTP data connection or a BSD R command standard error
      * stream.
      *
-     * @param socket the item to check against.
+     * @param socket The item to check against.
      * @return True if the remote hosts are the same, false if not.
      */
     public boolean verifyRemote(final Socket socket) {

@@ -65,7 +65,7 @@ public class NNTPClient extends NNTP {
     /**
      * Parse a response line from {@link #retrieveArticleInfo(long, long)}.
      *
-     * @param line a response line
+     * @param line A response line
      * @return The parsed {@link Article}, if unparseable then isDummy() will be true, and the subject will contain the raw info.
      * @since 3.0
      */
@@ -195,8 +195,8 @@ public class NNTPClient extends NNTP {
      * Log into a news server by sending the AUTHINFO USER/AUTHINFO PASS command sequence. This is usually sent in response to a 480 reply code from the NNTP
      * server.
      *
-     * @param user a valid user name
-     * @param password the corresponding password
+     * @param user A valid user name
+     * @param password The corresponding password
      * @return True for successful login, false for a failure
      * @throws IOException on error
      */
@@ -355,7 +355,7 @@ public class NNTPClient extends NNTP {
     /**
      * List the newsgroups that match a given pattern. Uses the "LIST ACTIVE" command.
      *
-     * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
+     * @param wildmat A pseudo-regex pattern (cf. RFC 2980)
      * @return An iterable of Strings containing the raw information for each newsgroup served by the NNTP server corresponding to the supplied pattern. If no
      *         such newsgroups are served, no entries will be returned.
      * @throws IOException on error
@@ -386,7 +386,7 @@ public class NNTPClient extends NNTP {
     /**
      * List the newsgroups that match a given pattern. Uses the "LIST ACTIVE" command.
      *
-     * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
+     * @param wildmat A pseudo-regex pattern (cf. RFC 2980)
      * @return An iterable NewsgroupInfo instances containing the information for each newsgroup served by the NNTP server corresponding to the supplied
      *         pattern. If no such newsgroups are served, no entries will be returned.
      * @throws IOException on error
@@ -487,7 +487,7 @@ public class NNTPClient extends NNTP {
     /**
      * List the newsgroups that match a given pattern. Uses the "LIST ACTIVE" command.
      *
-     * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
+     * @param wildmat A pseudo-regex pattern (cf. RFC 2980)
      * @return An array of NewsgroupInfo instances containing the information for each newsgroup served by the NNTP server corresponding to the supplied
      *         pattern. If no such newsgroups are served, a zero length array will be returned. If the command fails, null will be returned.
      * @throws IOException on error
@@ -530,8 +530,8 @@ public class NNTPClient extends NNTP {
     /**
      * Parse the reply and store the id and number in the pointer.
      *
-     * @param reply   the reply to parse "22n nnn <aaa>"
-     * @param pointer the pointer to update
+     * @param reply   The reply to parse "22n nnn <aaa>"
+     * @param pointer The pointer to update
      * @throws MalformedServerReplyException if response could not be parsed
      */
     private void parseArticlePointer(final String reply, final ArticleInfo pointer) throws MalformedServerReplyException {
@@ -671,7 +671,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as {@code retrieveArticle(articleNumber, null)}
      *
-     * @param articleNumber the article number to fetch
+     * @param articleNumber The article number to fetch
      * @return A DotTerminatedMessageReader instance from which the article can be read. null if the article does not exist.
      * @throws IOException if an IO error occurs
      */
@@ -710,7 +710,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as {@code retrieveArticle(articleId, (ArticleInfo) null)} Note: the return can be cast to a {@link BufferedReader}
      *
-     * @param articleId the article id to retrieve
+     * @param articleId The article id to retrieve
      * @return A DotTerminatedMessageReader instance from which the article can be read. null if the article does not exist.
      * @throws IOException if an IO error occurs
      */
@@ -801,7 +801,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as {@code retrieveArticleBody(articleNumber, null)}
      *
-     * @param articleNumber the article number
+     * @param articleNumber The article number
      * @return The reader
      * @throws IOException if an error occurs
      */
@@ -840,7 +840,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as {@code retrieveArticleBody(articleId, (ArticleInfo) null)} Note: the return can be cast to a {@link BufferedReader}
      *
-     * @param articleId the article id
+     * @param articleId The article id
      * @return A DotTerminatedMessageReader instance from which the article body can be read. null if the article does not exist.
      * @throws IOException if an error occurs
      */
@@ -932,7 +932,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as {@code retrieveArticleHeader(articleNumber, null)}
      *
-     * @param articleNumber the article number
+     * @param articleNumber The article number
      * @return The reader
      * @throws IOException if an error occurs
      */
@@ -971,7 +971,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as {@code retrieveArticleHeader(articleId, (ArticleInfo) null)} Note: the return can be cast to a {@link BufferedReader}
      *
-     * @param articleId the article id to fetch
+     * @param articleId The article id to fetch
      * @return The reader
      * @throws IOException if an error occurs
      */
@@ -1050,7 +1050,7 @@ public class NNTPClient extends NNTP {
     /**
      * Return article headers for a specified post.
      *
-     * @param articleNumber the article to retrieve headers for
+     * @param articleNumber The article to retrieve headers for
      * @return A DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
@@ -1100,7 +1100,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * @param header            the header
+     * @param header            The header
      * @param lowArticleNumber  to fetch
      * @param highArticleNumber to fetch
      * @return A DotTerminatedReader if successful, null otherwise
@@ -1115,8 +1115,8 @@ public class NNTPClient extends NNTP {
     /**
      * Return an article header for a specified post.
      *
-     * @param header        the header to retrieve
-     * @param articleNumber the article to retrieve the header for
+     * @param header        The header to retrieve
+     * @param articleNumber The article to retrieve the header for
      * @return A DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
@@ -1127,7 +1127,7 @@ public class NNTPClient extends NNTP {
     /**
      * Return an article header for all articles between lowArticleNumber and highArticleNumber, inclusively.
      *
-     * @param header            the header
+     * @param header            The header
      * @param lowArticleNumber  to fetch
      * @param highArticleNumber to fetch
      * @return A DotTerminatedReader if successful, null otherwise
@@ -1211,7 +1211,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as {@code selectArticle(articleNumber, null)}
      *
-     * @param articleNumber the numger
+     * @param articleNumber The numger
      * @return true if successful
      * @throws IOException on error
      */
@@ -1249,7 +1249,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as {@code selectArticle(articleId, (ArticleInfo) null)}
      *
-     * @param articleId the article's Id
+     * @param articleId The article's Id
      * @return true if successful
      * @throws IOException on error
      */
@@ -1308,7 +1308,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as {@code selectNewsgroup(newsgroup, null)}
      *
-     * @param newsgroup the newsgroup name
+     * @param newsgroup The newsgroup name
      * @return true if newsgroup exist and was selected
      * @throws IOException if an error occurs
      */

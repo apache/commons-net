@@ -242,7 +242,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     /**
      * Sets the charset.
      *
-     * @param charset the charset.
+     * @param charset The charset.
      * @since 3.3
      */
     public void setCharset(final Charset charset) {

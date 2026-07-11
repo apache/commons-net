@@ -204,7 +204,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Constructor for FTPSClient, using explicit mode, calls {@link #FTPSClient(String, boolean)}.
      *
-     * @param protocol the protocol to use
+     * @param protocol The protocol to use
      */
     public FTPSClient(final String protocol) {
         this(protocol, false);
@@ -214,7 +214,7 @@ public class FTPSClient extends FTPClient {
      * Constructor for FTPSClient allowing specification of protocol and security mode. If isImplicit is true, the port is set to {@link #DEFAULT_FTPS_PORT}
      * i.e. 990. The default TrustManager is set from {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
      *
-     * @param protocol   the protocol
+     * @param protocol   The protocol
      * @param isImplicit The security mode(Implicit/Explicit).
      */
     public FTPSClient(final String protocol, final boolean isImplicit) {
@@ -308,7 +308,7 @@ public class FTPSClient extends FTPClient {
      * Performs any custom initialization for a newly created SSLSocket (before the SSL handshake happens). Called by {@link #_openDataConnection_(int, String)}
      * immediately after creating the socket. The default implementation is a no-op
      *
-     * @param socket the socket to set up
+     * @param socket The socket to set up
      * @throws IOException on error
      * @since 3.1
      */
@@ -541,7 +541,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Extract the data from a reply with a prefix, e.g. PBSZ=1234 => 1234
      *
-     * @param prefix the prefix to find
+     * @param prefix The prefix to find
      * @param reply  where to find the prefix
      * @return The remainder of the string after the prefix, or null if the prefix was not present.
      */

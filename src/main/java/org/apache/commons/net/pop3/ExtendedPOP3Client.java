@@ -74,9 +74,9 @@ public class ExtendedPOP3Client extends POP3SClient {
     /**
      * Authenticate to the POP3 server by sending the AUTH command with the selected mechanism, using the given user and the given password.
      *
-     * @param method   the {@link AUTH_METHOD} to use
-     * @param user the user name
-     * @param password the password
+     * @param method   The {@link AUTH_METHOD} to use
+     * @param user The user name
+     * @param password The password
      * @return True if successfully completed, false if not.
      * @throws IOException              If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @throws NoSuchAlgorithmException If the CRAM hash algorithm cannot be instantiated by the Java runtime system.

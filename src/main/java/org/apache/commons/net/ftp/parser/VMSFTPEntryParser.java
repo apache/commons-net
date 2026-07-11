@@ -99,7 +99,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     /**
      * DO NOT USE.
      *
-     * @param listStream the stream
+     * @param listStream The stream
      * @return The array of files
      * @throws IOException on error
      * @deprecated (2.2) No other FTPFileEntryParser implementations have this method.

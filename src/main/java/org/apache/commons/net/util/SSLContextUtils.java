@@ -34,9 +34,9 @@ public class SSLContextUtils {
     /**
      * Create and initialize an SSLContext.
      *
-     * @param protocol     the protocol used to instantiate the context
-     * @param keyManager   the key manager, may be {@code null}
-     * @param trustManager the trust manager, may be {@code null}
+     * @param protocol     The protocol used to instantiate the context
+     * @param keyManager   The key manager, may be {@code null}
+     * @param trustManager The trust manager, may be {@code null}
      * @return The initialized context.
      * @throws IOException this is used to wrap any {@link GeneralSecurityException} that occurs
      */
@@ -48,9 +48,9 @@ public class SSLContextUtils {
     /**
      * Create and initialize an SSLContext.
      *
-     * @param protocol      the protocol used to instantiate the context
-     * @param keyManagers   the array of key managers, may be {@code null} but array entries must not be {@code null}
-     * @param trustManagers the array of trust managers, may be {@code null} but array entries must not be {@code null}
+     * @param protocol      The protocol used to instantiate the context
+     * @param keyManagers   The array of key managers, may be {@code null} but array entries must not be {@code null}
+     * @param trustManagers The array of trust managers, may be {@code null} but array entries must not be {@code null}
      * @return The initialized context.
      * @throws IOException this is used to wrap any {@link GeneralSecurityException} that occurs
      */

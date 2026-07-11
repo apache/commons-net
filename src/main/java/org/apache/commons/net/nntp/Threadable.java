@@ -55,14 +55,14 @@ public interface Threadable<T extends Threadable<T>> {
     /**
      * Sets the child instance.
      *
-     * @param child  the child instance.
+     * @param child  The child instance.
      */
     void setChild(T child);
 
     /**
      * Sets the next instance.
      *
-     * @param next  the next instance.
+     * @param next  The next instance.
      */
     void setNext(T next);
 

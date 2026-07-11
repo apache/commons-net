@@ -155,7 +155,7 @@ public class FTPListParseEngine {
      *
      * After this method is called this object's internal iterator is advanced by a number of positions equal to the size of the array returned.
      *
-     * @param quantityRequested the maximum number of entries we want to get.
+     * @param quantityRequested The maximum number of entries we want to get.
      * @return An array of at most {@code quantityRequested} FTPFile objects starting at the current position of this iterator within its list and at least the
      *         number of elements which exist in the list at and after its current position.
      *         <p>
@@ -187,7 +187,7 @@ public class FTPListParseEngine {
      *
      * After this method is called this object's internal iterator is moved back by a number of positions equal to the size of the array returned.
      *
-     * @param quantityRequested the maximum number of entries we want to get.
+     * @param quantityRequested The maximum number of entries we want to get.
      * @return An array of at most {@code quantityRequested} FTPFile objects starting at the current position of this iterator within its list and at least the
      *         number of elements which exist in the list at and after its current position. This array will be in the same order as the underlying list (not
      *         reversed).
@@ -250,7 +250,7 @@ public class FTPListParseEngine {
     /**
      * Do not use.
      *
-     * @param inputStream the stream from which to read
+     * @param inputStream The stream from which to read
      * @throws IOException on error
      * @deprecated Use {@link #readServerList(InputStream, String)} instead
      */
@@ -264,7 +264,7 @@ public class FTPListParseEngine {
      * list of unparsed entries (Strings) each referring to a unique file on the server.
      *
      * @param inputStream input stream provided by the server socket.
-     * @param charsetName the encoding to be used for reading the stream
+     * @param charsetName The encoding to be used for reading the stream
      * @throws IOException thrown on any failure to read from the sever.
      */
     public void readServerList(final InputStream inputStream, final String charsetName) throws IOException {

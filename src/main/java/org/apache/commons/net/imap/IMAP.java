@@ -45,7 +45,7 @@ public class IMAP extends SocketClient {
         /**
          * Called when a multi-line partial response has been received.
          *
-         * @param imap the instance, get the response by calling {@link #getReplyString()} or {@link #getReplyStrings()}
+         * @param imap The instance, get the response by calling {@link #getReplyString()} or {@link #getReplyStrings()}
          * @return {@code true} if the reply buffer is to be cleared on return
          */
         boolean chunkReceived(IMAP imap);
@@ -99,7 +99,7 @@ public class IMAP extends SocketClient {
      * Quote an input string if necessary. If the string is enclosed in double-quotes it is assumed to be quoted already and is returned unchanged. If it is the
      * empty string, "" is returned. If it contains a space then it is enclosed in double quotes, escaping the characters backslash and double-quote.
      *
-     * @param input the value to be quoted, may be null
+     * @param input The value to be quoted, may be null
      * @return The quoted value
      */
     static String quoteMailboxName(final String input) {
@@ -216,7 +216,7 @@ public class IMAP extends SocketClient {
      * Overrides {@link SocketClient#fireReplyReceived(int, String)} to avoid creating the reply string if there are no listeners to invoke.
      *
      * @param replyCode passed to the listeners
-     * @param ignored   the string is only created if there are listeners defined.
+     * @param ignored   The string is only created if there are listeners defined.
      * @see #getReplyString()
      * @since 3.4
      */
@@ -430,7 +430,7 @@ public class IMAP extends SocketClient {
      * {@link org.apache.commons.net.PrintCommandListener PrintCommandListener} instances will be invoked with the partial response and a status of
      * {@link IMAPReply#PARTIAL} to indicate that the final reply code is not yet known.
      *
-     * @param listener the class to use, or {@code null} to disable
+     * @param listener The class to use, or {@code null} to disable
      * @see #TRUE_CHUNK_LISTENER
      * @since 3.4
      */

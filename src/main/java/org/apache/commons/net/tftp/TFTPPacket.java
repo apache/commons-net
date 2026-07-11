@@ -188,7 +188,7 @@ public abstract class TFTPPacket {
     /**
      * Sets the host address where the packet is going to be sent.
      *
-     * @param address the address to set
+     * @param address The address to set
      */
     public final void setAddress(final InetAddress address) {
         this.address = address;
@@ -197,7 +197,7 @@ public abstract class TFTPPacket {
     /**
      * Sets the port where the packet is going to be sent.
      *
-     * @param port the port to set
+     * @param port The port to set
      */
     public final void setPort(final int port) {
         this.port = port;

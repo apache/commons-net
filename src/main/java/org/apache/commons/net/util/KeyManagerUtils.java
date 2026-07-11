@@ -144,8 +144,8 @@ public final class KeyManagerUtils {
      * Create a client key manager which returns a particular key. Does not handle server keys. Uses the default store type and assumes the key password is the
      * same as the store password. The key alias is found by searching the keystore for the first private key entry
      *
-     * @param storePath the path to the keyStore
-     * @param storePass the keyStore password
+     * @param storePath The path to the keyStore
+     * @param storePass The keyStore password
      * @return The customized KeyManager
      * @throws IOException              if there is a problem creating the keystore
      * @throws GeneralSecurityException if there is a problem creating the keystore
@@ -158,9 +158,9 @@ public final class KeyManagerUtils {
      * Create a client key manager which returns a particular key. Does not handle server keys. Uses the default store type and assumes the key password is the
      * same as the store password
      *
-     * @param storePath the path to the keyStore
-     * @param storePass the keyStore password
-     * @param keyAlias  the alias of the key to use, may be {@code null} in which case the first key entry alias is used
+     * @param storePath The path to the keyStore
+     * @param storePass The keyStore password
+     * @param keyAlias  The alias of the key to use, may be {@code null} in which case the first key entry alias is used
      * @return The customized KeyManager
      * @throws IOException              if there is a problem creating the keystore
      * @throws GeneralSecurityException if there is a problem creating the keystore
@@ -173,9 +173,9 @@ public final class KeyManagerUtils {
     /**
      * Create a client key manager which returns a particular key. Does not handle server keys.
      *
-     * @param ks       the keystore to use
-     * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
-     * @param keyPass  the password of the key to use
+     * @param ks       The keystore to use
+     * @param keyAlias The alias of the key to use, may be {@code null} in which case the first key entry alias is used
+     * @param keyPass  The password of the key to use
      * @return The customized KeyManager
      * @throws GeneralSecurityException if there is a problem creating the keystore
      */
@@ -187,11 +187,11 @@ public final class KeyManagerUtils {
     /**
      * Create a client key manager which returns a particular key. Does not handle server keys.
      *
-     * @param storeType the type of the keyStore, e.g. "JKS"
-     * @param storePath the path to the keyStore
-     * @param storePass the keyStore password
-     * @param keyAlias  the alias of the key to use, may be {@code null} in which case the first key entry alias is used
-     * @param keyPass   the password of the key to use
+     * @param storeType The type of the keyStore, e.g. "JKS"
+     * @param storePath The path to the keyStore
+     * @param storePass The keyStore password
+     * @param keyAlias  The alias of the key to use, may be {@code null} in which case the first key entry alias is used
+     * @param keyPass   The password of the key to use
      * @return The customized KeyManager
      * @throws GeneralSecurityException if there is a problem creating the keystore
      * @throws IOException              if there is a problem creating the keystore

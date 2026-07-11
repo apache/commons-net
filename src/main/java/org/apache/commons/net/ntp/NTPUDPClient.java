@@ -120,7 +120,7 @@ public final class NTPUDPClient extends DatagramSocketClient {
     /**
      * Sets the NTP protocol version number that client sets on request packet communicate with remote host.
      *
-     * @param version the NTP protocol version number
+     * @param version The NTP protocol version number
      */
     public void setVersion(final int version) {
         this.version = version;

@@ -52,8 +52,8 @@ class FTPTimestampParserImplTest {
      * Check how short date is interpreted at a given time Check only using specified lenient future dates setting
      *
      * @param msg        identifying message
-     * @param servertime the time at the server
-     * @param input      the time to be converted to a short date, parsed and tested against the full time
+     * @param servertime The time at the server
+     * @param input      The time to be converted to a short date, parsed and tested against the full time
      * @param lenient    whether to use lenient mode or not.
      */
     private void checkShortParse(final String msg, final Calendar servertime, final Calendar input, final boolean lenient) throws ParseException {
@@ -72,9 +72,9 @@ class FTPTimestampParserImplTest {
      * Check how short date is interpreted at a given time Check only using specified lenient future dates setting
      *
      * @param msg        identifying message
-     * @param servertime the time at the server
-     * @param input      the time to be converted to a short date and parsed
-     * @param expected   the expected result from parsing
+     * @param servertime The time at the server
+     * @param input      The time to be converted to a short date and parsed
+     * @param expected   The expected result from parsing
      * @param lenient    whether to use lenient mode or not.
      */
     private void checkShortParse(final String msg, final Calendar servertime, final Calendar input, final Calendar expected, final boolean lenient)

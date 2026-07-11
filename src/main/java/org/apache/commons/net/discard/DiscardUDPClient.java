@@ -48,8 +48,8 @@ public class DiscardUDPClient extends DatagramSocketClient {
     /**
      * Same as {@code send(data, data.length, host. DiscardUDPClient.DEFAULT_PORT)}.
      *
-     * @param data the buffer to send
-     * @param host the target host
+     * @param data The buffer to send
+     * @param host The target host
      * @see #send(byte[], int, InetAddress, int)
      * @throws IOException if an error occurs
      */
@@ -60,9 +60,9 @@ public class DiscardUDPClient extends DatagramSocketClient {
     /**
      * Same as {@code send(data, length, host. DiscardUDPClient.DEFAULT_PORT)}.
      *
-     * @param data   the buffer to send
-     * @param length the length of the data in the buffer
-     * @param host   the target host
+     * @param data   The buffer to send
+     * @param length The length of the data in the buffer
+     * @param host   The target host
      * @see #send(byte[], int, InetAddress, int)
      * @throws IOException if an error occurs
      */

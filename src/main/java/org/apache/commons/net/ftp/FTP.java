@@ -298,7 +298,7 @@ public class FTP extends SocketClient {
     /**
      * Initiates control connections and gets initial reply. Initializes {@link #_controlInput_} and {@link #_controlOutput_}.
      *
-     * @param socketIsReader the reader to reuse (if non-null)
+     * @param socketIsReader The reader to reuse (if non-null)
      * @throws IOException on error
      * @since 3.4
      */
@@ -873,7 +873,7 @@ public class FTP extends SocketClient {
      * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
      * level details for you.
      *
-     * @param path the path to report on
+     * @param path The path to report on
      * @return The reply code received from the server, may be {@code null} in which case the command is sent with no parameters
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -906,7 +906,7 @@ public class FTP extends SocketClient {
      * manage the data connection. If you don't need this low level of access, use {@link org.apache.commons.net.ftp.FTPClient} , which will handle all low
      * level details for you.
      *
-     * @param path the path to report on
+     * @param path The path to report on
      * @return The reply code received from the server, may be {@code null} in which case the command is sent with no parameters
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1343,7 +1343,7 @@ public class FTP extends SocketClient {
     /**
      * Sets strict multiline parsing.
      *
-     * @param strictMultilineParsing the setting
+     * @param strictMultilineParsing The setting
      * @since 2.0
      */
     public void setStrictMultilineParsing(final boolean strictMultilineParsing) {
@@ -1360,7 +1360,7 @@ public class FTP extends SocketClient {
      * <strong>This should not be required by a well-behaved FTP server</strong> <br>
      * </p>
      *
-     * @param strictReplyParsing the setting
+     * @param strictReplyParsing The setting
      * @since 3.6
      */
     public void setStrictReplyParsing(final boolean strictReplyParsing) {

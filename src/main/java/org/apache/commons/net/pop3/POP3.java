@@ -301,7 +301,7 @@ public class POP3 extends SocketClient {
     /**
      * Sets the internal POP3 state.
      *
-     * @param state the new state. This must be one of the {@code _STATE} constants.
+     * @param state The new state. This must be one of the {@code _STATE} constants.
      */
     public void setState(final int state) {
         popState = state;

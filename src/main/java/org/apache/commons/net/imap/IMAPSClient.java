@@ -135,7 +135,7 @@ public class IMAPSClient extends IMAPClient {
     /**
      * Constructor for IMAPSClient.
      *
-     * @param proto the protocol.
+     * @param proto The protocol.
      */
     public IMAPSClient(final String proto) {
         this(proto, false);
@@ -144,7 +144,7 @@ public class IMAPSClient extends IMAPClient {
     /**
      * Constructor for IMAPSClient.
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode(Implicit/Explicit).
      */
     public IMAPSClient(final String proto, final boolean implicit) {
@@ -154,9 +154,9 @@ public class IMAPSClient extends IMAPClient {
     /**
      * Constructor for IMAPSClient.
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode(Implicit/Explicit).
-     * @param ctx      the SSL context
+     * @param ctx      The SSL context
      */
     public IMAPSClient(final String proto, final boolean implicit, final SSLContext ctx) {
         setDefaultPort(DEFAULT_IMAPS_PORT);

@@ -101,7 +101,7 @@ public class SMTP extends SocketClient {
     /**
      * Overloaded constructor where the user may specify a default encoding.
      *
-     * @param encoding the encoding to use
+     * @param encoding The encoding to use
      * @since 2.0
      */
     public SMTP(final String encoding) {
@@ -466,8 +466,8 @@ public class SMTP extends SocketClient {
 
     /**
      *
-     * @param command      the command to send (as an int defined in {@link SMTPCommand})
-     * @param args         the command arguments, may be {@code null}
+     * @param command      The command to send (as an int defined in {@link SMTPCommand})
+     * @param args         The command arguments, may be {@code null}
      * @param includeSpace if {@code true}, add a space between the command and its arguments
      * @return The reply code
      * @throws IOException
@@ -510,8 +510,8 @@ public class SMTP extends SocketClient {
     /**
      * Send a command to the server. May also be used to send text data.
      *
-     * @param command      the command to send (as a plain String)
-     * @param args         the command arguments, may be {@code null}
+     * @param command      The command to send (as a plain String)
+     * @param args         The command arguments, may be {@code null}
      * @param includeSpace if {@code true}, add a space between the command and its arguments
      * @return The reply code
      * @throws IOException

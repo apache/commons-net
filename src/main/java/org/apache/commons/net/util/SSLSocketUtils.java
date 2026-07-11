@@ -30,7 +30,7 @@ public class SSLSocketUtils {
     /**
      * Enable the HTTPS endpoint identification algorithm on an SSLSocket.
      *
-     * @param socket the SSL socket
+     * @param socket The SSL socket
      * @return Always returns {@code true}
      */
     // TODO for 4.0: becomes a void method.

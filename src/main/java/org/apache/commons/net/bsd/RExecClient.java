@@ -155,9 +155,9 @@ public class RExecClient extends SocketClient {
     /**
      * Same as {@code rexec(user, password, command, false);}
      *
-     * @param user the user name
-     * @param password the password
-     * @param command  the command to run
+     * @param user The user name
+     * @param password The password
+     * @param command  The command to run
      * @throws IOException if an error occurs
      */
     public void rexec(final String user, final String password, final String command) throws IOException {

@@ -502,7 +502,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
      *
      * @param serverReadDirectory  directory for GET requests
      * @param serverWriteDirectory directory for PUT requests
-     * @param port                 the port to use
+     * @param port                 The port to use
      * @param localiface           The local network interface to bind to. The interface's first address wil be used.
      * @param mode                 A value as specified above.
      * @param log                  Stream to write log message to. If not provided, uses System.out
@@ -537,7 +537,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
      *
      * @param serverReadDirectory  directory for GET requests
      * @param serverWriteDirectory directory for PUT requests
-     * @param port                 the port to use
+     * @param port                 The port to use
      * @param mode                 A value as specified above.
      * @param log                  Stream to write log message to. If not provided, uses System.out
      * @param errorLog             Stream to write error messages to. If not provided, uses System.err.
@@ -726,7 +726,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     /**
      * Sets the stream object to log debug / informational messages. By default, this is a no-op
      *
-     * @param log the stream to use for logging
+     * @param log The stream to use for logging
      */
     public void setLog(final PrintStream log) {
         this.log = log;
@@ -735,7 +735,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     /**
      * Sets the stream object to log error messsages. By default, this is a no-op
      *
-     * @param logError the stream to use for logging errors
+     * @param logError The stream to use for logging errors
      */
     public void setLogError(final PrintStream logError) {
         this.logError = logError;
@@ -759,7 +759,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
      * <p>
      * Defaults to the value {@link TFTP#DEFAULT_TIMEOUT}. Minimum value of 10.
      * </p>
-     * @param timeout the timeout; must be equal to or larger than 10.
+     * @param timeout The timeout; must be equal to or larger than 10.
      * @throws IllegalArgumentException if {@code timeout} is less than 10.
      */
     public void setSocketTimeout(final int timeout) {

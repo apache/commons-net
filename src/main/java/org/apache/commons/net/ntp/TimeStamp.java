@@ -60,7 +60,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * Left-pad 8-character hexadecimal string with 0's
      *
      * @param buf   StringBuilder which is appended with leading 0's.
-     * @param l     a long.
+     * @param l     A long.
      */
     private static void appendHexString(final StringBuilder buf, final long l) {
         final String s = Long.toHexString(l);
@@ -73,7 +73,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Convert NTP timestamp hexstring (e.g. "c1a089bd.fc904f6d") to the NTP 64-bit unsigned fixed-point number.
      *
-     * @param hexString the string to convert
+     * @param hexString The string to convert
      * @return NTP 64-bit timestamp value.
      * @throws NumberFormatException - if the string does not contain a parsable timestamp.
      */
@@ -114,7 +114,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * (picoseconds) so converting Ntptime to Javatime and back to Ntptime loses precision. For example, Tue, Dec 17 2002 09:07:24.810 is represented by a
      * single Java-based time value of f22cd1fc8a, but its NTP equivalent are all values from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
      *
-     * @param dateMillis the milliseconds since January 1, 1970, 00:00:00 GMT.
+     * @param dateMillis The milliseconds since January 1, 1970, 00:00:00 GMT.
      * @return NTP timestamp object at the specified date.
      */
     public static TimeStamp getNtpTime(final long dateMillis) {
@@ -128,7 +128,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * timestamp loses precision. For example, Tue, Dec 17 2002 09:07:24.810 EST is represented by a single Java-based time value of f22cd1fc8a, but its NTP
      * equivalent are all values ranging from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
      *
-     * @param ntpTimeValue the input time
+     * @param ntpTimeValue The input time
      * @return The number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this NTP timestamp value.
      */
     public static long getTime(final long ntpTimeValue) {
@@ -194,7 +194,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * Converts 64-bit NTP timestamp value to a {@code String}. The NTP timestamp value is represented as hexadecimal string with seconds separated by
      * fractional seconds by a decimal point; e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
      *
-     * @param ntpTime the 64 bit timestamp
+     * @param ntpTime The 64 bit timestamp
      * @return NTP timestamp 64-bit long value as hexadecimal string with seconds separated by fractional seconds.
      */
     public static String toString(final long ntpTime) {
@@ -228,7 +228,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Constructs a newly allocated NTP timestamp object that represents the Java Date argument.
      *
-     * @param d   the Date to be represented by the Timestamp object.
+     * @param d   The Date to be represented by the Timestamp object.
      */
     public TimeStamp(final Date d) {
         ntpTime = d == null ? 0 : toNtpTime(d.getTime());
@@ -237,7 +237,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Constructs a newly allocated NTP timestamp object that represents the native 64-bit long argument.
      *
-     * @param ntpTime the timestamp
+     * @param ntpTime The timestamp
      */
     public TimeStamp(final long ntpTime) {
         this.ntpTime = ntpTime;
@@ -246,7 +246,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Constructs a newly allocated NTP timestamp object that represents the value represented by the string in hexdecimal form (e.g. "c1a089bd.fc904f6d").
      *
-     * @param hexStamp the hexadecimal timestamp
+     * @param hexStamp The hexadecimal timestamp
      * @throws NumberFormatException - if the string does not contain a parsable timestamp.
      */
     public TimeStamp(final String hexStamp) throws NumberFormatException {
@@ -256,7 +256,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Compares two Timestamps numerically.
      *
-     * @param anotherTimeStamp   the {@code TimeStamp} to be compared.
+     * @param anotherTimeStamp   The {@code TimeStamp} to be compared.
      * @return The value {@code 0} if the argument TimeStamp is equal to this TimeStamp; a value less than {@code 0} if this TimeStamp is numerically
      *         less than the TimeStamp argument; and a value greater than {@code 0} if this TimeStamp is numerically greater than the TimeStamp argument
      *         (signed comparison).
@@ -272,7 +272,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * Compares this object against the specified object. The result is {@code true} if and only if the argument is not {@code null} and is a
      * {@code Long} object that contains the same {@code long} value as this object.
      *
-     * @param obj the object to compare with.
+     * @param obj The object to compare with.
      * @return {@code true} if the objects are the same; {@code false} otherwise.
      */
     @Override

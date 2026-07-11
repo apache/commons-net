@@ -336,7 +336,7 @@ public class FTPClient extends FTP implements Configurable {
         /**
          * Resolves a host name.
          *
-         * @param hostname the hostname to resolve.
+         * @param hostname The hostname to resolve.
          * @return The resolved hostname.
          * @throws UnknownHostException if the host is unknown.
          */
@@ -354,7 +354,7 @@ public class FTPClient extends FTP implements Configurable {
         /**
          * Constructs a new instance.
          *
-         * @param client the FTP client.
+         * @param client The FTP client.
          */
         public NatServerResolverImpl(final FTPClient client) {
             this.client = client;
@@ -634,7 +634,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * @param socketIsReader the reader to reuse (if non-null)
+     * @param socketIsReader The reader to reuse (if non-null)
      * @throws IOException on error
      * @since 3.4
      */
@@ -809,7 +809,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Parses a reply.
      *
-     * @param reply the reply to parse.
+     * @param reply The reply to parse.
      * @throws MalformedServerReplyException if the reply is malformed.
      */
     protected void _parseExtendedPassiveModeReply(String reply) throws MalformedServerReplyException {
@@ -835,7 +835,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Parses a reply.
      *
-     * @param reply the reply to parse
+     * @param reply The reply to parse
      * @throws MalformedServerReplyException if the server reply does not match (n,n,n,n),(n),(n)
      * @since 3.1
      */
@@ -879,8 +879,8 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Retrieves data to an output stream for the given command.
      *
-     * @param command the command to get
-     * @param remote  the remote file name
+     * @param command The command to get
+     * @param remote  The remote file name
      * @param local   The local OutputStream to which to write the file.
      * @return true if successful
      * @throws IOException on error
@@ -921,8 +921,8 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Retrieves data in an input stream for the given command.
      *
-     * @param command the command to send
-     * @param remote  the remote file name
+     * @param command The command to send
+     * @param remote  The remote file name
      * @return The stream from which to read the file
      * @throws IOException on error
      * @since 3.1
@@ -951,8 +951,8 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Stores the given stream.
      *
-     * @param command the command to send
-     * @param remote  the remote file name
+     * @param command The command to send
+     * @param remote  The remote file name
      * @param local   The local InputStream from which to read the data to be written/appended to the remote file.
      * @return true if successful
      * @throws IOException on error
@@ -994,8 +994,8 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Gets the output stream.
      *
-     * @param command the command to send
-     * @param remote  the remote file name
+     * @param command The command to send
+     * @param remote  The remote file name
      * @return The output stream.
      * @throws IOException on error
      * @since 3.1
@@ -1411,7 +1411,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Queries the server for a supported feature, and returns its value (if any). Caches the parsed response to avoid resending the command repeatedly.
      *
-     * @param feature the feature to check
+     * @param feature The feature to check
      * @return if the feature is present, returns the feature value or the empty string if the feature exists but has no value. Returns {@code null} if the
      *         feature is not found or the command failed. Check {@link #getReplyCode()} or {@link #getReplyString()} if so.
      * @throws IOException on error
@@ -1428,7 +1428,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Queries the server for a supported feature, and returns its values (if any). Caches the parsed response to avoid resending the command repeatedly.
      *
-     * @param feature the feature to check
+     * @param feature The feature to check
      * @return if the feature is present, returns the feature values (empty array if none) Returns {@code null} if the feature is not found or the command
      *         failed. Check {@link #getReplyCode()} or {@link #getReplyString()} if so.
      * @throws IOException on error
@@ -1622,7 +1622,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Gets the adjusted string with "-a" added if necessary.
      *
-     * @param pathName the initial path
+     * @param pathName The initial path
      * @return The adjusted string with "-a" added if necessary.
      * @since 2.0
      */
@@ -1751,7 +1751,7 @@ public class FTPClient extends FTP implements Configurable {
      * Issue the FTP SIZE command to the server for a given path. This should produce the size of the file.
      * </p>
      *
-     * @param path the file name
+     * @param path The file name
      * @return The size information returned by the server; {@code null} if there was an error
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1791,7 +1791,7 @@ public class FTPClient extends FTP implements Configurable {
      * Issue the FTP STAT command to the server for a given path. This should produce a listing of the file or directory.
      * </p>
      *
-     * @param path the file name
+     * @param path The file name
      * @return The status information returned by the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1884,7 +1884,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Queries the server for a supported feature. Caches the parsed response to avoid resending the command repeatedly.
      *
-     * @param feature the name of the feature; it is converted to upper case.
+     * @param feature The name of the feature; it is converted to upper case.
      * @return {@code true} if the feature is present, {@code false} if the feature is not present or the {@link #feat()} command failed. Check
      *         {@link #getReplyCode()} or {@link #getReplyString()} if it is necessary to distinguish these cases.
      *
@@ -1898,7 +1898,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Queries the server for a supported feature. Caches the parsed response to avoid resending the command repeatedly.
      *
-     * @param feature the name of the feature; it is converted to upper case.
+     * @param feature The name of the feature; it is converted to upper case.
      * @return {@code true} if the feature is present, {@code false} if the feature is not present or the {@link #feat()} command failed. Check
      *         {@link #getReplyCode()} or {@link #getReplyString()} if it is necessary to distinguish these cases.
      *
@@ -1916,8 +1916,8 @@ public class FTPClient extends FTP implements Configurable {
      * Queries the server for a supported feature with particular value, for example "AUTH SSL" or "AUTH TLS". Caches the parsed response to avoid resending the
      * command repeatedly.
      *
-     * @param feature the name of the feature; it is converted to upper case.
-     * @param value   the value to find.
+     * @param feature The name of the feature; it is converted to upper case.
+     * @param value   The value to find.
      * @return {@code true} if the feature is present, {@code false} if the feature is not present or the {@link #feat()} command failed. Check
      *         {@link #getReplyCode()} or {@link #getReplyString()} if it is necessary to distinguish these cases.
      *
@@ -2066,7 +2066,7 @@ public class FTPClient extends FTP implements Configurable {
      * }
      * </pre>
      *
-     * @param path the starting directory
+     * @param path The starting directory
      * @return A FTPListParseEngine object that holds the raw information and is capable of providing parsed FTPFile objects, one for each file containing
      *         information contained in the given path in the format determined by the {@code parser} parameter. Null will be returned if a data connection
      *         cannot be opened. If the current working directory contains no files, an empty array will be the return.
@@ -2101,7 +2101,7 @@ public class FTPClient extends FTP implements Configurable {
      *                  server file listing. May be {@code null}, in which case the code checks first the system property {@link #FTP_SYSTEM_TYPE}, and if that
      *                  is not defined the SYST command is used to provide the value. To allow for arbitrary system types, the return from the SYST command is
      *                  used to look up an alias for the type in the {@link #SYSTEM_TYPE_PROPERTIES} properties file if it is available.
-     * @param path  the starting directory
+     * @param path  The starting directory
      * @return A FTPListParseEngine object that holds the raw information and is capable of providing parsed FTPFile objects, one for each file containing
      *         information contained in the given path in the format determined by the {@code parser} parameter. Null will be returned if a data connection
      *         cannot be opened. If the current working directory contains no files, an empty array will be the return.
@@ -2137,7 +2137,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Initiate list parsing for MLSD listings.
      *
-     * @param path the path from where to MLSD.
+     * @param path The path from where to MLSD.
      * @return The engine.
      * @throws IOException on error
      */
@@ -2233,7 +2233,7 @@ public class FTPClient extends FTP implements Configurable {
      * include milliseconds. See {@link #mlistDir()}
      * </p>
      *
-     * @param parent the starting directory
+     * @param parent The starting directory
      * @return The list of directories contained in the specified directory in the format determined by the autodetection mechanism.
      * @throws FTPConnectionClosedException                                    If the FTP server prematurely closes the connection as a result of the client
      *                                                                         being idle or some other reason causing the server to send FTP reply code 421.
@@ -2326,8 +2326,8 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Version of {@link #listFiles(String)} which allows a filter to be provided. For example: {@code listFiles("site", FTPFileFilters.DIRECTORY);}
      *
-     * @param path the initial path, may be null
-     * @param filter   the filter, non-null
+     * @param path The initial path, may be null
+     * @param filter   The filter, non-null
      * @return The array of FTPFile entries.
      * @throws IOException on error
      * @since 2.2
@@ -2554,7 +2554,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Merge two copystream listeners, either or both of which may be null.
      *
-     * @param local the listener used by this class, may be null
+     * @param local The listener used by this class, may be null
      * @return A merged listener or a single listener or null
      * @since 3.0
      */
@@ -2586,7 +2586,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Generate a directory listing using the MLSD command.
      *
-     * @param path the directory name, may be {@code null}
+     * @param path The directory name, may be {@code null}
      * @return The array of file entries
      * @throws IOException on error
      * @since 3.0
@@ -2598,8 +2598,8 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Generate a directory listing using the MLSD command.
      *
-     * @param path the directory name, may be {@code null}
-     * @param filter   the filter to apply to the responses
+     * @param path The directory name, may be {@code null}
+     * @param filter   The filter to apply to the responses
      * @return The array of file entries
      * @throws IOException on error
      * @since 3.0
@@ -2611,7 +2611,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Gets file details using the MLST command
      *
-     * @param path the file or directory to list, may be {@code null}
+     * @param path The file or directory to list, may be {@code null}
      * @return The file details, may be {@code null}
      * @throws IOException on error
      * @since 3.0
@@ -2957,7 +2957,7 @@ public class FTPClient extends FTP implements Configurable {
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
-     * @param controlIdle the duration to wait between keepalive messages. Zero (or less) disables.
+     * @param controlIdle The duration to wait between keepalive messages. Zero (or less) disables.
      * @since 3.9.0
      * @see #setControlKeepAliveReplyTimeout(Duration)
      */
@@ -2971,7 +2971,7 @@ public class FTPClient extends FTP implements Configurable {
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
-     * @param controlIdleSeconds the wait in seconds between keepalive messages. Zero (or less) disables.
+     * @param controlIdleSeconds The wait in seconds between keepalive messages. Zero (or less) disables.
      * @since 3.0
      * @see #setControlKeepAliveReplyTimeout(int)
      * @deprecated Use {@link #setControlKeepAliveTimeout(Duration)}.

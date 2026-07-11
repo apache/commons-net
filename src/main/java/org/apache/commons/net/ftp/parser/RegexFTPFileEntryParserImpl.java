@@ -65,7 +65,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * The constructor for a RegexFTPFileEntryParserImpl object.
      *
      * @param regex The regular expression with which this object is initialized.
-     * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
+     * @param flags The flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
      * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen in normal conditions. If it is seen, this is a sign
      *                                  that a subclass has been created with a bad regular expression. Since the parser must be created before use, this means
      *                                  that any bad parser subclasses created from this will bomb very quickly, leading to easy detection.
@@ -80,8 +80,8 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      *
      * This is an internal method to do the work so the constructor does not have to call an overrideable method.
      *
-     * @param regex the expression to compile
-     * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
+     * @param regex The expression to compile
+     * @param flags The flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
      * @throws IllegalArgumentException if the regex cannot be compiled
      */
     private void compileRegex(final String regex, final int flags) {
@@ -136,7 +136,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     /**
      * Convenience method delegates to the internal MatchResult's matches() method.
      *
-     * @param s the String to be matched
+     * @param s The String to be matched
      * @return true if s matches this object's regular expression.
      */
     public boolean matches(final String s) {
@@ -165,7 +165,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * Sets the regular expression for entry parsing and create a new {@link Pattern} instance.
      *
      * @param regex The new regular expression
-     * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
+     * @param flags The flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
      * @return true
      * @throws IllegalArgumentException if the regex cannot be compiled
      * @since 3.4

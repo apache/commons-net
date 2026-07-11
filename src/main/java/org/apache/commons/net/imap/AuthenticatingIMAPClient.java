@@ -112,7 +112,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     /**
      * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
      *
-     * @param proto the protocol.
+     * @param proto The protocol.
      */
     public AuthenticatingIMAPClient(final String proto) {
         this(proto, false);
@@ -121,7 +121,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     /**
      * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode(Implicit/Explicit).
      */
     public AuthenticatingIMAPClient(final String proto, final boolean implicit) {
@@ -131,9 +131,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     /**
      * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode(Implicit/Explicit).
-     * @param ctx      the context
+     * @param ctx      The context
      */
     public AuthenticatingIMAPClient(final String proto, final boolean implicit, final SSLContext ctx) {
         super(proto, implicit, ctx);
@@ -142,7 +142,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     /**
      * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given user and the given password.
      *
-     * @param method   the method name
+     * @param method   The method name
      * @param user user
      * @param password password
      * @return True if successfully completed, false if not.
@@ -213,7 +213,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     /**
      * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given user and the given password.
      *
-     * @param method   the method name
+     * @param method   The method name
      * @param user user
      * @param password password
      * @return True if successfully completed, false if not.

@@ -329,7 +329,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
 
     /**
      * @param format The defaultDateFormat to be set.
-     * @param dfs    the symbols to use (may be null)
+     * @param dfs    The symbols to use (may be null)
      */
     private void setDefaultDateFormat(final String format, final DateFormatSymbols dfs) {
         if (format != null) {
@@ -354,7 +354,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
 
     /**
      * @param format The recentDateFormat to set.
-     * @param dfs    the symbols to use (may be null)
+     * @param dfs    The symbols to use (may be null)
      */
     private void setRecentDateFormat(final String format, final DateFormatSymbols dfs) {
         if (format != null) {

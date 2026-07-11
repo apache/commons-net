@@ -40,7 +40,7 @@ public class TFTPPacketException extends Exception {
     /**
      * Simply calls the corresponding constructor of its superclass.
      *
-     * @param message the message
+     * @param message The message
      */
     public TFTPPacketException(final String message) {
         super(message);

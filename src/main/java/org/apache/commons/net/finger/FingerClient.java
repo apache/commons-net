@@ -91,7 +91,7 @@ public class FingerClient extends SocketClient {
      *
      * @param longOutput Set to true if long output is requested, false if not.
      * @param user   The name of the user to finger.
-     * @param encoding   the character encoding that should be used for the query, null for the platform's default encoding
+     * @param encoding   The character encoding that should be used for the query, null for the platform's default encoding
      * @return The InputStream of the network connection of the finger query. Can be read to obtain finger results.
      * @throws IOException If an I/O error during the operation.
      */

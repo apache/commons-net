@@ -129,7 +129,7 @@ public class Base64 {
     /**
      * Decodes a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
      *
-     * @param source a byte array containing base64 character data
+     * @param source A byte array containing base64 character data
      * @return A BigInteger
      * @since 1.4
      */
@@ -297,7 +297,7 @@ public class Base64 {
     /**
      * Encodes to a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
      *
-     * @param bigInt a BigInteger
+     * @param bigInt A BigInteger
      * @return A byte array containing base64 character data
      * @throws NullPointerException if null is passed in
      * @since 1.4
@@ -315,7 +315,7 @@ public class Base64 {
      *
      * @param array          byte[] array which will later be encoded
      * @param lineSize      line-length of the output (<= 0 means no chunking) between each chunkSeparator (e.g. CRLF).
-     * @param linkSeparator the sequence of bytes used to separate chunks of output (e.g. CRLF).
+     * @param linkSeparator The sequence of bytes used to separate chunks of output (e.g. CRLF).
      * @return amount of space needed to encode the supplied array. Returns a long since a max-len array will require Integer.MAX_VALUE + 33%.
      */
     static long getEncodeLength(final byte[] array, int lineSize, final byte[] linkSeparator) {
@@ -385,7 +385,7 @@ public class Base64 {
     /**
      * Checks if a byte value is whitespace or not.
      *
-     * @param byteToCheck the byte to check
+     * @param byteToCheck The byte to check
      * @return true if byte is whitespace, false otherwise
      */
     private static boolean isWhiteSpace(final byte byteToCheck) {
@@ -581,7 +581,7 @@ public class Base64 {
     /**
      * Encodes a byte[] containing binary data, into a byte[] containing characters in the Base64 alphabet.
      *
-     * @param source a byte array containing binary data
+     * @param source A byte array containing binary data
      * @return A byte array containing only Base64 character data
      */
     public byte[] encode(final byte[] source) {
@@ -591,7 +591,7 @@ public class Base64 {
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base64 alphabet.
      *
-     * @param source a byte array containing binary data
+     * @param source A byte array containing binary data
      * @return A String containing only Base64 character data
      * @since 1.4
      */

@@ -92,7 +92,7 @@ public final class CharGenUDPClient extends DatagramSocketClient {
     /**
      * Same as {@code send(host, CharGenUDPClient.DEFAULT_PORT);}
      *
-     * @param host the destination host
+     * @param host The destination host
      * @throws IOException on error
      */
     public void send(final InetAddress host) throws IOException {

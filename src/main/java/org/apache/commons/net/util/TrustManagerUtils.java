@@ -87,7 +87,7 @@ public final class TrustManagerUtils {
      * TrustManager[], SecureRandom)} when the TrustManager parameter is set to {@code null}
      * </p>
      *
-     * @param keyStore the KeyStore to use, may be {@code null}
+     * @param keyStore The KeyStore to use, may be {@code null}
      * @return The default TrustManager
      * @throws GeneralSecurityException if an error occurs
      */

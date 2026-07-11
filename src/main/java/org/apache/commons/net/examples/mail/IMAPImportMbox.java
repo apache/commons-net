@@ -68,8 +68,8 @@ public final class IMAPImportMbox {
     /**
      * Is at least one entry in the list contained in the string?
      *
-     * @param contains the list of strings to look for
-     * @param string   the String to check against
+     * @param contains The list of strings to look for
+     * @param string   The String to check against
      * @return true if at least one entry in the contains list is contained in the string
      */
     private static boolean listContains(final List<String> contains, final String string) {
@@ -194,10 +194,10 @@ public final class IMAPImportMbox {
     /**
      * Is the message wanted?
      *
-     * @param msgNum   the message number
-     * @param line     the {@code From} line
-     * @param msgNums  the list of wanted message numbers
-     * @param contains the list of strings to be contained
+     * @param msgNum   The message number
+     * @param line     The {@code From} line
+     * @param msgNums  The list of wanted message numbers
+     * @param contains The list of strings to be contained
      * @return true if the message is wanted
      */
     private static boolean wanted(final int msgNum, final String line, final BitSet msgNums, final List<String> contains) {

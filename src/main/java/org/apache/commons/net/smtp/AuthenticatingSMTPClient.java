@@ -114,7 +114,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
     /**
      * Overloaded constructor that takes a protocol specification and the implicit argument
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      * @since 3.3
      */
@@ -125,9 +125,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
     /**
      * Overloaded constructor that takes the protocol specification, the implicit argument and encoding
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
-     * @param encoding the encoding
+     * @param encoding The encoding
      * @since 3.3
      */
     public AuthenticatingSMTPClient(final String proto, final boolean implicit, final String encoding) {
@@ -148,10 +148,10 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
     /**
      * Authenticate to the SMTP server by sending the AUTH command with the selected mechanism, using the given user and the given password.
      *
-     * @param method   the method to use, one of the {@link AuthenticatingSMTPClient.AUTH_METHOD} enum values
-     * @param user the user name. If the method is XOAUTH/XOAUTH2, then this is used as the plain text oauth protocol parameter string which is
+     * @param method   The method to use, one of the {@link AuthenticatingSMTPClient.AUTH_METHOD} enum values
+     * @param user The user name. If the method is XOAUTH/XOAUTH2, then this is used as the plain text oauth protocol parameter string which is
      *                 Base64-encoded for transmission.
-     * @param password the password for the username. Ignored for XOAUTH/XOAUTH2.
+     * @param password The password for the username. Ignored for XOAUTH/XOAUTH2.
      * @return True if successfully completed, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                       causing the server to send SMTP reply code 421. This exception may be caught either as an IOException or

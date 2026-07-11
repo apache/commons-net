@@ -69,7 +69,7 @@ public final class MockDaytimeTCPServer extends MockTcpServer {
      * Creates new {@link MockDaytimeTCPServer} that will bind to {@link InetAddress#getLocalHost()}
      * on specified port.
      *
-     * @param port the port number the server will bind to, or 0 to use a port number that is automatically allocated
+     * @param port The port number the server will bind to, or 0 to use a port number that is automatically allocated
      * @throws IOException if an I/O error occurs when opening the socket.
      */
     public MockDaytimeTCPServer(final int port) throws IOException {
@@ -79,8 +79,8 @@ public final class MockDaytimeTCPServer extends MockTcpServer {
     /**
      * Creates new {@link MockDaytimeTCPServer} that will bind to specified {@link InetAddress} and on specified port.
      *
-     * @param port the port number the server will bind to, or 0 to use a port number that is automatically allocated
-     * @param serverAddress the InetAddress the server will bind to
+     * @param port The port number the server will bind to, or 0 to use a port number that is automatically allocated
+     * @param serverAddress The InetAddress the server will bind to
      * @throws IOException if an I/O error occurs when opening the socket.
      */
     public MockDaytimeTCPServer(final int port, final InetAddress serverAddress) throws IOException {

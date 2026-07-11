@@ -50,7 +50,7 @@ public final class EchoUDPClient extends DiscardUDPClient {
     /**
      * Same as {@code receive(data, data.length)}
      *
-     * @param data the buffer to receive the input
+     * @param data The buffer to receive the input
      * @return The number of bytes
      * @throws IOException on error
      */
@@ -62,7 +62,7 @@ public final class EchoUDPClient extends DiscardUDPClient {
      * Receives echoed data and returns its length. The data may be divided up among multiple datagrams, requiring multiple calls to receive. Also, the UDP
      * packets will not necessarily arrive in the same order they were sent.
      *
-     * @param data   the buffer to receive the input
+     * @param data   The buffer to receive the input
      * @param length of the buffer
      * @return Length of actual data received.
      * @throws IOException If an error occurs while receiving the data.

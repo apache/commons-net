@@ -71,8 +71,8 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler {
     /**
      * Implements the abstract method of TelnetOptionHandler.
      *
-     * @param suboptionData     the sequence received, without IAC SB &amp; IAC SE
-     * @param suboptionLength   the length of data in suboption_data
+     * @param suboptionData     The sequence received, without IAC SB &amp; IAC SE
+     * @param suboptionLength   The length of data in suboption_data
      * @return terminal type information
      */
     @Override

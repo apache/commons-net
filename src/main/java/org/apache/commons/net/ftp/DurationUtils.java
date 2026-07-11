@@ -25,7 +25,7 @@ final class DurationUtils {
     /**
      * Tests whether the given Duration is positive (&gt;0).
      *
-     * @param duration the value to test
+     * @param duration The value to test
      * @return whether the given Duration is positive (&gt;0).
      */
     static boolean isPositive(final Duration duration) {

@@ -139,7 +139,7 @@ public class SMTPSClient extends SMTPClient {
     /**
      * Constructor for SMTPSClient, using explicit security mode.
      *
-     * @param proto the protocol.
+     * @param proto The protocol.
      */
     public SMTPSClient(final String proto) {
         this(proto, false);
@@ -148,7 +148,7 @@ public class SMTPSClient extends SMTPClient {
     /**
      * Constructor for SMTPSClient.
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
     public SMTPSClient(final String proto, final boolean implicit) {
@@ -159,9 +159,9 @@ public class SMTPSClient extends SMTPClient {
     /**
      * Constructor for SMTPSClient.
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
-     * @param encoding the encoding
+     * @param encoding The encoding
      * @since 3.3
      */
     public SMTPSClient(final String proto, final boolean implicit, final String encoding) {

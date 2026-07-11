@@ -157,7 +157,7 @@ public enum IMAPCommand {
     /**
      * Gets the IMAP protocol string command corresponding to a command code.
      *
-     * @param command the {@link IMAPCommand} whose command string is required. Must not be null.
+     * @param command The {@link IMAPCommand} whose command string is required. Must not be null.
      * @return The IMAP protocol string command corresponding to a command code.
      */
     public static String getCommand(final IMAPCommand command) {

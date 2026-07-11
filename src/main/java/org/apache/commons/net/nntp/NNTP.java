@@ -172,7 +172,7 @@ public class NNTP extends SocketClient {
      * A convenience method to send the AUTHINFO PASS command to the server, receive the reply, and return the reply code. If this step is required, it should
      * immediately follow the AUTHINFO USER command (See RFC 2980)
      *
-     * @param password a valid password.
+     * @param password A valid password.
      * @return The reply code received from the server. The server should return a 281 or 502 for this command.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                       causing the server to send NNTP reply code 400. This exception may be caught either as an IOException or
@@ -713,8 +713,8 @@ public class NNTP extends SocketClient {
     /**
      * A convenience method to send the NNTP XHDR command to the server, receive the reply, and return the reply code.
      *
-     * @param header           a String naming a header line (e.g., "subject"). See RFC-1036 for a list of valid header lines.
-     * @param selectedArticles a String representation of the range of article headers required. This may be an article number, or a range of article numbers in
+     * @param header           A String naming a header line (e.g., "subject"). See RFC-1036 for a list of valid header lines.
+     * @param selectedArticles A String representation of the range of article headers required. This may be an article number, or a range of article numbers in
      *                         the form "XXXX-YYYY", where XXXX and YYYY are valid article numbers in the current group. It also may be of the form "XXX-",
      *                         meaning "return XXX and all following articles" In this revision, the last format is not possible (yet).
      * @return The reply code received from the server.
@@ -733,7 +733,7 @@ public class NNTP extends SocketClient {
     /**
      * A convenience method to send the NNTP XOVER command to the server, receive the reply, and return the reply code.
      *
-     * @param selectedArticles a String representation of the range of article headers required. This may be an article number, or a range of article numbers in
+     * @param selectedArticles A String representation of the range of article headers required. This may be an article number, or a range of article numbers in
      *                         the form "XXXX-YYYY", where XXXX and YYYY are valid article numbers in the current group. It also may be of the form "XXX-",
      *                         meaning "return XXX and all following articles" In this revision, the last format is not possible (yet).
      * @return The reply code received from the server.

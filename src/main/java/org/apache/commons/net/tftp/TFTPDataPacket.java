@@ -196,7 +196,7 @@ public final class TFTPDataPacket extends TFTPPacket {
     /**
      * Sets the block number of the data packet.
      *
-     * @param blockNumber the number to set
+     * @param blockNumber The number to set
      */
     public void setBlockNumber(final int blockNumber) {
         this.blockNumber = blockNumber;

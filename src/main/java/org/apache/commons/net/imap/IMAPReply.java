@@ -96,7 +96,7 @@ public final class IMAPReply {
     /**
      * Gets the String reply code - OK, NO, BAD - in a tagged response as an integer.
      *
-     * @param line the tagged line to be checked
+     * @param line The tagged line to be checked
      * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}
      * @throws IOException if the input has an unexpected format
      */
@@ -129,7 +129,7 @@ public final class IMAPReply {
     /**
      * Gets the String reply code - OK, NO, BAD - in an untagged response as an integer.
      *
-     * @param line the untagged line to be checked
+     * @param line The untagged line to be checked
      * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}
      * @throws IOException if the input has an unexpected format
      */
@@ -140,7 +140,7 @@ public final class IMAPReply {
     /**
      * Tests whether the reply line is a continuation, i.e. starts with "+"
      *
-     * @param replyCode the code to be checked
+     * @param replyCode The code to be checked
      * @return {@code true} if the response was a continuation
      */
     public static boolean isContinuation(final int replyCode) {
@@ -150,7 +150,7 @@ public final class IMAPReply {
     /**
      * Tests whether if the reply line is a continuation, i.e. starts with "+"
      *
-     * @param line the line to be checked
+     * @param line The line to be checked
      * @return {@code true} if the line is a continuation
      */
     public static boolean isContinuation(final String line) {
@@ -160,7 +160,7 @@ public final class IMAPReply {
     /**
      * Tests whether whether the reply code indicates success or not
      *
-     * @param replyCode the code to check
+     * @param replyCode The code to check
      * @return {@code true} if the code equals {@link #OK}
      */
     public static boolean isSuccess(final int replyCode) {
@@ -180,7 +180,7 @@ public final class IMAPReply {
     /**
      * Checks if the line introduces a literal, i.e. ends with {dd}
      *
-     * @param line the line to check
+     * @param line The line to check
      * @return The literal count, or -1 if there was no literal.
      */
     public static int literalCount(final String line) {

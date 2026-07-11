@@ -293,7 +293,7 @@ public class TFTP extends DatagramSocketClient {
      * {@code System.out.println(direction + " " + packet.toString());}
      *
      * @param direction {@code >} or {@code <}
-     * @param packet    the packet to be sent or that has been received respectively
+     * @param packet    The packet to be sent or that has been received respectively
      * @since 3.6
      */
     protected void trace(final String direction, final TFTPPacket packet) {

@@ -51,7 +51,7 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
      * constructor for this abstract class.
      *
      * @param regex Regular expression used main parsing of the file listing.
-     * @param flags the flags to apply, see {@link java.util.regex.Pattern#compile(String, int) Pattern#compile(String, int)}. Use 0 for none.
+     * @param flags The flags to apply, see {@link java.util.regex.Pattern#compile(String, int) Pattern#compile(String, int)}. Use 0 for none.
      * @since 3.4
      */
     public ConfigurableFTPFileEntryParserImpl(final String regex, final int flags) {
@@ -64,7 +64,7 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
      * implementation, ' passing it the supplied {@link FTPClientConfig FTPClientConfig} if that is non-null or a default configuration defined by each concrete
      * subclass.
      *
-     * @param config the configuration to be used to configure this parser. If it is null, a default configuration defined by each concrete subclass is used
+     * @param config The configuration to be used to configure this parser. If it is null, a default configuration defined by each concrete subclass is used
      *               instead.
      */
     @Override
@@ -96,7 +96,7 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
     /**
      * This method is called by the concrete parsers to delegate timestamp parsing to the timestamp parser.
      *
-     * @param timestampStr the timestamp string pulled from the file listing by the regular expression parser, to be submitted to the
+     * @param timestampStr The timestamp string pulled from the file listing by the regular expression parser, to be submitted to the
      *                     {@code timestampParser} for extracting the timestamp.
      * @return A {@code java.util.Calendar} containing results of the timestamp parse.
      * @throws ParseException on parse error

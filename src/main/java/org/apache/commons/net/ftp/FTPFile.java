@@ -427,7 +427,7 @@ public class FTPFile implements Serializable {
      * Note: if the instance is not valid {@link #isValid()}, no useful information can be returned. In this case, use {@link #getRawListing()} instead.
      * </p>
      *
-     * @param timezone the time zone to use for displaying the time stamp If {@code null}, then use the Calendar ({@link #getTimestamp()}) entry
+     * @param timezone The time zone to use for displaying the time stamp If {@code null}, then use the Calendar ({@link #getTimestamp()}) entry
      * @return A string representation of the FTPFile information.
      * @since 3.4
      */

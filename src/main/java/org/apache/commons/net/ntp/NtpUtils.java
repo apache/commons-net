@@ -25,7 +25,7 @@ public final class NtpUtils {
     /**
      * Gets the 32-bit integer address to IPv4 address string "%d.%d.%d.%d" format.
      *
-     * @param address the 32-bit address
+     * @param address The 32-bit address
      * @return The raw IP address in a string format.
      */
     public static String getHostAddress(final int address) {
@@ -35,7 +35,7 @@ public final class NtpUtils {
     /**
      * Gets a human-readable name of message mode type (RFC 1305).
      *
-     * @param mode the mode type
+     * @param mode The mode type
      * @return mode name
      */
     public static String getModeName(final int mode) {
@@ -76,7 +76,7 @@ public final class NtpUtils {
      * Gets refId as reference clock string (e.g. GPS, WWV, LCL). If string is invalid (non-ASCII character) then returns empty string "". For details refer to
      * the <A href="https://www.eecis.udel.edu/~mills/ntp/html/refclock.html#list">Comprehensive List of Clock Drivers</A>.
      *
-     * @param message the message to check
+     * @param message The message to check
      * @return reference clock string if primary NTP server
      */
     public static String getReferenceClock(final NtpV3Packet message) {

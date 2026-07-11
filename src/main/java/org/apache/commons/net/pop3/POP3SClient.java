@@ -126,7 +126,7 @@ public class POP3SClient extends POP3Client {
     /**
      * Constructor for POP3SClient. Sets security mode to explicit.
      *
-     * @param proto the protocol.
+     * @param proto The protocol.
      */
     public POP3SClient(final String proto) {
         this(proto, false);
@@ -135,7 +135,7 @@ public class POP3SClient extends POP3Client {
     /**
      * Constructor for POP3SClient.
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
     public POP3SClient(final String proto, final boolean implicit) {
@@ -145,9 +145,9 @@ public class POP3SClient extends POP3Client {
     /**
      * Constructor for POP3SClient. Sets the default port to {@link #DEFAULT_POP3S_PORT} - 995 - if using implicit mode
      *
-     * @param proto    the protocol.
+     * @param proto    The protocol.
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
-     * @param ctx      the context to be used
+     * @param ctx      The context to be used
      */
     public POP3SClient(final String proto, final boolean implicit, final SSLContext ctx) {
         protocol = proto;

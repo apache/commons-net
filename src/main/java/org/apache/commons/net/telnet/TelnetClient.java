@@ -69,7 +69,7 @@ public class TelnetClient extends Telnet {
     /**
      * Constructs an instance with the specified max subnegotiation length and the default terminal-type {@code VT100}.
      *
-     * @param maxSubnegotiationLength the size of the subnegotiation buffer.
+     * @param maxSubnegotiationLength The size of the subnegotiation buffer.
      */
     public TelnetClient(final int maxSubnegotiationLength) {
         this("VT100", maxSubnegotiationLength);
@@ -78,7 +78,7 @@ public class TelnetClient extends Telnet {
     /**
      * Constructs an instance with the specified terminal type.
      *
-     * @param termtype the terminal type to use, e.g. {@code VT100}
+     * @param termtype The terminal type to use, e.g. {@code VT100}
      */
     public TelnetClient(final String termtype) {
         this(termtype, DEFAULT_MAX_SUBNEGOTIATION_LENGTH);
@@ -87,8 +87,8 @@ public class TelnetClient extends Telnet {
     /**
      * Constructs an instance with the specified terminal type and max subnegotiation length
      *
-     * @param termType                the terminal type to use, e.g. {@code VT100}
-     * @param maxSubnegotiationLength the size of the subnegotiation buffer
+     * @param termType                The terminal type to use, e.g. {@code VT100}
+     * @param maxSubnegotiationLength The size of the subnegotiation buffer
      */
     public TelnetClient(final String termType, final int maxSubnegotiationLength) {
         /* TERMINAL-TYPE option (start) */
@@ -318,7 +318,7 @@ public class TelnetClient extends Telnet {
      * This method does not wait for any response. Messages sent by the remote end can be handled by registering an approrpriate {@link TelnetOptionHandler}.
      * </p>
      *
-     * @param command the code for the command
+     * @param command The code for the command
      * @throws IOException              if an I/O error occurs while writing the message
      * @throws IllegalArgumentException on error
      * @since 3.0

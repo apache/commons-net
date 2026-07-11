@@ -31,7 +31,7 @@ public class Article implements Threadable<Article> {
     /**
      * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
      *
-     * @param article the root of the article 'tree'
+     * @param article The root of the article 'tree'
      * @since 3.4
      */
     public static void printThread(final Article article) {
@@ -41,8 +41,8 @@ public class Article implements Threadable<Article> {
     /**
      * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
      *
-     * @param article the root of the article 'tree'
-     * @param depth   the current tree depth
+     * @param article The root of the article 'tree'
+     * @param depth   The current tree depth
      */
     public static void printThread(final Article article, final int depth) {
         printThread(article, depth, System.out);
@@ -51,9 +51,9 @@ public class Article implements Threadable<Article> {
     /**
      * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
      *
-     * @param article the root of the article 'tree'
-     * @param depth   the current tree depth
-     * @param ps      the PrintStream to use
+     * @param article The root of the article 'tree'
+     * @param depth   The current tree depth
+     * @param ps      The PrintStream to use
      * @since 3.4
      */
     public static void printThread(final Article article, final int depth, final PrintStream ps) {
@@ -72,8 +72,8 @@ public class Article implements Threadable<Article> {
     /**
      * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
      *
-     * @param article the root of the article 'tree'
-     * @param ps      the PrintStream to use
+     * @param article The root of the article 'tree'
+     * @param ps      The PrintStream to use
      * @since 3.4
      */
     public static void printThread(final Article article, final PrintStream ps) {
@@ -129,7 +129,7 @@ public class Article implements Threadable<Article> {
     /**
      * Adds a message-id to the list of messages that this message references (i.e. replies to)
      *
-     * @param msgId the message id to add
+     * @param msgId The message id to add
      */
     public void addReference(final String msgId) {
         if (msgId == null || msgId.isEmpty()) {
@@ -256,7 +256,7 @@ public class Article implements Threadable<Article> {
     /**
      * Sets the article ID.
      *
-     * @param string the article ID.
+     * @param string The article ID.
      */
     public void setArticleId(final String string) {
         articleId = string;
@@ -265,7 +265,7 @@ public class Article implements Threadable<Article> {
     /**
      * Sets the article number.
      *
-     * @param articleNumber  the article number.
+     * @param articleNumber  The article number.
      */
     @Deprecated
     public void setArticleNumber(final int articleNumber) {
@@ -275,7 +275,7 @@ public class Article implements Threadable<Article> {
     /**
      * Sets the article number.
      *
-     * @param articleNumber  the article number.
+     * @param articleNumber  The article number.
      */
     public void setArticleNumber(final long articleNumber) {
         this.articleNumber = articleNumber;
@@ -290,7 +290,7 @@ public class Article implements Threadable<Article> {
     /**
      * Sets the article date header.
      *
-     * @param date  the article date header.
+     * @param date  The article date header.
      */
     public void setDate(final String date) {
         this.date = date;
@@ -299,7 +299,7 @@ public class Article implements Threadable<Article> {
     /**
      * Sets the article from header.
      *
-     * @param from  the article from header.
+     * @param from  The article from header.
      */
     public void setFrom(final String from) {
         this.from = from;
@@ -314,7 +314,7 @@ public class Article implements Threadable<Article> {
     /**
      * Sets the article subject.
      *
-     * @param subject  the article subject.
+     * @param subject  The article subject.
      */
     public void setSubject(final String subject) {
         this.subject = subject;

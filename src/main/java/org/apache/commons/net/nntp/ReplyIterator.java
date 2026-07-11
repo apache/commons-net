@@ -44,7 +44,7 @@ final class ReplyIterator implements Iterator<String>, Iterable<String> {
 
     /**
      *
-     * @param _reader      the reader to wrap
+     * @param _reader      The reader to wrap
      * @param addDotReader whether to additionally wrap the reader in a DotTerminatedMessageReader
      * @throws IOException
      */

@@ -55,8 +55,8 @@ public final class POP3MessageInfo {
      * Constructs a new instance with {@code number} set to {@code num}, {@code size} set to {@code octets}, and
      * {@code identifier} set to null.
      *
-     * @param num    the number
-     * @param octets the size
+     * @param num    The number
+     * @param octets The size
      */
     public POP3MessageInfo(final int num, final int octets) {
         this(num, null, octets);
@@ -66,8 +66,8 @@ public final class POP3MessageInfo {
      * Constructs a new instance with {@code number} set to {@code num}, {@code size} undefined, and {@code identifier} set to
      * {@code uid}.
      *
-     * @param num the number
-     * @param uid the UID
+     * @param num The number
+     * @param uid The UID
      */
     public POP3MessageInfo(final int num, final String uid) {
         this(num, uid, -1);
@@ -76,9 +76,9 @@ public final class POP3MessageInfo {
     /**
      * Constructs a new instance.
      *
-     * @param num    the number.
-     * @param uid    the UID.
-     * @param octets the size.
+     * @param num    The number.
+     * @param uid    The UID.
+     * @param octets The size.
      */
     private POP3MessageInfo(final int num, final String uid, final int size) {
         this.number = num;

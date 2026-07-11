@@ -85,8 +85,8 @@ public abstract class TelnetOptionHandler {
      * request.
      * </p>
      *
-     * @param suboptionData     the sequence received, without IAC SB &amp; IAC SE
-     * @param suboptionLength   the length of data in suboption_data
+     * @param suboptionData     The sequence received, without IAC SB &amp; IAC SE
+     * @param suboptionLength   The length of data in suboption_data
      * @return response to be sent to the subnegotiation sequence. TelnetClient will add IAC SB &amp; IAC SE. null means no response
      */
     public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength) {

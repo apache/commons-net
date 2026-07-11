@@ -41,7 +41,7 @@ public class SubnetUtils {
         /**
          * Constructs a new instance.
          *
-         * @param subnetInfo the SubnetInfo to iterate.
+         * @param subnetInfo The SubnetInfo to iterate.
          */
         private SubnetAddressStringIterable(final SubnetInfo subnetInfo) {
             this.subnetInfo = subnetInfo;
@@ -65,7 +65,7 @@ public class SubnetUtils {
         /**
          * Constructs a new instance.
          *
-         * @param subnetInfo the SubnetInfo to iterate.
+         * @param subnetInfo The SubnetInfo to iterate.
          */
         private SubnetAddressStringIterator(final SubnetInfo subnetInfo) {
             this.subnetInfo = subnetInfo;
@@ -97,7 +97,7 @@ public class SubnetUtils {
         /**
          * Converts a dotted decimal format address to a packed integer format.
          *
-         * @param address a dotted decimal format address.
+         * @param address A dotted decimal format address.
          * @return packed integer formatted int.
          */
         public int asInteger(final String address) {
@@ -250,7 +250,7 @@ public class SubnetUtils {
          * Tests if the parameter {@code address} is in the range of usable endpoint addresses for this subnet. This excludes the network and broadcast
          * addresses by default. Use {@link SubnetUtils#setInclusiveHostCount(boolean)} to change this.
          *
-         * @param address the address to check
+         * @param address The address to check
          * @return true if it is in range
          * @since 3.4 (made public)
          */

@@ -112,7 +112,7 @@ public class SubnetUtils6 {
         /**
          * Tests if the given address is within this subnet range.
          *
-         * @param addr the IPv6 address to test (as a BigInteger).
+         * @param addr The IPv6 address to test (as a BigInteger).
          * @return true if the address is in range.
          */
         public boolean isInRange(final BigInteger addr) {
@@ -125,7 +125,7 @@ public class SubnetUtils6 {
         /**
          * Tests if the given address is within this subnet range.
          *
-         * @param addr the IPv6 address to test as a byte array (16 bytes).
+         * @param addr The IPv6 address to test as a byte array (16 bytes).
          * @return true if the address is in range.
          */
         public boolean isInRange(final byte[] addr) {
@@ -138,7 +138,7 @@ public class SubnetUtils6 {
         /**
          * Tests if the given address is within this subnet range.
          *
-         * @param addr the IPv6 address to test.
+         * @param addr The IPv6 address to test.
          * @return true if the address is in range.
          */
         public boolean isInRange(final Inet6Address addr) {
@@ -151,7 +151,7 @@ public class SubnetUtils6 {
         /**
          * Tests if the given address is within this subnet range.
          *
-         * @param addr the IPv6 address to test as a string.
+         * @param addr The IPv6 address to test as a string.
          * @return true if the address is in range.
          * @throws IllegalArgumentException if the address cannot be parsed.
          */
@@ -184,7 +184,7 @@ public class SubnetUtils6 {
     /**
      * Formats a BigInteger as an IPv6 address string using {@link InetAddress#getHostAddress()}.
      *
-     * @param addr the address as a BigInteger.
+     * @param addr The address as a BigInteger.
      * @return The formatted IPv6 address string.
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc5952">RFC 5952</a>
      */
@@ -201,7 +201,7 @@ public class SubnetUtils6 {
     /**
      * Converts a BigInteger to a 16-byte array, padding with leading zeros if necessary.
      *
-     * @param value the BigInteger to convert.
+     * @param value The BigInteger to convert.
      * @return A 16-byte array.
      */
     private static byte[] toByteArray16(final BigInteger value) {
@@ -223,7 +223,7 @@ public class SubnetUtils6 {
     /**
      * Parses an IPv6 address string to a byte array.
      *
-     * @param address the IPv6 address string.
+     * @param address The IPv6 address string.
      * @return The 16-byte representation.
      * @throws IllegalArgumentException if the address cannot be parsed.
      */
@@ -247,7 +247,7 @@ public class SubnetUtils6 {
     /**
      * Constructs an instance from a CIDR-notation string, e.g., "2001:db8::1/64".
      *
-     * @param cidrNotation a CIDR-notation string, e.g., "2001:db8::1/64".
+     * @param cidrNotation A CIDR-notation string, e.g., "2001:db8::1/64".
      * @throws IllegalArgumentException if the parameter is invalid.
      */
     public SubnetUtils6(final String cidrNotation) {
@@ -298,8 +298,8 @@ public class SubnetUtils6 {
     /**
      * Constructs an instance from an IPv6 address and prefix length.
      *
-     * @param address      an IPv6 address, e.g., "2001:db8::1".
-     * @param prefixLength the prefix length (0-128).
+     * @param address      An IPv6 address, e.g., "2001:db8::1".
+     * @param prefixLength The prefix length (0-128).
      * @throws IllegalArgumentException if the parameters are invalid.
      */
     public SubnetUtils6(final String address, final int prefixLength) {

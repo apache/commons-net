@@ -32,7 +32,7 @@ final class IMAPUtils {
     /**
      * Parses the URI and use the details to connect to the IMAP(S) server and login.
      *
-     * @param uri            the URI to use, e.g. imaps://user:pass@imap.mail.yahoo.com/folder or imaps://user:pass@imap.googlemail.com/folder
+     * @param uri            The URI to use, e.g. imaps://user:pass@imap.mail.yahoo.com/folder or imaps://user:pass@imap.googlemail.com/folder
      * @param defaultTimeout initial timeout (in milliseconds)
      * @param listener       for tracing protocol IO (may be null)
      * @return The IMAP client - connected and logged in

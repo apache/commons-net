@@ -82,7 +82,7 @@ public class NtpV3Impl implements NtpV3Packet {
      * Compares this object against the specified object. The result is {@code true} if and only if the argument is not {@code null} and is a
      * {@code NtpV3Impl} object that contains the same values as this object.
      *
-     * @param obj the object to compare with.
+     * @param obj The object to compare with.
      * @return {@code true} if the objects are the same; {@code false} otherwise.
      * @since 3.4
      */
@@ -445,7 +445,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Sets mode as defined in RFC-1305.
      *
-     * @param mode the mode to set
+     * @param mode The mode to set
      */
     @Override
     public void setMode(final int mode) {
@@ -475,7 +475,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Sets precision as defined in RFC-1305.
      *
-     * @param precision the precision to set
+     * @param precision The precision to set
      * @since 3.4
      */
     @Override

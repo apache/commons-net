@@ -59,7 +59,7 @@ public final class DaytimeUDPClient extends DatagramSocketClient {
      * Shorthand for {@code getTime(host, DaytimeUDPClient.DEFAULT_PORT);}
      * </p>
      *
-     * @param host the host
+     * @param host The host
      * @return The time
      * @throws IOException on error
      */

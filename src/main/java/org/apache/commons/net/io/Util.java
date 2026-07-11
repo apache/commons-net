@@ -52,7 +52,7 @@ public final class Util {
     /**
      * Closes the object quietly, catching rather than throwing IOException. Intended for use from finally blocks.
      *
-     * @param closeable the object to close, may be {@code null}
+     * @param closeable The object to close, may be {@code null}
      * @since 3.0
      * @deprecated Use {@link IOUtils#closeQuietly(Closeable)}.
      */
@@ -64,7 +64,7 @@ public final class Util {
     /**
      * Closes the socket quietly, catching rather than throwing IOException. Intended for use from finally blocks.
      *
-     * @param socket the socket to close, may be {@code null}
+     * @param socket The socket to close, may be {@code null}
      * @since 3.0
      * @deprecated Use {@link IOUtils#closeQuietly(Socket)}.
      */
@@ -243,7 +243,7 @@ public final class Util {
     /**
      * Creates a new PrintWriter using the default encoding.
      *
-     * @param printStream the target PrintStream.
+     * @param printStream The target PrintStream.
      * @return A new PrintWriter.
      * @since 3.11.0
      */

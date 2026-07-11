@@ -62,9 +62,9 @@ public class RLoginClient extends RCommandClient {
     /**
      * Same as the other rlogin method, but no terminal speed is defined.
      *
-     * @param localUserName  the local user
-     * @param remoteUserName the remote user
-     * @param terminalType   the terminal type
+     * @param localUserName  The local user
+     * @param remoteUserName The remote user
+     * @param terminalType   The terminal type
      * @throws IOException on error
      */
     public void rlogin(final String localUserName, final String remoteUserName, final String terminalType) throws IOException {
