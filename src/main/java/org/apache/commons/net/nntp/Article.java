@@ -215,7 +215,7 @@ public class Article implements Threadable<Article> {
     /**
      * Returns the MessageId references as an array of Strings
      *
-     * @return an array of message-ids
+     * @return An array of message-ids
      */
     public String[] getReferences() {
         if (references == null) {

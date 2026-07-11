@@ -106,7 +106,7 @@ public class FTPListParseEngine {
      * before being added to the array.
      *
      * @param filter FTPFileFilter, must not be {@code null}.
-     * @return a list of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
+     * @return A list of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
      *         <p>
      *         <strong> NOTE:</strong> This array may contain null members if any of the individual file listings failed to parse. The caller should check each
      *         entry for null before referencing it, or use a filter such as {@link FTPFileFilters#NON_NULL} which does not allow null entries.
@@ -122,7 +122,7 @@ public class FTPListParseEngine {
     /**
      * Gets an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
      *
-     * @return an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser. None of the entries will
+     * @return An array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser. None of the entries will
      *         be null
      * @throws IOException - not ever thrown, may be removed in a later release
      */
@@ -136,7 +136,7 @@ public class FTPListParseEngine {
      * before being added to the array.
      *
      * @param filter FTPFileFilter, must not be {@code null}.
-     * @return an array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
+     * @return An array of FTPFile objects containing the whole list of files returned by the server as read by this object's parser.
      *         <p>
      *         <strong> NOTE:</strong> This array may contain null members if any of the individual file listings failed to parse. The caller should check each
      *         entry for null before referencing it, or use a filter such as {@link FTPFileFilters#NON_NULL} which does not allow null entries.
@@ -156,7 +156,7 @@ public class FTPListParseEngine {
      * After this method is called this object's internal iterator is advanced by a number of positions equal to the size of the array returned.
      *
      * @param quantityRequested the maximum number of entries we want to get.
-     * @return an array of at most {@code quantityRequested} FTPFile objects starting at the current position of this iterator within its list and at least the
+     * @return An array of at most {@code quantityRequested} FTPFile objects starting at the current position of this iterator within its list and at least the
      *         number of elements which exist in the list at and after its current position.
      *         <p>
      *         <strong> NOTE:</strong> This array may contain null members if any of the individual file listings failed to parse. The caller should check each
@@ -188,7 +188,7 @@ public class FTPListParseEngine {
      * After this method is called this object's internal iterator is moved back by a number of positions equal to the size of the array returned.
      *
      * @param quantityRequested the maximum number of entries we want to get.
-     * @return an array of at most {@code quantityRequested} FTPFile objects starting at the current position of this iterator within its list and at least the
+     * @return An array of at most {@code quantityRequested} FTPFile objects starting at the current position of this iterator within its list and at least the
      *         number of elements which exist in the list at and after its current position. This array will be in the same order as the underlying list (not
      *         reversed).
      *         <p>

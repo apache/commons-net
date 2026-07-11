@@ -78,7 +78,7 @@ public class ListenerList<T extends EventListener> implements Serializable, Iter
     /**
      * Return an {@link Iterator} for the {@link EventListener} instances.
      *
-     * @return an {@link Iterator} for the {@link EventListener} instances
+     * @return An {@link Iterator} for the {@link EventListener} instances
      * @since 2.0 TODO Check that this is a good defensive strategy
      */
     @Override

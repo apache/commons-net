@@ -331,7 +331,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      *
      * </blockquote>
      *
-     * @return a hash code value for this object.
+     * @return A hash code value for this object.
      */
     @Override
     public int hashCode() {
@@ -365,7 +365,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      *
      * </blockquote> See java.text.SimpleDataFormat for code descriptions.
      *
-     * @return a string representation of this date.
+     * @return A string representation of this date.
      */
     public String toDateString() {
         if (simpleFormatter == null) {
@@ -400,7 +400,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      *
      * </blockquote> See java.text.SimpleDataFormat for code descriptions.
      *
-     * @return a string representation of this date in UTC.
+     * @return A string representation of this date in UTC.
      */
     public String toUTCString() {
         if (utcFormatter == null) {

@@ -647,7 +647,7 @@ public class FTPSClient extends FTPClient {
      * Gets the protocol versions. The {@link #getEnabledProtocols()} method gets the value from the socket while
      * this method gets its value from this instance's config.
      *
-     * @return a clone of the protocols, may be null
+     * @return A clone of the protocols, may be null
      * @since 3.11.0
      */
     protected String[] getProtocols() {
@@ -658,7 +658,7 @@ public class FTPSClient extends FTPClient {
      * Gets the cipher suites. The {@link #getEnabledCipherSuites()} method gets the value from the socket while
      * this method gets its value from this instance's config.
      *
-     * @return a clone of the suites, may be null
+     * @return A clone of the suites, may be null
      * @since 3.11.0
      */
     protected String[] getSuites() {

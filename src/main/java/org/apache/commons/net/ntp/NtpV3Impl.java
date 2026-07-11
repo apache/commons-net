@@ -101,7 +101,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Gets the datagram packet with the NTP details already filled in.
      *
-     * @return a datagram packet.
+     * @return A datagram packet.
      */
     @Override
     public synchronized DatagramPacket getDatagramPacket() {
@@ -361,7 +361,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Computes a hash code for this object. The result is the exclusive OR of the values of this object stored as a byte array.
      *
-     * @return a hash code value for this object.
+     * @return A hash code value for this object.
      * @since 3.4
      */
     @Override

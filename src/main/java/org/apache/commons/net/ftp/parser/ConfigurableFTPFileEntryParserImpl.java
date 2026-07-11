@@ -98,7 +98,7 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
      *
      * @param timestampStr the timestamp string pulled from the file listing by the regular expression parser, to be submitted to the
      *                     {@code timestampParser} for extracting the timestamp.
-     * @return a {@code java.util.Calendar} containing results of the timestamp parse.
+     * @return A {@code java.util.Calendar} containing results of the timestamp parse.
      * @throws ParseException on parse error
      */
     public Calendar parseTimestamp(final String timestampStr) throws ParseException {

@@ -2555,7 +2555,7 @@ public class FTPClient extends FTP implements Configurable {
      * Merge two copystream listeners, either or both of which may be null.
      *
      * @param local the listener used by this class, may be null
-     * @return a merged listener or a single listener or null
+     * @return A merged listener or a single listener or null
      * @since 3.0
      */
     private CopyStreamListener mergeListeners(final CopyStreamListener local) {

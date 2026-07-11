@@ -129,7 +129,7 @@ public interface NtpV3Packet {
     /**
      * Gets a datagram packet with the NTP parts already filled in.
      *
-     * @return a datagram packet with the NTP parts already filled in.
+     * @return A datagram packet with the NTP parts already filled in.
      */
     DatagramPacket getDatagramPacket();
 

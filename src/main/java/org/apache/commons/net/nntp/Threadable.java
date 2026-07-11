@@ -34,14 +34,14 @@ public interface Threadable<T extends Threadable<T>> {
     /**
      * Creates a dummy instance.
      *
-     * @return a dummy instance.
+     * @return A dummy instance.
      */
     T makeDummy();
 
     /**
      * Gets an ID.
      *
-     * @return an ID.
+     * @return An ID.
      */
     String messageThreadId();
 

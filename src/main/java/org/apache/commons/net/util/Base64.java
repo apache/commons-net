@@ -408,7 +408,7 @@ public class Base64 {
      * Returns a byte-array representation of a {@code BigInteger} without sign bit.
      *
      * @param bigInt {@code BigInteger} to be converted
-     * @return a byte array representation of the BigInteger parameter
+     * @return A byte array representation of the BigInteger parameter
      */
     private static byte[] toIntegerBytes(final BigInteger bigInt) {
         Objects.requireNonNull(bigInt, "bigInt");
@@ -561,7 +561,7 @@ public class Base64 {
      * Decodes a byte array containing characters in the Base64 alphabet.
      *
      * @param source A byte array containing Base64 character data
-     * @return a byte array containing binary data; will return {@code null} if provided byte array is {@code null}.
+     * @return A byte array containing binary data; will return {@code null} if provided byte array is {@code null}.
      */
     public byte[] decode(final byte[] source) {
         return isEmpty(source) ? source : getDecoder().decode(source);
@@ -571,7 +571,7 @@ public class Base64 {
      * Decodes a String containing characters in the Base64 alphabet.
      *
      * @param source A String containing Base64 character data, must not be {@code null}
-     * @return a byte array containing binary data
+     * @return A byte array containing binary data
      * @since 1.4
      */
     public byte[] decode(final String source) {

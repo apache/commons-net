@@ -162,7 +162,7 @@ public class SubnetUtils6 {
         /**
          * Returns a summary of this subnet for debugging.
          *
-         * @return a multi-line debug string summarizing this subnet.
+         * @return A multi-line debug string summarizing this subnet.
          */
         @Override
         public String toString() {
@@ -202,7 +202,7 @@ public class SubnetUtils6 {
      * Converts a BigInteger to a 16-byte array, padding with leading zeros if necessary.
      *
      * @param value the BigInteger to convert.
-     * @return a 16-byte array.
+     * @return A 16-byte array.
      */
     private static byte[] toByteArray16(final BigInteger value) {
         final byte[] raw = value.toByteArray();
@@ -309,7 +309,7 @@ public class SubnetUtils6 {
     /**
      * Gets a {@link SubnetInfo} instance that contains subnet-specific statistics.
      *
-     * @return a new SubnetInfo instance.
+     * @return A new SubnetInfo instance.
      */
     public SubnetInfo getInfo() {
         return new SubnetInfo();
@@ -323,7 +323,7 @@ public class SubnetUtils6 {
      * {@link #SubnetUtils6(String)}.
      * </p>
      *
-     * @return a multi-line debug string summarizing this subnet.
+     * @return A multi-line debug string summarizing this subnet.
      */
     @Override
     public String toString() {

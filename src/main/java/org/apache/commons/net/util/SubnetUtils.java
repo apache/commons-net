@@ -111,7 +111,7 @@ public class SubnetUtils {
         /**
          * Gets this instance's address into a dotted decimal String.
          *
-         * @return a dotted decimal String.
+         * @return A dotted decimal String.
          */
         public String getAddress() {
             return format(toArray4(address));
@@ -278,7 +278,7 @@ public class SubnetUtils {
         /**
          * Creates a new Iterable of address Strings.
          *
-         * @return a new Iterable of address Strings
+         * @return A new Iterable of address Strings
          * @see #getAllAddresses()
          * @see #streamAddressStrings()
          * @since 3.12.0
@@ -299,7 +299,7 @@ public class SubnetUtils {
         /**
          * Creates a new Stream of address Strings.
          *
-         * @return a new Stream of address Strings.
+         * @return A new Stream of address Strings.
          * @see #getAllAddresses()
          * @see #iterableAddressStrings()
          * @since 3.12.0

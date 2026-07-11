@@ -110,7 +110,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * For debugging purposes.
      * </p>
      *
-     * @return a string shows each match group by number.
+     * @return A string shows each match group by number.
      */
     public String getGroupsAsString() {
         final StringBuilder b = new StringBuilder();

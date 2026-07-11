@@ -228,7 +228,7 @@ public class IMAP extends SocketClient {
     /**
      * Generates a new command ID (tag) for a command.
      *
-     * @return a new command ID (tag) for an IMAP command.
+     * @return A new command ID (tag) for an IMAP command.
      */
     protected String generateCommandID() {
         final String res = new String(initialID);

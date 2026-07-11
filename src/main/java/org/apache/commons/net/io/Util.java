@@ -244,7 +244,7 @@ public final class Util {
      * Creates a new PrintWriter using the default encoding.
      *
      * @param printStream the target PrintStream.
-     * @return a new PrintWriter.
+     * @return A new PrintWriter.
      * @since 3.11.0
      */
     public static PrintWriter newPrintWriter(final PrintStream printStream) {

@@ -28,7 +28,7 @@ public class PrintCommandListeners {
     /**
      * Creates a new PrintCommandListener on system out.
      *
-     * @return a new PrintCommandListener on system out.
+     * @return A new PrintCommandListener on system out.
      */
     public static PrintCommandListener sysOutPrintCommandListener() {
         return new PrintCommandListener(Util.newPrintWriter(System.out), true);

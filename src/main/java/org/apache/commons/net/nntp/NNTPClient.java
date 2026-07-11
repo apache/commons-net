@@ -248,7 +248,7 @@ public class NNTPClient extends NNTP {
      * Creates a new writer or returns null if we don't have a a positive intermediate response.
      *
      * @param articleId Article ID.
-     * @return a new writer or null.
+     * @return A new writer or null.
      * @throws IOException If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public Writer forwardArticle(final String articleId) throws IOException {
@@ -263,7 +263,7 @@ public class NNTPClient extends NNTP {
      *
      * @param lowArticleNumber  low
      * @param highArticleNumber high
-     * @return an Iterable of Articles
+     * @return An Iterable of Articles
      * @throws IOException if the command failed
      * @since 3.0
      */
@@ -1026,7 +1026,7 @@ public class NNTPClient extends NNTP {
 
     /**
      * @param lowArticleNumber to fetch
-     * @return a DotTerminatedReader if successful, null otherwise
+     * @return A DotTerminatedReader if successful, null otherwise
      * @throws IOException tba
      * @deprecated 3.0 use {@link #retrieveArticleInfo(long)} instead
      */
@@ -1038,7 +1038,7 @@ public class NNTPClient extends NNTP {
     /**
      * @param lowArticleNumber  to fetch
      * @param highArticleNumber to fetch
-     * @return a DotTerminatedReader if successful, null otherwise
+     * @return A DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      * @deprecated 3.0 use {@link #retrieveArticleInfo(long, long)} instead
      */
@@ -1051,7 +1051,7 @@ public class NNTPClient extends NNTP {
      * Return article headers for a specified post.
      *
      * @param articleNumber the article to retrieve headers for
-     * @return a DotTerminatedReader if successful, null otherwise
+     * @return A DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
     public BufferedReader retrieveArticleInfo(final long articleNumber) throws IOException {
@@ -1063,7 +1063,7 @@ public class NNTPClient extends NNTP {
      *
      * @param lowArticleNumber  low number
      * @param highArticleNumber high number
-     * @return a DotTerminatedReader if successful, null otherwise
+     * @return A DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
     public BufferedReader retrieveArticleInfo(final long lowArticleNumber, final long highArticleNumber) throws IOException {
@@ -1076,7 +1076,7 @@ public class NNTPClient extends NNTP {
      * See {@link NNTP#xover} for legal agument formats. Alternatively, read RFC 2980 :-)
      *
      * @param articleRange
-     * @return a DotTerminatedMessageReader if successful, null otherwise
+     * @return A DotTerminatedMessageReader if successful, null otherwise
      * @throws IOException
      */
     private BufferedReader retrieveArticleInfo(final String articleRange) throws IOException {
@@ -1103,7 +1103,7 @@ public class NNTPClient extends NNTP {
      * @param header            the header
      * @param lowArticleNumber  to fetch
      * @param highArticleNumber to fetch
-     * @return a DotTerminatedReader if successful, null otherwise
+     * @return A DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      * @deprecated 3.0 use {@link #retrieveHeader(String, long, long)} instead
      */
@@ -1117,7 +1117,7 @@ public class NNTPClient extends NNTP {
      *
      * @param header        the header to retrieve
      * @param articleNumber the article to retrieve the header for
-     * @return a DotTerminatedReader if successful, null otherwise
+     * @return A DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
     public BufferedReader retrieveHeader(final String header, final long articleNumber) throws IOException {
@@ -1130,7 +1130,7 @@ public class NNTPClient extends NNTP {
      * @param header            the header
      * @param lowArticleNumber  to fetch
      * @param highArticleNumber to fetch
-     * @return a DotTerminatedReader if successful, null otherwise
+     * @return A DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
     public BufferedReader retrieveHeader(final String header, final long lowArticleNumber, final long highArticleNumber) throws IOException {
@@ -1145,7 +1145,7 @@ public class NNTPClient extends NNTP {
      *
      * @param header
      * @param articleRange
-     * @return a {@link DotTerminatedMessageReader} if successful, {@code null} otherwise
+     * @return A {@link DotTerminatedMessageReader} if successful, {@code null} otherwise
      * @throws IOException
      */
     private BufferedReader retrieveHeader(final String header, final String articleRange) throws IOException {

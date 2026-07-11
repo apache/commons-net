@@ -224,7 +224,7 @@ public class FTPClientConfig {
      * Gets a DateFormatSymbols object configured with short month names as in the supplied string
      *
      * @param shortmonths This should be as described in {@link #setShortMonthNames(String) shortMonthNames}
-     * @return a DateFormatSymbols object configured with short month names as in the supplied string
+     * @return A DateFormatSymbols object configured with short month names as in the supplied string
      */
     public static DateFormatSymbols getDateFormatSymbols(final String shortmonths) {
         final String[] months = splitShortMonthString(shortmonths);
@@ -237,7 +237,7 @@ public class FTPClientConfig {
      * Gets a Collection of all the language codes currently supported by this class. See {@link #setServerLanguageCode(String) serverLanguageCode} for a
      * functional description of language codes within this system.
      *
-     * @return a Collection of all the language codes currently supported by this class
+     * @return A Collection of all the language codes currently supported by this class
      */
     public static Collection<String> getSupportedLanguageCodes() {
         return LANGUAGE_CODE_MAP.keySet();
@@ -248,7 +248,7 @@ public class FTPClientConfig {
      * names corresponding to the code. If there is no corresponding entry in the table, the object returned will be that for {@code Locale.US}
      *
      * @param languageCode See {@link #setServerLanguageCode(String) serverLanguageCode}
-     * @return a DateFormatSymbols object configured with short month names corresponding to the supplied code, or with month names for {@code Locale.US}
+     * @return A DateFormatSymbols object configured with short month names corresponding to the supplied code, or with month names for {@code Locale.US}
      *         if there is no corresponding entry in the internal table.
      */
     public static DateFormatSymbols lookupDateFormatSymbols(final String languageCode) {
