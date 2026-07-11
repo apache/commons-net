@@ -67,7 +67,7 @@ class DaytimeTCPClientTest {
      * In order for this test to pass inside some VPNs, you cannot use the plain old {@link InetAddress#getLocalHost()}.
      * </p>
      *
-     * @return the InetAddress to use as the localhost.
+     * @return The InetAddress to use as the localhost.
      */
     private static InetAddress getLocalHostInetAddress() {
         return InetAddress.getLoopbackAddress();

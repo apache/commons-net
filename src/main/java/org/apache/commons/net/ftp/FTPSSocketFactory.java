@@ -46,7 +46,7 @@ public class FTPSSocketFactory extends SocketFactory {
 
     /**
      * @param port the port
-     * @return the socket
+     * @return The socket
      * @throws IOException on error
      * @deprecated (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int)}.
      */
@@ -58,7 +58,7 @@ public class FTPSSocketFactory extends SocketFactory {
     /**
      * @param port    the port
      * @param backlog the backlog
-     * @return the socket
+     * @return The socket
      * @throws IOException on error
      * @deprecated (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int)}.
      */
@@ -71,7 +71,7 @@ public class FTPSSocketFactory extends SocketFactory {
      * @param port      the port
      * @param backlog   the backlog
      * @param ifAddress the interface
-     * @return the socket
+     * @return The socket
      * @throws IOException on error
      * @deprecated (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int, InetAddress)}.
      */
@@ -111,7 +111,7 @@ public class FTPSSocketFactory extends SocketFactory {
 
     /**
      * @param socket the socket
-     * @return the socket
+     * @return The socket
      * @throws IOException on error
      * @deprecated (2.2) use {@link FTPSServerSocketFactory#init(java.net.ServerSocket)}
      */

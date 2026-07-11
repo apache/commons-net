@@ -64,7 +64,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
      * Gets the time from a server and returns a Java Date containing the time converted to the local time zone.
      *
      * @param host the time-server
-     * @return the date
+     * @return The date
      * @throws IOException on error
      */
     public Date getDate(final InetAddress host) throws IOException {
@@ -87,7 +87,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
      * Gets the time from the specified server and default port.
      *
      * @param host the time-server
-     * @return the time returned from the server
+     * @return The time returned from the server
      * @throws IOException on error
      */
     public long getTime(final InetAddress host) throws IOException {

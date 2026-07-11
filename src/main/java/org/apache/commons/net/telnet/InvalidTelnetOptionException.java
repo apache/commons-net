@@ -49,7 +49,7 @@ public class InvalidTelnetOptionException extends Exception {
     /**
      * Gets the error message of the exception.
      *
-     * @return the error message.
+     * @return The error message.
      */
     @Override
     public String getMessage() {

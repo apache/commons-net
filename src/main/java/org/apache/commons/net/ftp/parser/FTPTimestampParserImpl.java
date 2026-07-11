@@ -179,7 +179,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     /**
      * Gets the defaultDateFormat.
      *
-     * @return the defaultDateFormat.
+     * @return The defaultDateFormat.
      */
     public SimpleDateFormat getDefaultDateFormat() {
         return defaultDateFormat;
@@ -188,7 +188,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     /**
      * Gets the defaultDateFormat pattern string.
      *
-     * @return the defaultDateFormat pattern string.
+     * @return The defaultDateFormat pattern string.
      */
     public String getDefaultDateFormatString() {
         return defaultDateFormat.toPattern();
@@ -197,7 +197,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     /**
      * Gets the recentDateFormat.
      *
-     * @return the recentDateFormat.
+     * @return The recentDateFormat.
      */
     public SimpleDateFormat getRecentDateFormat() {
         return recentDateFormat;
@@ -206,7 +206,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     /**
      * Gets the recentDateFormat.
      *
-     * @return the recentDateFormat.
+     * @return The recentDateFormat.
      */
     public String getRecentDateFormatString() {
         return recentDateFormat.toPattern();
@@ -215,7 +215,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     /**
      * Gets the serverTimeZone used by this parser.
      *
-     * @return the serverTimeZone used by this parser.
+     * @return The serverTimeZone used by this parser.
      */
     public TimeZone getServerTimeZone() {
         return defaultDateFormat.getTimeZone();
@@ -231,7 +231,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
-     * @return the lenientFutureDates.
+     * @return The lenientFutureDates.
      */
     boolean isLenientFutureDates() {
         return lenientFutureDates;
@@ -264,7 +264,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
      * @see FTPTimestampParser#parseTimestamp(String)
      * @param timestampStr The timestamp to be parsed
      * @param serverTime   The current time for the server
-     * @return the calendar
+     * @return The calendar
      * @throws ParseException if timestamp cannot be parsed
      * @since 1.5
      */

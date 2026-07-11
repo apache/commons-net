@@ -92,7 +92,7 @@ public final class MockDaytimeTCPServer extends MockTcpServer {
      * to return Daytime data, as defined in <a href="https://datatracker.ietf.org/doc/html/rfc867">RFC 867</a> spec
      *
      * @param clock that will be used
-     * @return the queued {@code clock}
+     * @return The queued {@code clock}
      */
     public Clock enqueue(final Clock clock) {
         responseQueue.add(clock);

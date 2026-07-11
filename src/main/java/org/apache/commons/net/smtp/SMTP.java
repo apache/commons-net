@@ -469,7 +469,7 @@ public class SMTP extends SocketClient {
      * @param command      the command to send (as an int defined in {@link SMTPCommand})
      * @param args         the command arguments, may be {@code null}
      * @param includeSpace if {@code true}, add a space between the command and its arguments
-     * @return the reply code
+     * @return The reply code
      * @throws IOException
      */
     private int sendCommand(final int command, final String args, final boolean includeSpace) throws IOException {
@@ -513,7 +513,7 @@ public class SMTP extends SocketClient {
      * @param command      the command to send (as a plain String)
      * @param args         the command arguments, may be {@code null}
      * @param includeSpace if {@code true}, add a space between the command and its arguments
-     * @return the reply code
+     * @return The reply code
      * @throws IOException
      */
     private int sendCommand(final String command, final String args, final boolean includeSpace) throws IOException {

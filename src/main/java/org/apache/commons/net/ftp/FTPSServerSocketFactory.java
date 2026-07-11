@@ -77,7 +77,7 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
      * Sets the socket so newly accepted connections will use SSL client mode.
      *
      * @param socket the SSLServerSocket to initialize
-     * @return the socket
+     * @return The socket
      * @throws ClassCastException if socket is not an instance of SSLServerSocket
      */
     public ServerSocket init(final ServerSocket socket) {

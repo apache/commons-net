@@ -46,7 +46,7 @@ public class ParserInitializationException extends RuntimeException {
     /**
      * Gets the root cause of this exception or null if no root cause was specified.
      *
-     * @return the root cause of this exception being thrown
+     * @return The root cause of this exception being thrown
      * @deprecated Use {@link #getCause()} instead
      */
     @Deprecated

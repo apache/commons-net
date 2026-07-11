@@ -402,7 +402,7 @@ public class FTPClientConfig {
     /**
      * Gets the {@link #setDefaultDateFormatStr(String) defaultDateFormatStr} property.
      *
-     * @return the defaultDateFormatStr property.
+     * @return The defaultDateFormatStr property.
      */
     public String getDefaultDateFormatStr() {
         return defaultDateFormatStr;
@@ -411,7 +411,7 @@ public class FTPClientConfig {
     /**
      * Gets the {@link #setRecentDateFormatStr(String) recentDateFormatStr} property.
      *
-     * @return the recentDateFormatStr property.
+     * @return The recentDateFormatStr property.
      */
 
     public String getRecentDateFormatStr() {
@@ -421,7 +421,7 @@ public class FTPClientConfig {
     /**
      * Gets the {@link #setServerLanguageCode(String) serverLanguageCode} property.
      *
-     * @return the serverLanguageCode property.
+     * @return The serverLanguageCode property.
      */
     public String getServerLanguageCode() {
         return serverLanguageCode;
@@ -432,7 +432,7 @@ public class FTPClientConfig {
      * {@code FTPClientConfig.SYST_*} codes or else the fully qualified class name of a parser implementing both the {@code FTPFileEntryParser} and
      * {@code Configurable} interfaces.
      *
-     * @return the serverSystemKey property.
+     * @return The serverSystemKey property.
      */
     public String getServerSystemKey() {
         return serverSystemKey;
@@ -441,7 +441,7 @@ public class FTPClientConfig {
     /**
      * Gets the {@link #setServerTimeZoneId(String) serverTimeZoneId} property.
      *
-     * @return the serverTimeZoneId property.
+     * @return The serverTimeZoneId property.
      */
     public String getServerTimeZoneId() {
         return serverTimeZoneId;
@@ -450,7 +450,7 @@ public class FTPClientConfig {
     /**
      * Gets the {@link #setShortMonthNames(String) shortMonthNames} property.
      *
-     * @return the shortMonthNames.
+     * @return The shortMonthNames.
      */
     public String getShortMonthNames() {
         return shortMonthNames;
@@ -473,7 +473,7 @@ public class FTPClientConfig {
     /**
      * Tests whether the {@link #setLenientFutureDates(boolean) lenientFutureDates} property.
      *
-     * @return the lenientFutureDates (default true).
+     * @return The lenientFutureDates (default true).
      * @since 1.5
      */
     public boolean isLenientFutureDates() {

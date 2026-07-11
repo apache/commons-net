@@ -120,7 +120,7 @@ public class SubnetUtils {
         /**
          * Gets the count of available addresses. Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          *
-         * @return the count of addresses, may be zero.
+         * @return The count of addresses, may be zero.
          * @throws RuntimeException if the correct count is greater than {@code Integer.MAX_VALUE}
          * @deprecated (3.4) use {@link #getAddressCountLong()} instead
          */
@@ -137,7 +137,7 @@ public class SubnetUtils {
         /**
          * Gets the count of available addresses. Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          *
-         * @return the count of addresses, may be zero.
+         * @return The count of addresses, may be zero.
          * @since 3.4
          */
         public long getAddressCountLong() {
@@ -173,7 +173,7 @@ public class SubnetUtils {
         /**
          * Gets the broadcast address for this subnet.
          *
-         * @return the broadcast address for this subnet.
+         * @return The broadcast address for this subnet.
          */
         public String getBroadcastAddress() {
             return format(toArray4(broadcast));
@@ -182,7 +182,7 @@ public class SubnetUtils {
         /**
          * Gets the CIDR signature for this subnet.
          *
-         * @return the CIDR signature for this subnet.
+         * @return The CIDR signature for this subnet.
          */
         public String getCidrSignature() {
             return format(toArray4(address)) + "/" + Integer.bitCount(netmask);
@@ -191,7 +191,7 @@ public class SubnetUtils {
         /**
          * Gets the high address as a dotted IP address. Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          *
-         * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
+         * @return The IP address in dotted format, may be "0.0.0.0" if there is no valid address
          */
         public String getHighAddress() {
             return format(toArray4(high()));
@@ -200,7 +200,7 @@ public class SubnetUtils {
         /**
          * Gets the low address as a dotted IP address. Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          *
-         * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
+         * @return The IP address in dotted format, may be "0.0.0.0" if there is no valid address
          */
         public String getLowAddress() {
             return format(toArray4(low()));
@@ -209,7 +209,7 @@ public class SubnetUtils {
         /**
          * Gets the network mask for this subnet.
          *
-         * @return the network mask for this subnet.
+         * @return The network mask for this subnet.
          */
         public String getNetmask() {
             return format(toArray4(netmask));
@@ -218,7 +218,7 @@ public class SubnetUtils {
         /**
          * Gets the network address for this subnet.
          *
-         * @return the network address for this subnet.
+         * @return The network address for this subnet.
          */
         public String getNetworkAddress() {
             return format(toArray4(network));
@@ -227,7 +227,7 @@ public class SubnetUtils {
         /**
          * Gets the next address for this subnet.
          *
-         * @return the next address for this subnet.
+         * @return The next address for this subnet.
          */
         public String getNextAddress() {
             return format(toArray4(address + 1));
@@ -236,7 +236,7 @@ public class SubnetUtils {
         /**
          * Gets the previous address for this subnet.
          *
-         * @return the previous address for this subnet.
+         * @return The previous address for this subnet.
          */
         public String getPreviousAddress() {
             return format(toArray4(address - 1));
@@ -478,7 +478,7 @@ public class SubnetUtils {
     /**
      * Gets the next subnet for this instance.
      *
-     * @return the next subnet for this instance.
+     * @return The next subnet for this instance.
      */
     public SubnetUtils getNext() {
         return new SubnetUtils(getInfo().getNextAddress(), getInfo().getNetmask());
@@ -487,7 +487,7 @@ public class SubnetUtils {
     /**
      * Gets the previous subnet for this instance.
      *
-     * @return the next previous for this instance.
+     * @return The next previous for this instance.
      */
     public SubnetUtils getPrevious() {
         return new SubnetUtils(getInfo().getPreviousAddress(), getInfo().getNetmask());

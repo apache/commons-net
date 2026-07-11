@@ -68,7 +68,7 @@ public abstract class AbstractFtpsTest {
     /**
      * Returns the test directory as a String.
      * @param defaultHome A default value.
-     * @return the test directory as a String
+     * @return The test directory as a String
      */
     protected static String getTestHomeDirectory(final String defaultHome) {
         return System.getProperty("test.basedir", defaultHome);

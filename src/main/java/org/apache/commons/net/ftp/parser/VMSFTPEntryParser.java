@@ -80,7 +80,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     /**
      * Gets a new default configuration to be used when this class is instantiated without a {@link FTPClientConfig FTPClientConfig} parameter being specified.
      *
-     * @return the default configuration for this parser.
+     * @return The default configuration for this parser.
      */
     @Override
     protected FTPClientConfig getDefaultConfiguration() {
@@ -100,7 +100,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * DO NOT USE.
      *
      * @param listStream the stream
-     * @return the array of files
+     * @return The array of files
      * @throws IOException on error
      * @deprecated (2.2) No other FTPFileEntryParser implementations have this method.
      */

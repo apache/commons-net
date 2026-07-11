@@ -543,7 +543,7 @@ public class FTPSClient extends FTPClient {
      *
      * @param prefix the prefix to find
      * @param reply  where to find the prefix
-     * @return the remainder of the string after the prefix, or null if the prefix was not present.
+     * @return The remainder of the string after the prefix, or null if the prefix was not present.
      */
     private String extractPrefixedData(final String prefix, final String reply) {
         final int idx = reply.indexOf(prefix);
@@ -636,7 +636,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Gets the secure socket protocol to be used, e.g. SSL/TLS.
      *
-     * @return the protocol
+     * @return The protocol
      * @since 3.11.0
      */
     protected String getProtocol() {
@@ -913,7 +913,7 @@ public class FTPSClient extends FTPClient {
      * Parses the given ADAT response line and base64-decodes the data.
      *
      * @param reply The ADAT reply to parse.
-     * @return the data in the reply, base64-decoded.
+     * @return The data in the reply, base64-decoded.
      * @since 3.0
      */
     public byte[] parseADATReply(final String reply) {
@@ -929,7 +929,7 @@ public class FTPSClient extends FTPClient {
      * @param pbsz Protection Buffer Size.
      * @throws SSLException If the server reply code does not equal "200".
      * @throws IOException  If an I/O error occurs while sending the command.
-     * @return the negotiated value.
+     * @return The negotiated value.
      * @see #execPBSZ(long)
      * @since 3.0
      */

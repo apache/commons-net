@@ -59,7 +59,7 @@ public class ListenerList<T extends EventListener> implements Serializable, Iter
     /**
      * Gets the number of elements in this list.
      *
-     * @return the number of elements in this list
+     * @return The number of elements in this list
      */
     public int getListenerCount() {
         return listeners.size();

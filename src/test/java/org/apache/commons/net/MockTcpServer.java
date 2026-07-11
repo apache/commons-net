@@ -112,7 +112,7 @@ public abstract class MockTcpServer implements Runnable, Closeable {
     /**
      * Gets the port number on which {@link #serverSocket} is listening
      *
-     * @return the port number to which this socket is listening or -1
+     * @return The port number to which this socket is listening or -1
      *         if the socket is not bound yet
      */
     public int getPort() {

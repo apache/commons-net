@@ -211,7 +211,7 @@ public abstract class SocketClient {
      * This method does not allocate resources.
      * </p>
      *
-     * @return the non-null OutputStream.
+     * @return The non-null OutputStream.
      * @since 3.11.0
      */
     protected OutputStream checkOpenOutputStream() {
@@ -360,7 +360,7 @@ public abstract class SocketClient {
     /**
      * Gets the charset.
      *
-     * @return the charset.
+     * @return The charset.
      * @since 3.3
      */
     public Charset getCharset() {
@@ -370,7 +370,7 @@ public abstract class SocketClient {
     /**
      * Gets the charset name.
      *
-     * @return the charset.
+     * @return The charset.
      * @since 3.3
      * @deprecated Since the code now requires Java 1.6 as a minimum.
      */
@@ -382,7 +382,7 @@ public abstract class SocketClient {
     /**
      * Subclasses can override this if they need to provide their own instance field for backwards compatibility.
      *
-     * @return the CommandSupport instance, may be {@code null}.
+     * @return The CommandSupport instance, may be {@code null}.
      * @since 3.0
      */
     protected ProtocolCommandSupport getCommandSupport() {
@@ -452,7 +452,7 @@ public abstract class SocketClient {
     /**
      * Gets the proxy for use with all the connections.
      *
-     * @return the current proxy for connections.
+     * @return The current proxy for connections.
      */
     public Proxy getProxy() {
         return connProxy;
@@ -461,7 +461,7 @@ public abstract class SocketClient {
     /**
      * Gets the current receivedBuffer size.
      *
-     * @return the size, or -1 if not initialized.
+     * @return The size, or -1 if not initialized.
      * @since 3.0
      */
     protected int getReceiveBufferSize() {
@@ -481,7 +481,7 @@ public abstract class SocketClient {
     /**
      * Gets the remote socket address used for the connection.
      *
-     * @return the remote socket address used for the connection
+     * @return The remote socket address used for the connection
      * @since 3.10.0
      */
     protected InetSocketAddress getRemoteInetSocketAddress() {
@@ -501,7 +501,7 @@ public abstract class SocketClient {
     /**
      * Gets the current sendBuffer size.
      *
-     * @return the size, or -1 if not initialized.
+     * @return The size, or -1 if not initialized.
      * @since 3.0
      */
     protected int getSendBufferSize() {

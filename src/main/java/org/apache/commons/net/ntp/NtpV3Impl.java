@@ -165,7 +165,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Gets the {@code originate} time as defined in RFC-1305.
      *
-     * @return the {@code originate} time. Never returns null.
+     * @return The {@code originate} time. Never returns null.
      */
     @Override
     public TimeStamp getOriginateTimeStamp() {
@@ -197,7 +197,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Gets the {@code receive} timestamp as defined in RFC-1305.
      *
-     * @return the {@code receive} time. Never returns null.
+     * @return The {@code receive} time. Never returns null.
      */
     @Override
     public TimeStamp getReceiveTimeStamp() {
@@ -207,7 +207,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Gets the reference id as defined in RFC-1305, which is a 32-bit integer whose value is dependent on several criteria.
      *
-     * @return the reference id as defined in RFC-1305.
+     * @return The reference id as defined in RFC-1305.
      */
     @Override
     public int getReferenceId() {
@@ -218,7 +218,7 @@ public class NtpV3Impl implements NtpV3Packet {
      * Gets the reference id string. String cannot be null but value is dependent on the version of the NTP spec supported and stratum level. Value can be an
      * empty string, clock type string, IP address, or a hexadecimal string.
      *
-     * @return the reference id string.
+     * @return The reference id string.
      */
     @Override
     public String getReferenceIdString() {
@@ -245,7 +245,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Gets the reference time as defined in RFC-1305.
      *
-     * @return the reference time as {@code TimeStamp} object. Never returns null.
+     * @return The reference time as {@code TimeStamp} object. Never returns null.
      */
     @Override
     public TimeStamp getReferenceTimeStamp() {
@@ -331,7 +331,7 @@ public class NtpV3Impl implements NtpV3Packet {
     /**
      * Gets the {@code transmit} timestamp as defined in RFC-1305.
      *
-     * @return the {@code transmit} timestamp as defined in RFC-1305. Never returns a null object.
+     * @return The {@code transmit} timestamp as defined in RFC-1305. Never returns a null object.
      */
     @Override
     public TimeStamp getTransmitTimeStamp() {

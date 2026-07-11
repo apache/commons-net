@@ -100,7 +100,7 @@ public class IMAP extends SocketClient {
      * empty string, "" is returned. If it contains a space then it is enclosed in double quotes, escaping the characters backslash and double-quote.
      *
      * @param input the value to be quoted, may be null
-     * @return the quoted value
+     * @return The quoted value
      */
     static String quoteMailboxName(final String input) {
         if (input == null) { // Don't throw NPE here

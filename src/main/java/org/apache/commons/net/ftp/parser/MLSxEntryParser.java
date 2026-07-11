@@ -82,7 +82,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl {
     /**
      * Gets the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     public static MLSxEntryParser getInstance() {
         return INSTANCE;

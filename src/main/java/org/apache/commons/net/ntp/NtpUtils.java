@@ -26,7 +26,7 @@ public final class NtpUtils {
      * Gets the 32-bit integer address to IPv4 address string "%d.%d.%d.%d" format.
      *
      * @param address the 32-bit address
-     * @return the raw IP address in a string format.
+     * @return The raw IP address in a string format.
      */
     public static String getHostAddress(final int address) {
         return (address >>> 24 & 0xFF) + "." + (address >>> 16 & 0xFF) + "." + (address >>> 8 & 0xFF) + "." + (address >>> 0 & 0xFF);
@@ -65,7 +65,7 @@ public final class NtpUtils {
      * Gets the NTP packet reference identifier as IP address.
      *
      * @param packet NTP packet
-     * @return the packet reference id (as IP address) in "%d.%d.%d.%d" format.
+     * @return The packet reference id (as IP address) in "%d.%d.%d.%d" format.
      */
     public static String getRefAddress(final NtpV3Packet packet) {
         final int address = packet == null ? 0 : packet.getReferenceId();

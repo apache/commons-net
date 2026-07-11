@@ -146,7 +146,7 @@ public final class KeyManagerUtils {
      *
      * @param storePath the path to the keyStore
      * @param storePass the keyStore password
-     * @return the customized KeyManager
+     * @return The customized KeyManager
      * @throws IOException              if there is a problem creating the keystore
      * @throws GeneralSecurityException if there is a problem creating the keystore
      */
@@ -161,7 +161,7 @@ public final class KeyManagerUtils {
      * @param storePath the path to the keyStore
      * @param storePass the keyStore password
      * @param keyAlias  the alias of the key to use, may be {@code null} in which case the first key entry alias is used
-     * @return the customized KeyManager
+     * @return The customized KeyManager
      * @throws IOException              if there is a problem creating the keystore
      * @throws GeneralSecurityException if there is a problem creating the keystore
      */
@@ -176,7 +176,7 @@ public final class KeyManagerUtils {
      * @param ks       the keystore to use
      * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
      * @param keyPass  the password of the key to use
-     * @return the customized KeyManager
+     * @return The customized KeyManager
      * @throws GeneralSecurityException if there is a problem creating the keystore
      */
     public static KeyManager createClientKeyManager(final KeyStore ks, final String keyAlias, final String keyPass) throws GeneralSecurityException {
@@ -192,7 +192,7 @@ public final class KeyManagerUtils {
      * @param storePass the keyStore password
      * @param keyAlias  the alias of the key to use, may be {@code null} in which case the first key entry alias is used
      * @param keyPass   the password of the key to use
-     * @return the customized KeyManager
+     * @return The customized KeyManager
      * @throws GeneralSecurityException if there is a problem creating the keystore
      * @throws IOException              if there is a problem creating the keystore
      */

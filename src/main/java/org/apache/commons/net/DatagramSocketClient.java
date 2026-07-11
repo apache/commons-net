@@ -77,7 +77,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
      * This method does not allocate resources.
      * </p>
      *
-     * @return the non-null DatagramSocket.
+     * @return The non-null DatagramSocket.
      * @since 3.10.0
      */
     protected DatagramSocket checkOpen() {
@@ -98,7 +98,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     /**
      * Gets the charset.
      *
-     * @return the charset.
+     * @return The charset.
      * @since 3.3
      */
     public Charset getCharset() {
@@ -108,7 +108,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     /**
      * Gets the charset name.
      *
-     * @return the charset name.
+     * @return The charset name.
      * @since 3.3
      * @deprecated Use {@link #getCharset()} instead
      */

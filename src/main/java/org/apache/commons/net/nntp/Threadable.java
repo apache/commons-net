@@ -69,7 +69,7 @@ public interface Threadable<T extends Threadable<T>> {
     /**
      * Gets the simplified subject.
      *
-     * @return the simplified subject.
+     * @return The simplified subject.
      */
     String simplifiedSubject();
 

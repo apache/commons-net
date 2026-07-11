@@ -95,7 +95,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     /**
      * Convenience method
      *
-     * @return the number of groups() in the internal MatchResult.
+     * @return The number of groups() in the internal MatchResult.
      */
     public int getGroupCnt() {
         if (result == null) {
@@ -124,7 +124,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * Convenience method delegates to the internal MatchResult's group() method.
      *
      * @param matchNum match group number to be retrieved
-     * @return the content of the {@code matchnum'th} group of the internal match or null if this method is called without a match having been made.
+     * @return The content of the {@code matchnum'th} group of the internal match or null if this method is called without a match having been made.
      */
     public String group(final int matchNum) {
         if (result == null) {

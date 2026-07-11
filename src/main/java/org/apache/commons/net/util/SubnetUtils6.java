@@ -45,7 +45,7 @@ public class SubnetUtils6 {
         /**
          * Gets the address used to initialize this subnet.
          *
-         * @return the address as a string in standard IPv6 format.
+         * @return The address as a string in standard IPv6 format.
          */
         public String getAddress() {
             return format(address);
@@ -57,7 +57,7 @@ public class SubnetUtils6 {
          * For IPv6, this can be astronomically large. A /64 subnet has 2^64 addresses.
          * </p>
          *
-         * @return the count of addresses as a BigInteger.
+         * @return The count of addresses as a BigInteger.
          */
         public BigInteger getAddressCount() {
             // 2^(128 - prefixLength)
@@ -67,7 +67,7 @@ public class SubnetUtils6 {
         /**
          * Gets the CIDR notation for this subnet.
          *
-         * @return the CIDR signature (e.g., "2001:db8::1/64").
+         * @return The CIDR signature (e.g., "2001:db8::1/64").
          */
         public String getCidrSignature() {
             return format(address) + "/" + prefixLength;
@@ -76,7 +76,7 @@ public class SubnetUtils6 {
         /**
          * Gets the highest address in this subnet.
          *
-         * @return the high address as a string in standard IPv6 format.
+         * @return The high address as a string in standard IPv6 format.
          */
         public String getHighAddress() {
             return format(high);
@@ -85,7 +85,7 @@ public class SubnetUtils6 {
         /**
          * Gets the lowest address in this subnet (the network address).
          *
-         * @return the low address as a string in standard IPv6 format.
+         * @return The low address as a string in standard IPv6 format.
          */
         public String getLowAddress() {
             return format(network);
@@ -94,7 +94,7 @@ public class SubnetUtils6 {
         /**
          * Gets the network address for this subnet.
          *
-         * @return the network address as a string in standard IPv6 format.
+         * @return The network address as a string in standard IPv6 format.
          */
         public String getNetworkAddress() {
             return format(network);
@@ -103,7 +103,7 @@ public class SubnetUtils6 {
         /**
          * Gets the prefix length for this subnet.
          *
-         * @return the prefix length (0-128).
+         * @return The prefix length (0-128).
          */
         public int getPrefixLength() {
             return prefixLength;
@@ -185,7 +185,7 @@ public class SubnetUtils6 {
      * Formats a BigInteger as an IPv6 address string using {@link InetAddress#getHostAddress()}.
      *
      * @param addr the address as a BigInteger.
-     * @return the formatted IPv6 address string.
+     * @return The formatted IPv6 address string.
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc5952">RFC 5952</a>
      */
     private static String format(final BigInteger addr) {
@@ -224,7 +224,7 @@ public class SubnetUtils6 {
      * Parses an IPv6 address string to a byte array.
      *
      * @param address the IPv6 address string.
-     * @return the 16-byte representation.
+     * @return The 16-byte representation.
      * @throws IllegalArgumentException if the address cannot be parsed.
      */
     private static byte[] toBytes(final String address) {

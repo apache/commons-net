@@ -463,7 +463,7 @@ public class NNTP extends SocketClient {
      * A convenience wrapper for the extended LIST command that takes an argument, allowing us to selectively list multiple groups.
      *
      * @param wildmat A wildmat (pseudo-regex) pattern. See RFC 2980 for details.
-     * @return the reply code received from the server.
+     * @return The reply code received from the server.
      * @throws IOException if the command fails
      */
     public int listActive(final String wildmat) throws IOException {

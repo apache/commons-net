@@ -149,7 +149,7 @@ public class Article implements Threadable<Article> {
     /**
      * Gets the article ID.
      *
-     * @return the article ID.
+     * @return The article ID.
      */
     public String getArticleId() {
         return articleId;
@@ -158,7 +158,7 @@ public class Article implements Threadable<Article> {
     /**
      * Gets the article number.
      *
-     * @return the article number.
+     * @return The article number.
      */
     @Deprecated
     public int getArticleNumber() {
@@ -168,7 +168,7 @@ public class Article implements Threadable<Article> {
     /**
      * Gets the article number.
      *
-     * @return the article number.
+     * @return The article number.
      */
     public long getArticleNumberLong() {
         return articleNumber;
@@ -177,7 +177,7 @@ public class Article implements Threadable<Article> {
     /**
      * Gets the child article.
      *
-     * @return the child article.
+     * @return The child article.
      * @since 3.12.0
      */
     public Article getChild() {
@@ -187,7 +187,7 @@ public class Article implements Threadable<Article> {
     /**
      * Gets the article date header.
      *
-     * @return the article date header.
+     * @return The article date header.
      */
     public String getDate() {
         return date;
@@ -196,7 +196,7 @@ public class Article implements Threadable<Article> {
     /**
      * Gets the article from header.
      *
-     * @return the article from header.
+     * @return The article from header.
      */
     public String getFrom() {
         return from;
@@ -205,7 +205,7 @@ public class Article implements Threadable<Article> {
     /**
      * Gets the next article.
      *
-     * @return the next article.
+     * @return The next article.
      * @since 3.12.0
      */
     public Article getNext() {
@@ -227,7 +227,7 @@ public class Article implements Threadable<Article> {
     /**
      * Gets the article subject.
      *
-     * @return the article subject.
+     * @return The article subject.
      */
     public String getSubject() {
         return subject;

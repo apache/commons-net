@@ -64,7 +64,7 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
      * </p>
      *
      * @param config A {@link FTPClientConfig FTPClientConfig} used to configure the parser created
-     * @return the {@link FTPFileEntryParser} so created.
+     * @return The {@link FTPFileEntryParser} so created.
      * @throws ParserInitializationException Thrown on any exception in instantiation
      * @throws NullPointerException          if {@code config} is {@code null}
      * @since 1.4
@@ -100,7 +100,7 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
      *            <li>{@link FTPClientConfig#SYST_NETWARE NETWARE}</li>
      *            <li>{@link FTPClientConfig#SYST_L8 TYPE:L8}</li>
      *            </ul>
-     * @return the FTPFileEntryParser corresponding to the supplied key.
+     * @return The FTPFileEntryParser corresponding to the supplied key.
      * @throws ParserInitializationException thrown if for any reason the factory cannot resolve the supplied key into an FTPFileEntryParser.
      * @see FTPFileEntryParser
      */
@@ -201,7 +201,7 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
      * otherwise a composite of {@link NTFTPEntryParser} and {@link UnixFTPEntryParser} is used.
      *
      * @param config the config to use, may be {@code null}
-     * @return the parser
+     * @return The parser
      */
     private FTPFileEntryParser createNTFTPEntryParser(final FTPClientConfig config) {
         if (config != null && FTPClientConfig.SYST_NT.equals(config.getServerSystemKey())) {
@@ -236,7 +236,7 @@ public class DefaultFTPFileEntryParserFactory implements FTPFileEntryParserFacto
      * is used, otherwise a composite of {@link OS400FTPEntryParser} and {@link UnixFTPEntryParser} is used.
      *
      * @param config the config to use, may be {@code null}
-     * @return the parser
+     * @return The parser
      */
     private FTPFileEntryParser createOS400FTPEntryParser(final FTPClientConfig config) {
         if (config != null && FTPClientConfig.SYST_OS400.equals(config.getServerSystemKey())) {

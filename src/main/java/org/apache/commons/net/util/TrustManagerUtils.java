@@ -73,7 +73,7 @@ public final class TrustManagerUtils {
     /**
      * Generate a TrustManager that performs no checks.
      *
-     * @return the TrustManager
+     * @return The TrustManager
      */
     public static X509TrustManager getAcceptAllTrustManager() {
         return ACCEPT_ALL;
@@ -88,7 +88,7 @@ public final class TrustManagerUtils {
      * </p>
      *
      * @param keyStore the KeyStore to use, may be {@code null}
-     * @return the default TrustManager
+     * @return The default TrustManager
      * @throws GeneralSecurityException if an error occurs
      */
     public static X509TrustManager getDefaultTrustManager(final KeyStore keyStore) throws GeneralSecurityException {
@@ -101,7 +101,7 @@ public final class TrustManagerUtils {
     /**
      * Generate a TrustManager that checks server certificates for validity, but otherwise performs no checks.
      *
-     * @return the validating TrustManager
+     * @return The validating TrustManager
      */
     public static X509TrustManager getValidateServerCertificateTrustManager() {
         return CHECK_SERVER_VALIDITY;

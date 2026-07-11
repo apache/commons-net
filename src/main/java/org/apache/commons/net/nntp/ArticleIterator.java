@@ -45,7 +45,7 @@ final class ArticleIterator implements Iterator<Article>, Iterable<Article> {
     /**
      * Gets the next Article
      *
-     * @return the next {@link Article}, never {@code null}, if unparseable then isDummy() will be true, and the subject will contain the raw info.
+     * @return The next {@link Article}, never {@code null}, if unparseable then isDummy() will be true, and the subject will contain the raw info.
      */
     @Override
     public Article next() {

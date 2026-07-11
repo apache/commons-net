@@ -51,7 +51,7 @@ public final class EchoUDPClient extends DiscardUDPClient {
      * Same as {@code receive(data, data.length)}
      *
      * @param data the buffer to receive the input
-     * @return the number of bytes
+     * @return The number of bytes
      * @throws IOException on error
      */
     public int receive(final byte[] data) throws IOException {

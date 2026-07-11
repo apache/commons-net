@@ -60,7 +60,7 @@ public final class DaytimeUDPClient extends DatagramSocketClient {
      * </p>
      *
      * @param host the host
-     * @return the time
+     * @return The time
      * @throws IOException on error
      */
     public String getTime(final InetAddress host) throws IOException {

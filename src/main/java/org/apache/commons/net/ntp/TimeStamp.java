@@ -129,7 +129,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * equivalent are all values ranging from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
      *
      * @param ntpTimeValue the input time
-     * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this NTP timestamp value.
+     * @return The number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this NTP timestamp value.
      */
     public static long getTime(final long ntpTimeValue) {
         final long seconds = ntpTimeValue >>> 32 & 0xffffffffL; // high-order 32-bits
@@ -157,7 +157,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * Parses the string argument as a NTP hexidecimal timestamp representation string (e.g. "c1a089bd.fc904f6d").
      *
      * @param s   hexstring.
-     * @return the Timestamp represented by the argument in hexidecimal.
+     * @return The Timestamp represented by the argument in hexidecimal.
      * @throws NumberFormatException - if the string does not contain a parsable timestamp.
      */
     public static TimeStamp parseNtpString(final String s) throws NumberFormatException {
@@ -257,7 +257,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * Compares two Timestamps numerically.
      *
      * @param anotherTimeStamp   the {@code TimeStamp} to be compared.
-     * @return the value {@code 0} if the argument TimeStamp is equal to this TimeStamp; a value less than {@code 0} if this TimeStamp is numerically
+     * @return The value {@code 0} if the argument TimeStamp is equal to this TimeStamp; a value less than {@code 0} if this TimeStamp is numerically
      *         less than the TimeStamp argument; and a value greater than {@code 0} if this TimeStamp is numerically greater than the TimeStamp argument
      *         (signed comparison).
      */
@@ -313,7 +313,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Gets a Java standard time in milliseconds from the NTP timestamp.
      *
-     * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this NTP timestamp value.
+     * @return The number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this NTP timestamp value.
      */
     public long getTime() {
         return getTime(ntpTime);
@@ -341,7 +341,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Returns the value of this Timestamp as a long value.
      *
-     * @return the 64-bit long value represented by this object.
+     * @return The 64-bit long value represented by this object.
      */
     public long ntpValue() {
         return ntpTime;

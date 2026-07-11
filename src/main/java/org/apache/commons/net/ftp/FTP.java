@@ -620,7 +620,7 @@ public class FTP extends SocketClient {
      * }</pre>
      *
      * @param reportReply whether to fire a reply received event.
-     * @return the reply code.
+     * @return The reply code.
      * @throws IOException If an I/O error occurs.
      */
     private int getReply(final boolean reportReply) throws IOException {
@@ -813,7 +813,7 @@ public class FTP extends SocketClient {
      * Sends the MDTM command for the given file.
      *
      * @param file name of file
-     * @return the status
+     * @return The status
      * @throws IOException on error
      * @since 2.0
      **/

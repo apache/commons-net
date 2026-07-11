@@ -110,7 +110,7 @@ public final class NTPUDPClient extends DatagramSocketClient {
     /**
      * Gets the NTP protocol version number that client sets on request packet that is sent to remote host (e.g. 3=NTP v3, 4=NTP v4, etc.)
      *
-     * @return the NTP protocol version number that client sets on request packet.
+     * @return The NTP protocol version number that client sets on request packet.
      * @see #setVersion(int)
      */
     public int getVersion() {

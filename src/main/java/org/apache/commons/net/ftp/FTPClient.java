@@ -480,7 +480,7 @@ public class FTPClient extends FTP implements Configurable {
      * </p>
      *
      * @param reply
-     * @return the path, without enclosing quotes, or the full string after the reply code and space if the syntax is invalid (i.e. enclosing quotes are
+     * @return The path, without enclosing quotes, or the full string after the reply code and space if the syntax is invalid (i.e. enclosing quotes are
      *         missing or embedded quotes are not doubled)
      */
     // package protected for access by test cases
@@ -923,7 +923,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @param command the command to send
      * @param remote  the remote file name
-     * @return the stream from which to read the file
+     * @return The stream from which to read the file
      * @throws IOException on error
      * @since 3.1
      */
@@ -996,7 +996,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @param command the command to send
      * @param remote  the remote file name
-     * @return the output stream.
+     * @return The output stream.
      * @throws IOException on error
      * @since 3.1
      */
@@ -1522,7 +1522,7 @@ public class FTPClient extends FTP implements Configurable {
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
-     * @return the number of seconds between keepalive messages.
+     * @return The number of seconds between keepalive messages.
      * @since 3.0
      * @deprecated Use {@link #getControlKeepAliveTimeoutDuration()}.
      */
@@ -1537,7 +1537,7 @@ public class FTPClient extends FTP implements Configurable {
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
-     * @return the duration between keepalive messages.
+     * @return The duration between keepalive messages.
      * @since 3.9.0
      */
     public Duration getControlKeepAliveTimeoutDuration() {
@@ -1547,7 +1547,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Gets the currently active listener.
      *
-     * @return the listener, may be {@code null}
+     * @return The listener, may be {@code null}
      * @since 3.0
      */
     public CopyStreamListener getCopyStreamListener() {
@@ -1569,7 +1569,7 @@ public class FTPClient extends FTP implements Configurable {
      * <li>Number of IOErrors ignored</li>
      * </ul>
      *
-     * @return the debug array
+     * @return The debug array
      * @deprecated 3.7 For testing only; may be dropped or changed at any time
      */
     @Deprecated // only for use in testing
@@ -1623,7 +1623,7 @@ public class FTPClient extends FTP implements Configurable {
      * Gets the adjusted string with "-a" added if necessary.
      *
      * @param pathName the initial path
-     * @return the adjusted string with "-a" added if necessary.
+     * @return The adjusted string with "-a" added if necessary.
      * @since 2.0
      */
     protected String getListArguments(final String pathName) {
@@ -1808,7 +1808,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Gets the system name.
      *
-     * @return the name
+     * @return The name
      * @throws IOException on error
      * @deprecated Use {@link #getSystemType()} instead
      */
@@ -2127,7 +2127,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Initiate list parsing for MLSD listings in the current working directory.
      *
-     * @return the engine
+     * @return The engine
      * @throws IOException on error
      */
     public FTPListParseEngine initiateMListParsing() throws IOException {
@@ -2138,7 +2138,7 @@ public class FTPClient extends FTP implements Configurable {
      * Initiate list parsing for MLSD listings.
      *
      * @param path the path from where to MLSD.
-     * @return the engine.
+     * @return The engine.
      * @throws IOException on error
      */
     public FTPListParseEngine initiateMListParsing(final String path) throws IOException {
@@ -2328,7 +2328,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @param path the initial path, may be null
      * @param filter   the filter, non-null
-     * @return the array of FTPFile entries.
+     * @return The array of FTPFile entries.
      * @throws IOException on error
      * @since 2.2
      */
@@ -2575,7 +2575,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Generate a directory listing for the current directory using the MLSD command.
      *
-     * @return the array of file entries
+     * @return The array of file entries
      * @throws IOException on error
      * @since 3.0
      */
@@ -2587,7 +2587,7 @@ public class FTPClient extends FTP implements Configurable {
      * Generate a directory listing using the MLSD command.
      *
      * @param path the directory name, may be {@code null}
-     * @return the array of file entries
+     * @return The array of file entries
      * @throws IOException on error
      * @since 3.0
      */
@@ -2600,7 +2600,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @param path the directory name, may be {@code null}
      * @param filter   the filter to apply to the responses
-     * @return the array of file entries
+     * @return The array of file entries
      * @throws IOException on error
      * @since 3.0
      */
@@ -2612,7 +2612,7 @@ public class FTPClient extends FTP implements Configurable {
      * Gets file details using the MLST command
      *
      * @param path the file or directory to list, may be {@code null}
-     * @return the file details, may be {@code null}
+     * @return The file details, may be {@code null}
      * @throws IOException on error
      * @since 3.0
      */

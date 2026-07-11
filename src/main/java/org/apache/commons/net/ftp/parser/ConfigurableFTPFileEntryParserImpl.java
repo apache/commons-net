@@ -89,7 +89,7 @@ public abstract class ConfigurableFTPFileEntryParserImpl extends RegexFTPFileEnt
      * Each concrete subclass must define this member to create a default configuration to be used when that subclass is instantiated without a
      * {@link FTPClientConfig FTPClientConfig} parameter being specified.
      *
-     * @return the default configuration for the subclass.
+     * @return The default configuration for the subclass.
      */
     protected abstract FTPClientConfig getDefaultConfiguration();
 
