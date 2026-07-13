@@ -25,9 +25,11 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.time.Instant;
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -68,6 +70,31 @@ class FTPSClientTest extends AbstractFtpsTest {
         trace(">>testHasFeature");
         loginClient().disconnect();
         trace("<<testHasFeature");
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    void testHostnameVerifierUsedForDataConnection() throws SocketException, IOException {
+        final AtomicInteger verifyCount = new AtomicInteger();
+        setHostnameVerifier((hostname, session) -> {
+            verifyCount.incrementAndGet();
+            return true;
+        });
+        try {
+            final FTPSClient client = loginClient();
+            try {
+                // control connection has already been verified during login
+                final int afterControl = verifyCount.get();
+                assertTrue(afterControl >= 1, "verifier should run for the control connection");
+                // listFiles opens a data connection, which must be verified too
+                assertNotNull(client.listFiles(""));
+                assertTrue(verifyCount.get() > afterControl, "verifier should run for the data connection");
+            } finally {
+                client.disconnect();
+            }
+        } finally {
+            setHostnameVerifier(null);
+        }
     }
 
     private void testListFiles(final String pathname) throws SocketException, IOException {

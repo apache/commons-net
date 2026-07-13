@@ -27,6 +27,8 @@ import java.net.SocketException;
 import java.net.URL;
 import java.time.Duration;
 
+import javax.net.ssl.HostnameVerifier;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.NullOutputStream;
 import org.apache.commons.lang3.ThreadUtils;
@@ -141,6 +143,8 @@ public abstract class AbstractFtpsTest {
 
     private boolean endpointCheckingEnabled;
 
+    private HostnameVerifier hostnameVerifier;
+
     protected void assertClientCode(final FTPSClient client) {
         final int replyCode = client.getReplyCode();
         assertTrue(FTPReply.isPositiveCompletion(replyCode));
@@ -169,6 +173,9 @@ public abstract class AbstractFtpsTest {
         assertEquals(62, client.getDataTimeout().getSeconds());
         //
         client.setEndpointCheckingEnabled(endpointCheckingEnabled);
+        if (hostnameVerifier != null) {
+            client.setHostnameVerifier(hostnameVerifier);
+        }
         client.connect("localhost", SocketPort);
         //
         assertClientCode(client);
@@ -206,5 +213,9 @@ public abstract class AbstractFtpsTest {
 
     public void setEndpointCheckingEnabled(final boolean value) {
         this.endpointCheckingEnabled = value;
+    }
+
+    protected void setHostnameVerifier(final HostnameVerifier value) {
+        this.hostnameVerifier = value;
     }
 }
