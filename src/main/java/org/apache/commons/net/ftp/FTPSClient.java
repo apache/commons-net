@@ -283,10 +283,8 @@ public class FTPSClient extends FTPClient {
         _prepareDataSocket_(socket);
         if (socket instanceof SSLSocket) {
             final SSLSocket sslSocket = (SSLSocket) socket;
-
             sslSocket.setUseClientMode(isClientMode);
             sslSocket.setEnableSessionCreation(isCreation);
-
             // server mode
             if (!isClientMode) {
                 sslSocket.setNeedClientAuth(isNeedClientAuth);
@@ -299,11 +297,8 @@ public class FTPSClient extends FTPClient {
                 sslSocket.setEnabledProtocols(protocols);
             }
             sslSocket.startHandshake();
-            if (isClientMode && hostnameVerifier != null && !hostnameVerifier.verify(_hostname_, sslSocket.getSession())) {
-                throw new SSLHandshakeException("Hostname doesn't match certificate");
-            }
+            verifyHostName(sslSocket);
         }
-
         return socket;
     }
 
@@ -1094,7 +1089,6 @@ public class FTPSClient extends FTPClient {
         final SSLSocket socket = createSSLSocket(_socket_);
         socket.setEnableSessionCreation(isCreation);
         socket.setUseClientMode(isClientMode);
-
         // client mode
         if (isClientMode) {
             if (tlsEndpointChecking) {
@@ -1104,7 +1098,6 @@ public class FTPSClient extends FTPClient {
             socket.setNeedClientAuth(isNeedClientAuth);
             socket.setWantClientAuth(isWantClientAuth);
         }
-
         if (protocols != null) {
             socket.setEnabledProtocols(protocols);
         }
@@ -1112,12 +1105,14 @@ public class FTPSClient extends FTPClient {
             socket.setEnabledCipherSuites(suites);
         }
         socket.startHandshake();
-
         // TODO the following setup appears to duplicate that in the super class methods
         _socket_ = socket;
         _controlInput_ = new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
         _controlOutput_ = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), getControlEncoding()));
+        verifyHostName(socket);
+    }
 
+    private void verifyHostName(final SSLSocket socket) throws SSLHandshakeException {
         if (isClientMode && hostnameVerifier != null && !hostnameVerifier.verify(_hostname_, socket.getSession())) {
             throw new SSLHandshakeException("Hostname doesn't match certificate");
         }
