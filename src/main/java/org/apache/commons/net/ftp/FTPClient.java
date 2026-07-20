@@ -28,6 +28,7 @@ import java.io.Reader;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -870,7 +871,11 @@ public class FTPClient extends FTP implements Configurable {
         } else if (_socket_ == null) {
             pasvHost = null; // For unit testing.
         } else {
-            pasvHost = _socket_.getInetAddress().getHostAddress();
+            // If a PROXY is configured, use the IP given by the reply as it is.
+            Proxy proy = getProxy();
+            if (proy == null) {
+                pasvHost = _socket_.getInetAddress().getHostAddress();
+            }
         }
         passiveHost = pasvHost;
         passivePort = pasvPort;
