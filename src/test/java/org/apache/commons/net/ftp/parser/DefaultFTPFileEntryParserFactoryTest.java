@@ -30,9 +30,6 @@ import org.junit.jupiter.api.Test;
 
 class DefaultFTPFileEntryParserFactoryTest {
 
-    /** Set from {@link ConstructorProbe}'s static initialiser; kept here so reading it does not initialise the probe. */
-    static boolean probeInitialized;
-
     /** A non-parser class whose static initialiser records that the class was initialised. */
     public static final class ConstructorProbe {
         static {
@@ -43,6 +40,9 @@ class DefaultFTPFileEntryParserFactoryTest {
             // empty
         }
     }
+
+    /** Set from {@link ConstructorProbe}'s static initialiser; kept here so reading it does not initialise the probe. */
+    static boolean probeInitialized;
 
     private void checkParserClass(final FTPFileEntryParserFactory fact, final String key, final Class<?> expected) {
         final FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);

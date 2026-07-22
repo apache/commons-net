@@ -68,6 +68,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Javid Khan, Gary Gregory">Reject CR/LF in FTP, POP3, NNTP and SMTP command senders (#400).</action>
       <action type="fix" dev="ggregory" due-to="Javid Khan, Gary Gregory">Check parser type before instantiating class in DefaultFTPFileEntryParserFactory.createFileEntryParser() (#403).</action>
       <action type="fix" dev="ggregory" due-to="Javid Khan, Gary Gregory">Run hostname verifier on FTPS data connection (#404).</action>
+      <action type="fix" dev="ggregory" due-to="Sarankumar Baskar, Matt Pryor, Gary Gregory" issue="NET-745">[Javadoc] Improve UnixFTPEntryParser when filename with leading space when listing contains a year instead of time (IBM i example) (#405).</action>
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 97 to 103.</action>
