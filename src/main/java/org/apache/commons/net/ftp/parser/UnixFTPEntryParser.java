@@ -30,6 +30,12 @@ import org.apache.commons.net.ftp.FTPFile;
  * This class is based on the logic of Daniel Savarese's DefaultFTPListParser, but adapted to use regular expressions and to fit the new FTPFileEntryParser
  * interface.
  * </p>
+ * <p>
+ * By default, leading spaces in parsed file names are preserved because Unix file names may legitimately begin with spaces. However, some FTP servers,
+ * including IBM i (formerly OS/400) systems that return Unix-style listings, pad the date field with additional spaces when displaying a year instead
+ * of a time for older entries. As a result, parsed file names may incorrectly include a leading space. To remove these unintended spaces, use the
+ * {@link #UnixFTPEntryParser(FTPClientConfig, boolean)} constructor with {@code trimLeadingSpaces} set to {@code true}.
+ * </p>
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
