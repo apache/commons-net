@@ -828,8 +828,18 @@ public class FTPClient extends FTP implements Configurable {
             throw new MalformedServerReplyException("Could not parse extended passive host information.\nServer Reply: " + reply);
         }
         // in EPSV mode, the passive host address is implicit
-        passiveHost = getRemoteAddress().getHostAddress();
+        passiveHost = resolveExtendedPassiveModeHost();
         passivePort = port;
+    }
+
+    /**
+     * Resolve the host for extended passive mode.
+     *
+     * @since 3.14.0
+     * @return the passive host
+     */
+    protected String resolveExtendedPassiveModeHost() {
+        return getRemoteAddress().getHostAddress();
     }
 
     /**
