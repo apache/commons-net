@@ -95,7 +95,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         checkType(data);
         final StringBuilder buffer = new StringBuilder();
         int index = 2;
-        while (index < dataLen && data[index] != 0) {
+        while (isChar(data, index)) {
             buffer.append((char) data[index]);
             ++index;
         }
@@ -105,7 +105,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         }
         buffer.setLength(0);
         ++index; // need to advance beyond the end of string marker
-        while (index < dataLen && data[index] != 0) {
+        while (isChar(data, index)) {
             buffer.append((char) data[index]);
             ++index;
         }
@@ -129,7 +129,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         ++index;
         while (index < dataLen) {
             int start = index;
-            while (index < dataLen && data[index] != 0) {
+            while (isChar(data, index)) {
                 index++;
                 if (index >= dataLen) {
                     throw new TFTPPacketException("Invalid option format");
@@ -138,7 +138,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
             final String option = new String(data, start, index - start, StandardCharsets.US_ASCII);
             ++index;
             start = index;
-            while (index < dataLen && data[index] != 0) {
+            while (isChar(data, index)) {
                 index++;
                 if (index >= dataLen) {
                     throw new TFTPPacketException("Invalid option format");
@@ -193,6 +193,10 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
             System.arraycopy(value.getBytes(StandardCharsets.US_ASCII), 0, data, index, value.length());
             index += value.length();
         }
+    }
+
+    private boolean isChar(final byte[] data, int index) {
+        return index < data.length && data[index] != 0;
     }
 
     /**
