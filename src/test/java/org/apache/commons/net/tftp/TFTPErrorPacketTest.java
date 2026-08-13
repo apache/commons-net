@@ -19,15 +19,22 @@ package org.apache.commons.net.tftp;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Tests {@link TFTPErrorPacket}.
  */
-class TFTPErrorPacketTest {
+class TFTPErrorPacketTest extends TFTPPacketTest {
+
+    @Override
+    protected Executable getDatagramPacketCtor(final DatagramPacket packet) {
+        return () -> new TFTPErrorPacket(packet);
+    }
 
     @Test
     void testNewDatagram() throws UnknownHostException {
@@ -38,4 +45,5 @@ class TFTPErrorPacketTest {
     void testToString() throws UnknownHostException {
         assertNotNull(new TFTPErrorPacket(InetAddress.getLocalHost(), 0, 0, "").toString());
     }
+
 }

@@ -111,7 +111,7 @@ public abstract class TFTPPacket {
             packet = new TFTPErrorPacket(datagram);
             break;
         default:
-            throw new TFTPPacketException("Bad packet.  Invalid TFTP operator code.");
+            throw new TFTPPacketException("Bad packet. Invalid TFTP operator code.");
         }
         return packet;
     }

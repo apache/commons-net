@@ -34,11 +34,6 @@ import org.junit.jupiter.api.Test;
  */
 class TFTPRequestPacketOptionBoundsTest {
 
-    private static String parse(final byte[] buf, final int len) throws TFTPPacketException {
-        final DatagramPacket packet = new DatagramPacket(buf, len, InetAddress.getLoopbackAddress(), 69);
-        return "OK " + ((TFTPRequestPacket) TFTPPacket.newTFTPPacket(packet)).getOptions();
-    }
-
     /**
      * RRQ for "f" in octet mode, one option whose value has no terminating NUL.
      */
@@ -54,6 +49,11 @@ class TFTPRequestPacketOptionBoundsTest {
         out.write(0);
         out.write("1024".getBytes(StandardCharsets.US_ASCII));
         return out.toByteArray();
+    }
+
+    private static String parse(final byte[] buf, final int len) throws TFTPPacketException {
+        final DatagramPacket packet = new DatagramPacket(buf, len, InetAddress.getLoopbackAddress(), 69);
+        return "OK " + ((TFTPRequestPacket) TFTPPacket.newTFTPPacket(packet)).getOptions();
     }
 
     @Test
