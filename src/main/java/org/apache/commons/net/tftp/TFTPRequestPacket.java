@@ -90,70 +90,59 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
      */
     TFTPRequestPacket(final int type, final DatagramPacket datagram) throws TFTPPacketException {
         super(type, datagram.getAddress(), datagram.getPort());
-
         final byte[] data = datagram.getData();
-
+        final int dataLen = datagram.getLength();
         if (getType() != data[1]) {
             throw new TFTPPacketException("TFTP operator code does not match type.");
         }
-
         final StringBuilder buffer = new StringBuilder();
-
         int index = 2;
-        final int length = datagram.getLength();
-
-        while (index < length && data[index] != 0) {
+        while (index < dataLen && data[index] != 0) {
             buffer.append((char) data[index]);
             ++index;
         }
-
         this.fileName = buffer.toString();
-
-        if (index >= length) {
+        if (index >= dataLen) {
             throw new TFTPPacketException("Bad file name and mode format.");
         }
-
         buffer.setLength(0);
         ++index; // need to advance beyond the end of string marker
-        while (index < length && data[index] != 0) {
+        while (index < dataLen && data[index] != 0) {
             buffer.append((char) data[index]);
             ++index;
         }
-
         final String modeString = buffer.toString().toLowerCase(Locale.ENGLISH);
-        final int modeStringsLength = modeStrings.length;
-
+        final int modeStringsLen = modeStrings.length;
         int mode = 0;
         int modeIndex;
-        for (modeIndex = 0; modeIndex < modeStringsLength; modeIndex++) {
+        for (modeIndex = 0; modeIndex < modeStringsLen; modeIndex++) {
             if (modeString.equals(modeStrings[modeIndex])) {
                 mode = modeIndex;
                 break;
             }
         }
-
         this.mode = mode;
-
-        if (modeIndex >= modeStringsLength) {
+        if (modeIndex >= modeStringsLen) {
             throw new TFTPPacketException("Unrecognized TFTP transfer mode: " + modeString);
             // May just want to default to binary mode instead of throwing
             // exception.
-            // _mode = TFTP.OCTET_MODE;
+            // mode = TFTP.OCTET_MODE;
         }
-
         ++index;
-        while (index < length) {
+        while (index < dataLen) {
             int start = index;
-            for (; data[index] != 0; ++index) {
-                if (index >= length) {
+            while (index < dataLen && data[index] != 0) {
+                index++;
+                if (index >= dataLen) {
                     throw new TFTPPacketException("Invalid option format");
                 }
             }
             final String option = new String(data, start, index - start, StandardCharsets.US_ASCII);
             ++index;
             start = index;
-            for (; data[index] != 0; ++index) {
-                if (index >= length) {
+            while (index < dataLen && data[index] != 0) {
+                index++;
+                if (index >= dataLen) {
                     throw new TFTPPacketException("Invalid option format");
                 }
             }
