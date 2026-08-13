@@ -138,6 +138,12 @@ public abstract class TFTPPacket {
         this.port = port;
     }
 
+    void checkType(final byte[] data) throws TFTPPacketException {
+        if (getType() != data[1]) {
+            throw new TFTPPacketException("TFTP operator code does not match type.");
+        }
+    }
+
     /**
      * Gets the address of the host where the packet is going to be sent or where it came from.
      *

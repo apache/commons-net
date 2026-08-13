@@ -92,9 +92,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         super(type, datagram.getAddress(), datagram.getPort());
         final byte[] data = datagram.getData();
         final int dataLen = datagram.getLength();
-        if (getType() != data[1]) {
-            throw new TFTPPacketException("TFTP operator code does not match type.");
-        }
+        checkType(data);
         final StringBuilder buffer = new StringBuilder();
         int index = 2;
         while (index < dataLen && data[index] != 0) {

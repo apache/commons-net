@@ -66,9 +66,7 @@ public final class TFTPDataPacket extends TFTPPacket {
         this.data = datagram.getData();
         this.offset = 4;
 
-        if (getType() != this.data[1]) {
-            throw new TFTPPacketException("TFTP operator code does not match type.");
-        }
+        checkType(data);
 
         this.blockNumber = (this.data[2] & 0xff) << 8 | this.data[3] & 0xff;
 
