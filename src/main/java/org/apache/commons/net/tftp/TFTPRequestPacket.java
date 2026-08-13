@@ -204,28 +204,21 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
      */
     @Override
     public final DatagramPacket newDatagram() {
-        final int fileLength;
-        final int modeLength;
-        final byte[] data;
-
-        fileLength = fileName.length();
-        modeLength = modeBytes[mode].length;
-
+        final int fileLength = fileName.length();
+        final int modeLength = modeBytes[mode].length;
         int optionsLength = 0;
         for (final Map.Entry<String, String> entry : options.entrySet()) {
             optionsLength += entry.getKey().length() + 1 + entry.getValue().length() + 1;
         }
-        data = new byte[fileLength + modeLength + 3 + optionsLength];
+        final byte[] data = new byte[fileLength + modeLength + 3 + optionsLength];
         data[0] = 0;
         data[1] = (byte) type;
         System.arraycopy(fileName.getBytes(Charset.defaultCharset()), 0, data, 2, fileLength);
         data[fileLength + 2] = 0;
         System.arraycopy(modeBytes[mode], 0, data, fileLength + 3, modeLength);
-
         if (optionsLength > 0) {
             handleOptions(data, fileLength, modeLength);
         }
-
         return new DatagramPacket(data, data.length, address, port);
     }
 
@@ -239,25 +232,18 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
      */
     @Override
     final DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data) {
-        final int fileLength;
-        final int modeLength;
-
-        fileLength = fileName.length();
-        modeLength = modeBytes[mode].length;
-
+        final int fileLength = fileName.length();
+        final int modeLength = modeBytes[mode].length;
         data[0] = 0;
         data[1] = (byte) type;
         System.arraycopy(fileName.getBytes(Charset.defaultCharset()), 0, data, 2, fileLength);
         data[fileLength + 2] = 0;
         System.arraycopy(modeBytes[mode], 0, data, fileLength + 3, modeLength);
-
         handleOptions(data, fileLength, modeLength);
-
         datagram.setAddress(address);
         datagram.setPort(port);
         datagram.setData(data);
         datagram.setLength(fileLength + modeLength + 3);
-
         return datagram;
     }
 }
