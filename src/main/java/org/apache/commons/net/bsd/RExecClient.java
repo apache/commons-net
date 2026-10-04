@@ -65,7 +65,7 @@ public class RExecClient extends SocketClient {
      */
     public static final int DEFAULT_PORT = 512;
 
-    private boolean remoteVerificationEnabled;
+    private boolean remoteVerificationEnabled = true;
 
     /**
      * If a separate error stream is requested, {@code _errorStream_} will point to an InputStream from which the standard error of the remote process can
