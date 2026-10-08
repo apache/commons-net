@@ -869,8 +869,6 @@ public class FTPClient extends FTP implements Configurable {
             }
         } else if (_socket_ == null) {
             pasvHost = null; // For unit testing.
-        } else {
-            pasvHost = _socket_.getInetAddress().getHostAddress();
         }
         passiveHost = pasvHost;
         passivePort = pasvPort;
