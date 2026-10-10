@@ -16,6 +16,8 @@
 github:
   description: "Apache Commons Net"
   homepage: https://commons.apache.org/net/
+  autolink_jira:
+    - NET
   
   pull_requests:
     # allow auto-merge
