@@ -395,6 +395,13 @@ public class IMAP extends SocketClient {
      * @return The server reply code (either {@link IMAPReply#OK}, {@link IMAPReply#NO} or {@link IMAPReply#BAD}).
      */
     private int sendCommandWithID(final String commandID, final String command, final String args) throws IOException {
+        // Mirrors the guards in FTP.sendCommand, POP3.sendCommand, NNTP.sendCommand and SMTP.sendCommand:
+        // CR or LF in a command or argument would terminate the control line early and let an attacker
+        // inject additional IMAP commands, e.g. through a mailbox name taken from user input.
+        if (command != null && (command.indexOf('\r') >= 0 || command.indexOf('\n') >= 0)
+                || args != null && (args.indexOf('\r') >= 0 || args.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
+        }
         final StringBuilder builder = new StringBuilder();
         if (commandID != null) {
             builder.append(commandID);
