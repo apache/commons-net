@@ -46,7 +46,7 @@ public class FTPHTTPClient extends FTPClient {
     private final String proxyUserName;
     private final String proxyPassword;
     private final Charset charset;
-    private String tunnelHost; // Save the host when setting up a tunnel (needed for EPSV)
+    private String tunnelHost; // Save the host when setting up a tunnel (needed for EPSV and PASV)
 
     /**
      * Create an instance using the UTF-8 encoding, with no proxy credentials.
@@ -138,7 +138,8 @@ public class FTPHTTPClient extends FTPClient {
                 return null;
             }
             _parsePassiveModeReply(_replyLines.get(0));
-            passiveHost = getPassiveHost();
+            // Without the legacy flag, the parser substitutes the control socket's peer, which here is the proxy, not the FTP server
+            passiveHost = isIpAddressFromPasvResponse() ? getPassiveHost() : tunnelHost;
         }
 
         final Socket socket = _socketFactory_.createSocket(proxyHost, proxyPort);
@@ -159,6 +160,7 @@ public class FTPHTTPClient extends FTPClient {
         _socket_ = _socketFactory_.createSocket(proxyHost, proxyPort);
         _input_ = _socket_.getInputStream();
         _output_ = _socket_.getOutputStream();
+        tunnelHost = host;
         final Reader socketIsReader;
         try {
             socketIsReader = tunnelHandshake(host, port, _input_, _output_);
@@ -173,7 +175,6 @@ public class FTPHTTPClient extends FTPClient {
         final String connectString = "CONNECT " + host + ":" + port + " HTTP/1.1";
         final String hostString = "Host: " + host + ":" + port;
 
-        this.tunnelHost = host;
         output.write(connectString.getBytes(charset));
         output.write(CRLF);
         output.write(hostString.getBytes(charset));
