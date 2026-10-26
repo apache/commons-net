@@ -253,6 +253,18 @@ class SubnetUtils6Test {
     }
 
     @Test
+    void testHostNameIsNotResolved() {
+        final SubnetInfo info = new SubnetUtils6("::1/128").getInfo();
+        // Host names must be rejected, not resolved, even when they map to an address in range
+        assertThrows(IllegalArgumentException.class, () -> info.isInRange("localhost"));
+        assertThrows(IllegalArgumentException.class, () -> info.isInRange("ip6-localhost"));
+        assertThrows(IllegalArgumentException.class, () -> info.isInRange(""));
+        assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("localhost/128"));
+        assertTrue(info.isInRange("[::1]"));
+        assertTrue(new SubnetUtils6("fe80::/10").getInfo().isInRange("fe80::1%1"));
+    }
+
+    @Test
     void testLinkLocalAddress() {
         final SubnetUtils6 utils = new SubnetUtils6("fe80::/10");
         final SubnetInfo info = utils.getInfo();

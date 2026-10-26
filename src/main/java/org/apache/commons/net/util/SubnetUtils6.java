@@ -20,6 +20,7 @@ import java.math.BigInteger;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.regex.Pattern;
 
 /**
  * Performs subnet calculations given an IPv6 network address and a prefix length.
@@ -180,6 +181,8 @@ public class SubnetUtils6 {
     private static final String PARSE_FAIL = "Could not parse [%s]";
     private static final BigInteger TWO = BigInteger.valueOf(2);
     private static final BigInteger MAX_VALUE = TWO.pow(NBITS).subtract(BigInteger.ONE);
+    // Hex digits and a colon first so InetAddress parses it as a literal; an optional scope ID follows '%'
+    private static final Pattern IPV6_LITERAL = Pattern.compile("\\[?[0-9a-fA-F]*:[0-9a-fA-F:.]*(%[^\\]]*)?\\]?");
 
     /**
      * Formats a BigInteger as an IPv6 address string using {@link InetAddress#getHostAddress()}.
@@ -228,6 +231,10 @@ public class SubnetUtils6 {
      * @throws IllegalArgumentException if the address cannot be parsed.
      */
     private static byte[] toBytes(final String address) {
+        // InetAddress.getByName() would resolve a host name through DNS
+        if (address == null || !IPV6_LITERAL.matcher(address).matches()) {
+            throw new IllegalArgumentException(String.format(PARSE_FAIL, address) + " - not an IPv6 address");
+        }
         try {
             final InetAddress inetAddr = InetAddress.getByName(address);
             if (inetAddr instanceof Inet6Address) {
