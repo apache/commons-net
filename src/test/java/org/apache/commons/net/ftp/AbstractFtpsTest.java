@@ -151,8 +151,11 @@ public abstract class AbstractFtpsTest {
     }
 
     protected FTPSClient loginClient() throws SocketException, IOException {
+        return loginClient(new FTPSClient(IMPLICIT));
+    }
+
+    protected FTPSClient loginClient(final FTPSClient client) throws SocketException, IOException {
         trace(">>loginClient");
-        final FTPSClient client = new FTPSClient(IMPLICIT);
         if (ADD_LISTENER) {
             client.addProtocolCommandListener(new PrintCommandListener(System.err));
         }
