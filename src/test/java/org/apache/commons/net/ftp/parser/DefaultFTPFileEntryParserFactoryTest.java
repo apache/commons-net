@@ -41,7 +41,7 @@ class DefaultFTPFileEntryParserFactoryTest {
         }
     }
 
-    /** Set from {@link ConstructorProbe}'s static initialiser; kept here so reading it does not initialise the probe. */
+    /** Set from {@link ConstructorProbe}'s static initializer; kept here so reading it does not initialize the probe. */
     static boolean probeInitialized;
 
     private void checkParserClass(final FTPFileEntryParserFactory fact, final String key, final Class<?> expected) {
@@ -173,8 +173,8 @@ class DefaultFTPFileEntryParserFactoryTest {
         final DefaultFTPFileEntryParserFactory factory = new DefaultFTPFileEntryParserFactory();
         probeInitialized = false;
         // A qualified class name can arrive from the server's SYST reply during auto-detection.
-        // Referencing the .class literal does not initialise the probe, so probeInitialized stays false unless the factory triggers it.
+        // Referencing the .class literal does not initialize the probe, so probeInitialized stays false unless the factory triggers it.
         assertThrows(ParserInitializationException.class, () -> factory.createFileEntryParser(ConstructorProbe.class.getName()));
-        assertFalse(probeInitialized, "a class that is not an FTPFileEntryParser must not be loaded with initialisation");
+        assertFalse(probeInitialized, "a class that is not an FTPFileEntryParser must not be loaded with initialization");
     }
 }
