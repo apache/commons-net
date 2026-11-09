@@ -110,4 +110,26 @@ class IMAPTest {
         assertTrue(IMAP.TRUE_CHUNK_LISTENER.chunkReceived(new IMAP()));
     }
 
+    @Test
+    void testSendCommandRejectsCarriageReturnInArgs() {
+        // Mirrors the guards in FTP/POP3/NNTP/SMTP: the command layer is the last line of defense,
+        // even for arguments that do not go through quoteMailboxName (e.g. LOGIN user/password).
+        assertThrows(IllegalArgumentException.class, () -> new IMAP().sendCommand("SELECT", "INBOX\rA001 DELETE Sent"));
+    }
+
+    @Test
+    void testSendCommandRejectsCRLFInArgs() {
+        assertThrows(IllegalArgumentException.class, () -> new IMAP().sendCommand("SELECT", "INBOX\r\nA001 DELETE Sent"));
+    }
+
+    @Test
+    void testSendCommandRejectsLineFeedInArgs() {
+        assertThrows(IllegalArgumentException.class, () -> new IMAP().sendCommand("SELECT", "INBOX\nA001 DELETE Sent"));
+    }
+
+    @Test
+    void testSendCommandRejectsCarriageReturnInCommand() {
+        assertThrows(IllegalArgumentException.class, () -> new IMAP().sendCommand("SELECT\r\nX"));
+    }
+
 }
