@@ -22,11 +22,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.net.SocketException;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
+
+import javax.net.ssl.SSLSocket;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -94,6 +98,30 @@ class FTPSClientTest extends AbstractFtpsTest {
             }
         } finally {
             setHostnameVerifier(null);
+        }
+    }
+
+    @Test
+    @Timeout(TEST_TIMEOUT)
+    void testEndpointCheckingUsedForDataConnection() throws SocketException, IOException {
+        setEndpointCheckingEnabled(true);
+        final AtomicReference<String> algorithm = new AtomicReference<>();
+        final FTPSClient client = loginClient(new FTPSClient(IMPLICIT) {
+            @Override
+            protected Socket _openDataConnection_(final String command, final String arg) throws IOException {
+                final Socket socket = super._openDataConnection_(command, arg);
+                if (socket instanceof SSLSocket) {
+                    algorithm.set(((SSLSocket) socket).getSSLParameters().getEndpointIdentificationAlgorithm());
+                }
+                return socket;
+            }
+        });
+        try {
+            // listFiles opens a data connection, which must be verified like the control connection
+            assertNotNull(client.listFiles(""));
+            assertEquals("HTTPS", algorithm.get(), "endpoint identification should be enabled on the data connection");
+        } finally {
+            client.disconnect();
         }
     }
 
