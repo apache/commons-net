@@ -176,6 +176,7 @@ public class IMAPSClient extends IMAPClient {
     protected void _connectAction_() throws IOException {
         // Implicit mode.
         if (isImplicit) {
+            applySocketAttributes();
             performSSLNegotiation();
         }
         super._connectAction_();
