@@ -367,12 +367,15 @@ public class TFTPClient extends TFTP {
                             }
                         } else { // wrong host or TID; send error
                             final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress, recdPort, TFTPErrorPacket.UNKNOWN_TID, "Unexpected host or port.");
-                            bufferedSend(error);
+                            // Use unbuffered send to avoid corrupting the pending DATA packet's buffer
+                            send(error);
                         }
                     } catch (final SocketException | InterruptedIOException e) {
                         if (++timeouts >= maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
+                        // Retry sending the outstanding packet on receive timeout
+                        bufferedSend(sent);
                     } catch (final TFTPPacketException e) {
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
