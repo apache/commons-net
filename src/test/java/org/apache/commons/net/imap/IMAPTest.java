@@ -22,8 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.stream.Stream;
 
+import org.apache.commons.net.io.CRLFLineReader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -82,6 +87,25 @@ class IMAPTest {
         assertEquals(IMAP.DEFAULT_PORT, imap.getDefaultPort());
         assertEquals(IMAP.IMAPState.DISCONNECTED_STATE, imap.getState());
         assertEquals(0, imap.getReplyStrings().length);
+    }
+
+    @Test
+    void testGetReplyReadsEveryLiteral() throws IOException {
+        final String header = "Subject: hi\r\n\r\n";
+        // Message text is not protocol data, even when it looks like a tagged reply and a FETCH response.
+        final String text = "x OK\r\n* 2 FETCH (BODY[] {6}\r\nfake\r\n)\r\ny OK FETCH completed\r\n";
+        final String message2 = "Subject: two\r\n";
+        final IMAP imap = new IMAP();
+        imap._reader = new CRLFLineReader(new StringReader("* 1 FETCH (BODY[HEADER] {" + header.length() + "}\r\n" + header + " BODY[1] {3}\r\nabc BODY[TEXT] {"
+                + text.length() + "}\r\n" + text + ")\r\nA001 OK FETCH completed\r\n* 2 FETCH (BODY[] {" + message2.length() + "}\r\n" + message2
+                + ")\r\nA002 OK FETCH completed\r\n"));
+        imap.__writer = new BufferedWriter(new StringWriter());
+        assertEquals(IMAPReply.OK, imap.sendCommand(IMAPCommand.FETCH, "1 (BODY.PEEK[HEADER] BODY.PEEK[1] BODY.PEEK[TEXT])"));
+        final String[] reply = imap.getReplyStrings();
+        assertEquals(12, reply.length);
+        assertEquals("A001 OK FETCH completed", reply[reply.length - 1]);
+        assertEquals(IMAPReply.OK, imap.sendCommand(IMAPCommand.FETCH, "2 BODY[]"));
+        assertEquals("Subject: two", imap.getReplyStrings()[1]);
     }
 
     @Test
