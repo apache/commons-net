@@ -17,6 +17,7 @@
 package org.apache.commons.net.util;
 
 import java.math.BigInteger;
+import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -191,7 +192,8 @@ public class SubnetUtils6 {
     private static String format(final BigInteger addr) {
         final byte[] bytes = toByteArray16(addr);
         try {
-            return InetAddress.getByAddress(bytes).getHostAddress();
+            // Inet6Address.getByAddress keeps IPv4-mapped addresses (::ffff:0:0/96) as IPv6; InetAddress.getByAddress would convert them to IPv4.
+            return Inet6Address.getByAddress(null, bytes, -1).getHostAddress();
         } catch (final UnknownHostException e) {
             // Should never happen with a valid 16-byte array
             throw new IllegalStateException("Unexpected error formatting IPv6 address", e);
@@ -232,6 +234,14 @@ public class SubnetUtils6 {
             final InetAddress inetAddr = InetAddress.getByName(address);
             if (inetAddr instanceof Inet6Address) {
                 return inetAddr.getAddress();
+            }
+            if (inetAddr instanceof Inet4Address && address.indexOf(':') >= 0) {
+                // The JDK parses IPv4-mapped IPv6 literals such as "::ffff:192.0.2.1" to an Inet4Address.
+                final byte[] mapped = new byte[16];
+                mapped[10] = (byte) 0xff;
+                mapped[11] = (byte) 0xff;
+                System.arraycopy(inetAddr.getAddress(), 0, mapped, 12, 4);
+                return mapped;
             }
             throw new IllegalArgumentException(String.format(PARSE_FAIL, address) + " - not an IPv6 address");
         } catch (final UnknownHostException e) {
