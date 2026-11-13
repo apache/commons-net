@@ -191,10 +191,29 @@ public class FTP extends SocketClient {
 
     private static final String MODES = "AEILNTCFRPSBCZ";
 
+    /**
+     * Placeholder used in command-sent events fired for {@link #sendCommand(String, char[])} so that sensitive arguments are never materialized into a
+     * {@link String}.
+     */
+    private static final String MASKED_ARGS = "******";
+
     private static void checkCRLF(final String command, final String args) {
         if (command != null && (command.indexOf('\r') >= 0 || command.indexOf('\n') >= 0)
                 || args != null && (args.indexOf('\r') >= 0 || args.indexOf('\n') >= 0)) {
             throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
+        }
+    }
+
+    private static void checkCRLF(final String command, final char[] args) {
+        if (command != null && (command.indexOf('\r') >= 0 || command.indexOf('\n') >= 0)) {
+            throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
+        }
+        if (args != null) {
+            for (final char c : args) {
+                if (c == '\r' || c == '\n') {
+                    throw new IllegalArgumentException("Commands and arguments cannot contain CR or LF characters");
+                }
+            }
         }
     }
 
@@ -282,7 +301,7 @@ public class FTP extends SocketClient {
      * @since 3.0
      */
     protected void __noop() throws IOException {
-        final String msg = buildMessage(FTPCmd.NOOP.getCommand(), null);
+        final String msg = buildMessage(FTPCmd.NOOP.getCommand(), (String) null);
         send(msg);
         __getReplyNoReport(); // This may time out
     }
@@ -442,6 +461,23 @@ public class FTP extends SocketClient {
         }
         builder.append(NETASCII_EOL);
         return builder.toString();
+    }
+
+    private char[] buildMessage(final String command, final char[] args) {
+        final int commandLen = command.length();
+        final int eolLen = NETASCII_EOL.length();
+        final boolean hasArgs = args != null;
+        final char[] message = new char[commandLen + (hasArgs ? args.length + 1 : 0) + eolLen];
+        int pos = 0;
+        command.getChars(0, commandLen, message, pos);
+        pos += commandLen;
+        if (hasArgs) {
+            message[pos++] = SP;
+            System.arraycopy(args, 0, message, pos, args.length);
+            pos += args.length;
+        }
+        NETASCII_EOL.getChars(0, eolLen, message, pos);
+        return message;
     }
 
     /**
@@ -1049,6 +1085,25 @@ public class FTP extends SocketClient {
     }
 
     /**
+     * Sends the FTP {@code PASS} command to the server, receive the reply, and return the reply code.
+     * <p>
+     * The password is provided as a {@code char} array so that it is never materialized into a {@link String}, which cannot be reliably wiped. Callers are
+     * responsible for clearing the array afterwards, see {@link FTPClient#login(String, char[])}.
+     * </p>
+     *
+     * @param password The plain text password of the user being logged into.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
+     * @since 3.13.1
+     */
+    public int pass(final char[] password) throws IOException {
+        return sendCommand(FTPCmd.PASS, password);
+    }
+
+    /**
      * Sends the FTP {@code PASV} command to the server, receive the reply, and return the reply code. Remember, it's up to you to interpret the
      * reply string containing the host/port information.
      *
@@ -1209,6 +1264,18 @@ public class FTP extends SocketClient {
         }
     }
 
+    private void send(final char[] message) throws IOException, FTPConnectionClosedException, SocketException {
+        try {
+            _controlOutput_.write(message);
+            _controlOutput_.flush();
+        } catch (final SocketException e) {
+            if (!isConnected()) {
+                throw new FTPConnectionClosedException("Connection unexpectedly closed.");
+            }
+            throw e;
+        }
+    }
+
     /**
      * Sends an FTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
      * actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
@@ -1222,7 +1289,7 @@ public class FTP extends SocketClient {
      * @since 3.3
      */
     public int sendCommand(final FTPCmd command) throws IOException {
-        return sendCommand(command, null);
+        return sendCommand(command, (String) null);
     }
 
     /**
@@ -1239,6 +1306,28 @@ public class FTP extends SocketClient {
      * @since 3.3
      */
     public int sendCommand(final FTPCmd command, final String args) throws IOException {
+        return sendCommand(command.getCommand(), args);
+    }
+
+    /**
+     * Sends an FTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
+     * actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
+     * <p>
+     * The arguments are provided as a {@code char} array so that sensitive data (like passwords) is never materialized into a {@link String}, which cannot
+     * be reliably wiped. Unlike {@link #sendCommand(FTPCmd, String)}, the {@code ProtocolCommandEvent} fired to command listeners does not contain the
+     * command arguments, they are reported as masked.
+     * </p>
+     *
+     * @param command The FTPCmd enum corresponding to the FTP command to send.
+     * @param args    The arguments to the FTP command. If this parameter is set to null, then the command is sent with no argument.
+     * @return The integer value of the FTP reply code returned by the server in response to the command.
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
+     * @since 3.13.1
+     */
+    public int sendCommand(final FTPCmd command, final char[] args) throws IOException {
         return sendCommand(command.getCommand(), args);
     }
 
@@ -1287,7 +1376,7 @@ public class FTP extends SocketClient {
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
     public int sendCommand(final String command) throws IOException {
-        return sendCommand(command, null);
+        return sendCommand(command, (String) null);
     }
 
     /**
@@ -1310,6 +1399,35 @@ public class FTP extends SocketClient {
         final String message = buildMessage(command, args);
         send(message);
         fireCommandSent(command, message);
+        return getReply();
+    }
+
+    /**
+     * Sends an FTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
+     * actual reply text can be accessed by calling {@link #getReplyString getReplyString} or {@link #getReplyStrings getReplyStrings}.
+     * <p>
+     * The arguments are provided as a {@code char} array so that sensitive data (like passwords) is never materialized into a {@link String}, which cannot
+     * be reliably wiped: the command is built and written to the control connection as {@code char} arrays only. Unlike
+     * {@link #sendCommand(String, String)}, the {@code ProtocolCommandEvent} fired to command listeners does not contain the command arguments, they are
+     * reported as masked.
+     * </p>
+     *
+     * @param command The text representation of the FTP command to send.
+     * @param args    The arguments to the FTP command. If this parameter is set to null, then the command is sent with no argument.
+     * @return The integer value of the FTP reply code returned by the server in response to the command.
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
+     * @since 3.13.1
+     */
+    public int sendCommand(final String command, final char[] args) throws IOException {
+        checkCRLF(command, args);
+        if (_controlOutput_ == null) {
+            throw new IOException("Connection is not open");
+        }
+        send(buildMessage(command, args));
+        fireCommandSent(command, buildMessage(command, args != null ? MASKED_ARGS : null));
         return getReply();
     }
 

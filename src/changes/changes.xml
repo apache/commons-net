@@ -72,6 +72,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Javid Khan, Gary Gregory">Force Gregorian calendar in FTP listing timestamp parsers (##406).</action>
       <action type="fix" dev="ggregory" due-to="Arpit Jain, Gary Gregory">TFTPRequestPacket now throws TFTPPacketException instead of ArrayIndexOutOfBoundsException (#407).</action>
       <!-- ADD -->
+      <action type="add" dev="ggregory" due-to="Inf1mum" issue="NET-746">Add FTPClient.login(String, char[]) so passwords are sent as char arrays and cleared after transmission; add FTP.pass(char[]) and FTP.sendCommand(String, char[]) / FTP.sendCommand(FTPCmd, char[]) overloads.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add and use FTPFile.setUserPermission(int, boolean).</action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 97 to 107.</action>
