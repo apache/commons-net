@@ -172,6 +172,23 @@ class SubnetUtils6Test {
     }
 
     @Test
+    void testIPv4MappedAddresses() {
+        final SubnetInfo info = new SubnetUtils6("::ffff:0:0/96").getInfo();
+        assertEquals("0:0:0:0:0:ffff:0:0", info.getNetworkAddress());
+        assertEquals("0:0:0:0:0:ffff:ffff:ffff", info.getHighAddress());
+        assertTrue(info.isInRange("::ffff:192.0.2.1"));
+        assertTrue(info.isInRange("::ffff:c000:201"));
+        assertFalse(info.isInRange("::192.0.2.1"));
+        assertEquals("0:0:0:0:0:ffff:c000:201/128", new SubnetUtils6("::ffff:192.0.2.1/128").getInfo().getCidrSignature());
+        // A high address that falls in the IPv4-mapped range must be formatted as IPv6 and round-trip.
+        final SubnetInfo low = new SubnetUtils6("::/80").getInfo();
+        assertEquals("0:0:0:0:0:ffff:ffff:ffff", low.getHighAddress());
+        assertTrue(low.isInRange(low.getHighAddress()));
+        // Plain IPv4 text is still rejected.
+        assertThrows(IllegalArgumentException.class, () -> info.isInRange("192.0.2.1"));
+    }
+
+    @Test
     void testInvalidTwoArgConstructor() {
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1", 129));
         assertThrows(IllegalArgumentException.class, () -> new SubnetUtils6("2001:db8::1", -1));
