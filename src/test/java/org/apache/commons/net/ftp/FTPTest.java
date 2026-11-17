@@ -42,4 +42,19 @@ class FTPTest {
     void testRejectLFInCommand() {
         assertThrows(IllegalArgumentException.class, () -> new FTP().sendCommand("NOOP\nDELE secret"));
     }
+
+    @Test
+    void testRejectCRInCharArgs() {
+        assertThrows(IllegalArgumentException.class, () -> new FTP().sendCommand("RETR", "file\rDELE secret".toCharArray()));
+    }
+
+    @Test
+    void testRejectCRLFInCharArgs() {
+        assertThrows(IllegalArgumentException.class, () -> new FTP().sendCommand("RETR", "file\r\nDELE secret".toCharArray()));
+    }
+
+    @Test
+    void testRejectLFInCharArgs() {
+        assertThrows(IllegalArgumentException.class, () -> new FTP().sendCommand("RETR", "file\nDELE secret".toCharArray()));
+    }
 }
