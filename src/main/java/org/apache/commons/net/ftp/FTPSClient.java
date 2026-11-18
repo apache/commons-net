@@ -28,12 +28,16 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
+import javax.net.ssl.SNIHostName;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
@@ -71,6 +75,9 @@ public class FTPSClient extends FTPClient {
 
     /** Default PROT Command */
     private static final String DEFAULT_PROT = "C";
+
+    /** Matches an IPv4 address literal, which is not a valid SNI host name. */
+    private static final Pattern IPV4_LITERAL = Pattern.compile("\\d{1,3}(\\.\\d{1,3}){3}");
 
     /** Default secure socket protocol name, i.e. TLS */
     private static final String DEFAULT_PROTOCOL = "TLS";
@@ -285,8 +292,12 @@ public class FTPSClient extends FTPClient {
             final SSLSocket sslSocket = (SSLSocket) socket;
             sslSocket.setUseClientMode(isClientMode);
             sslSocket.setEnableSessionCreation(isCreation);
-            // server mode
-            if (!isClientMode) {
+            // client mode
+            if (isClientMode) {
+                if (tlsEndpointChecking) {
+                    enableEndpointNameVerification(sslSocket);
+                }
+            } else { // server mode
                 sslSocket.setNeedClientAuth(isNeedClientAuth);
                 sslSocket.setWantClientAuth(isWantClientAuth);
             }
@@ -1110,6 +1121,24 @@ public class FTPSClient extends FTPClient {
         _controlInput_ = new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
         _controlOutput_ = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), getControlEncoding()));
         verifyHostName(socket);
+    }
+
+    /**
+     * Enables endpoint identification on a data connection socket. Unlike the control socket, the data socket is not created with the server host name (it
+     * is connected to an address or accepted), so endpoint identification alone would match the certificate against the peer IP address only. Supplying
+     * the host name as the SNI server name makes the trust manager check it instead, as it does for the control connection.
+     */
+    private void enableEndpointNameVerification(final SSLSocket sslSocket) {
+        final SSLParameters sslParameters = sslSocket.getSSLParameters();
+        sslParameters.setEndpointIdentificationAlgorithm("HTTPS");
+        if (_hostname_ != null && !IPV4_LITERAL.matcher(_hostname_).matches()) {
+            try {
+                sslParameters.setServerNames(Collections.singletonList(new SNIHostName(_hostname_)));
+            } catch (final IllegalArgumentException e) {
+                // not a valid SNI host name (for example an IPv6 literal): the certificate is matched against the peer address
+            }
+        }
+        sslSocket.setSSLParameters(sslParameters);
     }
 
     private void verifyHostName(final SSLSocket socket) throws SSLHandshakeException {
