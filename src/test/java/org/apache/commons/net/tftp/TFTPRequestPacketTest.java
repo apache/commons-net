@@ -27,6 +27,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -67,6 +68,21 @@ class TFTPRequestPacketTest {
         final Map<String, String> options = requestPacket.getOptions();
         assertEquals(1, options.size());
         assertEquals("1024", options.get("blksize"));
+    }
+
+    @Test
+    void testNewDatagramBufferIncludesOptions() throws TFTPPacketException, UnknownHostException {
+        final DatagramPacket datagramPacket = getDatagramPacket();
+        final TFTPReadRequestPacket requestPacket = new TFTPReadRequestPacket(datagramPacket);
+        final byte[] buffer = new byte[datagramPacket.getLength()];
+        // Simulate a reused send buffer that is not zero-initialized anymore, as in TFTP.bufferedSend().
+        Arrays.fill(buffer, (byte) 'X');
+        final DatagramPacket reused = new DatagramPacket(buffer, buffer.length, InetAddress.getLocalHost(), 0);
+
+        requestPacket.newDatagram(reused, buffer);
+
+        assertEquals(datagramPacket.getLength(), reused.getLength());
+        assertArrayEquals(datagramPacket.getData(), buffer);
     }
 
     @Test
