@@ -280,7 +280,12 @@ public class IMAP extends SocketClient {
                         throw new EOFException("Connection closed without indication.");
                     }
                     replyLines.add(line);
-                    literalCount -= line.length() + 2; // Allow for CRLF
+                    if (literalCount >= line.length() + 2) {
+                        literalCount -= line.length() + 2; // Allow for CRLF
+                    } else {
+                        // The literal ends on this line, and the rest of the line may introduce another literal.
+                        literalCount = literalCount < line.length() ? IMAPReply.literalCount(line.substring(literalCount)) : -1;
+                    }
                 }
                 if (isMultiLine) {
                     final IMAPChunkListener il = chunkListener;
