@@ -78,7 +78,7 @@ public final class POP3MessageInfo {
      *
      * @param num    The number.
      * @param uid    The UID.
-     * @param octets The size.
+     * @param size   The size.
      */
     private POP3MessageInfo(final int num, final String uid, final int size) {
         this.number = num;
