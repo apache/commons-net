@@ -109,7 +109,9 @@ class UnixFTPEntryParserTest extends AbstractFTPParseTest {
         case 'b':
         case 'c':
             assertEquals(0, f.getHardLinkCount());
-            // falls through$ TODO this needs to be fixed if a device type is introduced
+            // NET-200: block and character devices are not regular files.
+            assertEquals(FTPFile.UNKNOWN_TYPE, type, "Type of " + test);
+            break;
         case 'f':
         case '-':
             assertEquals(FTPFile.FILE_TYPE, type, "Type of " + test);
@@ -226,6 +228,26 @@ class UnixFTPEntryParserTest extends AbstractFTPParseTest {
         assertNotNull(f.getTimestamp(), "Timestamp should not be null");
         assertEquals(2008, f.getTimestamp().get(Calendar.YEAR));
         assertEquals("bloplab 7 cd1.img", f.getName());
+    }
+
+    // https://issues.apache.org/jira/browse/NET-200
+    @Test
+    void testNET200BlockAndCharacterDevicesAreNotFiles() {
+        final String[] deviceEntries = {
+                // block device
+                "brw-rw----   1 root     disk         8,   0 Jan 22  2001 sda",
+                // character device
+                "crw-rw-rw-   1 root     root         1,   3 Jan 22  2001 null"};
+        for (final String entry : deviceEntries) {
+            final FTPFile f = getParser().parseFTPEntry(entry);
+            assertNotNull(f, "Failed to parse " + entry);
+            assertEquals(FTPFile.UNKNOWN_TYPE, f.getType(), "Type of " + entry);
+            assertFalse(f.isFile(), "Device must not be a regular file: " + entry);
+            assertFalse(f.isDirectory(), "Device must not be a directory: " + entry);
+            assertTrue(f.isUnknown(), "Device must be of unknown type: " + entry);
+            assertEquals(0, f.getHardLinkCount(), "Hard link count of " + entry);
+            assertNotNull(f.getTimestamp(), "Expected to find a timestamp for " + entry);
+        }
     }
 
     @Test

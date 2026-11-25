@@ -227,7 +227,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             case 'b':
             case 'c':
                 isDevice = true;
-                type = FTPFile.FILE_TYPE; // TODO change this if DEVICE_TYPE implemented
+                // NET-200: block and character devices are not regular files.
+                type = FTPFile.UNKNOWN_TYPE;
                 break;
             case 'f':
             case '-':
