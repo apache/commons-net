@@ -959,7 +959,30 @@ public class FTPSClient extends FTPClient {
     // Would like to remove this method, but that will break any existing clients that are using CCC
     @Override
     public int sendCommand(final String command, final String args) throws IOException {
-        final int repCode = super.sendCommand(command, args);
+        return postSendCCC(super.sendCommand(command, args), command);
+    }
+
+    /**
+     * Send an FTP command with sensitive arguments. A successful CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance to be
+     * assigned to a plain {@link Socket}
+     *
+     * @param command The FTP command.
+     * @param args    The arguments to the FTP command as a {@code char} array, for sensitive data.
+     * @return server reply.
+     * @throws IOException  If an I/O error occurs while sending the command.
+     * @throws SSLException Thrown if a CCC command fails
+     * @see org.apache.commons.net.ftp.FTP#sendCommand(String, char[])
+     * @since 3.13.1
+     */
+    @Override
+    public int sendCommand(final String command, final char[] args) throws IOException {
+        return postSendCCC(super.sendCommand(command, args), command);
+    }
+
+    /**
+     * Handles the clear command channel transition after a {@code CCC} command was sent.
+     */
+    private int postSendCCC(final int repCode, final String command) throws IOException {
         /* If CCC is issued, restore socket i/o streams to unsecured versions */
         if (CMD_CCC.equals(command)) {
             if (FTPReply.COMMAND_OK != repCode) {

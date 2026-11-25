@@ -38,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -2433,6 +2434,41 @@ public class FTPClient extends FTP implements Configurable {
             return false;
         }
         return FTPReply.isPositiveCompletion(pass(password));
+    }
+
+    /**
+     * Login to the FTP server using the provided user and password.
+     * <p>
+     * The password is provided as a {@code char} array so that it is never materialized into a {@link String}, which cannot be reliably wiped. Once the
+     * password has been transmitted to the server, the array is cleared with {@link Arrays#fill(char[], char)}; note that this happens even if the server
+     * rejects the password, so the same array cannot be reused for a second login attempt.
+     * </p>
+     *
+     * @param user     The user name to login under.
+     * @param password The password to use. It is cleared after being sent to the server.
+     * @return True if successfully completed, false if not.
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
+     * @since 3.13.1
+     */
+    public boolean login(final String user, final char[] password) throws IOException {
+        user(user);
+        if (FTPReply.isPositiveCompletion(_replyCode)) {
+            return true;
+        }
+        // If we get here, we either have an error code, or an intermediate
+        // reply requesting password.
+        if (!FTPReply.isPositiveIntermediate(_replyCode)) {
+            return false;
+        }
+        try {
+            return FTPReply.isPositiveCompletion(pass(password));
+        } finally {
+            // The password has been handed to the control connection: wipe it.
+            Arrays.fill(password, (char) 0);
+        }
     }
 
     /**
