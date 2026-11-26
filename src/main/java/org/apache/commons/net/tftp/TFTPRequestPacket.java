@@ -179,6 +179,19 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         return options;
     }
 
+    /**
+     * Gets the encoded length of the options extensions.
+     *
+     * @return The encoded length of the options extensions.
+     */
+    private int getOptionsLength() {
+        int optionsLength = 0;
+        for (final Map.Entry<String, String> entry : options.entrySet()) {
+            optionsLength += entry.getKey().length() + 1 + entry.getValue().length() + 1;
+        }
+        return optionsLength;
+    }
+
     private void handleOptions(final byte[] data, final int fileLength, final int modeLength) {
         int index = fileLength + modeLength + 2;
         for (final Map.Entry<String, String> entry : options.entrySet()) {
@@ -193,6 +206,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
             System.arraycopy(value.getBytes(StandardCharsets.US_ASCII), 0, data, index, value.length());
             index += value.length();
         }
+        data[index] = 0;
     }
 
     private boolean isChar(final byte[] data, int index) {
@@ -210,10 +224,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
     public final DatagramPacket newDatagram() {
         final int fileLength = fileName.length();
         final int modeLength = modeBytes[mode].length;
-        int optionsLength = 0;
-        for (final Map.Entry<String, String> entry : options.entrySet()) {
-            optionsLength += entry.getKey().length() + 1 + entry.getValue().length() + 1;
-        }
+        final int optionsLength = getOptionsLength();
         final byte[] data = new byte[fileLength + modeLength + 3 + optionsLength];
         data[0] = 0;
         data[1] = (byte) type;
@@ -238,6 +249,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
     final DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data) {
         final int fileLength = fileName.length();
         final int modeLength = modeBytes[mode].length;
+        final int optionsLength = getOptionsLength();
         data[0] = 0;
         data[1] = (byte) type;
         System.arraycopy(fileName.getBytes(Charset.defaultCharset()), 0, data, 2, fileLength);
@@ -247,7 +259,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket {
         datagram.setAddress(address);
         datagram.setPort(port);
         datagram.setData(data);
-        datagram.setLength(fileLength + modeLength + 3);
+        datagram.setLength(fileLength + modeLength + 3 + optionsLength);
         return datagram;
     }
 }
